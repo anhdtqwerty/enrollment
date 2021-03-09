@@ -12,7 +12,7 @@
       <div class="accent--text ml-1" id="school-title">LƯƠNG THẾ VINH</div>
     </div>
     <v-spacer></v-spacer>
-    <GuestToolbar />
+    <GuestToolbar @onSigninClick="signin" @onSignupClick="signup" />
     <!-- <UserToolbar /> -->
   </v-app-bar>
 </template>
@@ -21,10 +21,18 @@
 import GuestToolbar from "@/components/layout/GuestToolbar.vue";
 // import UserToolbar from "@/components/layout/UserToolbar.vue";
 export default {
-  components: { 
-      GuestToolbar, 
-    //   UserToolbar 
-      },
+  components: {
+    GuestToolbar,
+    //   UserToolbar
+  },
+  methods: {
+    signin(data) {
+      this.$emit("signin", data);
+    },
+    signup(data) {
+      this.$emit("signup", data);
+    },
+  },
 };
 </script>
 

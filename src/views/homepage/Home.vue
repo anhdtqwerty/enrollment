@@ -50,32 +50,13 @@
         ></span
       >
     </div>
-    <SignInDialog :state="signinDialog" />
-    <ForgotPasswordDialog :state="signinDialog" />
-    <ConfirmForgotPasswordDialog :state="signinDialog" />
-    <NewPasswordDialog :state="signinDialog" />
-    <SignUpDialog :state="signinDialog" />
-    <ConfirmSignupDialog :state="signinDialog" />
   </v-container>
 </template>
 
 <script>
-import SignInDialog from "@/views/auth/SignInDialog.vue";
-import ForgotPasswordDialog from "@/views/auth/ForgotPasswordDialog.vue";
-import ConfirmForgotPasswordDialog from "@/views/auth/ConfirmForgotPasswordDialog.vue";
-import NewPasswordDialog from "@/views/auth/NewPasswordDialog.vue";
-import SignUpDialog from "@/views/auth/SignUpDialog.vue";
-import ConfirmSignupDialog from "@/views/auth/ConfirmSignupDialog.vue";
+
 export default {
   name: "Home",
-  components: {
-    SignInDialog,
-    ForgotPasswordDialog,
-    ConfirmForgotPasswordDialog,
-    NewPasswordDialog,
-    SignUpDialog,
-    ConfirmSignupDialog,
-  },
   methods: {
     getImageSrc(n, index) {
       return this.menu[(n - 1) * 2 + index].src;
