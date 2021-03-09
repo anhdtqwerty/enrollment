@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:impl="http://impl.bulkSms.ws/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <impl:wsCpMt>
+         <!--Optional:-->
+         <User>sapling</User>
+         <!--Optional:-->
+         <Password>14ab78@#c9</Password>
+         <!--Optional:-->
+         <CPCode>SAPLING</CPCode>
+         <!--Optional:-->
+         <RequestID>4</RequestID>
+         <!--Optional:-->
+         <UserID>84973728668</UserID>
+         <!--Optional:-->
+         <ReceiverID>84973728668</ReceiverID>
+         <!--Optional:-->
+         <ServiceID>THPT LTV</ServiceID>
+         <!--Optional:-->
+         <CommandCode>bulksms</CommandCode>
+         <!--Optional:-->
+         <Content>SLLDT truong LTV: Kiem tra tin nhan hoat dong binh thuong.</Content>
+         <!--Optional:-->
+         <ContentType>0</ContentType>
+      </impl:wsCpMt>
+   </soapenv:Body>
+</soapenv:Envelope>
