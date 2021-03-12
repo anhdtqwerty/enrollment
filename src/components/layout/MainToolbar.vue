@@ -1,6 +1,18 @@
 <template>
-  <v-app-bar color="white" class="elevation-2 px-4" height="92px" app dark>
-    <div class="d-flex justify-start align-center">
+  <v-app-bar
+    color="white"
+    class="elevation-2"
+    max-height="92px"
+    :height="getBarHeight"
+    app
+    dark
+  >
+    <div
+      class="d-flex justify-start align-center"
+      :class="{
+        'px-4 md-height': $vuetify.breakpoint.mdAndUp,
+      }"
+    >
       <v-img
         alt="Vuetify Logo"
         class="mr-2"
@@ -12,7 +24,11 @@
       <div class="accent--text ml-1" id="school-title">LƯƠNG THẾ VINH</div>
     </div>
     <v-spacer></v-spacer>
-    <GuestToolbar @onSigninClick="signin" @onSignupClick="signup" />
+    <GuestToolbar
+      @onSigninClick="signin"
+      @onSignupClick="signup"
+      v-if="$vuetify.breakpoint.mdAndUp"
+    />
     <!-- <UserToolbar /> -->
   </v-app-bar>
 </template>
@@ -31,6 +47,12 @@ export default {
     },
     signup(data) {
       this.$emit("signup", data);
+    },
+  },
+  computed: {
+    getBarHeight() {
+      if (this.$vuetify.breakpoint.mdAndUp) return "92px";
+      else return "68px";
     },
   },
 };

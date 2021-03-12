@@ -1,8 +1,9 @@
 <template>
   <div>
     <v-btn
-      color="info"
-      class="text-none mr-4"
+      color="black"
+      class="text-none"
+      :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
       @click="onSigninClick"
       x-large
       plain
@@ -11,6 +12,7 @@
     <v-btn
       color="primary"
       class="text-none"
+      :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
       @click="onSignupClick"
       x-large
       outlined
@@ -20,14 +22,32 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   methods: {
+    ...mapActions("layout", [
+      "setSignUpDialog",
+      "setSignInDialog",
+      "setAllDialogClose",
+    ]),
     onSigninClick() {
-      this.$emit("onSigninClick", true);
+      this.setAllDialogClose();
+      this.setSignInDialog(true);
     },
     onSignupClick() {
-      this.$emit("onSignupClick", true);
+      this.setAllDialogClose();
+      this.setSignUpDialog(true);
     },
   },
 };
 </script>
+<style scoped>
+.btn-text {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
+</style>

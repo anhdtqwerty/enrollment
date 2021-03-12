@@ -1,27 +1,26 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import { createStore } from 'vuex-extensions'
-import _ from 'lodash'
+import { createStore } from "vuex-extensions";
+import _ from "lodash";
 
 import { axiosPlugin } from "@/plugins/axios";
-import auth from "./auth/auth.js";
+import auth from "./app/auth.js";
+import layout from "./app/layout.js";
+
 Vue.use(Vuex);
 
 export default createStore(Vuex.Store, {
   plugins: [
     createPersistedState({
       key: "enrollment",
-      paths: [
-        "auth.user",
-        "auth.isAuthenticated",
-        "auth.jwt",
-      ],
+      paths: ["auth.user", "auth.isAuthenticated", "auth.jwt"],
     }),
     axiosPlugin,
   ],
   modules: {
     auth,
+    layout,
   },
   mixins: {
     mutations: {

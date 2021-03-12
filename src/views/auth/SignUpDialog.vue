@@ -7,7 +7,7 @@
   >
     <v-card>
       <v-card-title
-        ><div style="color: #797979">Đăng ký</div>
+        ><div>Đăng ký</div>
         <v-spacer />
         <v-icon @click="cancel()">mdi-close</v-icon>
       </v-card-title>
@@ -25,19 +25,6 @@
             v-model="credentials.phone"
             @keyup.enter="submit"
             :rules="phoneRules"
-            outlined
-            validate-on-blur
-          />
-          <div class="text-subtitle-1">
-            Email <span style="color: red">*</span>
-          </div>
-          <v-text-field
-            placeholder="Nhập mật khẩu tại đây"
-            v-model="credentials.email"
-            type="email"
-            :rules="emailRules"
-            @keyup.enter="submit"
-            color="primary"
             outlined
             validate-on-blur
           />
@@ -76,7 +63,7 @@
           depressed
           x-large
           color="primary"
-          class="white--text text-subtitle-1 btn-text mt-6"
+          class="white--text text-subtitle-1 mt-6 text-none"
           style="width: 100%"
           :disabled="!isValid"
           :loading="loading"
@@ -86,7 +73,7 @@
         <v-btn
           plain
           color="primary"
-          class="text-subtitle-1 font-weight-bold btn-text mt-6"
+          class="text-subtitle-1 font-weight-bold mt-6 text-none"
           style="width: 100%"
           >Đã có tài khoản? Đăng nhập
         </v-btn>
@@ -102,16 +89,19 @@ export default {
     state: Boolean,
   },
   watch: {
-    state(state) {
-      this.dialog = state;
+    signUpDialog(signUpDialog) {
+      this.dialog = signUpDialog;
     },
+  },
+  computed: {
+    ...mapGetters("layout", ["signUpDialog"]),
+    ...mapGetters("auth", ["isAuthenticated", "user"]),
   },
   data() {
     return {
       dialog: false,
       isValid: true,
       credentials: {
-        email: "",
         phone: "",
         password: "",
       },
@@ -134,10 +124,10 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["signUp"]),
-    ...mapGetters("auth", ["isAuthenticated", "user"]),
+    ...mapActions("layout", ["setSignUpDialog", "setConfirmSignupDialog"]),
     cancel() {
       this.$refs.form.reset();
-      this.$emit("onClose", false);
+      this.setSignUpDialog(false);
     },
     async submit() {
       if (this.$refs.form.validate()) {
@@ -145,7 +135,8 @@ export default {
         await this.signUp(this.credentials);
         if (this.user && this.isAuthenticated) {
           this.$refs.form.reset();
-          this.$emit("signupCheckOTP");
+          this.setSignUpDialog(false);
+          this.setConfirmSignupDialog(true);
         }
         this.loading = false;
       }
@@ -154,3 +145,7 @@ export default {
 };
 /* eslint-enable no-unused-vars */
 </script>
+
+<style>
+
+</style>

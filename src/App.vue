@@ -1,21 +1,14 @@
 <template>
   <v-app>
     <v-main>
-      <MainToolbar @signin="toggleSignin" @signup="toggleSignup" />
+      <MainToolbar />
       <router-view></router-view>
-      <SignInDialog :state="signinDialog" @onClose="toggleSignin" />
+      <SignInDialog />
       <ForgotPasswordDialog />
       <ConfirmForgotPasswordDialog />
       <NewPasswordDialog />
-      <SignUpDialog
-        :state="signupDialog"
-        @onClose="toggleSignup"
-        @signupCheckOTP="onSignupOTPCheck"
-      />
-      <ConfirmSignupDialog
-        :state="confirmSignupDialog"
-        @onClose="toggleConfirmSignup"
-      />
+      <SignUpDialog />
+      <ConfirmSignupDialog />
     </v-main>
   </v-app>
 </template>
@@ -44,20 +37,12 @@ export default {
     signupDialog: false,
     confirmSignupDialog: false,
   }),
-  methods: {
-    toggleSignin(data) {
-      this.signinDialog = data;
-    },
-    toggleSignup(data) {
-      this.signupDialog = data;
-    },
-    toggleConfirmSignup(data) {
-      this.confirmSignupDialog = data;
-    },
-    onSignupOTPCheck() {
-      this.signupDialog = false;
-      this.confirmSignupDialog = true;
-    },
-  },
+  methods: {},
 };
 </script>
+<style>
+.container.fill-height > .row {
+  flex: 1 1 100%;
+  max-width: calc(100%) !important;
+}
+</style>

@@ -2,7 +2,7 @@
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:impl="http://impl.bulkSms.ws/">
    <soapenv:Header/>
    <soapenv:Body>
-      <impl:wsCpMt>
+      <impl:checkBalance>
          <!--Optional:-->
          <User>sapling</User>
          <!--Optional:-->
@@ -12,17 +12,7 @@
          <!--Optional:-->
          <RequestID>4</RequestID>
          <!--Optional:-->
-         <UserID>84973728668</UserID>
-         <!--Optional:-->
-         <ReceiverID>84973728668</ReceiverID>
-         <!--Optional:-->
-         <ServiceID>THPT LTV</ServiceID>
-         <!--Optional:-->
-         <CommandCode>bulksms</CommandCode>
-         <!--Optional:-->
-         <Content>SLLDT truong LTV: Kiem tra tin nhan hoat dong binh thuong.</Content>
-         <!--Optional:-->
-         <ContentType>0</ContentType>
-      </impl:wsCpMt>
+         <ServiceID>THPT-LTV</ServiceID>
+      </impl:checkBalance>
    </soapenv:Body>
 </soapenv:Envelope>

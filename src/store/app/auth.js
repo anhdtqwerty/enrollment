@@ -4,6 +4,7 @@ import utils from "@/plugins/utils";
 import router from "@/router";
 import api from "../../plugins/api";
 import _ from "lodash";
+import moment from "moment";
 export default {
   namespaced: true,
   state: {
@@ -24,11 +25,16 @@ export default {
     signOut() {
       this.reset();
     },
-    async signUp({ commit }, { phone, password, email }) {
+    async signUp({ commit }, { phone, password }) {
       //TODO: Xoa dong duoi sau khi test xong
       this.reset();
       try {
-        const { user, jwt } = await api.Auth.register(phone, password, email);
+        const rndEmail = `student${Date.now()}@ltv.edu.vn`;
+        const { user, jwt } = await api.Auth.register(
+          phone,
+          password,
+          rndEmail
+        );
         commit("setUser", { user, jwt });
         await api.User.update(user.id, {
           confirmationToken: utils.generateRegisterOTP(),
