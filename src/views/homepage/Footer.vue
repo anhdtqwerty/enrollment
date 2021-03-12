@@ -21,10 +21,8 @@
       cols="5"
       xs="5"
       sm="5"
-      md="7"
-      lg="6"
-      xl="5"
-      :class="{ 'd-flex': $vuetify.breakpoint.mdAndUp }"
+      md="9"
+      :class="{ 'd-flex justify-end mr-4': $vuetify.breakpoint.mdAndUp }"
     >
       <div
         class="mr-4 font-weight-medium body-text"

@@ -31,7 +31,7 @@
             v-if="$vuetify.breakpoint.mdAndUp"
           ></v-col>
           <v-col class="d-flex justify-center" xs="12" sm="12" md="4">
-            <v-card class="elevation-0" @click="enrollDialog = true">
+            <v-card class="elevation-0" @click="getBtnEvent(n, 0)">
               <v-img
                 :src="getImageSrc(n, 0)"
                 class="mx-auto"
@@ -94,7 +94,14 @@ export default {
       return this.menu[(n - 1) * 2 + index].src;
     },
     getBtnEvent(n, index) {
-      return this.menu[(n - 1) * 2 + index].event;
+      switch ((n - 1) * 2 + index) {
+        case "0":
+          this.enrollDialog = true;
+          break;
+        default:
+          this.enrollDialog = true;
+          break;
+      }
     },
     toggleEnrollDialog(data) {
       this.enrollDialog = data;
@@ -106,32 +113,26 @@ export default {
       {
         title: "Thông tin tuyển sinh",
         src: require("@/assets/homepage/Group-5.svg"),
-        event: "toggleEnrollDialog(true)",
       },
       {
         title: "Quản lý hồ sơ",
         src: require("@/assets/homepage/Group-2.svg"),
-        event: "",
       },
       {
         title: "Giới thiệu chung",
         src: require("@/assets/homepage/Group-4.svg"),
-        event: "",
       },
       {
         title: "Cơ cấu HĐQT",
         src: require("@/assets/homepage/Group-1.svg"),
-        event: "",
       },
       {
         title: "Cơ sở vật chất",
         src: require("@/assets/homepage/Group-6.svg"),
-        event: "",
       },
       {
         title: "Hoạt động từ thiện",
         src: require("@/assets/homepage/Group-3.svg"),
-        event: "",
       },
     ],
   }),

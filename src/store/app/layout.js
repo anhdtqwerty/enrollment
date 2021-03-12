@@ -8,77 +8,87 @@ export default {
     confirmForgotPasswordDialog: false,
     newPasswordDialog: false,
     confirmSignupDialog: false,
+    countdownRegisterOTP: 0,
   },
   actions: {
-    setSignInDialog({ commit }, data) {
-      commit("setSignInDialog", data);
+    setSignInDialog({commit}, data) {
+      commit('setSignInDialog', data)
     },
-    setSignUpDialog({ commit }, data) {
-      commit("setSignUpDialog", data);
+    setSignUpDialog({commit}, data) {
+      commit('setSignUpDialog', data)
     },
-    setForgotPasswordDialog({ commit }, data) {
-      commit("setForgotPasswordDialog", data);
+    setForgotPasswordDialog({commit}, data) {
+      commit('setForgotPasswordDialog', data)
     },
-    setConfirmForgotPasswordDialog({ commit }, data) {
-      commit("setConfirmForgotPasswordDialog", data);
+    setConfirmForgotPasswordDialog({commit}, data) {
+      commit('setConfirmForgotPasswordDialog', data)
     },
-    setNewPasswordDialog({ commit }, data) {
-      commit("setNewPasswordDialog", data);
+    setNewPasswordDialog({commit}, data) {
+      commit('setNewPasswordDialog', data)
     },
-    setConfirmSignupDialog({ commit }, data) {
-      commit("setConfirmSignupDialog", data);
+    setConfirmSignupDialog({commit}, data) {
+      commit('setConfirmSignupDialog', data)
     },
-    setAllDialogClose({ commit }) {
-      commit("setAllDialogClose");
+    setCountdownRegisterOTP({commit}, data) {
+      commit('setCountdownRegisterOTP', data)
+    },
+    setAllDialogClose({commit}) {
+      commit('setAllDialogClose')
     },
   },
   mutations: {
+    setCountdownRegisterOTP(state, data) {
+      state.countdownRegisterOTP = data
+    },
     setAllDialogClose(state) {
-      state.signInDialog = false;
-      state.signUpDialog = false;
-      state.forgotPasswordDialog = false;
-      state.confirmForgotPasswordDialog = false;
-      state.newPasswordDialog = false;
-      state.confirmSignupDialog = false;
+      state.signInDialog = false
+      state.signUpDialog = false
+      state.forgotPasswordDialog = false
+      state.confirmForgotPasswordDialog = false
+      state.newPasswordDialog = false
+      state.confirmSignupDialog = false
     },
     setSignInDialog(state, data) {
-      state.signInDialog = data;
+      state.signInDialog = data
     },
     setSignUpDialog(state, data) {
-      state.signUpDialog = data;
+      state.signUpDialog = data
     },
     setForgotPasswordDialog(state, data) {
-      state.forgotPasswordDialog = data;
+      state.forgotPasswordDialog = data
     },
     setConfirmForgotPasswordDialog(state, data) {
-      state.confirmForgotPasswordDialog = data;
+      state.confirmForgotPasswordDialog = data
     },
     setNewPasswordDialog(state, data) {
-      state.newPasswordDialog = data;
+      state.newPasswordDialog = data
     },
     setConfirmSignupDialog(state, data) {
-      state.confirmSignupDialog = data;
+      state.confirmSignupDialog = data
     },
   },
   getters: {
     signInDialog(state) {
-      return state.signInDialog;
+      return state.signInDialog
     },
     signUpDialog(state) {
-      return state.signUpDialog;
+      return state.signUpDialog
     },
     forgotPasswordDialog(state) {
-      return state.forgotPasswordDialog;
+      return state.forgotPasswordDialog
     },
     confirmForgotPasswordDialog(state) {
-      return state.confirmForgotPasswordDialog;
+      return state.confirmForgotPasswordDialog
     },
     newPasswordDialog(state) {
-      return state.newPasswordDialog;
+      return state.newPasswordDialog
     },
     confirmSignupDialog(state) {
-      return state.confirmSignupDialog;
+      return state.confirmSignupDialog
+    },
+    countdownRegisterOTP(state) {
+      return state.countdownRegisterOTP
     },
   },
-};
+}
 /* eslint-disable no-unused-vars */

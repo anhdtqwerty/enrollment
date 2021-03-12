@@ -36,6 +36,7 @@
           color="primary"
           class="white--text text-subtitle-1 btn-text mt-6"
           style="width: 100%"
+          @click="submit()"
           :disabled="!isValid"
           >Xác nhận
         </v-btn>
@@ -45,40 +46,82 @@
           plain
           class="primary--text text-subtitle-1 font-weight-bold btn-text mt-4"
           style="width: 100%"
-          >Gửi lại
+          @click="resendOTP()"
+          :disabled="countdownRegisterOTP > 0"
+          >{{ getCountdownTime }}
         </v-btn>
       </v-card-text>
     </v-card>
   </v-dialog>
 </template>
 <script>
-// import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
-  props: {
-    state: Boolean,
+  computed: {
+    ...mapGetters("layout", ["confirmSignupDialog", "countdownRegisterOTP"]),
+    ...mapGetters("auth", ["isAuthenticated", "isConfirmedOTP", "user"]),
+    getCountdownTime() {
+      if (this.countdownRegisterOTP > 0)
+        return `Gửi lại (${this.countdownRegisterOTP})`;
+      return `Gửi lại`;
+    },
   },
   data: () => ({
     signupOTP: "",
     loading: false,
     dialog: false,
     isValid: true,
+    timerCount: 0,
+    timerEnabled: false,
   }),
   methods: {
+    ...mapActions("auth", ["confirmSignupOTP, requestOTP"]),
+    ...mapActions("layout", [
+      "setConfirmSignupDialog",
+      "setCountdownRegisterOTP",
+    ]),
     cancel() {
       this.$refs.form.reset();
       this.$emit("onClose", false);
     },
-    // ...mapActions("auth", ["forgotPassword"]),
-    // async submit() {
-    //   if (this.$refs.form.validate()) {
-    //     await this.forgotPassword(this.email);
-    //     this.done = true;
-    //   }
-    // },
+    async submit() {
+      if (this.$refs.form.validate()) {
+        this.loading = true;
+        await this.confirmSignup({
+          phone: this.user.username,
+          otp: this.signupOTP,
+        });
+        if (this.isConfirmedOTP && this.isAuthenticated && this.user) {
+          this.setConfirmSignupDialog(false);
+        }
+        this.loading = false;
+      }
+    },
+    async resendOTP() {
+      if (this.timerCount == 0 && this.countdownRegisterOTP == 0) {
+        this.timerEnabled = true;
+        this.timerCount = 60;
+        await this.requestOTP({
+          userId: this.user.id,
+          phone: this.user.username,
+        });
+      }
+    },
   },
   watch: {
-    state(state) {
-      this.dialog = state;
+    confirmSignupDialog(confirmSignupDialog) {
+      this.dialog = confirmSignupDialog;
+    },
+    timerCount: {
+      handler(value) {
+        if (value > 0 && this.timerEnabled) {
+          setTimeout(() => {
+            this.timerCount--;
+            this.setCountdownRegisterOTP(this.timerCount);
+          }, 1000);
+        } else if (value == 0) this.timerEnabled = false;
+      },
+      immediate: false,
     },
   },
 };
