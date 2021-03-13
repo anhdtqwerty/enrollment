@@ -41,7 +41,7 @@ export default {
   computed: {
     ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
     getBarHeight() {
-      if (this.$vuetify.breakpoint.mdAndUp) return "92px";
+      if (this.$vuetify.breakpoint.mdAndUp) return "80px";
       else return "68px";
     },
     isGuestBar() {

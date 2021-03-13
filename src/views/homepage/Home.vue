@@ -15,7 +15,8 @@
           style="width: 100%"
           class="d-flex justify-end pr-5"
         >
-          <GuestToolbar />
+          <GuestToolbar v-if="isGuestBar" />
+          <UserToolbar v-if="!isGuestBar" />
         </div>
         <v-row
           class="d-flex justify-center align-center mx-auto py-3"
@@ -66,15 +67,29 @@
 
 <script>
 import GuestToolbar from "@/components/layout/GuestToolbar.vue";
+import UserToolbar from "@/components/layout/UserToolbar.vue";
 import Footer from "./Footer.vue";
 import EnrollDialog from "@/views/enroll/EnrollDialog.vue";
 import FacilityDialog from "@/views/facility/FacilityDialog.vue";
+import { mapGetters } from "vuex";
+
 export default {
   components: {
     GuestToolbar,
+    UserToolbar,
     Footer,
     EnrollDialog,
     FacilityDialog,
+  },
+  computed: {
+    ...mapGetters("auth", ["isAuthenticated", "user"]),
+    isGuestBar() {
+      if (this.isAuthenticated && this.user && !this.isConfirmedOTP)
+        return true;
+      if (this.isAuthenticated && this.user && this.isConfirmedOTP)
+        return false;
+      return true;
+    },
   },
   name: "Home",
   methods: {
@@ -99,6 +114,17 @@ export default {
     toggleFacilityDialog(data) {
       this.facilityDialog = data;
     },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+    },
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   },
   data: () => ({
     enrollDialog: false,
