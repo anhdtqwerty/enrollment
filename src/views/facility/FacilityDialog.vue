@@ -132,7 +132,6 @@ export default {
 };
 /* eslint-enable no-unused-vars */
 </script>
-
 <style scoped>
 .facility-subtitle {
   font-family: "Roboto";
