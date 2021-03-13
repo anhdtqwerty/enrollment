@@ -31,8 +31,6 @@ export default {
       this.reset()
     },
     async signUp({commit}, {phone, password}) {
-      //TODO: Xoa dong duoi sau khi test xong
-      this.reset()
       try {
         const rndEmail = `student${Date.now()}@ltv.edu.vn`
         const userPhone = utils.getValidUserPhone(phone)
@@ -64,17 +62,19 @@ export default {
         console.error('request OTP', error)
       }
     },
-    async confirmSignup({commit, state}, {phone, otp}) {
+    async confirmSignup({commit, state}, {phone, confirmOTP}) {
+      console.log(confirmOTP)
+      console.log(phone)
       try {
         const result = await api.Auth.confirmSignupOTP(
           state.user.id,
           phone,
-          otp
+          confirmOTP
         )
         alert.success(result)
         commit('setConfirmOTP', true)
       } catch (error) {
-        console.error('register', error)
+        console.error('Confirm', error)
       }
     },
     // async forgotPassword(context, email) {

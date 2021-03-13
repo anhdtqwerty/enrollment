@@ -1,9 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    width="480px"
-    persistent
-  >
+  <v-dialog v-model="dialog" width="480px" persistent>
     <v-card>
       <v-card-title
         ><div class="title--text">Xác nhận tài khoản</div>
@@ -20,7 +16,7 @@
           <v-text-field
             placeholder="Nhập mã OTP tại đây"
             name="login"
-            v-model="signupOTP"
+            v-model="otp"
             @keyup.enter="submit"
             :rules="[$rules.required, $rules.otp]"
             type="text"
@@ -90,7 +86,7 @@ export default {
     },
   },
   data: () => ({
-    signupOTP: "",
+    otp: "",
     loading: false,
     dialog: false,
     isValid: true,
@@ -117,10 +113,9 @@ export default {
     async submit() {
       if (this.$refs.form.validate()) {
         this.loading = true;
-        this.$refs.form.reset();
         await this.confirmSignup({
           phone: this.user.username,
-          otp: this.signupOTP,
+          confirmOTP: this.otp,
         });
         if (this.isConfirmedOTP && this.isAuthenticated && this.user) {
           this.setConfirmSignupDialog(false);
@@ -132,6 +127,7 @@ export default {
             this.timerConfirmCount = 5 * 60;
           }
         }
+        this.$refs.form.reset();
         this.loading = false;
       }
     },

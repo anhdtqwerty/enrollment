@@ -104,10 +104,10 @@ export default {
       return state.countdownRegisterOTP
     },
     countdownLockLogin(state) {
-      return state.countdownRegisterOTP
+      return state.countdownLockLogin
     },
     countdownLockConfirm(state) {
-      return state.countdownRegisterOTP
+      return state.countdownLockConfirm
     },
   },
 }
