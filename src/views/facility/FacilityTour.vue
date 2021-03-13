@@ -46,13 +46,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .iframe-container {
   position: relative;
   overflow: hidden;
   height: 840px;
 }
-
 .responsive-iframe {
   position: absolute;
   top: 0;
@@ -61,5 +60,8 @@ export default {
   right: 0;
   width: 100%;
   height: 100%;
+}
+.v-dialog {
+  margin: 24px 0px !important;
 }
 </style>

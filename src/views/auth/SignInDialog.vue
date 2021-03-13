@@ -4,10 +4,10 @@
       <v-card-title
         ><div class="title--text">Đăng nhập</div>
         <v-spacer />
-        <v-icon @click="cancel()">mdi-close</v-icon>
+        <v-icon @click="cancel()" class="mr-n1">mdi-close</v-icon>
       </v-card-title>
       <v-divider></v-divider>
-      <v-card-text class="py-8">
+      <v-card-text class="pt-4 pb-2">
         <v-form ref="form">
           <div class="text-subtitle-1">
             Số điện thoại <span style="color: red">*</span>
@@ -59,7 +59,7 @@
         <v-btn
           plain
           color="primary"
-          class="text-subtitle-1 font-weight-bold text-none mt-4 mb-2"
+          class="text-subtitle-1 font-weight-bold text-none mt-2"
           style="width: 100%"
           @click="register()"
           >Chưa có tài khoản? Đăng ký

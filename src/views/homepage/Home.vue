@@ -40,10 +40,8 @@
             <v-img
               :src="getImageSrc(n)"
               class="mx-auto"
-              :class="{
-                'desktop-img': $vuetify.breakpoint.mdAndUp,
-                'mobile-img': $vuetify.breakpoint.smAndDown,
-              }"
+              :width="getImageSize"
+              :height="getImageSize"
             ></v-img>
             <div class="justify-center menu-title mt-2">
               {{ menu[n - 1].title }}
@@ -89,6 +87,14 @@ export default {
       if (this.isAuthenticated && this.user && this.isConfirmedOTP)
         return false;
       return true;
+    },
+    getImageSize() {
+      if (this.$vuetify.breakpoint.smAndDown) return 100;
+      const maxSize = (768 - 80 - 52 - 48) / 3 - 12 * 2 - 24 - 24;
+      let imageSize = (this.window.height - 80 - 52 - 48) / 3 - 12 * 2 - 24;
+      if (imageSize >= maxSize) imageSize = maxSize;
+      console.log(this.window.height);
+      return imageSize;
     },
   },
   name: "Home",
@@ -183,23 +189,18 @@ export default {
   max-width: 276px;
 }
 .tablet-menu-blog {
-  width: calc(720px / 3 - 12px * 2);
+  width: calc(680px / 3 - 12px * 2);
 }
 .desktop-menu-blog {
-  width: calc(700px / 2 - 12px * 2);
-  max-width: 240px;
+  width: calc(640px / 2 - 12px * 4);
+  max-width: 220px;
 }
 .tablet-container {
-  max-width: 700px;
+  max-width: 680px;
 }
 .desktop-container {
   width: 100%;
-  max-width: 700px;
-}
-.mobile-img {
-  width: 100px;
-}
-.desktop-img {
-  width: 100px;
+  max-width: 600px;
+  max-height: calc(100% - 80px - 52px - 12px * 2);
 }
 </style>

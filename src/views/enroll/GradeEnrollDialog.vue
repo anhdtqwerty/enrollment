@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-height="900px" persistent>
+  <v-dialog v-model="dialog" max-height="900px" width="100%" persistent>
     <v-card>
       <v-card-title
         ><div
@@ -73,7 +73,7 @@ export default {
 /* eslint-enable no-unused-vars */
 </script>
 
-<style>
+<style scoped>
 .iframe-container {
   position: relative;
   overflow: hidden;
@@ -88,5 +88,9 @@ export default {
   right: 0;
   width: 100%;
   height: 100%;
+}
+
+.v-dialog {
+  margin: 24px 0px !important;
 }
 </style>

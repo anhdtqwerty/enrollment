@@ -20,12 +20,26 @@
         >
           <v-img
             src="@/assets/facility/facilityA.svg"
-            width="450px"
+            :width="getImgWidth"
             class="d-flex align-end"
             :class="{ 'text-center': $vuetify.breakpoint.smAndDown }"
           >
-            <div class="facility-subtitle">Cơ sở A</div>
-            <div class="facility-title">Nam Trung Yên</div>
+            <div
+              :class="{
+                'facility-subtitle': $vuetify.breakpoint.smAndUp,
+                'text-h6': $vuetify.breakpoint.xsOnly,
+              }"
+            >
+              Cơ sở A
+            </div>
+            <div
+              :class="{
+                'facility-title': $vuetify.breakpoint.smAndUp,
+                'text-h5 font-weight-bold': $vuetify.breakpoint.xsOnly,
+              }"
+            >
+              Nam Trung Yên
+            </div>
           </v-img>
         </v-card>
         <v-card
@@ -34,15 +48,29 @@
         >
           <v-img
             src="@/assets/facility/facility1.svg"
-            width="450px"
+            :width="getImgWidth"
             class="d-flex align-end"
             :class="{
               'text-end': $vuetify.breakpoint.mdAndUp,
               'text-center': $vuetify.breakpoint.smAndDown,
             }"
           >
-            <div class="facility-subtitle">Cơ sở 1</div>
-            <div class="facility-title">Tân Triều</div>
+            <div
+              :class="{
+                'facility-subtitle': $vuetify.breakpoint.smAndUp,
+                'text-h6': $vuetify.breakpoint.xsOnly,
+              }"
+            >
+              Cơ sở 1
+            </div>
+            <div
+              :class="{
+                'facility-title': $vuetify.breakpoint.smAndUp,
+                'text-h5 font-weight-bold': $vuetify.breakpoint.xsOnly,
+              }"
+            >
+              Tân Triều
+            </div>
           </v-img>
         </v-card>
       </v-card-actions>
@@ -76,7 +104,13 @@ export default {
       this.dialog = state;
     },
   },
-  computed: {},
+  computed: {
+    getImgWidth() {
+      if (this.$vuetify.breakpoint.smOnly) return 350;
+      if (this.$vuetify.breakpoint.xsOnly) return 225;
+      return 450;
+    },
+  },
   data() {
     return {
       dialog: false,

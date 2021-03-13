@@ -4,10 +4,10 @@
       <v-card-title
         ><div class="title--text">Đăng ký</div>
         <v-spacer />
-        <v-icon @click="cancel()">mdi-close</v-icon>
+        <v-icon class="mr-n1" @click="cancel()">mdi-close</v-icon>
       </v-card-title>
       <v-divider></v-divider>
-      <v-card-text class="py-8">
+      <v-card-text class="pt-4 pb-2">
         <v-form ref="form" v-model="isValid">
           <div class="text-subtitle-1">
             Số điện thoại <span style="color: red">*</span>
@@ -58,7 +58,7 @@
           depressed
           x-large
           color="primary"
-          class="white--text text-subtitle-1 mt-6 text-none"
+          class="white--text text-subtitle-1 mt-4 text-none"
           style="width: 100%"
           :disabled="!isValid"
           :loading="loading"
@@ -67,8 +67,9 @@
         </v-btn>
         <v-btn
           plain
+          x-large
           color="primary"
-          class="text-subtitle-1 font-weight-bold mt-6 text-none"
+          class="text-subtitle-1 font-weight-bold mt-2 text-none"
           style="width: 100%"
           @click="signin()"
           >Đã có tài khoản? Đăng nhập
@@ -150,5 +151,5 @@ export default {
 /* eslint-enable no-unused-vars */
 </script>
 
-<style>
+<style scoped>
 </style>
