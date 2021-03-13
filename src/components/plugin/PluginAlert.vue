@@ -7,8 +7,8 @@
     top
     class="plugin__alert"
   >
-    <v-icon class="mr-3">{{icon}}</v-icon>
-    {{alert.message}}
+    <v-icon class="mr-3 mt-n1">{{icon}}</v-icon>
+    <span class="text-h6">{{alert.message}}</span>
     <!-- <v-btn icon @click="close">
       <v-icon>mdi-close</v-icon>
     </v-btn> -->

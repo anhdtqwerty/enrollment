@@ -151,5 +151,11 @@ export default {
 /* eslint-enable no-unused-vars */
 </script>
 
-<style scoped>
+<style>
+.v-messages {
+  font-size: 16px !important;
+}
+.v-messages__message{
+  line-height: 20px !important;
+}
 </style>

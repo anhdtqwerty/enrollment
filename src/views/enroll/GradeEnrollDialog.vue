@@ -93,4 +93,7 @@ export default {
 .v-dialog {
   margin: 24px 0px !important;
 }
+div >>> .v-dialog {
+  margin: 24px 0px !important;
+}
 </style>
