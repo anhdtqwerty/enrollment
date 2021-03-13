@@ -22,14 +22,17 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
+import { mapActions, mapGetters } from "vuex";
 export default {
+  computed: {
+    ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
+  },
   methods: {
     ...mapActions("layout", [
       "setSignUpDialog",
       "setSignInDialog",
       "setAllDialogClose",
+      "setConfirmSignupDialog",
     ]),
     onSigninClick() {
       this.setAllDialogClose();
@@ -37,7 +40,9 @@ export default {
     },
     onSignupClick() {
       this.setAllDialogClose();
-      this.setSignUpDialog(true);
+      if (this.isAuthenticated && this.user && !this.isConfirmedOTP)
+        this.setConfirmSignupDialog(true);
+      else this.setSignUpDialog(true);
     },
   },
 };

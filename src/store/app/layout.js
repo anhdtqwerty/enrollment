@@ -9,6 +9,8 @@ export default {
     newPasswordDialog: false,
     confirmSignupDialog: false,
     countdownRegisterOTP: 0,
+    countdownLockConfirm: 0,
+    countdownLockLogin: 0,
   },
   actions: {
     setSignInDialog({commit}, data) {
@@ -32,6 +34,12 @@ export default {
     setCountdownRegisterOTP({commit}, data) {
       commit('setCountdownRegisterOTP', data)
     },
+    setCountdownLockConfirm({commit}, data) {
+      commit('setCountdownLockConfirm', data)
+    },
+    setCountdownLockLogin({commit}, data) {
+      commit('setCountdownLockLogin', data)
+    },
     setAllDialogClose({commit}) {
       commit('setAllDialogClose')
     },
@@ -39,6 +47,12 @@ export default {
   mutations: {
     setCountdownRegisterOTP(state, data) {
       state.countdownRegisterOTP = data
+    },
+    setCountdownLockConfirm(state, data) {
+      state.countdownLockConfirm = data
+    },
+    setCountdownLockLogin(state, data) {
+      state.countdownLockLogin = data
     },
     setAllDialogClose(state) {
       state.signInDialog = false
@@ -87,6 +101,12 @@ export default {
       return state.confirmSignupDialog
     },
     countdownRegisterOTP(state) {
+      return state.countdownRegisterOTP
+    },
+    countdownLockLogin(state) {
+      return state.countdownRegisterOTP
+    },
+    countdownLockConfirm(state) {
       return state.countdownRegisterOTP
     },
   },

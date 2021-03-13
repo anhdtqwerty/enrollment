@@ -13,12 +13,16 @@ export default {
     role: {},
     isAuthenticated: false,
     isConfirmedOTP: false,
+    confirmFailTime: 0,
+    loginFailTime: 0,
   },
   actions: {
-    async signIn({commit}, {identifier = '', password = ''} = {}) {
+    async signIn({commit, state}, {identifier = '', password = ''} = {}) {
       try {
         const {jwt, user} = await api.Auth.create({identifier, password})
         commit('setUser', {user, jwt})
+        if (state.user && state.isAuthenticated)
+          alert.success('Đăng nhập thành công')
       } catch (error) {
         console.error('signIn', error)
       }
@@ -31,30 +35,31 @@ export default {
       this.reset()
       try {
         const rndEmail = `student${Date.now()}@ltv.edu.vn`
-        const {user, jwt} = await api.Auth.register(phone, password, rndEmail)
+        const userPhone = utils.getValidUserPhone(phone)
+        const {user, jwt} = await api.Auth.register(
+          userPhone,
+          password,
+          rndEmail
+        )
         commit('setUser', {user, jwt})
         const result = await api.Auth.requestOTP(
           user.id,
           phone,
           'Ma OTP cua ban la {{otp}}. OTP cua ban co hieu luc trong 5 phut'
         )
-        console.log(result)
-        this.$alert.success(
-          'Hãy kiểm tra mã OTP đã được gửi tới điện thoại của bạn'
-        )
+        alert.success(result)
       } catch (error) {
         console.error('register', error)
       }
     },
-    async requestOTP({userId, phone}) {
+    async requestOTP({commit}, {userId, phone}) {
       try {
         const result = await api.Auth.requestOTP(
           userId,
           phone,
           'Ma OTP cua ban la {{otp}}. OTP cua ban co hieu luc trong 5 phut'
         )
-        console.log(result)
-        return result
+        alert.success(result)
       } catch (error) {
         console.error('request OTP', error)
       }
@@ -66,8 +71,8 @@ export default {
           phone,
           otp
         )
-        console.log(result)
-        return result
+        alert.success(result)
+        commit('setConfirmOTP', true)
       } catch (error) {
         console.error('register', error)
       }
@@ -83,6 +88,12 @@ export default {
     setRole({commit}, role) {
       commit('setRole', role)
     },
+    setConfirmFailTime({commit}, role) {
+      commit('setRole', role)
+    },
+    setLoginFailTime({commit}, role) {
+      commit('setRole', role)
+    },
   },
   mutations: {
     setUser(state, {user, jwt}) {
@@ -91,9 +102,11 @@ export default {
       if (user) {
         state.role = user.role
         state.isAuthenticated = true
+        state.isConfirmedOTP = user.isConfirmedOTP
       } else {
         state.isAuthenticated = false
         state.role = null
+        state.isConfirmedOTP = false
       }
     },
     setRole(state, role) {
@@ -101,6 +114,12 @@ export default {
     },
     setConfirmOTP(state, data) {
       state.isConfirmedOTP = data
+    },
+    setConfirmFailTime(state, data) {
+      state.confirmFailTime = data
+    },
+    setLoginFailTime(state, data) {
+      state.loginFailTime = data
     },
   },
   getters: {
@@ -118,6 +137,12 @@ export default {
     },
     isConfirmedOTP(state) {
       return state.isConfirmedOTP
+    },
+    confirmFailTime(state) {
+      return state.confirmFailTime
+    },
+    loginFailTime(state) {
+      return state.loginFailTime
     },
   },
 }

@@ -2,12 +2,11 @@
   <v-dialog
     v-model="dialog"
     width="480px"
-    :fullscreen="$vuetify.breakpoint.smAndDown"
     persistent
   >
     <v-card>
       <v-card-title
-        ><div style="color: #797979">Đăng ký</div>
+        ><div class="title--text">Xác nhận tài khoản</div>
         <v-spacer />
         <v-icon @click="cancel()">mdi-close</v-icon>
       </v-card-title>
@@ -37,8 +36,9 @@
           class="white--text text-subtitle-1 btn-text mt-6"
           style="width: 100%"
           @click="submit()"
-          :disabled="!isValid"
-          >Xác nhận
+          :loading="loading"
+          :disabled="!isValid || countdownLockConfirm > 0"
+          >{{ getConfirmCountdown }}
         </v-btn>
         <v-btn
           depressed
@@ -47,8 +47,9 @@
           class="primary--text text-subtitle-1 font-weight-bold btn-text mt-4"
           style="width: 100%"
           @click="resendOTP()"
+          :loading="loading"
           :disabled="countdownRegisterOTP > 0"
-          >{{ getCountdownTime }}
+          >{{ getSendCountdown }}
         </v-btn>
       </v-card-text>
     </v-card>
@@ -58,12 +59,34 @@
 import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
-    ...mapGetters("layout", ["confirmSignupDialog", "countdownRegisterOTP"]),
-    ...mapGetters("auth", ["isAuthenticated", "isConfirmedOTP", "user"]),
-    getCountdownTime() {
-      if (this.countdownRegisterOTP > 0)
-        return `Gửi lại (${this.countdownRegisterOTP})`;
+    ...mapGetters("layout", [
+      "confirmSignupDialog",
+      "countdownRegisterOTP",
+      "countdownLockConfirm",
+    ]),
+    ...mapGetters("auth", [
+      "isAuthenticated",
+      "isConfirmedOTP",
+      "user",
+      "confirmFailTime",
+    ]),
+    getSendCountdown() {
+      if (this.countdownRegisterOTP > 0) {
+        const timeString = new Date(this.countdownRegisterOTP * 1000)
+          .toISOString()
+          .substr(14, 5);
+        return `Gửi lại (${timeString})`;
+      }
       return `Gửi lại`;
+    },
+    getConfirmCountdown() {
+      if (this.countdownLockConfirm > 0) {
+        const timeString = new Date(this.countdownLockConfirm * 1000)
+          .toISOString()
+          .substr(14, 5);
+        return `Xác nhận (${timeString})`;
+      }
+      return `Xác nhận`;
     },
   },
   data: () => ({
@@ -71,40 +94,57 @@ export default {
     loading: false,
     dialog: false,
     isValid: true,
-    timerCount: 0,
-    timerEnabled: false,
+    timerSendCount: 0,
+    timerSendEnabled: false,
+    timerConfirmCount: 0,
+    timerConfirmEnabled: false,
   }),
   methods: {
-    ...mapActions("auth", ["confirmSignupOTP, requestOTP"]),
+    ...mapActions("auth", [
+      "confirmSignup",
+      "requestOTP",
+      "setConfirmFailTime",
+    ]),
     ...mapActions("layout", [
       "setConfirmSignupDialog",
       "setCountdownRegisterOTP",
+      "setCountdownLockConfirm",
     ]),
     cancel() {
       this.$refs.form.reset();
-      this.$emit("onClose", false);
+      this.setConfirmSignupDialog(false);
     },
     async submit() {
       if (this.$refs.form.validate()) {
         this.loading = true;
+        this.$refs.form.reset();
         await this.confirmSignup({
           phone: this.user.username,
           otp: this.signupOTP,
         });
         if (this.isConfirmedOTP && this.isAuthenticated && this.user) {
           this.setConfirmSignupDialog(false);
+          this.setConfirmFailTime(0);
+        } else {
+          this.setConfirmFailTime(this.confirmFailTime + 1);
+          if (this.confirmFailTime >= 5) {
+            this.timerConfirmEnabled = true;
+            this.timerConfirmCount = 5 * 60;
+          }
         }
         this.loading = false;
       }
     },
     async resendOTP() {
-      if (this.timerCount == 0 && this.countdownRegisterOTP == 0) {
-        this.timerEnabled = true;
-        this.timerCount = 60;
+      if (this.timerSendCount == 0 && this.countdownRegisterOTP == 0) {
+        this.loading = true;
+        this.timerSendEnabled = true;
+        this.timerSendCount = 60;
         await this.requestOTP({
           userId: this.user.id,
           phone: this.user.username,
         });
+        this.loading = false;
       }
     },
   },
@@ -112,14 +152,28 @@ export default {
     confirmSignupDialog(confirmSignupDialog) {
       this.dialog = confirmSignupDialog;
     },
-    timerCount: {
+    timerSendCount: {
       handler(value) {
-        if (value > 0 && this.timerEnabled) {
+        if (value > 0 && this.timerSendEnabled) {
           setTimeout(() => {
-            this.timerCount--;
-            this.setCountdownRegisterOTP(this.timerCount);
+            this.timerSendCount--;
+            this.setCountdownRegisterOTP(this.timerSendCount);
           }, 1000);
-        } else if (value == 0) this.timerEnabled = false;
+        } else if (value == 0) this.timerSendEnabled = false;
+      },
+      immediate: false,
+    },
+    timerConfirmCount: {
+      handler(value) {
+        if (value > 0 && this.timerConfirmEnabled) {
+          setTimeout(() => {
+            this.timerConfirmCount--;
+            this.setCountdownLockConfirm(this.timerConfirmCount);
+          }, 1000);
+        } else if (value == 0) {
+          this.timerConfirmEnabled = false;
+          this.setConfirmFailTime(0);
+        }
       },
       immediate: false,
     },

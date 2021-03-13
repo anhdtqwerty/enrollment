@@ -1,6 +1,8 @@
 <template>
   <v-app>
     <v-main>
+      <PluginAlert />
+      <PluginConfirmDialog />
       <MainToolbar />
       <router-view></router-view>
       <SignInDialog />
@@ -21,6 +23,8 @@ import ConfirmForgotPasswordDialog from "@/views/auth/ConfirmForgotPasswordDialo
 import NewPasswordDialog from "@/views/auth/NewPasswordDialog.vue";
 import SignUpDialog from "@/views/auth/SignUpDialog.vue";
 import ConfirmSignupDialog from "@/views/auth/ConfirmSignupDialog.vue";
+import PluginConfirmDialog from "@/components/plugin/PluginConfirmDialog";
+import PluginAlert from "@/components/plugin/PluginAlert";
 export default {
   name: "App",
   components: {
@@ -31,6 +35,8 @@ export default {
     NewPasswordDialog,
     SignUpDialog,
     ConfirmSignupDialog,
+    PluginAlert,
+    PluginConfirmDialog,
   },
   data: () => ({
     signinDialog: false,

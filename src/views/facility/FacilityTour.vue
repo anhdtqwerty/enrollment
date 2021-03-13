@@ -16,61 +16,34 @@
       </v-card-title>
       <v-divider></v-divider>
       <div class="iframe-container">
-        <iframe :src="htmlUrl" class="responsive-iframe" />
+        <iframe :src="iframeSrc" class="responsive-iframe" />
       </div>
     </v-card>
   </v-dialog>
 </template>
 <script>
-/* eslint-disable no-unused-vars */
-import { grade6HTML } from "@/assets/enroll/htmlHelper.js";
-import { grade10HTML } from "@/assets/enroll/htmlHelper.js";
 export default {
   props: {
     state: Boolean,
     title: String,
-    grade: String,
+    iframeSrc: String,
   },
   watch: {
     state(state) {
       this.dialog = state;
     },
   },
-  data() {
-    return {
-      dialog: false,
-      htmlUrl: "",
-      htmlString: "",
-    };
-  },
   methods: {
     cancel() {
       this.$emit("closeDialog", false);
     },
-    getBlobURL(code, type) {
-      const blob = new Blob([code], { type });
-      return URL.createObjectURL(blob);
-    },
-    getGeneratedPageURL(html) {
-      const source = `
-      <html>
-        <head>
-        </head>
-        <body>
-          ${html || ""}
-        </body>
-      </html>
-    `;
-      return this.getBlobURL(source, "text/html");
-    },
   },
-  mounted() {
-    if (this.grade === "grade6") this.htmlString = grade6HTML;
-    if (this.grade === "grade10") this.htmlString = grade10HTML;
-    this.htmlUrl = this.getGeneratedPageURL(this.htmlString);
+  data() {
+    return {
+      dialog: false,
+    };
   },
 };
-/* eslint-enable no-unused-vars */
 </script>
 
 <style>

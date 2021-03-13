@@ -69,6 +69,10 @@
       </v-col>
     </v-row>
     <EnrollDialog :state="enrollDialog" @closeEnroll="toggleEnrollDialog" />
+    <FacilityDialog
+      :state="facilityDialog"
+      @closeFacility="toggleFacilityDialog"
+    />
   </v-container>
 </template>
 
@@ -76,11 +80,13 @@
 import GuestToolbar from "@/components/layout/GuestToolbar.vue";
 import Footer from "./Footer.vue";
 import EnrollDialog from "@/views/enroll/EnrollDialog.vue";
+import FacilityDialog from "@/views/facility/FacilityDialog.vue";
 export default {
   components: {
     GuestToolbar,
     Footer,
     EnrollDialog,
+    FacilityDialog,
   },
   name: "Home",
   computed: {
@@ -95,20 +101,26 @@ export default {
     },
     getBtnEvent(n, index) {
       switch ((n - 1) * 2 + index) {
-        case "0":
+        case 0:
           this.enrollDialog = true;
           break;
+        case 4:
+          this.facilityDialog = true;
+          break;
         default:
-          this.enrollDialog = true;
           break;
       }
     },
     toggleEnrollDialog(data) {
       this.enrollDialog = data;
     },
+    toggleFacilityDialog(data) {
+      this.facilityDialog = data;
+    },
   },
   data: () => ({
     enrollDialog: false,
+    facilityDialog: false,
     menu: [
       {
         title: "Thông tin tuyển sinh",

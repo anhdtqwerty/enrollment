@@ -1,14 +1,10 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    width="480px"
-    :fullscreen="$vuetify.breakpoint.smAndDown"
-  >
+  <v-dialog v-model="dialog" width="480px">
     <v-card>
       <v-card-title
-        ><div style="color: #797979">Đăng nhập</div>
+        ><div class="title--text">Đăng nhập</div>
         <v-spacer />
-        <v-icon>mdi-close</v-icon>
+        <v-icon @click="cancel()">mdi-close</v-icon>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="py-8">
@@ -17,12 +13,13 @@
             Số điện thoại <span style="color: red">*</span>
           </div>
           <v-text-field
-            placeholder="Nhập số điện thoại tại đây"
-            name="login"
+            placeholder="Nhập số điện thoại tại đây (Ví dụ: 097372xxxx)"
             v-model="credentials.identifier"
-            @keyup.enter="submit"
+            name="login"
             type="text"
             color="primary"
+            @keyup.enter="submit"
+            :rules="phoneRules"
             outlined
             validate-on-blur
           />
@@ -32,9 +29,10 @@
           <v-text-field
             placeholder="Nhập mật khẩu tại đây"
             v-model="credentials.password"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            @click:append="showPassword = !showPassword"
             :type="showPassword ? 'text' : 'password'"
+            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="passwordRules"
+            @click:append="showPassword = !showPassword"
             @keyup.enter="submit"
             color="primary"
             outlined
@@ -45,22 +43,25 @@
           depressed
           x-large
           color="primary"
-          class="white--text text-subtitle-1 btn-text mt-6"
+          class="white--text text-subtitle-1 text-none mt-6"
           style="width: 100%"
+          :loading="loading"
+          @click="submit()"
           >Đăng nhập
         </v-btn>
-        <div class="d-flex justify-center py-4 mt-4">
+        <!-- <div class="d-flex justify-center py-4 mt-4">
           <router-link
             :to="'/forgot-password'"
             class="info--text text-subtitle-1 text-decoration-underline"
             >Quên mật khẩu?</router-link
           >
-        </div>
+        </div> -->
         <v-btn
           plain
           color="primary"
-          class="text-subtitle-1 font-weight-bold btn-text mb-2"
+          class="text-subtitle-1 font-weight-bold text-none mt-4 mb-2"
           style="width: 100%"
+          @click="register()"
           >Chưa có tài khoản? Đăng ký
         </v-btn>
       </v-card-text>
@@ -68,7 +69,20 @@
   </v-dialog>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
+  props: {
+    state: Boolean,
+  },
+  watch: {
+    signInDialog(signInDialog) {
+      this.dialog = signInDialog;
+    },
+  },
+  computed: {
+    ...mapGetters("layout", ["signInDialog"]),
+    ...mapGetters("auth", ["isAuthenticated", "user"]),
+  },
   data() {
     return {
       dialog: false,
@@ -79,21 +93,35 @@ export default {
       loading: false,
       showPassword: false,
       password: "Password",
-      rules: {
-        min: (v) => v.length >= 6 || "Min 6 characters",
-        emailMatch: () => "The email and password you entered don't match",
-      },
+      phoneRules: [this.$rules.required, this.$rules.phone],
+      passwordRules: [this.$rules.required, this.$rules.minLength(4)],
     };
   },
   methods: {
-    // ...mapActions("auth", ["signIn"]),
-    // async submit() {
-    //   if (this.$refs.form.validate()) {
-    //     this.loading = true;
-    //     await this.signIn(this.credentials);
-    //     this.loading = false;
-    //   }
-    // },
+    ...mapActions("auth", ["signIn"]),
+    ...mapActions("layout", [
+      "setSignInDialog",
+      "setSignUpDialog",
+      "setConfirmSignupDialog",
+    ]),
+    cancel() {
+      this.$refs.form.reset();
+      this.setSignInDialog(false);
+    },
+    async submit() {
+      if (this.$refs.form.validate()) {
+        this.loading = true;
+        await this.signIn(this.credentials);
+        if (this.user && this.isAuthenticated) this.setSignInDialog(false);
+        if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
+          this.setConfirmSignupDialog(true);
+        this.loading = false;
+      }
+    },
+    register() {
+      this.setSignInDialog(false);
+      this.setSignUpDialog(true);
+    },
   },
 };
 </script>

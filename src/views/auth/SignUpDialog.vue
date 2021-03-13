@@ -1,13 +1,8 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    max-width="640px"
-    :fullscreen="$vuetify.breakpoint.smAndDown"
-    persistent
-  >
+  <v-dialog v-model="dialog" max-width="640px" persistent>
     <v-card>
       <v-card-title
-        ><div>Đăng ký</div>
+        ><div class="title--text">Đăng ký</div>
         <v-spacer />
         <v-icon @click="cancel()">mdi-close</v-icon>
       </v-card-title>
@@ -18,7 +13,7 @@
             Số điện thoại <span style="color: red">*</span>
           </div>
           <v-text-field
-            placeholder="Nhập số điện thoại tại đây"
+            placeholder="Nhập số điện thoại tại đây (Ví dụ: 097372xxxx)"
             name="login"
             type="tel"
             color="primary"
@@ -75,6 +70,7 @@
           color="primary"
           class="text-subtitle-1 font-weight-bold mt-6 text-none"
           style="width: 100%"
+          @click="signin()"
           >Đã có tài khoản? Đăng nhập
         </v-btn>
       </v-card-text>
@@ -124,7 +120,11 @@ export default {
   },
   methods: {
     ...mapActions("auth", ["signUp"]),
-    ...mapActions("layout", ["setSignUpDialog", "setConfirmSignupDialog"]),
+    ...mapActions("layout", [
+      "setSignUpDialog",
+      "setSignInDialog",
+      "setConfirmSignupDialog",
+    ]),
     cancel() {
       this.$refs.form.reset();
       this.setSignUpDialog(false);
@@ -140,6 +140,10 @@ export default {
         }
         this.loading = false;
       }
+    },
+    signin() {
+      this.setSignInDialog(true);
+      this.setSignUpDialog(false);
     },
   },
 };

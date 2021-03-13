@@ -24,35 +24,32 @@
       <div class="accent--text ml-1" id="school-title">LƯƠNG THẾ VINH</div>
     </div>
     <v-spacer></v-spacer>
-    <GuestToolbar
-      @onSigninClick="signin"
-      @onSignupClick="signup"
-      v-if="$vuetify.breakpoint.mdAndUp"
-    />
-    <!-- <UserToolbar /> -->
+    <GuestToolbar v-if="$vuetify.breakpoint.mdAndUp && isGuestBar" />
+    <UserToolbar v-if="$vuetify.breakpoint.mdAndUp && !isGuestBar" />
   </v-app-bar>
 </template>
 
 <script>
 import GuestToolbar from "@/components/layout/GuestToolbar.vue";
-// import UserToolbar from "@/components/layout/UserToolbar.vue";
+import UserToolbar from "@/components/layout/UserToolbar.vue";
+import { mapGetters } from "vuex";
 export default {
   components: {
     GuestToolbar,
-    //   UserToolbar
-  },
-  methods: {
-    signin(data) {
-      this.$emit("signin", data);
-    },
-    signup(data) {
-      this.$emit("signup", data);
-    },
+    UserToolbar,
   },
   computed: {
+    ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
     getBarHeight() {
       if (this.$vuetify.breakpoint.mdAndUp) return "92px";
       else return "68px";
+    },
+    isGuestBar() {
+      if (this.isAuthenticated && this.user && !this.isConfirmedOTP)
+        return true;
+      if (this.isAuthenticated && this.user && this.isConfirmedOTP)
+        return false;
+      return true;
     },
   },
 };

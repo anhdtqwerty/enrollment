@@ -37,11 +37,13 @@
     <GradeEnrollDialog
       title="Thông tin tuyển sinh khối lớp 6"
       :state="grade6Dialog"
+      grade="grade6"
       @closeDialog="toggleGrade6Dialog"
     />
     <GradeEnrollDialog
       title="Thông tin tuyển sinh khối lớp 10"
       htmlString=""
+      grade="grade10"
       :state="grade10Dialog"
       @closeDialog="toggleGrade10Dialog"
     />
