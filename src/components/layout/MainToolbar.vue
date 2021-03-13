@@ -2,7 +2,7 @@
   <v-app-bar
     color="white"
     class="elevation-2"
-    max-height="92px"
+    max-height="80px"
     :height="getBarHeight"
     app
     dark
@@ -24,8 +24,8 @@
       <div class="accent--text ml-1" id="school-title">LƯƠNG THẾ VINH</div>
     </div>
     <v-spacer></v-spacer>
-    <GuestToolbar v-if="$vuetify.breakpoint.mdAndUp && isGuestBar" />
-    <UserToolbar v-if="$vuetify.breakpoint.mdAndUp && !isGuestBar" />
+    <GuestToolbar v-if="$vuetify.breakpoint.smAndUp && isGuestBar" />
+    <UserToolbar v-if="$vuetify.breakpoint.smAndUp && !isGuestBar" />
   </v-app-bar>
 </template>
 

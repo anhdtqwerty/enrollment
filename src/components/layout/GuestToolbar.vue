@@ -1,12 +1,14 @@
 <template>
   <div>
     <v-btn
-      color="black"
       class="text-none"
       :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
       @click="onSigninClick"
-      x-large
-      plain
+      color="white"
+      depressed
+      light
+      dense
+      large
       >Đăng nhập</v-btn
     >
     <v-btn
@@ -14,8 +16,9 @@
       class="text-none"
       :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
       @click="onSignupClick"
-      x-large
       outlined
+      dense
+      large
       >Đăng ký ngay</v-btn
     >
   </div>

@@ -8,58 +8,46 @@
         xs="12"
         sm="12"
         md="6"
-        :class="{ 'mt-6 mb-4': $vuetify.breakpoint.smAndDown }"
+        :class="{ 'pt-6': $vuetify.breakpoint.xsOnly }"
       >
         <div
-          v-if="$vuetify.breakpoint.smAndDown"
+          v-if="$vuetify.breakpoint.xsOnly"
           style="width: 100%"
           class="d-flex justify-end pr-5"
         >
           <GuestToolbar />
         </div>
         <v-row
-          v-for="n in 3"
-          :key="n"
-          class="justify-space-around"
-          :class="{ 'mt-6': $vuetify.breakpoint.smAndDown }"
+          class="d-flex justify-center align-center mx-auto py-3"
+          :class="{
+            'tablet-container': $vuetify.breakpoint.smOnly,
+            'desktop-container': $vuetify.breakpoint.mdAndUp,
+          }"
           no-gutters
         >
-          <v-col
-            xs="0"
-            sm="0"
-            md="2"
-            v-if="$vuetify.breakpoint.mdAndUp"
-          ></v-col>
-          <v-col class="d-flex justify-center" xs="12" sm="12" md="4">
-            <v-card class="elevation-0" @click="getBtnEvent(n, 0)">
-              <v-img
-                :src="getImageSrc(n, 0)"
-                class="mx-auto"
-                :width="getImgHeight"
-              ></v-img>
-              <v-card-title class="justify-center menu-title">{{
-                menu[(n - 1) * 2].title
-              }}</v-card-title>
-            </v-card>
-          </v-col>
-          <v-col class="d-flex justify-center" xs="12" sm="12" md="4">
-            <v-card class="elevation-0" @click="getBtnEvent(n, 1)">
-              <v-img
-                :src="getImageSrc(n, 1)"
-                class="mx-auto"
-                :width="getImgHeight"
-              ></v-img>
-              <v-card-title class="justify-center menu-title">{{
-                menu[(n - 1) * 2 + 1].title
-              }}</v-card-title>
-            </v-card>
-          </v-col>
-          <v-col
-            xs="0"
-            sm="0"
-            md="2"
-            v-if="$vuetify.breakpoint.mdAndUp"
-          ></v-col>
+          <v-card
+            v-for="n in 6"
+            :key="n"
+            class="elevation-0 d-flex flex-column align-center py-3"
+            :class="{
+              'mobile-menu-blog': $vuetify.breakpoint.xsOnly,
+              'tablet-menu-blog': $vuetify.breakpoint.smOnly,
+              'desktop-menu-blog': $vuetify.breakpoint.mdAndUp,
+            }"
+            @click="getBtnEvent(n)"
+          >
+            <v-img
+              :src="getImageSrc(n)"
+              class="mx-auto"
+              :class="{
+                'desktop-img': $vuetify.breakpoint.mdAndUp,
+                'mobile-img': $vuetify.breakpoint.smAndDown,
+              }"
+            ></v-img>
+            <div class="justify-center menu-title mt-2">
+              {{ menu[n - 1].title }}
+            </div>
+          </v-card>
         </v-row>
         <div v-if="$vuetify.breakpoint.mdAndUp" style="height: 52px"></div>
         <Footer />
@@ -89,18 +77,12 @@ export default {
     FacilityDialog,
   },
   name: "Home",
-  computed: {
-    getImgHeight() {
-      if (this.$vuetify.breakpoint.mdAndUp) return "150px";
-      else return "100px";
-    },
-  },
   methods: {
-    getImageSrc(n, index) {
-      return this.menu[(n - 1) * 2 + index].src;
+    getImageSrc(n) {
+      return this.menu[n - 1].src;
     },
-    getBtnEvent(n, index) {
-      switch ((n - 1) * 2 + index) {
+    getBtnEvent(n) {
+      switch (n - 1) {
         case 0:
           this.enrollDialog = true;
           break;
@@ -121,6 +103,10 @@ export default {
   data: () => ({
     enrollDialog: false,
     facilityDialog: false,
+    window: {
+      width: 0,
+      height: 0,
+    },
     menu: [
       {
         title: "Thông tin tuyển sinh",
@@ -154,7 +140,7 @@ export default {
 <style scoped>
 .bg-image {
   position: absolute;
-  object-fit: cover;
+  object-fit: contain;
   width: 50%;
   height: 100%;
   top: 0px;
@@ -165,5 +151,29 @@ export default {
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
+}
+.mobile-menu-blog {
+  width: calc(100% / 2 - 12px * 2);
+  max-width: 276px;
+}
+.tablet-menu-blog {
+  width: calc(720px / 3 - 12px * 2);
+}
+.desktop-menu-blog {
+  width: calc(700px / 2 - 12px * 2);
+  max-width: 240px;
+}
+.tablet-container {
+  max-width: 700px;
+}
+.desktop-container {
+  width: 100%;
+  max-width: 700px;
+}
+.mobile-img {
+  width: 100px;
+}
+.desktop-img {
+  width: 100px;
 }
 </style>
