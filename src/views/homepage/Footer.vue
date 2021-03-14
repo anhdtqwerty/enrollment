@@ -67,7 +67,6 @@ export default {
   bottom: 0px;
   background-color: #3e3e3c;
   color: white;
-  z-index: 999;
 }
 .body-text {
   font-family: "Roboto";

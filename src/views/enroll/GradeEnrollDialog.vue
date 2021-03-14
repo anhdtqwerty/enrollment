@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-height="900px" width="100%" persistent>
+  <v-dialog v-model="dialog" max-width="1024px" width="100%">
     <v-card>
       <v-card-title
         ><div
@@ -90,10 +90,9 @@ export default {
   height: 100%;
 }
 
-.v-dialog {
-  margin: 24px 0px !important;
-}
-div >>> .v-dialog {
-  margin: 24px 0px !important;
+@media screen and (max-width: 400px) {
+  div >>> .v-dialog {
+    margin: 24px 0px !important;
+  }
 }
 </style>

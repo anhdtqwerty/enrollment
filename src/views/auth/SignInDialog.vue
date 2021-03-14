@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="480px">
+  <v-dialog v-model="dialog" width="480px" persistent>
     <v-card>
       <v-card-title
         ><div class="title--text">Đăng nhập</div>
