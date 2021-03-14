@@ -51,4 +51,8 @@ export default {
   flex: 1 1 100%;
   max-width: calc(100%) !important;
 }
+
+.v-card--link:focus:before {
+  opacity: 0 !important;
+}
 </style>

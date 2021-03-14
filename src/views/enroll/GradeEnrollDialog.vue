@@ -35,6 +35,9 @@ export default {
     state(state) {
       this.dialog = state;
     },
+    dialog(dialog) {
+      if (!dialog) this.$emit("closeDialog", false);
+    },
   },
   data() {
     return {
