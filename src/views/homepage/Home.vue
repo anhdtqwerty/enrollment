@@ -51,6 +51,7 @@
         <div v-if="$vuetify.breakpoint.mdAndUp" style="height: 52px"></div>
         <Footer />
       </v-col>
+      
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.smAndDown">
         <v-img src="@/assets/homepage/home-bg.svg"></v-img>
       </v-col>
@@ -59,6 +60,10 @@
     <FacilityDialog
       :state="facilityDialog"
       @closeFacility="toggleFacilityDialog"
+    />
+    <DocumentDialog
+      :state="documentDialog"
+      @closeDocument="toggleDocumentDialog"
     />
   </v-container>
 </template>
@@ -69,6 +74,7 @@ import UserToolbar from "@/components/layout/UserToolbar.vue";
 import Footer from "./Footer.vue";
 import EnrollDialog from "@/views/enroll/EnrollDialog.vue";
 import FacilityDialog from "@/views/facility/FacilityDialog.vue";
+import DocumentDialog from "@/views/document/DocumentDialog.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -78,6 +84,7 @@ export default {
     Footer,
     EnrollDialog,
     FacilityDialog,
+    DocumentDialog,
   },
   computed: {
     ...mapGetters("auth", ["isAuthenticated", "user"]),
@@ -107,6 +114,9 @@ export default {
         case 0:
           this.enrollDialog = true;
           break;
+        case 1:
+          this.documentDialog = true;
+          break;
         case 4:
           this.facilityDialog = true;
           break;
@@ -116,6 +126,9 @@ export default {
     },
     toggleEnrollDialog(data) {
       this.enrollDialog = data;
+    },
+    toggleDocumentDialog(data) {
+      this.documentDialog = data;
     },
     toggleFacilityDialog(data) {
       this.facilityDialog = data;
@@ -135,6 +148,7 @@ export default {
   data: () => ({
     enrollDialog: false,
     facilityDialog: false,
+    documentDialog: false,
     window: {
       width: 0,
       height: 0,
@@ -205,7 +219,7 @@ export default {
 }
 @media screen and (min-width: 600px) {
   div.v-card--link:hover {
-    background: rgb(62,62,60, 0.1) !important;
+    background: rgb(62, 62, 60, 0.1) !important;
   }
 }
 </style>
