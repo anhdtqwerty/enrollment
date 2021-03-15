@@ -15,7 +15,7 @@
         <v-icon @click="cancel()">mdi-close</v-icon>
       </v-card-title>
       <v-divider></v-divider>
-      <div class="iframe-container">
+      <div class="iframe-container" :style="getIframeContainerHeight">
         <iframe :src="htmlUrl" class="responsive-iframe" />
       </div>
     </v-card>
@@ -39,11 +39,20 @@ export default {
       if (!dialog) this.$emit("closeDialog", false);
     },
   },
+  computed: {
+    getIframeContainerHeight() {
+      return `height: ${this.window.height * 0.9 - 60}px;`;
+    },
+  },
   data() {
     return {
       dialog: false,
       htmlUrl: "",
       htmlString: "",
+      window: {
+        width: 0,
+        height: 0,
+      },
     };
   },
   methods: {
@@ -66,6 +75,17 @@ export default {
     `;
       return this.getBlobURL(source, "text/html");
     },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+    },
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   },
   mounted() {
     if (this.grade === "grade6") this.htmlString = grade6HTML;
@@ -80,7 +100,6 @@ export default {
 .iframe-container {
   position: relative;
   overflow: hidden;
-  height: 840px;
 }
 
 .responsive-iframe {

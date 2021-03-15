@@ -8,21 +8,28 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-actions
+        class="pa-0"
         :class="{
-          'd-flex justify-space-around py-8 px-4': $vuetify.breakpoint.mdAndUp,
-          'd-flex flex-column py-4': $vuetify.breakpoint.smAndDown,
+          'd-flex': $vuetify.breakpoint.mdAndUp,
+          'd-flex flex-column pb-8': $vuetify.breakpoint.smAndDown,
         }"
       >
         <v-card
           class="d-flex flex-column align-center elevation-0"
-          :class="{ 'mb-10': $vuetify.breakpoint.smAndDown }"
+          :class="{
+            'mb-4': $vuetify.breakpoint.smAndDown,
+            'desktop-btn py-8': $vuetify.breakpoint.mdAndUp,
+          }"
           @click="toggleFacilityADialog(true)"
         >
           <v-img
             src="@/assets/facility/facilityA.svg"
-            :width="getImgWidth"
             class="d-flex align-end"
-            :class="{ 'text-center': $vuetify.breakpoint.smAndDown }"
+            :width="getImgWidth"
+            :class="{
+              'pl-8': $vuetify.breakpoint.mdAndUp,
+              'text-center': $vuetify.breakpoint.smAndDown,
+            }"
           >
             <div
               :class="{
@@ -41,9 +48,11 @@
               Nam Trung Yên
             </div>
           </v-img>
+          <div v-if="$vuetify.breakpoint.smAndUp" class="btn-overlay"></div>
         </v-card>
         <v-card
           class="d-flex flex-column align-center elevation-0"
+          :class="{ 'desktop-btn py-8': $vuetify.breakpoint.mdAndUp }"
           @click="toggleFacility1Dialog(true)"
         >
           <v-img
@@ -51,7 +60,7 @@
             :width="getImgWidth"
             class="d-flex align-end"
             :class="{
-              'text-end': $vuetify.breakpoint.mdAndUp,
+              'text-end pr-8': $vuetify.breakpoint.mdAndUp,
               'text-center': $vuetify.breakpoint.smAndDown,
             }"
           >
@@ -72,6 +81,7 @@
               Tân Triều
             </div>
           </v-img>
+          <div v-if="$vuetify.breakpoint.smAndUp" class="btn-overlay"></div>
         </v-card>
       </v-card-actions>
     </v-card>
@@ -108,7 +118,7 @@ export default {
     getImgWidth() {
       if (this.$vuetify.breakpoint.smOnly) return 350;
       if (this.$vuetify.breakpoint.xsOnly) return 225;
-      return 450;
+      return "100%";
     },
   },
   data() {
@@ -146,5 +156,20 @@ export default {
   font-weight: bold;
   font-size: 36px;
   line-height: 48px;
+}
+.desktop-btn {
+  width: 50%;
+  position: relative;
+}
+.btn-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgb(62, 62, 60, 0) !important;
+}
+.btn-overlay:hover {
+  background: rgb(62, 62, 60, 0.1) !important;
 }
 </style>

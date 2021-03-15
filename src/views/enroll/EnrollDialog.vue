@@ -8,14 +8,20 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-actions
+        class="pa-0"
         :class="{
-          'd-flex justify-space-around py-12': $vuetify.breakpoint.mdAndUp,
-          'd-flex flex-column py-10': $vuetify.breakpoint.smAndDown,
+          'd-flex': $vuetify.breakpoint.mdAndUp,
+          'd-flex flex-column py-8': $vuetify.breakpoint.smOnly,
+          'd-flex flex-column py-6': $vuetify.breakpoint.xsOnly,
         }"
       >
         <v-card
-          class="d-flex flex-column align-center elevation-0"
-          :class="{ 'mb-10': $vuetify.breakpoint.smAndDown }"
+          class="d-flex flex-column align-center elevation-0 pa-4"
+          :class="{
+            'desktop-btn py-12': $vuetify.breakpoint.mdAndUp,
+            'mb-4': $vuetify.breakpoint.smOnly,
+            'mb-3': $vuetify.breakpoint.xsOnly,
+          }"
           @click="grade6Dialog = true"
         >
           <v-img src="@/assets/enroll/khoi-6.svg" width="160px"></v-img>
@@ -24,7 +30,8 @@
           </div>
         </v-card>
         <v-card
-          class="d-flex flex-column align-center elevation-0"
+          class="d-flex flex-column align-center elevation-0 pa-4"
+          :class="{ 'desktop-btn py-12': $vuetify.breakpoint.mdAndUp }"
           @click="grade10Dialog = true"
         >
           <v-img src="@/assets/enroll/khoi-10.svg" width="160px"></v-img>
@@ -93,5 +100,13 @@ export default {
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
+}
+.desktop-btn {
+  width: 50%;
+}
+@media screen and (min-width: 600px) {
+  div.v-card--link:hover {
+    background: rgb(62, 62, 60, 0.1) !important;
+  }
 }
 </style>

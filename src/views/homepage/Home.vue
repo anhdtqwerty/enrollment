@@ -203,4 +203,9 @@ export default {
   max-width: 600px;
   max-height: calc(100% - 80px - 52px - 12px * 2);
 }
+@media screen and (min-width: 600px) {
+  div.v-card--link:hover {
+    background: rgb(62,62,60, 0.1) !important;
+  }
+}
 </style>
