@@ -97,7 +97,7 @@ export default {
   methods: {
     ...mapActions("auth", [
       "confirmSignup",
-      "requestOTP",
+      "requestRegisterOTP",
       "setConfirmFailTime",
     ]),
     ...mapActions("layout", [
@@ -135,8 +135,8 @@ export default {
         this.loading = true;
         this.timerSendEnabled = true;
         this.timerSendCount = 60;
-        await this.requestOTP({
-          userId: this.user.id,
+        this.setCountdownRegisterOTP(60);
+        await this.requestRegisterOTP({
           phone: this.user.username,
         });
         this.loading = false;

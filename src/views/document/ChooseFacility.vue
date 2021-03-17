@@ -39,12 +39,34 @@
         <v-icon> mdi-content-save </v-icon>
         <span class="ml-2">Lưu tạm thời</span>
       </v-btn>
-      <v-btn class="px-6 py-3 text-none" color="primary" large>
+      <v-btn
+        class="px-6 py-3 text-none"
+        color="primary"
+        @click="completeStep"
+        large
+      >
         <span>Hoàn thành</span>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
+
+<script>
+export default {
+  methods: {
+    completeStep() {
+      this.$dialog.confirm({
+        title: "Hoàn thành",
+        okText: "Xác nhận",
+        cancelText: "Chọn lại",
+        done: async () => {
+          this.$emit("completeFacilityStep");
+        },
+      });
+    },
+  },
+};
+</script>
 
 <style scoped>
 .card-title {

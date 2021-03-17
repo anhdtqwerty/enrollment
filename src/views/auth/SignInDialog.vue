@@ -8,7 +8,7 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pt-4 pb-2">
-        <v-form ref="form">
+        <v-form ref="form" v-model="isValid">
           <div class="text-subtitle-1">
             Số điện thoại <span style="color: red">*</span>
           </div>
@@ -45,21 +45,24 @@
           color="primary"
           class="white--text text-subtitle-1 text-none mt-6"
           style="width: 100%"
+          :disabled="!isValid"
           :loading="loading"
           @click="submit()"
           >Đăng nhập
         </v-btn>
-        <!-- <div class="d-flex justify-center py-4 mt-4">
-          <router-link
-            :to="'/forgot-password'"
-            class="info--text text-subtitle-1 text-decoration-underline"
-            >Quên mật khẩu?</router-link
-          >
-        </div> -->
+        <div class="d-flex justify-center mt-6">
+          <v-btn
+            plain
+            class="info--text text-subtitle-1 text-decoration-underline text-none"
+            style="width: 100%"
+            @click="resetPassword()"
+            >Quên mật khẩu?
+          </v-btn>
+        </div>
         <v-btn
           plain
           color="primary"
-          class="text-subtitle-1 font-weight-bold text-none mt-2"
+          class="text-subtitle-1 font-weight-bold text-none mt-3"
           style="width: 100%"
           @click="register()"
           >Chưa có tài khoản? Đăng ký
@@ -71,9 +74,6 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
-  props: {
-    state: Boolean,
-  },
   watch: {
     signInDialog(signInDialog) {
       this.dialog = signInDialog;
@@ -81,10 +81,17 @@ export default {
   },
   computed: {
     ...mapGetters("layout", ["signInDialog"]),
-    ...mapGetters("auth", ["isAuthenticated", "user"]),
+    ...mapGetters("auth", [
+      "isAuthenticated",
+      "user",
+      "isRequestingReset",
+      "isConfirmedResetOTP",
+      "isConfirmedOTP",
+    ]),
   },
   data() {
     return {
+      isValid: true,
       dialog: false,
       credentials: {
         identifier: "",
@@ -102,7 +109,10 @@ export default {
     ...mapActions("layout", [
       "setSignInDialog",
       "setSignUpDialog",
+      "setForgotPasswordDialog",
       "setConfirmSignupDialog",
+      "setConfirmForgotPasswordDialog",
+      "setNewPasswordDialog",
     ]),
     cancel() {
       this.$refs.form.reset();
@@ -117,6 +127,12 @@ export default {
           this.setConfirmSignupDialog(true);
         this.loading = false;
       }
+    },
+    resetPassword() {
+      this.setSignInDialog(false);
+      if (this.isRequestingReset) this.setConfirmForgotPasswordDialog(true);
+      else if (this.isConfirmedResetOTP) this.setNewPasswordDialog(true);
+      else this.setForgotPasswordDialog(true);
     },
     register() {
       this.setSignInDialog(false);

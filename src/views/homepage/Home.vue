@@ -100,7 +100,6 @@ export default {
       const maxSize = (768 - 80 - 52 - 48) / 3 - 12 * 2 - 24 - 24;
       let imageSize = (this.window.height - 80 - 52 - 48) / 3 - 12 * 2 - 24;
       if (imageSize >= maxSize) imageSize = maxSize;
-      console.log(this.window.height);
       return imageSize;
     },
   },

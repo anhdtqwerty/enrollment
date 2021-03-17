@@ -36,7 +36,7 @@
     </v-col>
     <v-divider vertical></v-divider>
     <v-col class="d-flex px-8" style="flex: 2 1 0px">
-      <ChooseFacility />
+      <ChooseFacility @completeFacilityStep="e13 = 2" />
     </v-col>
   </div>
 </template>

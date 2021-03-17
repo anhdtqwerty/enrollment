@@ -1,38 +1,35 @@
 <template>
-  <v-dialog v-model="dialog.state" max-width="500px">
-    <v-card class="pb-4">
-      <v-card-title class="py-3 text-subtitle-1 text-uppercase font-weight-regular amber darken-1 white--text"
-        >{{ dialog.title }}<v-spacer />
-        <v-icon color="white" @click="cancel">close</v-icon></v-card-title
-      >
-      <v-divider />
-      <v-card-text class="px-6 mt-4 mx-auto" style="max-width:450px">
-        <v-row>
-          <v-col cols="3" md="2">
-            <v-img width ="60px" height="60px" src="@/assets/warning_24px.svg" class="mt-1"/>
-          </v-col>
-          <v-col cols="9" md="10" class="pl-4">
-            <div v-if="dialog.text" class="text-subtitle-1 font-weight-bold">{{ dialog.text }}</div>
-          </v-col>
-        </v-row>
-        <slot></slot>
+  <v-dialog v-model="dialog.state" max-width="400px">
+    <v-card class="pa-6">
+      <v-card-title class="pa-0 title--text card-title mb-6"
+        >{{ dialog.title }}<v-spacer
+      /></v-card-title>
+      <v-card-text class="card-content mx-auto pa-0" style="max-width:450px">
+        <slot name="top-content" class=" mb-4"></slot>
+        <slot name="mid-content" class=" mb-4"></slot>
+        <slot name="bottom-content" class=" mb-6"></slot>
       </v-card-text>
-      <v-card-actions class="justify-space-between mt-n4 pr-8">
-        <v-spacer></v-spacer>
+      <v-card-actions class="justify-space-between pa-0">
         <v-btn
           small
           v-show="!dialog.hideCancel"
           @click="cancel"
-          color="white"
-          class="ma-0 mr-2 elevation-0 text-subtitle-1 font-weight-bold"
+          color="primary"
+          class="px-6 btn text-none"
+          large
+          outlined
+          dense
           >{{ dialog.cancelText }}</v-btn
         >
+        <v-spacer></v-spacer>
         <v-btn
           small
           v-show="!dialog.hideOk"
-          color="white"
+          color="primary"
           @click="done"
-          class="ma-0 elevation-0 primary--text text-subtitle-1 font-weight-bold"
+          class="px-6 btn text-none elevation-0"
+          large
+          dense
           >{{ dialog.okText }}</v-btn
         >
       </v-card-actions>
@@ -42,19 +39,45 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      dialog: this.$dialog.confirmData
-    }
+      dialog: this.$dialog.confirmData,
+    };
   },
   methods: {
-    done () {
-      this.dialog.done()
-      this.cancel()
+    done() {
+      this.dialog.done();
+      this.cancel();
     },
-    cancel () {
-      this.$dialog.cancel()
-    }
-  }
-}
+    cancel() {
+      this.$dialog.cancel();
+    },
+  },
+};
 </script>
+
+<style scoped>
+.card-title {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+}
+.card-content {
+  text-align: justify !important;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px !important;
+  line-height: 20px;
+  color: #3e3e3c !important;
+}
+.btn {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px !important;
+  line-height: 20px;
+}
+</style>

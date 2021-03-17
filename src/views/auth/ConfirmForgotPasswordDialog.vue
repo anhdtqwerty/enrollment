@@ -1,18 +1,14 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    width="480px"
-    :fullscreen="$vuetify.breakpoint.smAndDown"
-  >
+  <v-dialog v-model="dialog" width="480px" persistent>
     <v-card>
       <v-card-title
-        ><div style="color: #797979">Quên mật khẩu</div>
+        ><div class="title--text">Xác nhận tài khoản</div>
         <v-spacer />
-        <v-icon>mdi-close</v-icon>
+        <v-icon @click="cancel()" class="mr-n1">mdi-close</v-icon>
       </v-card-title>
       <v-divider></v-divider>
-      <v-card-text class="py-8">
-        <v-form ref="form">
+      <v-card-text class="pt-4 pb-2">
+        <v-form ref="form" v-model="isValid">
           <div class="text-subtitle-1">
             Nhập mã OTP được gửi tới điện thoại bạn
             <span style="color: red">*</span>
@@ -20,8 +16,9 @@
           <v-text-field
             placeholder="Nhập mã OTP tại đây"
             name="login"
-            v-model="identifier"
+            v-model="otp"
             @keyup.enter="submit"
+            :rules="[$rules.required, $rules.otp]"
             type="text"
             color="primary"
             outlined
@@ -32,38 +29,150 @@
           depressed
           x-large
           color="primary"
-          class="white--text text-subtitle-1 btn-text mt-6"
+          class="white--text text-subtitle-1 btn-text mt-4"
           style="width: 100%"
-          >Xác nhận
+          @click="submit()"
+          :loading="loading"
+          :disabled="!isValid || countdownLockReset > 0"
+          >{{ getConfirmCountdown }}
         </v-btn>
         <v-btn
           depressed
-          x-large
           plain
-          class="primary--text text-subtitle-1 font-weight-bold btn-text mt-4"
+          class="primary--text text-subtitle-1 font-weight-bold btn-text mt-2"
           style="width: 100%"
-          >Gửi lại
+          @click="resendOTP()"
+          :loading="loading"
+          :disabled="countdownResetOTP > 0"
+          >{{ getSendCountdown }}
         </v-btn>
       </v-card-text>
     </v-card>
   </v-dialog>
 </template>
 <script>
-// import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
+  computed: {
+    ...mapGetters("layout", [
+      "confirmForgotPasswordDialog",
+      "countdownResetOTP",
+      "countdownLockReset",
+    ]),
+    ...mapGetters("auth", [
+      "resetFailTime",
+      "isRequestingReset",
+      "isConfirmedResetOTP",
+      "userPhone",
+    ]),
+    getSendCountdown() {
+      if (this.countdownResetOTP > 0) {
+        const timeString = new Date(this.countdownResetOTP * 1000)
+          .toISOString()
+          .substr(14, 5);
+        return `Gửi lại (${timeString})`;
+      }
+      return `Gửi lại`;
+    },
+    getConfirmCountdown() {
+      if (this.countdownLockReset > 0) {
+        const timeString = new Date(this.countdownResetOTP * 1000)
+          .toISOString()
+          .substr(14, 5);
+        return `Xác nhận (${timeString})`;
+      }
+      return `Xác nhận`;
+    },
+  },
   data: () => ({
-    email: "",
-    done: false,
+    otp: "",
+    loading: false,
     dialog: false,
-    identifier: "",
+    isValid: true,
+    timerSendCount: 0,
+    timerSendEnabled: false,
+    timerConfirmCount: 0,
+    timerConfirmEnabled: false,
   }),
   methods: {
-    // ...mapActions("auth", ["forgotPassword"]),
+    ...mapActions("auth", [
+      "confirmResetPassword",
+      "requestResetOTP",
+      "setResetFailTime",
+    ]),
+    ...mapActions("layout", [
+      "setConfirmForgotPasswordDialog",
+      "setNewPasswordDialog",
+      "setCountdownResetOTP",
+      "setCountdownLockReset",
+    ]),
+    cancel() {
+      this.$refs.form.reset();
+      this.setConfirmForgotPasswordDialog(false);
+    },
     async submit() {
       if (this.$refs.form.validate()) {
-        await this.forgotPassword(this.email);
-        this.done = true;
+        this.loading = true;
+        await this.confirmResetPassword({
+          userPhone: this.userPhone,
+          otp: this.otp,
+        });
+        if (this.isConfirmedResetOTP && !this.isRequestingReset) {
+          this.setConfirmForgotPasswordDialog(false);
+          this.setNewPasswordDialog(true);
+          this.setResetFailTime(0);
+        } else {
+          this.setResetFailTime(this.confirmFailTime + 1);
+          if (this.confirmFailTime >= 5) {
+            this.timerConfirmEnabled = true;
+            this.timerConfirmCount = 5 * 60;
+          }
+        }
+        this.$refs.form.reset();
+        this.loading = false;
       }
+    },
+    async resendOTP() {
+      if (this.timerSendCount == 0 && this.countdownResetOTP == 0) {
+        this.loading = true;
+        this.timerSendEnabled = true;
+        this.timerSendCount = 60;
+        this.setCountdownResetOTP(60);
+        await this.requestResetOTP({
+          userPhone: this.userPhone,
+        });
+        this.loading = false;
+      }
+    },
+  },
+  watch: {
+    confirmForgotPasswordDialog(confirmForgotPasswordDialog) {
+      this.dialog = confirmForgotPasswordDialog;
+    },
+    timerSendCount: {
+      handler(value) {
+        if (value > 0 && this.timerSendEnabled) {
+          setTimeout(() => {
+            this.timerSendCount--;
+            this.setCountdownResetOTP(this.timerSendCount);
+          }, 1000);
+        } else if (value == 0) this.timerSendEnabled = false;
+      },
+      immediate: false,
+    },
+    timerConfirmCount: {
+      handler(value) {
+        if (value > 0 && this.timerConfirmEnabled) {
+          setTimeout(() => {
+            this.timerConfirmCount--;
+            this.setCountdownLockReset(this.timerConfirmCount);
+          }, 1000);
+        } else if (value == 0) {
+          this.timerConfirmEnabled = false;
+          this.setResetFailTime(0);
+        }
+      },
+      immediate: false,
     },
   },
 };

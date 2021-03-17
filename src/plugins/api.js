@@ -1,68 +1,75 @@
-import axios from 'axios'
-import utils from '@/plugins/utils'
+import axios from "axios";
+import utils from "@/plugins/utils";
 
-const CV_API = '/cvs/'
-const AUTH_API = '/auth/local'
-const USER_API = '/users/'
-const UPLOAD_API = '/upload/'
-const DESTROY_API = '/upload/files/'
+const CV_API = "/cvs/";
+const AUTH_API = "/auth/local";
+const USER_API = "/users/";
+const UPLOAD_API = "/upload/";
+const DESTROY_API = "/upload/files/";
 
 const APIHelper = (api) => ({
   search: (params, option) =>
-    axios.get(api, {params: utils.filterObject(params)}, option),
+    axios.get(api, { params: utils.filterObject(params) }, option),
   count: (params, option) =>
-    axios.get(api + 'count', {params: utils.filterObject(params)}, option),
+    axios.get(api + "count", { params: utils.filterObject(params) }, option),
   fetch: (params, option) =>
-    axios.get(api, {params: utils.filterObject(params)}, option),
+    axios.get(api, { params: utils.filterObject(params) }, option),
   fetchOne: (id, option) => axios.get(api + id, option),
   create: (params, options) =>
     axios.post(api, utils.filterObject(params), options),
   update: (id, params, option) =>
     axios.put(api + id, utils.filterObject(params), option),
   remove: (id, option) => axios.delete(api + id, option),
-})
-export const APIRespository = APIHelper
+});
+export const APIRespository = APIHelper;
 export const Auth = {
   ...APIHelper(AUTH_API),
-  forgotPassword: (email) => axios.post('/auth/forgot-password', {email}),
-  resetPassword: (code, password, passwordConfirmation) =>
-    axios.post('/auth/reset-password', {
-      code,
-      password,
-      passwordConfirmation,
+  requestResetOTP: (userPhone) =>
+    axios.post(`/request-otp`, {
+      userPhone,
+      requestType: "reset-password",
+    }),
+  confirmResetOTP: (userPhone, otp) =>
+    axios.post(`/confirm-reset-password/${userPhone}`, {
+      otp,
+    }),
+  changePassword: (userPhone, newPassword, confirmNewPassword) =>
+    axios.put(`/change-password/${userPhone}`, {
+      newPassword,
+      confirmNewPassword,
     }),
   register: (phone, password, email) =>
-    axios.post('/auth/local/register', {
+    axios.post("/auth/local/register", {
       username: phone,
       password,
       email,
     }),
-  requestOTP: (userId, userPhone, msgContent) =>
-    axios.post(`/request-otp/${userId}`, {
+  requestRegisterOTP: (userPhone) =>
+    axios.post(`/request-otp`, {
       userPhone,
-      msgContent,
+      requestType: "register",
     }),
-  confirmSignupOTP: (userId, userPhone, otp) =>
-    axios.post(`/confirm-otp/${userId}`, {
+  confirmSignupOTP: (userPhone, otp) =>
+    axios.post(`/confirm-register`, {
       userPhone,
       otp,
     }),
-}
-export const CV = APIHelper(CV_API)
-export const User = APIHelper(USER_API)
+};
+export const CV = APIHelper(CV_API);
+export const User = APIHelper(USER_API);
 export const Upload = {
   upload: (formData) =>
     axios.post(UPLOAD_API, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     }),
   destroy: (id) => axios.delete(DESTROY_API + id),
-}
+};
 
 export default {
   Auth,
   CV,
   Upload,
   User,
-}
+};

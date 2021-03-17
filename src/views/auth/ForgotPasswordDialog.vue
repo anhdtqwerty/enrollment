@@ -1,18 +1,14 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    width="480px"
-    :fullscreen="$vuetify.breakpoint.smAndDown"
-  >
+  <v-dialog v-model="dialog" width="480px">
     <v-card>
       <v-card-title
         ><div style="color: #797979">Quên mật khẩu</div>
         <v-spacer />
-        <v-icon>mdi-close</v-icon>
+        <v-icon class="mr-n1" @click="cancel()">mdi-close</v-icon>
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="py-8">
-        <v-form ref="form">
+        <v-form ref="form" v-model="isValid">
           <div class="text-subtitle-1">
             Số điện thoại <span style="color: red">*</span>
           </div>
@@ -21,6 +17,7 @@
             name="login"
             v-model="identifier"
             @keyup.enter="submit"
+            :rules="phoneRules"
             type="text"
             color="primary"
             outlined
@@ -30,9 +27,13 @@
         <v-btn
           depressed
           x-large
+          block
           color="primary"
-          class="white--text text-subtitle-1 btn-text mt-6"
+          class="white--text text-subtitle-1 btn-text text-none mt-6"
           style="width: 100%"
+          :disabled="!isValid"
+          :loading="loading"
+          @click="submit()"
           >Tiếp theo
         </v-btn>
       </v-card-text>
@@ -40,21 +41,48 @@
   </v-dialog>
 </template>
 <script>
-// import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
-  data: () => ({
-    email: "",
-    done: false,
-    dialog: false,
-    identifier: "",
-  }),
+  computed: {
+    ...mapGetters("layout", ["forgotPasswordDialog"]),
+    ...mapGetters("auth", ["isRequestingReset", "userPhone"]),
+  },
+  watch: {
+    forgotPasswordDialog(forgotPasswordDialog) {
+      this.dialog = forgotPasswordDialog;
+    },
+  },
+  data() {
+    return {
+      isValid: true,
+      loading: false,
+      phoneRules: [this.$rules.required, this.$rules.phone],
+      dialog: false,
+      identifier: "",
+    };
+  },
   methods: {
-    // ...mapActions("auth", ["forgotPassword"]),
+    ...mapActions("auth", ["requestResetOTP"]),
+    ...mapActions("layout", [
+      "setForgotPasswordDialog",
+      "setConfirmForgotPasswordDialog",
+      "setSignInDialog",
+    ]),
     async submit() {
       if (this.$refs.form.validate()) {
-        await this.forgotPassword(this.email);
-        this.done = true;
+        this.loading = true;
+        await this.requestResetOTP({ userPhone: this.identifier });
+        if (this.isRequestingReset && this.userPhone) {
+          this.setForgotPasswordDialog(false);
+          this.setConfirmForgotPasswordDialog(true);
+        }
+        this.loading = false;
       }
+    },
+    cancel() {
+      this.$refs.form.reset();
+      this.setForgotPasswordDialog(false);
+      this.setSignInDialog(true);
     },
   },
 };

@@ -82,9 +82,6 @@
 /* eslint-disable no-unused-vars */
 import { mapActions, mapGetters } from "vuex";
 export default {
-  props: {
-    state: Boolean,
-  },
   watch: {
     signUpDialog(signUpDialog) {
       this.dialog = signUpDialog;
