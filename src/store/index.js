@@ -5,6 +5,7 @@ import { createStore } from "vuex-extensions";
 import _ from "lodash";
 
 import { axiosPlugin } from "@/plugins/axios";
+import activeCode from "./active-code/activeCode.js";
 import auth from "./app/auth.js";
 import layout from "./app/layout.js";
 
@@ -21,6 +22,7 @@ export default createStore(Vuex.Store, {
   modules: {
     auth,
     layout,
+    activeCode,
   },
   mixins: {
     mutations: {

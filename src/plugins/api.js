@@ -2,6 +2,7 @@ import axios from "axios";
 import utils from "@/plugins/utils";
 
 const CV_API = "/cvs/";
+const ACTIVE_CODE_API = "/active-codes/";
 const AUTH_API = "/auth/local";
 const USER_API = "/users/";
 const UPLOAD_API = "/upload/";
@@ -56,6 +57,7 @@ export const Auth = {
     }),
 };
 export const CV = APIHelper(CV_API);
+export const ActiveCode = APIHelper(ACTIVE_CODE_API);
 export const User = APIHelper(USER_API);
 export const Upload = {
   upload: (formData) =>

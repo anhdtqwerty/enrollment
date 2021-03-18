@@ -85,15 +85,16 @@
         </v-card>
       </v-card-actions>
     </v-card>
+    <!-- iframeSrc="https://d23d1hjjvbs4dk.cloudfront.net" -->
     <FacilityTour
       title="Cơ sở A Nam Trung Yên"
-      iframeSrc="https://d23d1hjjvbs4dk.cloudfront.net"
+      iframeSrc="http://enroll-api.quanlylop.com/ltv-360/index.html"
       :state="facilityADialog"
       @closeDialog="toggleFacilityADialog"
     />
     <FacilityTour
       title="Cơ sở 1 Tân Triều"
-      iframeSrc="https://d5b3fkasxbwpk.cloudfront.net"
+      iframeSrc="http://enroll-api.quanlylop.com/cs-2/index.html"
       :state="facility1Dialog"
       @closeDialog="toggleFacility1Dialog"
     />

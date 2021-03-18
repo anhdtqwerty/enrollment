@@ -16,20 +16,18 @@
       </v-card-title>
       <v-divider></v-divider>
       <div class="iframe-container" :style="getIframeContainerHeight">
-        <iframe :src="htmlUrl" class="responsive-iframe" />
+        <iframe :src="src" class="responsive-iframe" />
       </div>
     </v-card>
   </v-dialog>
 </template>
 <script>
 /* eslint-disable no-unused-vars */
-import { grade6HTML } from "@/assets/enroll/htmlHelper.js";
-import { grade10HTML } from "@/assets/enroll/htmlHelper.js";
 export default {
   props: {
     state: Boolean,
     title: String,
-    grade: String,
+    src: String,
   },
   watch: {
     state(state) {
@@ -59,22 +57,6 @@ export default {
     cancel() {
       this.$emit("closeDialog", false);
     },
-    getBlobURL(code, type) {
-      const blob = new Blob([code], { type });
-      return URL.createObjectURL(blob);
-    },
-    getGeneratedPageURL(html) {
-      const source = `
-      <html>
-        <head>
-        </head>
-        <body>
-          ${html || ""}
-        </body>
-      </html>
-    `;
-      return this.getBlobURL(source, "text/html");
-    },
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
@@ -86,11 +68,6 @@ export default {
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
-  },
-  mounted() {
-    if (this.grade === "grade6") this.htmlString = grade6HTML;
-    if (this.grade === "grade10") this.htmlString = grade10HTML;
-    this.htmlUrl = this.getGeneratedPageURL(this.htmlString);
   },
 };
 /* eslint-enable no-unused-vars */

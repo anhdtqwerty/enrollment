@@ -20,6 +20,7 @@ export default new Vuetify({
         success: "#4BCA81",
         warning: "#FFC107",
         title: "#797979",
+        admin: "#0D47A1",
       },
     },
   },

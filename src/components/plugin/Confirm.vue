@@ -2,8 +2,8 @@
   <v-layout v-if="active" row justify-center>
     <v-dialog :value="active" persistent max-width="290">
       <v-card>
-        <v-card-title>{{title}}</v-card-title>
-        <v-card-text v-if="message">{{message}}</v-card-text>
+        <v-card-title>{{ title }}</v-card-title>
+        <v-card-text v-if="message">{{ message }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="green" text @click.native="confirm">OK</v-btn>
@@ -15,33 +15,34 @@
 </template>
 
 <script>
+/* eslint-disable no-unused-vars */
 export default {
   data: () => ({
-    title: '',
-    message: '',
+    title: "",
+    message: "",
     active: false,
-    resolver: null
+    resolver: null,
   }),
   methods: {
-    show (title, message) {
-      this.title = title
-      this.message = message
-      this.active = true
+    show(title, message) {
+      this.title = title;
+      this.message = message;
+      this.active = true;
       return new Promise((resolve, reject) => {
-        this.resolver = resolve
-      })
+        this.resolver = resolve;
+      });
     },
-    confirm () {
-      this.active = false
-      this.resolver(true)
+    confirm() {
+      this.active = false;
+      this.resolver(true);
     },
-    cancel () {
-      this.active = false
-      this.resolver(false)
-    }
-  }
-}
+    cancel() {
+      this.active = false;
+      this.resolver(false);
+    },
+  },
+};
+/* eslint-enable no-unused-vars */
 </script>
 
-<style>
-</style>
+<style></style>
