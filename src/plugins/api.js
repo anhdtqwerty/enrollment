@@ -56,8 +56,20 @@ export const Auth = {
       otp,
     }),
 };
-export const CV = APIHelper(CV_API);
-export const ActiveCode = APIHelper(ACTIVE_CODE_API);
+export const CV = {
+  ...APIHelper(CV_API),
+  create: (code, params) =>
+    axios.post(`/cvs/${code}`, {
+      ...params,
+    }),
+};
+export const ActiveCode = {
+  ...APIHelper(ACTIVE_CODE_API),
+  validate: (code) =>
+    axios.post(`/active-codes/validate`, {
+      code,
+    }),
+};
 export const User = APIHelper(USER_API);
 export const Upload = {
   upload: (formData) =>
@@ -74,4 +86,5 @@ export default {
   CV,
   Upload,
   User,
+  ActiveCode,
 };

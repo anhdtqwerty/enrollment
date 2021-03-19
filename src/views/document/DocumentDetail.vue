@@ -3,13 +3,15 @@
     <v-col class="px-8" style="flex: 1 1 0px">
       <v-card class="elevation-0" width="100%">
         <div class="d-flex align-center">
-          <span class="mr-6"><v-icon> mdi-arrow-left </v-icon></span>
+          <span class="mr-6"
+            ><v-icon @click="backToHome()"> mdi-arrow-left </v-icon></span
+          >
           <div>
             <div class="document-title">Đăng ký vào lớp 6</div>
             <div class="document-subtitle mt-1">Mã hồ sơ: 00001</div>
           </div>
         </div>
-        <v-stepper class="elevation-0" v-model="e13" vertical>
+        <v-stepper class="elevation-0" v-model="step" vertical>
           <v-stepper-step class="mb-4" step="1">
             <span class="step-title mb-1">Chọn cơ sở</span>
             <div class="step-subtitle">Đang khai báo</div></v-stepper-step
@@ -36,21 +38,53 @@
     </v-col>
     <v-divider vertical></v-divider>
     <v-col class="d-flex px-8" style="flex: 2 1 0px">
-      <ChooseFacility @completeFacilityStep="e13 = 2" />
+      <ChooseFacility @completeFacilityStep="step = 2" />
     </v-col>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import ChooseFacility from "./ChooseFacility.vue";
 export default {
   components: {
     ChooseFacility,
   },
+  computed: {
+    ...mapGetters("auth", ["user", "isAuthenticated"]),
+    ...mapGetters("cv", ["CVs", "CV"]),
+  },
+  methods: {
+    ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
+    ...mapActions("layout", ["setDocumentDialog"]),
+    backToHome() {
+      this.$router.push("/");
+      this.setDocumentDialog(true);
+    },
+  },
   data() {
     return {
-      e13: 1,
+      step: 1,
+      documentCode: "",
     };
+  },
+  async created() {
+    this.documentCode = this.$route.params.code;
+    this.$loading.active = true;
+    if (!this.user || !this.isAuthenticated) {
+      this.$alert.error(`Bạn cần phải đăng nhập để sử dụng chức năng này!`);
+      this.$router.push("/");
+      return;
+    }
+    await this.fetchCV({ code: this.documentCode, userId: this.user.id });
+    if (!this.CV(this.documentCode)) {
+      this.$alert.error(
+        `Hồ sơ ${this.documentCode} không tồn tại hoặc không có quyền truy cập!`
+      );
+      this.$router.push("/");
+      return;
+    }
+    this.$loading.active = false;
   },
 };
 </script>

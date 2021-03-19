@@ -8,6 +8,13 @@ export default {
     count: 0,
   },
   actions: {
+    async validate({ commit }, code) {
+      try {
+        return await ActiveCode.validate(code);
+      } catch (e) {
+        alert.error(e);
+      }
+    },
     async fetchActiveCodes({ commit }, options) {
       try {
         commit("setActiveCodes", await ActiveCode.fetch(options));

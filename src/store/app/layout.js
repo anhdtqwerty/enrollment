@@ -8,6 +8,7 @@ export default {
     confirmForgotPasswordDialog: false,
     newPasswordDialog: false,
     confirmSignupDialog: false,
+    documentDialog: false,
     countdownRegisterOTP: 0,
     countdownResetOTP: 0,
     countdownLockConfirm: 0,
@@ -15,6 +16,9 @@ export default {
     countdownLockLogin: 0,
   },
   actions: {
+    setDocumentDialog({ commit }, data) {
+      commit("setDocumentDialog", data);
+    },
     setSignInDialog({ commit }, data) {
       commit("setSignInDialog", data);
     },
@@ -53,6 +57,9 @@ export default {
     },
   },
   mutations: {
+    setDocumentDialog(state, data) {
+      state.documentDialog = data;
+    },
     setCountdownResetOTP(state, data) {
       state.countdownResetOTP = data;
     },
@@ -96,6 +103,9 @@ export default {
     },
   },
   getters: {
+    documentDialog(state) {
+      return state.documentDialog;
+    },
     signInDialog(state) {
       return state.signInDialog;
     },

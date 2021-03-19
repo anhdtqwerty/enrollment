@@ -31,8 +31,8 @@ export default {
         alert.error(error);
       }
     },
-    signOut() {
-      this.reset();
+    signOut({ commit }) {
+      commit("signout");
     },
     async signUp({ commit }, { phone, password }) {
       try {
@@ -143,6 +143,19 @@ export default {
     },
     setRole(state, role) {
       state.role = role;
+    },
+    signout(state, role) {
+      state.user = null;
+      state.jwt = null;
+      state.role = {};
+      state.isAuthenticated = false;
+      state.isConfirmedOTP = false;
+      state.isRequestingReset = false;
+      state.isConfirmedResetOTP = false;
+      state.userPhone = "";
+      state.confirmFailTime = 0;
+      state.loginFailTime = 0;
+      state.resetFailTime = 0;
     },
     setUserPhone(state, data) {
       state.userPhone = data;

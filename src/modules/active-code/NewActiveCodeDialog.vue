@@ -29,8 +29,8 @@
             style="flex: 1 1 0px;"
             :loading="loading"
             :disabled="isCreated"
+            :dark="!isCreated"
             @click="submit()"
-            dark
             depressed
             >Thêm mã kích hoạt</v-btn
           >
@@ -47,7 +47,9 @@
           >
             {{ getCode }}
           </div>
-          <div class="dialog-title mb-10" style="color: #212121;">Khối 6</div>
+          <div class="dialog-title mb-10" style="color: #212121;">
+            {{ getGrade }}
+          </div>
           <v-btn
             color="#0D47A1"
             style="flex: 1 1 0px"
@@ -68,7 +70,7 @@
 </template>
 
 <script>
-import _ from "lodash";
+import { get } from "lodash";
 import { mapActions, mapGetters } from "vuex";
 
 /* eslint-disable no-unused-vars */
@@ -79,7 +81,10 @@ export default {
   computed: {
     ...mapGetters("activeCode", ["activeCodes"]),
     getCode() {
-      return _.get(this.activeCode, "code", "---");
+      return get(this.activeCode, "code", "---");
+    },
+    getGrade() {
+      return get(this.activeCode, "grade", "");
     },
   },
   data() {
@@ -107,10 +112,14 @@ export default {
       "updateActiveCode",
       "createActiveCode",
     ]),
+    reset() {
+      this.activeCode = {};
+      this.isCreated = false;
+      this.grade = "Khối 6";
+    },
     async submit() {
       this.loading = true;
       const newActiveCode = await this.createActiveCode({
-        code: "12312388",
         grade: this.grade,
       });
       if (newActiveCode) {
@@ -121,6 +130,7 @@ export default {
     },
     cancel() {
       this.dialog = false;
+      this.reset();
       this.$emit("cancel");
     },
   },

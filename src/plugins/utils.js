@@ -258,9 +258,6 @@ export default {
     console.log(str)
     return str.trim().toLocaleLowerCase()
   },
-  generateRegisterOTP() {
-    return ('' + Math.random()).substring(2, 8)
-  },
   generateUserName(name = '') {
     let nameArr = name.split(' ')
     if (nameArr[nameArr.length - 1].length === 1) {

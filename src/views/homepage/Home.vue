@@ -51,7 +51,7 @@
         <div v-if="$vuetify.breakpoint.mdAndUp" style="height: 52px"></div>
         <Footer />
       </v-col>
-      
+
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.smAndDown">
         <v-img src="@/assets/homepage/home-bg.svg"></v-img>
       </v-col>
@@ -60,10 +60,6 @@
     <FacilityDialog
       :state="facilityDialog"
       @closeFacility="toggleFacilityDialog"
-    />
-    <DocumentDialog
-      :state="documentDialog"
-      @closeDocument="toggleDocumentDialog"
     />
   </v-container>
 </template>
@@ -74,8 +70,7 @@ import UserToolbar from "@/components/layout/UserToolbar.vue";
 import Footer from "./Footer.vue";
 import EnrollDialog from "@/views/enroll/EnrollDialog.vue";
 import FacilityDialog from "@/views/facility/FacilityDialog.vue";
-import DocumentDialog from "@/views/document/DocumentDialog.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
@@ -84,15 +79,11 @@ export default {
     Footer,
     EnrollDialog,
     FacilityDialog,
-    DocumentDialog,
   },
   computed: {
-    ...mapGetters("auth", ["isAuthenticated", "user"]),
+    ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
     isGuestBar() {
-      if (this.isAuthenticated && this.user && !this.isConfirmedOTP)
-        return true;
-      if (this.isAuthenticated && this.user && this.isConfirmedOTP)
-        return false;
+      if (this.isAuthenticated && this.user) return false;
       return true;
     },
     getImageSize() {
@@ -105,6 +96,11 @@ export default {
   },
   name: "Home",
   methods: {
+    ...mapActions("layout", [
+      "setDocumentDialog",
+      "setConfirmSignupDialog",
+      "setSignInDialog",
+    ]),
     getImageSrc(n) {
       return this.menu[n - 1].src;
     },
@@ -114,7 +110,7 @@ export default {
           this.enrollDialog = true;
           break;
         case 1:
-          this.documentDialog = true;
+          this.onDocumentClick();
           break;
         case 4:
           this.facilityDialog = true;
@@ -123,11 +119,15 @@ export default {
           break;
       }
     },
+    onDocumentClick() {
+      if (this.user && this.isAuthenticated && this.isConfirmedOTP)
+        this.setDocumentDialog(true);
+      else if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
+        this.setConfirmSignupDialog(true);
+      else this.setSignInDialog(true);
+    },
     toggleEnrollDialog(data) {
       this.enrollDialog = data;
-    },
-    toggleDocumentDialog(data) {
-      this.documentDialog = data;
     },
     toggleFacilityDialog(data) {
       this.facilityDialog = data;
@@ -147,7 +147,6 @@ export default {
   data: () => ({
     enrollDialog: false,
     facilityDialog: false,
-    documentDialog: false,
     window: {
       width: 0,
       height: 0,

@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 /* User Page */
 import UserLayout from "@/views/homepage/UserLayout.vue";
+import Home from "@/views/homepage/Home.vue";
 import DocumentDetail from "@/views/document/DocumentDetail.vue";
 
 /* Admin Page */
@@ -20,14 +21,24 @@ const routes = [
     meta: {
       title: "Trang chủ",
     },
-  },
-  {
-    path: "/document",
-    name: "DocumentDetail",
-    component: DocumentDetail,
-    meta: {
-      title: "Hồ sơ",
-    },
+    children: [
+      {
+        path: "/",
+        name: "Home",
+        component: Home,
+        meta: {
+          title: "Hồ sơ",
+        },
+      },
+      {
+        path: "/document/:code",
+        name: "DocumentDetail",
+        component: DocumentDetail,
+        meta: {
+          title: "Hồ sơ",
+        },
+      },
+    ],
   },
   {
     path: "/admin",
@@ -37,7 +48,7 @@ const routes = [
     },
     children: [
       {
-        path: "dashboard",
+        path: "/",
         name: "Dashboard",
         component: Dashboard,
         meta: {

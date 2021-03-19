@@ -113,6 +113,7 @@ export default {
       "setConfirmSignupDialog",
       "setConfirmForgotPasswordDialog",
       "setNewPasswordDialog",
+      "setDocumentDialog",
     ]),
     cancel() {
       this.$refs.form.reset();
@@ -122,7 +123,11 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true;
         await this.signIn(this.credentials);
-        if (this.user && this.isAuthenticated) this.setSignInDialog(false);
+        if (this.user && this.isAuthenticated) {
+          this.$refs.form.reset();
+          this.setSignInDialog(false);
+          this.setDocumentDialog(true);
+        }
         if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
           this.setConfirmSignupDialog(true);
         this.loading = false;

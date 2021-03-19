@@ -45,10 +45,7 @@ export default {
       else return "68px";
     },
     isGuestBar() {
-      if (this.isAuthenticated && this.user && !this.isConfirmedOTP)
-        return true;
-      if (this.isAuthenticated && this.user && this.isConfirmedOTP)
-        return false;
+      if (this.isAuthenticated && this.user) return false;
       return true;
     },
   },

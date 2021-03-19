@@ -94,7 +94,7 @@ const originHeaders = [
 ];
 
 import { mapActions, mapGetters } from "vuex";
-import _ from "lodash";
+import { get } from "lodash";
 import moment from "moment";
 moment.locale("vi");
 
@@ -110,9 +110,8 @@ export default {
   },
   async mounted() {
     await this.refresh({
-      _sort: "created_at:DESC",
+      _sort: "createdAt:DESC",
     });
-    console.log(this.activeCodes);
   },
   methods: {
     ...mapActions("activeCode", [
@@ -148,13 +147,13 @@ export default {
       else return "---";
     },
     getDepartment: (item) => {
-      return _.get(item, "department", "---");
+      return get(item, "department", "---");
     },
     getCode: (item) => {
-      return _.get(item, "code", "---");
+      return get(item, "code", "---");
     },
     getGrade: (item) => {
-      return _.get(item, "grade", "Khối 6");
+      return get(item, "grade", "Khối 6");
     },
   },
 };
