@@ -10,7 +10,10 @@
         style="flex: 1 1 0px"
         color="#F8F8F8"
         class="elevation-0 mr-8"
-        :class="{ 'selected-card': department === 'Cơ sở A' }"
+        :class="{
+          'selected-card': department === 'Cơ sở A',
+          'cursor-default': step !== 1,
+        }"
         :disabled="department !== 'Cơ sở A' && department !== ''"
         @click="chooseFacility(true)"
       >
@@ -44,7 +47,10 @@
         style="flex: 1 1 0px"
         color="#F8F8F8"
         class="elevation-0"
-        :class="{ 'selected-card': department === 'Cơ sở 1' }"
+        :class="{
+          'selected-card': department === 'Cơ sở 1',
+          'cursor-default': step !== 1,
+        }"
         :disabled="department !== 'Cơ sở 1' && department !== ''"
         @click="chooseFacility(false)"
       >
@@ -72,84 +78,55 @@
         </ul>
       </v-card>
     </v-card-text>
-    <hr class="dashed" />
-    <v-card-actions class="d-flex justify-space-between pt-6 px-0">
-      <v-btn
-        class="px-6 py-3 text-none"
-        color="primary"
-        :loading="loading"
-        @click="saveDraft()"
-        outlined
-        large
-      >
-        <v-icon> mdi-content-save </v-icon>
-        <span class="ml-2">Lưu tạm thời</span>
-      </v-btn>
-      <v-btn
-        class="px-6 py-3 text-none"
-        color="primary"
-        @click="completeStep"
-        :loading="loading"
-        large
-      >
-        <span>Hoàn thành</span>
-      </v-btn>
-    </v-card-actions>
+    <DocumentActions
+      :documentId="document.id"
+      :query="query"
+      @completeStep="completeStep"
+    />
   </v-card>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import DocumentActions from "./DocumentActions.vue";
 export default {
-  created() {
-    this.documentCode = this.$route.params.code;
+  components: { DocumentActions },
+  props: {
+    document: Object,
+    documentCode: String,
+    step: Number,
   },
   data() {
     return {
       department: "",
-      loading: false,
-      documentCode: "",
+      query: {},
     };
   },
-  computed: {
-    ...mapGetters("cv", ["CVs", "CV"]),
-    ...mapGetters("auth", ["user", "isAuthenticated"]),
+  watch: {
+    document(document) {
+      if (document && document.department && document.department !== "")
+        this.department = document.department;
+    },
+    department(department) {
+      this.query = {
+        department,
+      };
+    },
   },
+
   methods: {
-    ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
-    async saveDraft() {
-      if (this.department === "") {
-        this.$alert.error("Xin vui lòng chọn cơ sở");
-        return;
-      }
-      this.loading = true;
-      const updatedCV = await this.updateCV({
-        id: this.CV(this.documentCode).id,
-        department: this.department,
-      });
-      if (updatedCV && updatedCV.department && updatedCV.department != "")
-        this.$alert.success("Đã lưu thành công");
-      this.loading = false;
-    },
-    completeStep() {
-      this.$dialog.confirm({
-        title: "Hoàn thành",
-        okText: "Xác nhận",
-        cancelText: "Chọn lại",
-        done: async () => {
-          this.$emit("completeFacilityStep");
-        },
-      });
-    },
     chooseFacility(isFacilityA) {
-      if (isFacilityA) {
+      if (isFacilityA && this.step === 1) {
         if (this.department === "Cơ sở A") this.department = "";
         else this.department = "Cơ sở A";
       }
-      if (!isFacilityA) {
+      if (!isFacilityA && this.step === 1) {
         if (this.department === "Cơ sở 1") this.department = "";
         else this.department = "Cơ sở 1";
       }
+    },
+    completeStep() {
+      //TODO: sua API de update step
+      this.$emit("completeFacilityStep");
     },
   },
 };
@@ -196,9 +173,7 @@ export default {
 .item-content li:not(:last-child) {
   margin-bottom: 16px;
 }
-hr.dashed {
-  border-top: 1px dashed #e6e4eb;
-}
+
 hr.solid {
   width: calc(100% - 24px * 2);
   border-style: solid;
@@ -208,5 +183,11 @@ hr.solid {
 .selected-card {
   border: rgba(0, 132, 255, 1) 1px solid !important;
   background: rgba(0, 132, 255, 0.1) !important;
+}
+.cursor-default {
+  pointer-events: none;
+}
+.cursor-default:hover {
+  cursor: default;
 }
 </style>

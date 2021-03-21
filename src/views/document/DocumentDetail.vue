@@ -38,7 +38,12 @@
     </v-col>
     <v-divider vertical></v-divider>
     <v-col class="d-flex px-8" style="flex: 2 1 0px">
-      <ChooseFacility @completeFacilityStep="step = 2" />
+      <ChooseFacility
+        :document="document"
+        :documentCode="documentCode"
+        :step="step"
+        @completeFacilityStep="step = 2"
+      />
     </v-col>
   </div>
 </template>
@@ -64,8 +69,9 @@ export default {
   },
   data() {
     return {
-      step: 1,
       documentCode: "",
+      document: {},
+      step: 1,
     };
   },
   async created() {
@@ -74,6 +80,7 @@ export default {
     if (!this.user || !this.isAuthenticated) {
       this.$alert.error(`Bạn cần phải đăng nhập để sử dụng chức năng này!`);
       this.$router.push("/");
+      this.$loading.active = false;
       return;
     }
     await this.fetchCV({ code: this.documentCode, userId: this.user.id });
@@ -82,8 +89,12 @@ export default {
         `Hồ sơ ${this.documentCode} không tồn tại hoặc không có quyền truy cập!`
       );
       this.$router.push("/");
+      this.$loading.active = false;
       return;
     }
+    this.document = this.CV(this.documentCode);
+    this.step = this.document.step;
+    console.log(this.document);
     this.$loading.active = false;
   },
 };
