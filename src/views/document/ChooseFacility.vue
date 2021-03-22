@@ -12,7 +12,7 @@
         class="elevation-0 mr-8"
         :class="{
           'selected-card': department === 'Cơ sở A',
-          'cursor-default': step !== 1,
+          'cursor-default': documentStep !== 1,
         }"
         :disabled="department !== 'Cơ sở A' && department !== ''"
         @click="chooseFacility(true)"
@@ -49,7 +49,7 @@
         class="elevation-0"
         :class="{
           'selected-card': department === 'Cơ sở 1',
-          'cursor-default': step !== 1,
+          'cursor-default': documentStep !== 1,
         }"
         :disabled="department !== 'Cơ sở 1' && department !== ''"
         @click="chooseFacility(false)"
@@ -78,55 +78,104 @@
         </ul>
       </v-card>
     </v-card-text>
-    <DocumentActions
-      :documentId="document.id"
-      :query="query"
-      @completeStep="completeStep"
-    />
+    <hr class="dashed" />
+    <v-card-actions class="d-flex justify-end pt-6 px-0">
+      <v-btn
+        class="px-6 py-3 mr-6 text-none"
+        color="primary"
+        v-if="documentStep === 1"
+        :disabled="department !== 'Cơ sở A' && department !== 'Cơ sở 1'"
+        @click="saveDraft()"
+        outlined
+        large
+      >
+        <v-icon> mdi-content-save </v-icon>
+        <span class="ml-2">Lưu tạm thời</span>
+      </v-btn>
+      <v-btn
+        class="px-6 py-3 text-none elevation-0"
+        color="primary"
+        v-if="documentStep === 1"
+        @click="completeStep"
+        :disabled="department !== 'Cơ sở A' && department !== 'Cơ sở 1'"
+        large
+      >
+        <span>Hoàn thành</span>
+      </v-btn>
+      <v-btn
+        class="px-6 py-3 text-none elevation-0"
+        color="primary"
+        v-if="documentStep !== 1"
+        @click="nextStep"
+        :disabled="department !== 'Cơ sở A' && department !== 'Cơ sở 1'"
+        large
+      >
+        <span>Tiếp theo</span>
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import DocumentActions from "./DocumentActions.vue";
+import { mapActions, mapGetters } from "vuex";
+
 export default {
-  components: { DocumentActions },
   props: {
     document: Object,
-    documentCode: String,
-    step: Number,
+    documentStep: Number,
   },
   data() {
     return {
       department: "",
-      query: {},
     };
   },
-  watch: {
-    document(document) {
-      if (document && document.department && document.department !== "")
-        this.department = document.department;
-    },
-    department(department) {
-      this.query = {
-        department,
-      };
-    },
+  computed: {
+    ...mapGetters("cv", ["CVs", "CV"]),
+    ...mapGetters("auth", ["user", "isAuthenticated"]),
   },
-
+  beforeMount() {
+    if (this.document.department) this.department = this.document.department;
+  },
   methods: {
+    ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
     chooseFacility(isFacilityA) {
-      if (isFacilityA && this.step === 1) {
+      if (isFacilityA && this.documentStep === 1) {
         if (this.department === "Cơ sở A") this.department = "";
         else this.department = "Cơ sở A";
       }
-      if (!isFacilityA && this.step === 1) {
+      if (!isFacilityA && this.documentStep === 1) {
         if (this.department === "Cơ sở 1") this.department = "";
         else this.department = "Cơ sở 1";
       }
     },
     completeStep() {
-      //TODO: sua API de update step
-      this.$emit("completeFacilityStep");
+      let fullAddress = "";
+      if (this.department === "Cơ sở 1")
+        fullAddress = "Số 35 Đinh Núp, Phường Trung Hòa, Quận Cầu Giấy, Hà Nội";
+      else if (this.department === "Cơ sở A")
+        fullAddress = "Thôn Yên Xã, Tân Triều, Thanh Trì, Hà Nội";
+      this.$dialog.confirm({
+        title: "Hoàn thành",
+        okText: "Xác nhận",
+        topContent: `Quý phụ huynh đã chọn cơ sở đăng ký là: \n${fullAddress}`,
+        midContent: "Vui lòng ấn xác nhận nếu thông tin trên là đúng",
+        botContent:
+          "Lưu ý: Hồ sơ đăng ký tại cơ sở nào sẽ chỉ được thi và nhập học tại cơ sở đó",
+        isRedText: [false, false, true],
+        cancelText: "Chọn lại",
+        done: async () => {
+          this.$loading.active = true;
+          this.$emit("completeStep", { department: this.department });
+        },
+      });
+    },
+    saveDraft() {
+      this.$loading.active = true;
+      this.$emit("saveDraft", { department: this.department });
+    },
+    nextStep() {
+      this.$loading.active = true;
+      this.$emit("nextStep");
     },
   },
 };
@@ -179,6 +228,10 @@ hr.solid {
   border-style: solid;
   border-width: 1px;
   margin: auto;
+}
+hr.dashed {
+  width: 100%;
+  border: 1px dashed #e6e4eb;
 }
 .selected-card {
   border: rgba(0, 132, 255, 1) 1px solid !important;

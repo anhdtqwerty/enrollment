@@ -3,28 +3,31 @@ import utils from './utils'
 const _initConfirmData = {
   state: false,
   title: '',
-  text: '',
+  topContent: '',
+  midContent: '',
+  botContent: '',
+  isRedText: [false, false, false],
   okText: 'Yes',
   cancelText: 'No',
   hideCancel: false,
   hideOk: false,
-  done () {},
-  cancel () {}
+  done() {},
+  cancel() {},
 }
 
 export default {
   confirmData: utils.clone(_initConfirmData),
-  confirm (dialogData = {}) {
+  confirm(dialogData = {}) {
     Object.assign(this.confirmData, {
       state: true,
-      ...dialogData
+      ...dialogData,
     })
   },
-  cancel () {
+  cancel() {
     this.confirmData.state = false
     this.confirmData.cancel()
     setTimeout(() => {
       Object.assign(this.confirmData, _initConfirmData)
     }, 500)
-  }
+  },
 }

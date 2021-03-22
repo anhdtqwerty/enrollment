@@ -9,6 +9,13 @@ export default {
     step: 1,
   },
   actions: {
+    async checkSystemTime({state}, {grade}) {
+      try {
+        return await CV.checkSystemTime({grade})
+      } catch (e) {
+        alert.error(e)
+      }
+    },
     async fetchCVs({commit}, options) {
       try {
         commit('setCVs', await CV.fetch(options))
@@ -38,13 +45,12 @@ export default {
         commit('setCV', newCV)
         alert.success('Tạo hồ sơ mới thành công!')
       } catch (e) {
-        console.log(e)
         alert.error(e)
       }
     },
-    async updateCV({commit, state}, {id, ...Cv}) {
+    async updateCV({commit, state}, {code, ...Cv}) {
       try {
-        const updatedCV = await CV.update(id, Cv)
+        const updatedCV = await CV.update(code, Cv)
         commit('setCV', updatedCV)
         alert.success('Đã lưu thành công')
       } catch (e) {
@@ -87,6 +93,7 @@ export default {
         ...state.CVs,
         [CV.code]: CV,
       }
+      state.step = CV.step
     },
     setStep(state, step) {
       state.step = step

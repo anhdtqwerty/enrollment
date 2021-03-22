@@ -4,10 +4,29 @@
       <v-card-title class="pa-0 title--text card-title mb-6"
         >{{ dialog.title }}<v-spacer
       /></v-card-title>
-      <v-card-text class="card-content mx-auto pa-0" style="max-width:450px">
-        <slot name="top-content" class=" mb-4"></slot>
-        <slot name="mid-content" class=" mb-4"></slot>
-        <slot name="bottom-content" class=" mb-6"></slot>
+      <v-card-text class="card-content mx-auto pa-0" style="max-width: 450px">
+        <div
+          name="top-content"
+          style="white-space: pre-line"
+          class="mb-4"
+          :class="{ 'error--text': dialog.isRedText[0] }"
+        >
+          {{ dialog.topContent }}
+        </div>
+        <div
+          name="mid-content"
+          class="mb-4"
+          :class="{ 'error--text': dialog.isRedText[1] }"
+        >
+          {{ dialog.midContent }}
+        </div>
+        <div
+          name="bottom-content"
+          class="mb-6"
+          :class="{ 'error--text': dialog.isRedText[2] }"
+        >
+          {{ dialog.botContent }}
+        </div>
       </v-card-text>
       <v-card-actions class="justify-space-between pa-0">
         <v-btn
