@@ -7,14 +7,22 @@ import utils from "@/plugins/utils";
 import dialog from "@/plugins/dialog";
 import alert from "@/plugins/alert";
 import loading from "@/plugins/loading";
+import VueHtmlToPaper from "vue-html-to-paper";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "@mdi/font/css/materialdesignicons.css";
-moment.locale("vi");
+import { VueMaskDirective } from "v-mask";
 
+const options = {
+  name: "_blank",
+  specs: ["fullscreen=yes", "titlebar=no", "scrollbars=no"],
+  styles: ["@/modules/active-code/PrintActiveCode.css"],
+};
+
+Vue.directive("mask", VueMaskDirective);
 Vue.use(
   PluginHelper.create({
     $utils: utils,
@@ -26,6 +34,7 @@ Vue.use(
     $moment: moment,
   })
 );
+Vue.use(VueHtmlToPaper, options);
 Vue.config.productionTip = false;
 new Vue({
   router,

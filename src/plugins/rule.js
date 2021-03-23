@@ -45,7 +45,10 @@ export const inputRules = {
     "Sai định dạng số điện thoại",
   nospace: (v) => !v || !/ /.test(v.trim()) || "Không được chứa dấu cách",
   notEmpty: (v) => !Array.isArray(v) || !!v.length || "Required",
-  otp: (v) =>
-    (v && /[0-9]{6}/.test(v.trim())) || "Định dạng mã OTP bao gồm 6 chữ số",
-  activeCode: (v) => /(?<!\d)\d{8}(?!\d)/.test(v) || "Mã kích hoạt gồm 8 chữ số"
+  otp: (v) => (v && /^(\d{6})$/.test(v.trim())) || "Mã OTP bao gồm 6 chữ số",
+  cccd: (v) =>
+    (v && /^(\d{9}|\d{12})$/.test(v.trim())) ||
+    "Sai định dạng số CMND / Thẻ CCCD",
+  activeCode: (v) =>
+    /(?<!\d)\d{8}(?!\d)/.test(v.trim()) || "Mã kích hoạt gồm 8 chữ số",
 };

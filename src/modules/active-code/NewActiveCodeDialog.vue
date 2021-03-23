@@ -1,5 +1,11 @@
 <template>
   <v-dialog v-model="dialog" max-width="620px" persistent>
+    <PrintActiveCode
+      id="printNewActiveCode"
+      class="d-none"
+      :code="activeCode.code"
+      :createdAt="activeCode.createdAt"
+    />
     <v-card>
       <v-card-title class="admin white--text text-uppercase dialog-title">
         Thêm mã kích hoạt
@@ -28,10 +34,9 @@
             color="admin"
             style="flex: 1 1 0px;"
             :loading="loading"
-            :disabled="isCreated"
-            :dark="!isCreated"
             @click="submit()"
             depressed
+            dark
             >Thêm mã kích hoạt</v-btn
           >
         </div>
@@ -54,7 +59,8 @@
             color="#0D47A1"
             style="flex: 1 1 0px"
             :loading="loading"
-            :disabled="!isCreated"
+            :disabled="!activeCode.code"
+            @click="onPrint()"
             class="px-3 py-2 text-none"
             outlined
             light
@@ -72,9 +78,13 @@
 <script>
 import { get } from "lodash";
 import { mapActions, mapGetters } from "vuex";
+import PrintActiveCode from "./PrintActiveCode.vue";
 
 /* eslint-disable no-unused-vars */
 export default {
+  components: {
+    PrintActiveCode,
+  },
   props: {
     state: Boolean,
   },
@@ -90,7 +100,6 @@ export default {
   data() {
     return {
       activeCode: {},
-      isCreated: false,
       dialog: false,
       loading: false,
       grade: "Khối 6",
@@ -112,9 +121,17 @@ export default {
       "updateActiveCode",
       "createActiveCode",
     ]),
+    sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    },
+    async onPrint() {
+      this.$loading.active = true;
+      await this.sleep(250);
+      this.$loading.active = false;
+      this.$htmlToPaper("printNewActiveCode");
+    },
     reset() {
       this.activeCode = {};
-      this.isCreated = false;
       this.grade = "Khối 6";
     },
     async submit() {
@@ -123,7 +140,6 @@ export default {
         grade: this.grade,
       });
       if (newActiveCode) {
-        this.isCreated = true;
         this.activeCode = newActiveCode;
       }
       this.loading = false;

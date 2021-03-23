@@ -1,41 +1,56 @@
 <template>
-  <v-data-table
-    item-key="id"
-    :headers="headers"
-    :loading="loading"
-    :items="activeCodes"
-    :items-per-page="10"
-    :disable-sort="$vuetify.breakpoint.smAndDown"
-    v-bind="this.$attrs"
-  >
-    <template v-slot:[`item.code`]="{ item }">
-      {{ item | getCode }}
-    </template>
-    <template v-slot:[`item.grade`]="{ item }">
-      {{ item | getGrade }}
-    </template>
-    <template v-slot:[`item.department`]="{ item }">
-      {{ item | getDepartment }}
-    </template>
-    <template v-slot:[`item.created_at`]="{ item }">
-      {{ getCreatedAt(item) }}
-    </template>
-    <template v-slot:[`item.activeDate`]="{ item }">
-      {{ getActiveAt(item) }}
-    </template>
-    <template v-slot:[`item.status`]="{ item }">
-      <v-chip small class="white--text" :color="getColor(item.status)" label>
-        {{ item.status | getStatus }}
-      </v-chip>
-    </template>
-    <template v-slot:[`item.action`]="{ item }">
-      <v-btn @click="onPrint(item)" color="admin" icon>
-        <v-icon>
-          mdi-printer
-        </v-icon>
-      </v-btn>
-    </template>
-  </v-data-table>
+  <div>
+    <PrintActiveCode
+      class="d-none"
+      id="printActiveCode"
+      :code="selectedCode"
+      :createdAt="selectedCreatedAt"
+    />
+
+    <v-data-table
+      item-key="id"
+      :headers="headers"
+      :loading="loading"
+      :items="activeCodes"
+      :items-per-page="10"
+      :disable-sort="$vuetify.breakpoint.smAndDown"
+      v-bind="this.$attrs"
+    >
+      <template v-slot:[`item.code`]="{ item }">
+        {{ item | getCode }}
+      </template>
+      <template v-slot:[`item.grade`]="{ item }">
+        {{ item | getGrade }}
+      </template>
+      <template v-slot:[`item.department`]="{ item }">
+        {{ item | getDepartment }}
+      </template>
+      <template v-slot:[`item.created_at`]="{ item }">
+        {{ getCreatedAt(item) }}
+      </template>
+      <template v-slot:[`item.activeDate`]="{ item }">
+        {{ getActiveAt(item) }}
+      </template>
+      <template v-slot:[`item.status`]="{ item }">
+        <v-chip
+          small
+          class="white--text d-flex justify-center"
+          :color="getColor(item.status)"
+          style="width: 105px"
+          label
+        >
+          {{ item.status | getStatus }}
+        </v-chip>
+      </template>
+      <template v-slot:[`item.action`]="{ item }">
+        <v-btn @click="onPrint(item)" color="admin" icon>
+          <v-icon>
+            mdi-printer
+          </v-icon>
+        </v-btn>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script>
@@ -93,12 +108,14 @@ const originHeaders = [
   },
 ];
 
+import PrintActiveCode from "./PrintActiveCode.vue";
 import { mapActions, mapGetters } from "vuex";
 import { get } from "lodash";
 import moment from "moment";
 moment.locale("vi");
 
 export default {
+  components: { PrintActiveCode },
   computed: {
     ...mapGetters("activeCode", ["activeCodes", "activeCode"]),
   },
@@ -106,6 +123,8 @@ export default {
     return {
       loading: false,
       headers: originHeaders,
+      selectedCode: "",
+      selectedCreatedAt: "",
     };
   },
   async mounted() {
@@ -128,15 +147,25 @@ export default {
       if (item.activeDate) return moment(item.activeDate).format("DD/MM/YYYY");
       else return "---";
     },
-    onPrint(data) {},
+    sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    },
+    async onPrint(data) {
+      this.$loading.active = true;
+      this.selectedCode = data.code;
+      this.selectedCreatedAt = data.createdAt;
+      await this.sleep(250);
+      this.$loading.active = false;
+      this.$htmlToPaper("printActiveCode");
+    },
     async refresh(query) {
       this.loading = true;
       await this.fetchActiveCodes({ ...query });
       this.loading = false;
     },
     getColor(status) {
-      if (status === "Đã kích hoạt") return "green--text";
-      else return "gray--text";
+      if (status === "active") return "green";
+      else return "gray";
     },
     search() {},
   },
