@@ -9,6 +9,7 @@ import activeCode from "./active-code/activeCode.js";
 import auth from "./app/auth.js";
 import layout from "./app/layout.js";
 import cv from "./cv/cv.js";
+import upload from "./other/upload.js";
 
 Vue.use(Vuex);
 
@@ -30,6 +31,7 @@ export default createStore(Vuex.Store, {
     layout,
     activeCode,
     cv,
+    upload
   },
   mixins: {
     mutations: {

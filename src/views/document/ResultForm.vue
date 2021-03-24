@@ -1,26 +1,20 @@
 <template>
   <v-card width="100%" class="elevation-0">
-    <v-card-title class="card-title mb-2">1. Thông tin phụ huynh</v-card-title>
+    <v-card-title class="card-title mb-2">Kết quả học tập</v-card-title>
     <v-card-subtitle class="card-subtitle">
-      Vui lòng điền đầy đủ thông tin bằng tiếng Việt có dấu, viết hoa đầy đủ.
+      Vui lòng điền <b>Điểm thi cuối năm</b> môn Toán, Văn, Anh và điểm hạnh
+      kiểm cả năm
     </v-card-subtitle>
     <v-card-text class="d-flex pa-0">
-      <ParentForm
-        ref="parentForm"
+      <Grade6ResultForm
+        ref="grade6Result"
         :documentStep="documentStep"
         :document="document"
       />
     </v-card-text>
-    <hr class="dashed" />
-    <v-card-title class="card-title mb-2 mt-6"
-      >2. Thông tin học sinh</v-card-title
-    >
-    <v-card-subtitle class="card-subtitle">
-      Vui lòng điền đầy đủ thông tin bằng tiếng Việt có dấu, viết hoa đầy đủ.
-    </v-card-subtitle>
     <v-card-text class="d-flex pa-0">
-      <StudentForm
-        ref="studentForm"
+      <Grade6Expectation
+        ref="grade6Expectation"
         :documentStep="documentStep"
         :document="document"
       />
@@ -61,14 +55,14 @@
 </template>
 
 <script>
-import ParentForm from "@/modules/cv/ParentForm.vue";
-import StudentForm from "@/modules/cv/StudentForm.vue";
+import Grade6ResultForm from "@/modules/cv/Grade6ResultForm.vue";
+import Grade6Expectation from "@/modules/cv/Grade6Expectation.vue";
 import moment from "moment";
 
 export default {
   components: {
-    ParentForm,
-    StudentForm,
+    Grade6ResultForm,
+    Grade6Expectation,
   },
   props: {
     document: Object,

@@ -12,4 +12,7 @@
 .v-card--link:focus:before {
   opacity: 0 !important;
 }
+.v-toolbar__content {
+  z-index: 10002 !important;
+}
 </style>

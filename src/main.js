@@ -14,7 +14,7 @@ import store from "./store";
 import vuetify from "./plugins/vuetify";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "@mdi/font/css/materialdesignicons.css";
-import { VueMaskDirective } from "v-mask";
+import VueMask from "v-mask";
 
 const options = {
   name: "_blank",
@@ -22,7 +22,7 @@ const options = {
   styles: ["@/modules/active-code/PrintActiveCode.css"],
 };
 
-Vue.directive("mask", VueMaskDirective);
+Vue.use(VueMask);
 Vue.use(
   PluginHelper.create({
     $utils: utils,

@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 export const inputRules = {
   required: (v) =>
     (!!v && (typeof v !== "string" || !!v.trim())) ||
@@ -47,8 +49,16 @@ export const inputRules = {
   notEmpty: (v) => !Array.isArray(v) || !!v.length || "Required",
   otp: (v) => (v && /^(\d{6})$/.test(v.trim())) || "Mã OTP bao gồm 6 chữ số",
   cccd: (v) =>
-    (v && /^(\d{9}|\d{12})$/.test(v.trim())) ||
+    !v ||
+    /^(\d{9}|\d{12})$/.test(v.trim()) ||
     "Sai định dạng số CMND / Thẻ CCCD",
   activeCode: (v) =>
-    /(?<!\d)\d{8}(?!\d)/.test(v.trim()) || "Mã kích hoạt gồm 8 chữ số",
+    (v && /(?<!\d)\d{8}(?!\d)/.test(v.trim())) || "Mã kích hoạt gồm 8 chữ số",
+  dob: (v) =>
+    !v ||
+    (moment(v, "DD/MM/YYYY").isValid() &&
+      moment(v, "DD/MM/YYYY").isBefore(new Date())) ||
+    "Ngày tháng năm sinh không hợp lệ",
+  mark: (v) =>
+    !v || (parseFloat(v) >= 0 && parseFloat(v) <= 10) || "Điểm không hợp lệ",
 };

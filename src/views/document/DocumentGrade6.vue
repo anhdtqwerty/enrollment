@@ -92,6 +92,16 @@
         :documentStep="document.step"
         @completeStep="updateDocument($event, false)"
         @saveDraft="updateDocument($event, true)"
+        @nextStep="nextStep"
+      />
+    </v-col>
+    <v-col v-if="step === 3" class="d-flex px-8" style="flex: 2 1 0px">
+      <ResultForm
+        :document="document"
+        :documentStep="document.step"
+        @completeStep="updateDocument($event, false)"
+        @saveDraft="updateDocument($event, true)"
+        @nextStep="nextStep"
       />
     </v-col>
   </div>
@@ -101,10 +111,12 @@
 import { mapActions, mapGetters } from "vuex";
 import ChooseFacility from "./ChooseFacility.vue";
 import InfoForm from "./InfoForm.vue";
+import ResultForm from "./ResultForm.vue";
 export default {
   components: {
     ChooseFacility,
     InfoForm,
+    ResultForm,
   },
   computed: {
     ...mapGetters("auth", ["user", "isAuthenticated"]),
@@ -165,6 +177,7 @@ export default {
     },
     nextStep() {
       this.setStep(this.step + 1);
+      this.$loading.active = false;
     },
   },
 };

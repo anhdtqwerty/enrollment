@@ -52,14 +52,16 @@ export default {
   },
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV", "checkSystemTime"]),
+    ...mapActions("upload", ["upload", "destroy"]),
     async updateDocument(data, isDraft) {
+      let avatarId = "";
       if (!data) {
         this.$alert.error("Đã có lỗi xảy ra trong quá trình cập nhật hồ sơ");
         return;
       }
-      if (data.department && data.department === "") {
-        this.$alert.error("Xin vui lòng chọn cơ sở");
-        return;
+      if (data.avatar && data.avatar != "") {
+        avatarId = await this.uploadAvatar(data.avatar);
+        data.avatar = [avatarId];
       }
       if (isDraft) {
         data.submitType = "save-draft";
@@ -74,7 +76,19 @@ export default {
         ...data,
       });
       this.document = this.CV(this.documentCode);
+      this.systemTime = await this.checkSystemTime({
+        grade: this.document.type,
+      });
       this.$loading.active = false;
+    },
+    async uploadAvatar(image) {
+      if (this.document.avatar.length > 0)
+        await this.destroy(this.document.avatar[0].id);
+      let formData = new FormData();
+      formData.append("files", image);
+      formData.append("refId", this.document.id);
+      formData.append("field", "avatar");
+      return await this.upload(formData);
     },
   },
   data() {

@@ -149,6 +149,10 @@ export default {
       }
     },
     completeStep() {
+      if (!this.department || this.department === "") {
+        this.$alert.error("Xin vui lòng chọn cơ sở");
+        return;
+      }
       let fullAddress = "";
       if (this.department === "Cơ sở 1")
         fullAddress = "Số 35 Đinh Núp, Phường Trung Hòa, Quận Cầu Giấy, Hà Nội";
@@ -165,11 +169,18 @@ export default {
         cancelText: "Chọn lại",
         done: async () => {
           this.$loading.active = true;
-          this.$emit("completeStep", { department: this.department });
+          this.$emit("completeStep", {
+            department: this.department,
+            status: "filling",
+          });
         },
       });
     },
     saveDraft() {
+      if (!this.department || this.department === "") {
+        this.$alert.error("Xin vui lòng chọn cơ sở");
+        return;
+      }
       this.$loading.active = true;
       this.$emit("saveDraft", { department: this.department });
     },
