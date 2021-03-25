@@ -43,14 +43,14 @@
     </v-card>
     <GradeEnrollDialog
       title="Thông tin tuyển sinh khối lớp 6"
-      src="http://enroll-api.quanlylop.com/Khoi6.html"
+      src="https://enroll-api.quanlylop.com/Khoi6.html"
       :state="grade6Dialog"
       @closeDialog="toggleGrade6Dialog"
     />
     <GradeEnrollDialog
       title="Thông tin tuyển sinh khối lớp 10"
       htmlString=""
-      src="http://enroll-api.quanlylop.com/Khoi10.html"
+      src="https://enroll-api.quanlylop.com/Khoi10.html"
       :state="grade10Dialog"
       @closeDialog="toggleGrade10Dialog"
     />
