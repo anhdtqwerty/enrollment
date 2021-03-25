@@ -3,7 +3,7 @@
     <v-card-title class="card-title mb-2">Kết quả học tập</v-card-title>
     <v-card-subtitle class="card-subtitle">
       Vui lòng điền <b>Điểm thi cuối năm</b> môn Toán, Văn, Anh và điểm hạnh
-      kiểm cả năm
+      kiểm cả năm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>
     </v-card-subtitle>
     <v-card-text class="d-flex pa-0">
       <Grade6ResultForm

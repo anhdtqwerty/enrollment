@@ -10,10 +10,9 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade1Math"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
-          v-mask="'#.##'"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.mark]"
           outlined
@@ -31,7 +30,7 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade1Literature"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -44,13 +43,11 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <div class="field-label">
-          Anh (nếu có)
-        </div>
+        <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade1English"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -94,7 +91,7 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade2Math"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -113,8 +110,8 @@
         </div>
         <v-text-field
           placeholder="VD: 10"
-          v-model="name"
-          type="studyResult.grade2Literature"
+          v-model="studyResult.grade2Literature"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -127,13 +124,11 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <div class="field-label">
-          Anh (nếu có)
-        </div>
+        <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade2English"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -177,7 +172,7 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade3Math"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -197,7 +192,7 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade3Literature"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -210,13 +205,11 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <div class="field-label">
-          Anh (nếu có)
-        </div>
+        <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade3English"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -260,7 +253,7 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade4Math"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -280,7 +273,7 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade4Literature"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -293,13 +286,11 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <div class="field-label">
-          Anh (nếu có)
-        </div>
+        <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade4English"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -343,7 +334,7 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade5Math"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -363,7 +354,7 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade5Literature"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -376,13 +367,11 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <div class="field-label">
-          Anh (nếu có)
-        </div>
+        <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade5English"
-          type="text"
+          type="number"
           color="primary"
           v-show="documentStep === 3"
           @keyup.enter="submit"
@@ -425,7 +414,7 @@
         </div>
         <v-text-field
           placeholder="VD: 100"
-          v-model="studyResult.totalMathLiterature"
+          :value="getTotal"
           type="text"
           color="primary"
           v-show="documentStep === 3"
@@ -439,11 +428,9 @@
     <div class="section-label py-6">Thành tích đặc biệt</div>
     <v-row class="pb-6">
       <v-col cols="12">
-        <div class="field-label">
-          Giải thưởng đã đạt được
-        </div>
+        <div class="field-label">Giải thưởng đã đạt được</div>
         <v-text-field
-          placeholder="VD: 100"
+          placeholder="VD: Cháu đạt giải Nhì Toán Thành phố Năm 2020, giải Nhất Toán Thành phố Năm 2021"
           v-model="studyResult.totalMathLiterature"
           type="text"
           color="primary"
@@ -464,6 +451,35 @@ export default {
     document: {
       type: Object,
       default: () => {},
+    },
+  },
+  computed: {
+    getTotal() {
+      if (
+        this.studyResult.grade1Literature == "" ||
+        this.studyResult.grade1Math == "" ||
+        this.studyResult.grade2Literature == "" ||
+        this.studyResult.grade2Math == "" ||
+        this.studyResult.grade3Literature == "" ||
+        this.studyResult.grade3Math == "" ||
+        this.studyResult.grade4Literature == "" ||
+        this.studyResult.grade4Math == "" ||
+        this.studyResult.grade5Literature == "" ||
+        this.studyResult.grade5Math == ""
+      )
+        return "Xin vui lòng điền hết các điểm thành phần bên trên";
+      return (
+        parseFloat(this.studyResult.grade1Literature) +
+        parseFloat(this.studyResult.grade1Math) +
+        parseFloat(this.studyResult.grade2Literature) +
+        parseFloat(this.studyResult.grade2Math) +
+        parseFloat(this.studyResult.grade3Literature) +
+        parseFloat(this.studyResult.grade3Math) +
+        parseFloat(this.studyResult.grade4Literature) +
+        parseFloat(this.studyResult.grade4Math) +
+        parseFloat(this.studyResult.grade5Literature) +
+        parseFloat(this.studyResult.grade5Math)
+      );
     },
   },
   data() {
