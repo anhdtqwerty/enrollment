@@ -62,9 +62,7 @@
     </v-row>
     <v-row>
       <v-col cols="4">
-        <div class="field-label">
-          Lý
-        </div>
+        <div class="field-label">Lý</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade6Physics"
@@ -81,9 +79,7 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <div class="field-label">
-          Hóa
-        </div>
+        <div class="field-label">Hóa</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade6Chemistry"
@@ -182,9 +178,7 @@
     </v-row>
     <v-row>
       <v-col cols="4">
-        <div class="field-label">
-          Lý
-        </div>
+        <div class="field-label">Lý</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade7Physics"
@@ -201,9 +195,7 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <div class="field-label">
-          Hóa
-        </div>
+        <div class="field-label">Hóa</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade7Chemistry"
@@ -302,9 +294,7 @@
     </v-row>
     <v-row>
       <v-col cols="4">
-        <div class="field-label">
-          Lý
-        </div>
+        <div class="field-label">Lý</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade8Physics"
@@ -321,9 +311,7 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <div class="field-label">
-          Hóa
-        </div>
+        <div class="field-label">Hóa</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade8Chemistry"
@@ -422,9 +410,7 @@
     </v-row>
     <v-row>
       <v-col cols="4">
-        <div class="field-label">
-          Lý
-        </div>
+        <div class="field-label">Lý</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade9Physics"
@@ -441,9 +427,7 @@
         </div>
       </v-col>
       <v-col cols="4">
-        <div class="field-label">
-          Hóa
-        </div>
+        <div class="field-label">Hóa</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade9Chemistry"
@@ -479,70 +463,69 @@
         </div>
       </v-col>
     </v-row>
-    <hr class="dashed" />
-    <div class="section-label py-6">Thành tích đặc biệt</div>
-    <v-row class="pb-6">
-      <v-col cols="12">
-        <div class="field-label">Thành tích đặc biệt (xét học bổng)</div>
-        <v-text-field
-          placeholder="VD: Con đạt giải Nhì Toán Thành phố Năm 2020, giải Nhất Toán Thành phố Năm 2021"
-          v-model="studyResult.achievements"
-          type="text"
-          color="primary"
-          v-if="documentStep === 4"
-          messages="Vui lòng bỏ qua nếu không có thông tin"
-          outlined
-        />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
-          {{ studyResult.achievements || "Chưa có thông tin" }}
+    <div v-if="documentStep === 4">
+      <hr class="dashed" />
+      <div class="section-label py-6">Thành tích đặc biệt</div>
+      <v-row class="pb-6">
+        <v-col cols="12">
+          <div class="field-label">Thành tích đặc biệt (xét học bổng)</div>
+          <v-text-field
+            placeholder="VD: Con đạt giải Nhì Toán Thành phố Năm 2020, giải Nhất Toán Thành phố Năm 2021"
+            v-model="studyResult.achievements"
+            type="text"
+            color="primary"
+            v-if="documentStep === 4"
+            messages="Vui lòng bỏ qua nếu không có thông tin"
+            outlined
+          />
+          <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+            {{ studyResult.achievements || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+      </v-row>
+      <v-row class="pb-6 d-flex flex-column" no-gutters>
+        <div class="field-label mb-2"><b>Học bổng năm 2021 - 2022:</b></div>
+        <table class="scholarship-table">
+          <tr style="background: #f8f8f8" class="table-th">
+            <td>STT</td>
+            <td>Mức học bổng</td>
+            <td>Số lượng</td>
+            <td>Tiêu chí</td>
+          </tr>
+          <tr v-for="scholarship in scholarships" :key="scholarship.index">
+            <td class="text-center table-td">{{ scholarship.index }}</td>
+            <td class="table-td">{{ scholarship.discount }}</td>
+            <td class="table-td">{{ scholarship.amount }}</td>
+            <td class="table-td" v-html="scholarship.criterias"></td>
+          </tr>
+        </table>
+      </v-row>
+      <hr class="dashed" />
+      <div class="section-label py-6">Diện tuyển thẳng</div>
+      <div class="d-flex">
+        <v-checkbox
+          class="align-self-start mt-0 pt-0"
+          v-model="isRecuitingStraight"
+        ></v-checkbox>
+        <div class="text-justify">
+          Con của tôi đạt đủ 1 trong 2 tiêu chí và nằm trong diện tuyển thẳng
+          của nhà trường.
         </div>
-      </v-col>
-    </v-row>
-    <v-row class="pb-6 d-flex flex-column" no-gutters>
-      <div class="field-label mb-2"><b>Học bổng năm 2021 - 2022:</b></div>
-      <table class="scholarship-table">
-        <tr style="background: #F8F8F8;" class="table-th">
-          <td>STT</td>
-          <td>Mức học bổng</td>
-          <td>Số lượng</td>
-          <td>Tiêu chí</td>
-        </tr>
-        <tr v-for="scholarship in scholarships" :key="scholarship.index">
-          <td class="text-center table-td">{{ scholarship.index }}</td>
-          <td class="table-td">{{ scholarship.discount }}</td>
-          <td class="table-td">{{ scholarship.amount }}</td>
-          <td class="table-td" v-html="scholarship.criterias"></td>
-        </tr>
-      </table>
-    </v-row>
-    <hr class="dashed" />
-    <div class="section-label py-6">Diện tuyển thẳng</div>
-    <div class="d-flex">
-      <v-checkbox
-        class="align-self-start mt-0 pt-0"
-        v-model="studyResult.isRecuitingStraight"
-      ></v-checkbox>
-      <div class="text-justify">
-        Con của tôi đạt đủ 1 trong 2 tiêu chí và nằm trong diện tuyển thẳng của
-        nhà trường.
       </div>
-    </div>
-    <v-row v-if="studyResult.isRecuitingStraight" no-gutters>
-      <v-select
-        v-model="studyResult.recuitingStraightType"
-        placeholder="Phụ huynh chọn 1 trong 2 tieu chí xét tuyển thẳng"
-        item-text="title"
-        item-value="value"
-        :items="recuitingStraightTypes"
-        :rules="[$rules.required]"
-        v-if="documentStep === 4"
-        multiple
-        outlined
-      />
-    </v-row>
-    <div class="field-label mb-2">
-      <span class="error--text">(*)</span> Phụ huynh vui lòng đến cơ sở của Nhà
-      trường để xác nhận với ban tuyển sinh về diện tuyển thẳng của con
+      <v-row v-if="isRecuitingStraight" no-gutters>
+        <v-radio-group v-model="studyResult.recuitingStraightType">
+          <v-radio
+            v-for="recuitingStraightType in recuitingStraightTypes"
+            :key="recuitingStraightType.title"
+            :label="recuitingStraightType.title"
+            :value="recuitingStraightType.value"
+          ></v-radio>
+        </v-radio-group>
+      </v-row>
+      <div class="field-label mb-2">
+        <span class="error--text">(*)</span> Phụ huynh vui lòng đến cơ sở của
+        Nhà trường để xác nhận với ban tuyển sinh về diện tuyển thẳng của con
+      </div>
     </div>
   </v-form>
 </template>
@@ -556,44 +539,57 @@ export default {
       default: () => {},
     },
   },
+  watch: {
+    isRecuitingStraight(newValue) {
+      if (!newValue) {
+        this.studyResult.recuitingStraightType = "";
+      }
+    },
+  },
   data() {
     return {
       isValid: false,
+      isRecuitingStraight: false,
       studyResult: {
-        grade1Literature: "",
-        grade1Math: "",
-        grade1English: "",
-        grade1Morality: "",
-        grade2Literature: "",
-        grade2Math: "",
-        grade2English: "",
-        grade2Morality: "",
-        grade3Literature: "",
-        grade3Math: "",
-        grade3English: "",
-        grade3Morality: "",
-        grade4Literature: "",
-        grade4Math: "",
-        grade4English: "",
-        grade4Morality: "",
-        grade5Literature: "",
-        grade5Math: "",
-        grade5English: "",
-        grade5Morality: "",
+        grade6Literature: "",
+        grade6Math: "",
+        grade6English: "",
+        grade6Physics: "",
+        grade6Chemistry: "",
+        grade6Morality: "",
+        grade7Literature: "",
+        grade7Math: "",
+        grade7English: "",
+        grade7Physics: "",
+        grade7Chemistry: "",
+        grade7Morality: "",
+        grade8Literature: "",
+        grade8Math: "",
+        grade8English: "",
+        grade8Physics: "",
+        grade8Chemistry: "",
+        grade8Morality: "",
+        grade9Literature: "",
+        grade9Math: "",
+        grade9English: "",
+        grade9Physics: "",
+        grade9Chemistry: "",
+        grade9Morality: "",
         achievements: "",
-        isRecuitingStraight: false,
         recuitingStraightType: "",
       },
       recuitingStraightTypes: [
         {
           title:
             "Học sinh đạt chứng chỉ IELTS từ 6.0 trở lên; đạt 4 năm học sinh giỏi THCS; có tham gia kỳ thi vào lớp 10 năm học 2021 – 2022 của Sở GD&ĐT Hà Nội.",
-          value: "IELTS",
+          value:
+            "Học sinh đạt chứng chỉ IELTS từ 6.0 trở lên; đạt 4 năm học sinh giỏi THCS; có tham gia kỳ thi vào lớp 10 năm học 2021 – 2022 của Sở GD&ĐT Hà Nội.",
         },
         {
           title:
             "Học sinh đạt giải Nhất, Nhì, Ba trong kỳ thi học sinh giỏi của TP Hà Nội các môn Toán, Lý, Hóa, Văn, Anh.",
-          value: "HSG",
+          value:
+            "Học sinh đạt giải Nhất, Nhì, Ba trong kỳ thi học sinh giỏi của TP Hà Nội các môn Toán, Lý, Hóa, Văn, Anh.",
         },
       ],
       moralities: [
@@ -652,10 +648,7 @@ export default {
     },
     getData() {
       return {
-        studyResult: {
-          ...this.studyResult,
-          totalMathLiterature: !isNaN(this.getTotal) ? this.getTotal : "",
-        },
+        studyResult: this.studyResult,
       };
     },
   },

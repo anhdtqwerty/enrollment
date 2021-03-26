@@ -30,7 +30,10 @@
       <v-btn
         class="px-6 py-3 mr-6 text-none"
         color="primary"
-        v-if="documentStep === 3"
+        v-if="
+          (documentStep === 3 && document.type === 'Khối 6') ||
+          (documentStep === 4 && document.type === 'Khối 10')
+        "
         @click="saveDraft"
         outlined
         large
@@ -41,7 +44,10 @@
       <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep === 3"
+        v-if="
+          (documentStep === 3 && document.type === 'Khối 6') ||
+          (documentStep === 4 && document.type === 'Khối 10')
+        "
         @click="completeStep"
         large
       >
@@ -50,7 +56,10 @@
       <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep !== 3"
+        v-if="
+          (documentStep !== 3 && document.type === 'Khối 6') ||
+          (documentStep !== 4 && document.type === 'Khối 10')
+        "
         @click="nextStep"
         large
       >
@@ -87,7 +96,7 @@ export default {
       this.$refs.grade6Result.reset();
       this.$refs.grade6Expectation.reset();
     },
-    getQuery(resultForm, expectationForm) {
+    getGrade6Query(resultForm, expectationForm) {
       return {
         studyRecord: resultForm.studyResult,
         expectation1: expectationForm.expectation1,
@@ -95,16 +104,37 @@ export default {
         expectation3: expectationForm.expectation3,
       };
     },
+    getGrade10Query(resultForm) {
+      return {
+        studyRecord: resultForm.studyResult,
+      };
+    },
     completeStep() {
-      const resultForm = this.$refs.grade6Result.getData();
-      const expectationForm = this.$refs.grade6Expectation.getData();
-      if (
-        !this.$refs.grade6Result.validate() ||
-        !this.$refs.grade6Expectation.validate()
-      ) {
-        this.$alert.error("Xin vui lòng điền hết thông tin bắt buộc");
-        return;
-      }
+      let resultForm,
+        expectationForm,
+        query = {};
+      if (this.document.type === "Khối 6") {
+        if (
+          !this.$refs.grade6Result.validate() ||
+          !this.$refs.grade6Expectation.validate()
+        ) {
+          this.$alert.error("Xin vui lòng điền hết thông tin bắt buộc");
+          return;
+        }
+        resultForm = this.$refs.grade6Result.getData();
+        expectationForm = this.$refs.grade6Expectation.getData();
+        query = this.getGrade6Query(resultForm, expectationForm);
+      } else if (this.document.type === "Khối 10") {
+        if (!this.$refs.grade10Result.validate()) {
+          this.$alert.error("Xin vui lòng điền hết thông tin bắt buộc");
+          return;
+        }
+        resultForm = this.$refs.grade10Result.getData();
+        query = this.getGrade10Query(resultForm);
+      } else
+        this.$alert.error(
+          "Có lỗi trong quá trình cập nhật hồ sơ, xin vui lòng thử lại"
+        );
       this.$dialog.confirm({
         title: "Hoàn thành",
         okText: "Xác nhận",
@@ -117,19 +147,26 @@ export default {
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;
-          this.$emit(
-            "completeStep",
-            this.getQuery(resultForm, expectationForm)
-          );
+          this.$emit("completeStep", query);
         },
       });
     },
     saveDraft() {
-      const resultForm = this.$refs.grade6Result.getData();
-      const expectationForm = this.$refs.grade6Expectation.getData();
-      console.log(resultForm);
       this.$loading.active = true;
-      this.$emit("saveDraft", this.getQuery(resultForm, expectationForm));
+      if (this.document.type === "Khối 6") {
+        const resultForm = this.$refs.grade6Result.getData();
+        const expectationForm = this.$refs.grade6Expectation.getData();
+        this.$emit(
+          "saveDraft",
+          this.getGrade6Query(resultForm, expectationForm)
+        );
+      } else if (this.document.type === "Khối 10") {
+        const resultForm = this.$refs.grade10Result.getData();
+        this.$emit("saveDraft", this.getGrade10Query(resultForm));
+      } else
+        this.$alert.error(
+          "Có lỗi trong quá trình cập nhật hồ sơ, xin vui lòng thử lại"
+        );
     },
     nextStep() {
       this.$loading.active = true;

@@ -7,13 +7,16 @@
       v-if="document.type === 'Khối 6'"
     />
     <ExamResultGrade10
-      ref="agreeForm"
+      ref="grade10ExamResult"
       :documentStep="documentStep"
       :document="document"
       v-if="document.type === 'Khối 10'"
     />
-    <hr class="dashed" />
-    <v-card-actions class="d-flex justify-end pt-6 px-0">
+    <v-card-actions
+      class="d-flex justify-end pt-6 px-0"
+      v-if="document.status !== 'submitted'"
+    >
+      <hr class="dashed" />
       <v-btn
         class="px-6 py-3 mr-6 text-none"
         color="primary"
@@ -39,8 +42,8 @@
         color="primary"
         v-if="
           document.type === 'Khối 6' &&
-            document.ltvExamResult &&
-            document.ltvExamResult.passExam
+          document.ltvExamResult &&
+          document.ltvExamResult.passExam
         "
         @click="completeGrade6"
         large
@@ -68,7 +71,33 @@ export default {
     reset() {
       this.$refs.agreeForm.reset();
     },
-    completeGrade10() {},
+    completeGrade10() {
+      const grade10ExamResult = this.$refs.grade10ExamResult.getData();
+      if (!this.$refs.grade10ExamResult.validate()) {
+        this.$alert.error(
+          "Xin vui lòng điền tất cả thông tin bắt buộc và tích vào ô đồng ý với nội quy của nhà trường"
+        );
+        return;
+      }
+      this.$dialog.confirm({
+        title: "Hoàn thành",
+        okText: "Xác nhận",
+        topContent: `Sau khi hoàn thành, thông tin đã được khai báo sẽ KHÔNG ĐƯỢC CHỈNH SỬA.`,
+        midContent:
+          "Quý phụ huynh vui lòng kiểm tra lại một cách kỹ lưỡng trước khi chuyển sang bước tiếp theo.",
+        botContent:
+          "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục.",
+        isRedText: [true, false, false],
+        cancelText: "Kiểm tra lại",
+        done: async () => {
+          this.$loading.active = true;
+          this.$emit("completeStep", {
+            ltvExamResult: grade10ExamResult.ltvExamResult,
+            status: "submitted",
+          });
+        },
+      });
+    },
     completeGrade6() {
       if (!this.$refs.agreeForm.validate()) {
         this.$alert.error(
@@ -90,17 +119,16 @@ export default {
           this.$loading.active = true;
           this.$emit("completeStep", {
             status: "submitted",
-            expectation2: "",
           });
         },
       });
     },
-    getQuery() {},
     saveDraft() {
-      // const resultForm = this.$refs.grade6Result.getData();
-      // const expectationForm = this.$refs.grade6Expectation.getData();
+      const grade10ExamResult = this.$refs.grade10ExamResult.getData();
       this.$loading.active = true;
-      // this.$emit("saveDraft", this.getQuery(resultForm, expectationForm));
+      this.$emit("saveDraft", {
+        ltvExamResult: grade10ExamResult.ltvExamResult,
+      });
     },
     nextStep() {
       this.$loading.active = true;

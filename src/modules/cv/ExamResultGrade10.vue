@@ -1,105 +1,403 @@
 <template>
   <v-form ref="form" v-bind="this.$attrs">
-    <v-card-title class="card-title">Điểm thi</v-card-title>
+    <v-card-title class="card-title"
+      >Kết quả Kỳ thi tuyển sinh vào lớp 10 THPT năm 2021 - 2022</v-card-title
+    >
     <v-card-subtitle class="card-subtitle py-6">
-      Kết quả kỳ khảo sát & đánh giá năng lực để vào trường THCS Lương Thế Vinh
+      Phụ huynh vui lòng khai báo đầy đủ thông tin và ấn "Hoàn thành" trước ngày
+      dd/mm/yyyy
     </v-card-subtitle>
     <v-card-text class="d-flex flex-column pa-0">
+      <div class="section-label py-6">Số báo danh</div>
       <v-row>
-        <v-col>
+        <v-col cols="12">
           <div class="field-label">
-            Số báo danh
+            Số báo danh dự thi vào kỳ thi vào lớp 10 của Sở GD&ĐT TP. Hà Nội năm
+            2021
+            <span style="color: red" v-if="document.status !== 'submitted'"
+              >*</span
+            >
           </div>
-          <div class="info-label mt-2 mb-6" v-show="documentStep === 4">
+          <v-text-field
+            placeholder="VD: 123123123"
+            v-model="ltvExamResult.studentExamID"
+            type="number"
+            color="primary"
+            v-if="document.status !== 'submitted'"
+            @keyup.enter="submit"
+            :rules="[$rules.required]"
+            outlined
+            validate-on-blur
+          />
+          <div
+            class="info-label mt-2 mb-6"
+            v-if="document.status === 'submitted'"
+          >
             {{ ltvExamResult.studentExamID || "Chưa có thông tin" }}
           </div>
         </v-col>
       </v-row>
+      <hr class="dashed" />
+      <div class="section-label py-6">
+        Kết quả kỳ thi tuyển vào lớp 10 của trường Sở GD&ĐT Hà Nội năm 2021
+      </div>
       <v-row>
-        <v-col cols="3">
+        <v-col cols="4">
           <div class="field-label">
             Toán
+            <span style="color: red" v-if="document.status !== 'submitted'"
+              >*</span
+            >
           </div>
+          <v-text-field
+            placeholder="VD: 10"
+            v-model="ltvExamResult.examMath"
+            type="number"
+            color="primary"
+            v-if="document.status !== 'submitted'"
+            @keyup.enter="submit"
+            :rules="[$rules.required, $rules.mark]"
+            outlined
+            validate-on-blur
+          />
           <div
             class="info-label error--text mt-2 mb-6"
-            v-show="documentStep === 4"
+            style="font-size: 16px"
+            v-if="document.status === 'submitted'"
           >
             {{ ltvExamResult.examMath || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="4">
           <div class="field-label">
             Văn
+            <span style="color: red" v-if="document.status !== 'submitted'"
+              >*</span
+            >
           </div>
+          <v-text-field
+            placeholder="VD: 10"
+            v-model="ltvExamResult.examLiterature"
+            type="number"
+            color="primary"
+            v-if="document.status !== 'submitted'"
+            @keyup.enter="submit"
+            :rules="[$rules.required, $rules.mark]"
+            outlined
+            validate-on-blur
+          />
           <div
             class="info-label error--text mt-2 mb-6"
-            v-show="documentStep === 4"
+            style="font-size: 16px"
+            v-if="document.status === 'submitted'"
           >
-            {{ ltvExamResult.examMath || "Chưa có thông tin" }}
+            {{ ltvExamResult.examLiterature || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="3">
+        <v-col cols="4">
           <div class="field-label">
             Anh
+            <span style="color: red" v-if="document.status !== 'submitted'"
+              >*</span
+            >
           </div>
+          <v-text-field
+            placeholder="VD: 10"
+            v-model="ltvExamResult.examEnglish"
+            type="number"
+            color="primary"
+            v-if="document.status !== 'submitted'"
+            :rules="[$rules.required, $rules.mark]"
+            @keyup.enter="submit"
+            outlined
+            validate-on-blur
+          />
           <div
             class="info-label error--text mt-2 mb-6"
-            v-show="documentStep === 4"
+            style="font-size: 16px"
+            v-if="document.status === 'submitted'"
           >
-            {{ ltvExamResult.examMath || "Chưa có thông tin" }}
+            {{ ltvExamResult.examEnglish || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="3">
-          <div class="field-label mb-2">
-            Tổng điểm
+      </v-row>
+      <v-row>
+        <v-col cols="4">
+          <div class="field-label">
+            Lịch sử
+            <span style="color: red" v-if="document.status !== 'submitted'"
+              >*</span
+            >
           </div>
+          <v-text-field
+            placeholder="VD: 10"
+            v-model="ltvExamResult.examHistory"
+            type="number"
+            color="primary"
+            v-if="document.status !== 'submitted'"
+            @keyup.enter="submit"
+            :rules="[$rules.required, $rules.mark]"
+            outlined
+            validate-on-blur
+          />
           <div
             class="info-label error--text mt-2 mb-6"
-            style="font-size: 24px;"
-            v-show="documentStep === 4"
+            style="font-size: 16px"
+            v-if="document.status === 'submitted'"
           >
-            {{ getTotal }}
+            {{ ltvExamResult.examHistory || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+      </v-row>
+      <v-row v-if="document.status !== 'submitted'">
+        <v-col cols="8">
+          <div class="field-label">
+            Loại ưu tiên
+            <span style="color: red" v-if="document.status !== 'submitted'"
+              >*</span
+            >
+          </div>
+          <v-select
+            v-model="ltvExamResult.priorityType"
+            placeholder="VD: Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội"
+            item-text="title"
+            item-value="value"
+            :items="priorityTypes"
+            :rules="[$rules.required]"
+            v-if="document.status !== 'submitted'"
+            outlined
+          />
+          <div
+            class="info-label mt-2 mb-6"
+            v-if="document.status === 'submitted'"
+          >
+            {{ ltvExamResult.priorityType || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+        <v-col cols="4">
+          <div class="field-label">Điểm cộng ưu tiên (nếu có)</div>
+          <v-text-field
+            placeholder="VD: 3"
+            :value="getPriorityMark"
+            type="number"
+            color="primary"
+            v-if="document.status !== 'submitted'"
+            @keyup.enter="submit"
+            :rules="[$rules.priorityMark]"
+            :disabled="
+              ltvExamResult.priorityType !==
+              'Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội'
+            "
+            outlined
+            validate-on-blur
+          />
+          <div
+            class="info-label mt-2 mb-6"
+            v-if="document.status === 'submitted'"
+          >
+            {{ ltvExamResult.priorityMark || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="4">
+          <div class="field-label">Tổng điểm ban A</div>
+          <v-text-field
+            placeholder="VD: 10"
+            :value="getTotalA"
+            type="number"
+            color="primary"
+            v-if="document.status !== 'submitted'"
+            @keyup.enter="submit"
+            hide-details="true"
+            disabled
+            filled
+            outlined
+            validate-on-blur
+          />
+          <div
+            class="info-label error--text mt-2 mb-6"
+            style="font-size: 24px"
+            v-if="document.status === 'submitted'"
+          >
+            {{ ltvExamResult.totalA || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+        <v-col cols="4">
+          <div class="field-label">Tổng điểm ban A1</div>
+          <v-text-field
+            placeholder="VD: 10"
+            :value="getTotalA1"
+            type="number"
+            color="primary"
+            v-if="document.status !== 'submitted'"
+            @keyup.enter="submit"
+            hide-details="true"
+            disabled
+            filled
+            outlined
+            validate-on-blur
+          />
+          <div
+            class="info-label error--text mt-2 mb-6"
+            style="font-size: 24px"
+            v-if="document.status === 'submitted'"
+          >
+            {{ ltvExamResult.totalA1 || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+        <v-col cols="4">
+          <div class="field-label">Tổng điểm ban D</div>
+          <v-text-field
+            placeholder="VD: 10"
+            :value="getTotalD"
+            type="number"
+            color="primary"
+            v-if="document.status !== 'submitted'"
+            @keyup.enter="submit"
+            hide-details="true"
+            disabled
+            filled
+            outlined
+            validate-on-blur
+          />
+          <div
+            class="info-label error--text mt-2 mb-6"
+            style="font-size: 24px"
+            v-if="document.status === 'submitted'"
+          >
+            {{ ltvExamResult.totalD || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+      </v-row>
+      <div class="py-6" v-if="document.status !== 'submitted'">
+        <div class="font-weight-bold">Cách tính tổng điểm</div>
+        <div>
+          - Ban A: ĐXT = Điểm Toán x4 + Điểm Anh x4 + Điểm Văn + Lịch sử + Điểm
+          ưu tiên
+        </div>
+        <div>
+          - Ban A1: ĐXT = Điểm Toán x4 + Điểm Anh x4 + Điểm Văn + Lịch sử + Điểm
+          ưu tiên
+        </div>
+        <div>
+          - Ban D: ĐXT = (Điểm Toán x3 + Điểm Văn + Điểm Anh) x3 + Lịch sử +
+          Điểm ưu tiên
+        </div>
+        <div class="font-weight-bold mt-3">Các diện điểm cộng ưu tiên:</div>
+        <div>- Điểm ưu tiên theo quy định của Sở GD&ĐT Hà Nội.</div>
+        <div>
+          - Con em chiến sĩ, cán bộ y tế phục vụ chống dịch Covid-19 được cộng 2
+          điểm.
+        </div>
+        <div>- Học sinh THCS Lương Thế Vinh được cộng 3 điểm.</div>
+      </div>
+      <hr class="dashed" />
+      <div class="section-label py-6">Đăng ký nguyện vọng ban tại trường</div>
+      <v-row>
+        <v-col cols="6">
+          <div class="field-label">
+            Nguyện vọng 1
+            <span style="color: red" v-if="document.status !== 'submitted'"
+              >*</span
+            >
+          </div>
+          <v-select
+            v-model="ltvExamResult.groupExpectation1"
+            placeholder="VD: Tốt"
+            item-text="title"
+            item-value="value"
+            :items="groups"
+            :rules="[$rules.required]"
+            v-if="document.status !== 'submitted'"
+            outlined
+          />
+          <div
+            class="info-label mt-2 mb-6"
+            v-if="document.status === 'submitted'"
+          >
+            {{ ltvExamResult.groupExpectation1 || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+        <v-col cols="6">
+          <div class="field-label">Nguyện vọng 2</div>
+          <v-select
+            v-model="ltvExamResult.groupExpectation2"
+            placeholder="VD: Tốt"
+            item-text="title"
+            item-value="value"
+            :items="groups"
+            v-if="document.status !== 'submitted'"
+            outlined
+          />
+          <div
+            class="info-label mt-2 mb-6"
+            v-if="document.status === 'submitted'"
+          >
+            {{ ltvExamResult.groupExpectation2 || "Chưa có thông tin" }}
           </div>
         </v-col>
       </v-row>
       <hr class="dashed" />
-      <div class="py-6" v-if="ltvExamResult.passExam">
-        <div class="mx-auto" style="width: 355px">
-          <v-img src="@/assets/pass-exam.svg" />
-        </div>
-        <div class="d-flex justify-center pt-6">
-          <v-checkbox
-            class="align-self-start mt-0 pt-0"
-            v-model="agree"
-            :rules="[$rules.checkbox]"
-          ></v-checkbox>
-          <div class="text-justify">
-            Hiện con tôi đã đạt yêu cầu của trường Lương Thế Vinh & có nguyện
-            vọng được vào học tại trường. Nếu con tôi được chấp nhận vào học tại
-            trường, gia đình chúng tôi cam đoan chấp hành hành mọi nội quy và
-            quy định của trường THCS & THPT Lương Thế Vinh. Đơn này đã được gia
-            đình thống nhất và nộp cho nhà trường ngày hôm nay.
-          </div>
-        </div>
+      <div
+        class="d-flex justify-center py-6"
+        v-if="document.status !== 'submitted'"
+      >
+        <v-checkbox
+          class="align-self-start mt-0 pt-0"
+          v-model="agree"
+          :rules="[$rules.checkbox]"
+        ></v-checkbox>
+        <p class="text-justify">
+          Con tôi đã đạt đủ điểm chuẩn vào trường Lương Thế Vinh & có nguyện
+          vọng được vào học tại trường. Nếu được nhận vào học, gia đình chúng
+          tôi và cháu sẽ chấp hành mọi nội quy, quy định của nhà trường. Đơn này
+          đã được gia đình thống nhất và nộp cho nhà trường ngày hôm nay.
+        </p>
       </div>
-      <div class="py-6" v-if="!ltvExamResult.passExam">
-        <div class="mx-auto mb-6" style="width: 355px">
-          <v-img src="@/assets/fail-exam.svg" />
-        </div>
-        <div class="fail-card pa-4">
-          <div>
-            Nếu quý phụ huynh vẫn có nguyện vọng đăng ký vào danh sách dự
-            khuyết, xin vui lòng liên hệ trực tiếp văn phòng tại cơ sở đăng ký.
+      <div v-if="ltvExamResult.passExam !== ''">
+        <div v-if="ltvExamResult.passExam">
+          <div class="mx-auto py-6" style="width: 355px">
+            <v-img src="@/assets/pass-exam.svg" />
           </div>
-          <div>
-            <div>Thông tin liên hệ:</div>
-            <div>Cơ Sở A: Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội</div>
+          <div class="fail-card pa-4">
             <div>
-              SĐT: <span class="primary--text">0242.215.5985</span> –
-              <span class="primary--text">0246.663.8338</span>
+              Học sinh
+              <span class="font-weight-bold">{{ document.name }}</span> đã trúng
+              tuyển đợt 1 vào trường THCS & THPT Lương Thế Vinh.
             </div>
-            <div>Cơ Sở I: Tân Triều, Thanh Trì, Hà Nội</div>
-            <div>SĐT: <span class="primary--text">0243.568.2603</span></div>
+            <div>
+              Phụ huynh vui lòng làm thủ tục nhập học ngày
+              <span class="error--text">dd/mm/yyyy</span>
+            </div>
+            <div>Thời gian làm việc của Ban tuyển sinh</div>
+            <div>Sáng: 8:00 - 11:00</div>
+            <div>Chiều: 14:00 - 17:00</div>
+            <div class="font-weight-bold">
+              Nhà trường sẽ dừng tuyển sinh khi đủ chỉ tiêu
+            </div>
+          </div>
+        </div>
+        <div class="py-6" v-if="!ltvExamResult.passExam">
+          <div class="mx-auto mb-6" style="width: 355px">
+            <v-img src="@/assets/fail-exam.svg" />
+          </div>
+          <div class="fail-card pa-4">
+            <p>
+              Nếu quý phụ huynh vẫn có nguyện vọng đăng ký vào danh sách dự
+              khuyết, xin vui lòng liên hệ trực tiếp văn phòng tại cơ sở đăng
+              ký.
+            </p>
+            <div>
+              <p>Thông tin liên hệ:</p>
+              <p>Cơ Sở A: Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội</p>
+              <p>
+                SĐT: <span class="primary--text">0242.215.5985</span> –
+                <span class="primary--text">0246.663.8338</span>
+              </p>
+              <p>Cơ Sở I: Tân Triều, Thanh Trì, Hà Nội</p>
+              <p>SĐT: <span class="primary--text">0243.568.2603</span></p>
+            </div>
           </div>
         </div>
       </div>
@@ -117,8 +415,71 @@ export default {
     },
   },
   computed: {
-    getTotal() {
-      return this.examMath + this.examLiterature + this.examEnglish || "0";
+    getPriorityMark() {
+      switch (this.ltvExamResult.priorityType) {
+        case "Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội":
+          return "";
+        case "Con em chiến sĩ, cán bộ y tế phục vụ chống dịch Covid-19":
+          return 2;
+        case "Học sinh THCS Lương Thế Vinh":
+          return 3;
+        case "Không có điểm cộng":
+          return 0;
+        default:
+          return 0;
+      }
+    },
+    getTotalA() {
+      if (
+        !this.ltvExamResult.examMath ||
+        !this.ltvExamResult.examLiterature ||
+        !this.ltvExamResult.examEnglish ||
+        !this.ltvExamResult.examHistory ||
+        isNaN(this.getPriorityMark)
+      )
+        return "";
+      return (
+        parseFloat(this.ltvExamResult.examMath) * 4 +
+        parseFloat(this.ltvExamResult.examEnglish) * 4 +
+        parseFloat(this.ltvExamResult.examLiterature) +
+        parseFloat(this.ltvExamResult.examHistory) +
+        this.getPriorityMark
+      );
+    },
+    getTotalA1() {
+      if (
+        !this.ltvExamResult.examMath ||
+        !this.ltvExamResult.examLiterature ||
+        !this.ltvExamResult.examEnglish ||
+        !this.ltvExamResult.examHistory ||
+        isNaN(this.getPriorityMark)
+      )
+        return "";
+      return (
+        parseFloat(this.ltvExamResult.examMath) * 4 +
+        parseFloat(this.ltvExamResult.examEnglish) * 4 +
+        parseFloat(this.ltvExamResult.examLiterature) +
+        parseFloat(this.ltvExamResult.examHistory) +
+        this.getPriorityMark
+      );
+    },
+    getTotalD() {
+      if (
+        !this.ltvExamResult.examMath ||
+        !this.ltvExamResult.examLiterature ||
+        !this.ltvExamResult.examEnglish ||
+        !this.ltvExamResult.examHistory ||
+        isNaN(this.getPriorityMark)
+      )
+        return "";
+      return (
+        (parseFloat(this.ltvExamResult.examMath) +
+          parseFloat(this.ltvExamResult.examEnglish) +
+          parseFloat(this.ltvExamResult.examLiterature)) *
+          3 +
+        parseFloat(this.ltvExamResult.examHistory) +
+        this.getPriorityMark
+      );
     },
   },
   data() {
@@ -129,14 +490,42 @@ export default {
         examMath: "",
         examLiterature: "",
         examEnglish: "",
-        passExam: false,
+        examHistory: "",
+        passExam: "",
+        priorityType: "",
+        groupExpectation1: "",
+        groupExpectation2: "",
       },
       agree: false,
+      priorityTypes: [
+        {
+          title: "Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội",
+          value: "Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội",
+        },
+        {
+          title: "Con em chiến sĩ, cán bộ y tế phục vụ chống dịch Covid-19",
+          value: "Con em chiến sĩ, cán bộ y tế phục vụ chống dịch Covid-19",
+        },
+        {
+          title: "Học sinh THCS Lương Thế Vinh",
+          value: "Học sinh THCS Lương Thế Vinh",
+        },
+        {
+          title: "Không có điểm cộng",
+          value: "Không có điểm cộng",
+        },
+      ],
+      groups: [
+        { title: "Ban A", value: "Ban A" },
+        { title: "Ban A1", value: "Ban A1" },
+        { title: "Ban D", value: "Ban D" },
+      ],
     };
   },
   created() {
     if (this.document.ltvExamResult) {
       this.ltvExamResult = this.document.ltvExamResult;
+      this.agree = this.document.status === "submitted";
     }
   },
   methods: {
@@ -152,6 +541,15 @@ export default {
     getData() {
       return {
         agree: this.agree,
+        ltvExamResult: {
+          ...this.ltvExamResult,
+          priorityMark: !isNaN(this.getPriorityMark)
+            ? this.getPriorityMark
+            : "",
+          totalA: !isNaN(this.getTotalA) ? this.getTotalA : "",
+          totalA1: !isNaN(this.getTotalA1) ? this.getTotalA1 : "",
+          totalD: !isNaN(this.getTotalD) ? this.getTotalD : "",
+        },
       };
     },
   },

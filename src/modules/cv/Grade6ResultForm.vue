@@ -525,11 +525,10 @@ export default {
     };
   },
   created() {
-    console.log(this.document);
     if (this.document.studyRecord) {
       this.studyResult = this.document.studyRecord;
+      this.agree = this.document.status === "submitted";
     }
-    console.log(this.studyResult);
   },
   methods: {
     validate() {
