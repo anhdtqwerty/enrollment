@@ -1,0 +1,717 @@
+<template>
+  <v-form v-model="isValid" ref="form" v-bind="this.$attrs" style="width: 100%">
+    <div class="section-label py-6">Lớp 6</div>
+    <v-row>
+      <v-col cols="4">
+        <div class="field-label">
+          Toán
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade6Math"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.required, $rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade6Math || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Văn
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade6Literature"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.required, $rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade6Literature || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">Anh</div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade6English"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade6English || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="4">
+        <div class="field-label">
+          Lý
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade6Physics"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade6Physics || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Hóa
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade6Chemistry"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade6Chemistry || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Hạnh kiểm cả năm
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-select
+          v-model="studyResult.grade6Morality"
+          placeholder="VD: Tốt"
+          item-text="title"
+          item-value="value"
+          :items="moralities"
+          :rules="[$rules.required]"
+          v-if="documentStep === 4"
+          outlined
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade6Morality || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <hr class="dashed" />
+    <div class="section-label py-6">Lớp 7</div>
+    <v-row>
+      <v-col cols="4">
+        <div class="field-label">
+          Toán
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade7Math"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.required, $rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade7Math || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Văn
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade7Literature"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.required, $rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade7Literature || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">Anh</div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade7English"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade7English || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="4">
+        <div class="field-label">
+          Lý
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade7Physics"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade7Physics || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Hóa
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade7Chemistry"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade7Chemistry || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Hạnh kiểm cả năm
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-select
+          v-model="studyResult.grade7Morality"
+          placeholder="VD: Tốt"
+          item-text="title"
+          item-value="value"
+          :items="moralities"
+          :rules="[$rules.required]"
+          v-if="documentStep === 4"
+          outlined
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade7Morality || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <hr class="dashed" />
+    <div class="section-label py-6">Lớp 8</div>
+    <v-row>
+      <v-col cols="4">
+        <div class="field-label">
+          Toán
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade8Math"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.required, $rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade8Math || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Văn
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade8Literature"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.required, $rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade8Literature || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">Anh</div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade8English"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade8English || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="4">
+        <div class="field-label">
+          Lý
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade8Physics"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade8Physics || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Hóa
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade8Chemistry"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade8Chemistry || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Hạnh kiểm cả năm
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-select
+          v-model="studyResult.grade8Morality"
+          placeholder="VD: Tốt"
+          item-text="title"
+          item-value="value"
+          :items="moralities"
+          :rules="[$rules.required]"
+          v-if="documentStep === 4"
+          outlined
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade8Morality || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <hr class="dashed" />
+    <div class="section-label py-6">Lớp 9</div>
+    <v-row>
+      <v-col cols="4">
+        <div class="field-label">
+          Toán
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade9Math"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.required, $rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade9Math || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Văn
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade9Literature"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.required, $rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade9Literature || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">Anh</div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade9English"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade9English || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="4">
+        <div class="field-label">
+          Lý
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade9Physics"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade9Physics || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Hóa
+        </div>
+        <v-text-field
+          placeholder="VD: 10"
+          v-model="studyResult.grade9Chemistry"
+          type="number"
+          color="primary"
+          v-if="documentStep === 4"
+          @keyup.enter="submit"
+          :rules="[$rules.mark]"
+          outlined
+          validate-on-blur
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade9Chemistry || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col cols="4">
+        <div class="field-label">
+          Hạnh kiểm cả năm
+          <span style="color: red" v-if="documentStep === 4">*</span>
+        </div>
+        <v-select
+          v-model="studyResult.grade9Morality"
+          placeholder="VD: Tốt"
+          item-text="title"
+          item-value="value"
+          :items="moralities"
+          :rules="[$rules.required]"
+          v-if="documentStep === 4"
+          outlined
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.grade9Morality || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <hr class="dashed" />
+    <div class="section-label py-6">Thành tích đặc biệt</div>
+    <v-row class="pb-6">
+      <v-col cols="12">
+        <div class="field-label">Thành tích đặc biệt (xét học bổng)</div>
+        <v-text-field
+          placeholder="VD: Con đạt giải Nhì Toán Thành phố Năm 2020, giải Nhất Toán Thành phố Năm 2021"
+          v-model="studyResult.achievements"
+          type="text"
+          color="primary"
+          v-if="documentStep === 4"
+          messages="Vui lòng bỏ qua nếu không có thông tin"
+          outlined
+        />
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4">
+          {{ studyResult.achievements || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <v-row class="pb-6 d-flex flex-column" no-gutters>
+      <div class="field-label mb-2"><b>Học bổng năm 2021 - 2022:</b></div>
+      <table class="scholarship-table">
+        <tr style="background: #F8F8F8;" class="table-th">
+          <td>STT</td>
+          <td>Mức học bổng</td>
+          <td>Số lượng</td>
+          <td>Tiêu chí</td>
+        </tr>
+        <tr v-for="scholarship in scholarships" :key="scholarship.index">
+          <td class="text-center table-td">{{ scholarship.index }}</td>
+          <td class="table-td">{{ scholarship.discount }}</td>
+          <td class="table-td">{{ scholarship.amount }}</td>
+          <td class="table-td" v-html="scholarship.criterias"></td>
+        </tr>
+      </table>
+    </v-row>
+    <hr class="dashed" />
+    <div class="section-label py-6">Diện tuyển thẳng</div>
+    <div class="d-flex">
+      <v-checkbox
+        class="align-self-start mt-0 pt-0"
+        v-model="studyResult.isRecuitingStraight"
+      ></v-checkbox>
+      <div class="text-justify">
+        Con của tôi đạt đủ 1 trong 2 tiêu chí và nằm trong diện tuyển thẳng của
+        nhà trường.
+      </div>
+    </div>
+    <v-row v-if="studyResult.isRecuitingStraight" no-gutters>
+      <v-select
+        v-model="studyResult.recuitingStraightType"
+        placeholder="Phụ huynh chọn 1 trong 2 tieu chí xét tuyển thẳng"
+        item-text="title"
+        item-value="value"
+        :items="recuitingStraightTypes"
+        :rules="[$rules.required]"
+        v-if="documentStep === 4"
+        multiple
+        outlined
+      />
+    </v-row>
+    <div class="field-label mb-2">
+      <span class="error--text">(*)</span> Phụ huynh vui lòng đến cơ sở của Nhà
+      trường để xác nhận với ban tuyển sinh về diện tuyển thẳng của con
+    </div>
+  </v-form>
+</template>
+
+<script>
+export default {
+  props: {
+    documentStep: Number,
+    document: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  data() {
+    return {
+      isValid: false,
+      studyResult: {
+        grade1Literature: "",
+        grade1Math: "",
+        grade1English: "",
+        grade1Morality: "",
+        grade2Literature: "",
+        grade2Math: "",
+        grade2English: "",
+        grade2Morality: "",
+        grade3Literature: "",
+        grade3Math: "",
+        grade3English: "",
+        grade3Morality: "",
+        grade4Literature: "",
+        grade4Math: "",
+        grade4English: "",
+        grade4Morality: "",
+        grade5Literature: "",
+        grade5Math: "",
+        grade5English: "",
+        grade5Morality: "",
+        achievements: "",
+        isRecuitingStraight: false,
+        recuitingStraightType: "",
+      },
+      recuitingStraightTypes: [
+        {
+          title:
+            "Học sinh đạt chứng chỉ IELTS từ 6.0 trở lên; đạt 4 năm học sinh giỏi THCS; có tham gia kỳ thi vào lớp 10 năm học 2021 – 2022 của Sở GD&ĐT Hà Nội.",
+          value: "IELTS",
+        },
+        {
+          title:
+            "Học sinh đạt giải Nhất, Nhì, Ba trong kỳ thi học sinh giỏi của TP Hà Nội các môn Toán, Lý, Hóa, Văn, Anh.",
+          value: "HSG",
+        },
+      ],
+      moralities: [
+        { title: "Tốt", value: "Tốt" },
+        { title: "Khá", value: "Khá" },
+        { title: "Trung bình", value: "Trung bình" },
+        { title: "Yếu", value: "Yếu" },
+        { title: "Kém", value: "Kém" },
+      ],
+      scholarships: [
+        {
+          index: 1,
+          discount: "100% Học phí cơ bản năm đầu",
+          amount: "Không giới hạn",
+          criterias:
+            "Đạt giải <b>Nhất</b> kỳ thi HSG thành phố trở lên các môn Toán, Lý, Hóa, Văn, Anh",
+        },
+        {
+          index: 2,
+          discount: "70% Học phí cơ bản năm đầu",
+          amount: "Không giới hạn",
+          criterias:
+            "Đạt giải <b>Nhì</b> hoặc <b>Ba</b> kỳ thi HSG thành phố trở lên các môn Toán, Lý, Hóa, Văn, Anh",
+        },
+        {
+          index: 3,
+          discount: "50% Học phí cơ bản năm đầu",
+          amount: "Không giới hạn",
+          criterias:
+            "Trúng tuyển vào các trường Chuyên khoa Toán, Lý, Hóa, Văn, Anh hoặc Tin",
+        },
+        {
+          index: 4,
+          discount: "50% Học phí cơ bản năm đầu",
+          amount: "6",
+          criterias:
+            "Thủ khoa các ban A, A1, D trong kỳ sát hạch phân loại lớp",
+        },
+      ],
+    };
+  },
+  created() {
+    if (this.document.studyRecord) {
+      this.studyResult = this.document.studyRecord;
+    }
+  },
+  methods: {
+    validate() {
+      return this.$refs.form.validate();
+    },
+    reset() {
+      this.$refs.form.reset();
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation();
+    },
+    getData() {
+      return {
+        studyResult: {
+          ...this.studyResult,
+          totalMathLiterature: !isNaN(this.getTotal) ? this.getTotal : "",
+        },
+      };
+    },
+  },
+};
+</script>
+
+<style scoped>
+.scholarship-table tr {
+  border: 1px solid #e6e4eb;
+}
+.scholarship-table td {
+  padding: 12px;
+}
+.table-th {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #9c9c9c;
+}
+.table-td {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #3e3e3c;
+}
+.field-label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: #797979;
+  margin-bottom: 4px;
+}
+.section-label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #3e3e3c;
+}
+.info-label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #3e3e3c;
+}
+hr.dashed {
+  width: 100%;
+  border: 1px dashed #e6e4eb;
+}
+</style>

@@ -61,4 +61,5 @@ export const inputRules = {
     "Ngày tháng năm sinh không hợp lệ",
   mark: (v) =>
     !v || (parseFloat(v) >= 0 && parseFloat(v) <= 10) || "Điểm không hợp lệ",
+  checkbox: (v) => v || "",
 };

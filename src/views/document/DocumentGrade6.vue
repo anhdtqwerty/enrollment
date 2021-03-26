@@ -70,7 +70,7 @@
             </div>
           </v-stepper-step>
         </v-stepper>
-        <div class="notice pa-4">
+        <div class="notice pa-4" v-if="step < 4">
           Quý phụ huynh lưu ý thông tin tiếp theo sẽ được mở để khai báo sau.
           Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm
           tra để nhận thông báo.
@@ -104,6 +104,15 @@
         @nextStep="nextStep"
       />
     </v-col>
+    <v-col v-if="step === 4" class="d-flex px-8" style="flex: 2 1 0px">
+      <ExamResultForm
+        :document="document"
+        :documentStep="document.step"
+        @completeStep="updateDocument($event, false)"
+        @saveDraft="updateDocument($event, true)"
+        @nextStep="nextStep"
+      />
+    </v-col>
   </div>
 </template>
 
@@ -112,11 +121,13 @@ import { mapActions, mapGetters } from "vuex";
 import ChooseFacility from "./ChooseFacility.vue";
 import InfoForm from "./InfoForm.vue";
 import ResultForm from "./ResultForm.vue";
+import ExamResultForm from "./ExamResultForm.vue";
 export default {
   components: {
     ChooseFacility,
     InfoForm,
     ResultForm,
+    ExamResultForm,
   },
   computed: {
     ...mapGetters("auth", ["user", "isAuthenticated"]),
@@ -164,15 +175,15 @@ export default {
       return this.document.step > step;
     },
     onStepClick(key, step) {
-      if (!this.systemTime[key]) {
-        this.$alert.error(
-          "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
-        );
-        return;
-      }
-      if (this.document.step < step) {
-        this.$alert.error("Xin vui lòng hoàn thành bước trước");
-      }
+      // if (!this.systemTime[key]) {
+      //   this.$alert.error(
+      //     "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+      //   );
+      //   return;
+      // }
+      // if (this.document.step < step) {
+      //   this.$alert.error("Xin vui lòng hoàn thành bước trước");
+      // }
       this.setStep(step);
     },
     nextStep() {

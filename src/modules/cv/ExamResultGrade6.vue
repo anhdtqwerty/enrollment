@@ -1,0 +1,218 @@
+<template>
+  <v-form ref="form" v-bind="this.$attrs">
+    <v-card-title class="card-title">Điểm thi</v-card-title>
+    <v-card-subtitle class="card-subtitle py-6">
+      Kết quả kỳ khảo sát & đánh giá năng lực để vào trường THCS Lương Thế Vinh
+    </v-card-subtitle>
+    <v-card-text class="d-flex flex-column pa-0">
+      <v-row>
+        <v-col>
+          <div class="field-label">
+            Số báo danh
+          </div>
+          <div class="info-label mt-2 mb-6" v-show="documentStep === 4">
+            {{ ltvExamResult.studentExamID || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="3">
+          <div class="field-label">
+            Toán
+          </div>
+          <div
+            class="info-label error--text mt-2 mb-6"
+            v-show="documentStep === 4"
+          >
+            {{ ltvExamResult.examMath || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <div class="field-label">
+            Văn
+          </div>
+          <div
+            class="info-label error--text mt-2 mb-6"
+            v-show="documentStep === 4"
+          >
+            {{ ltvExamResult.examMath || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <div class="field-label">
+            Anh
+          </div>
+          <div
+            class="info-label error--text mt-2 mb-6"
+            v-show="documentStep === 4"
+          >
+            {{ ltvExamResult.examMath || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+        <v-col cols="3">
+          <div class="field-label mb-2">
+            Tổng điểm
+          </div>
+          <div
+            class="info-label error--text mt-2 mb-6"
+            style="font-size: 24px;"
+            v-show="documentStep === 4"
+          >
+            {{ getTotal }}
+          </div>
+        </v-col>
+      </v-row>
+      <hr class="dashed" />
+      <div class="py-6" v-if="ltvExamResult.passExam">
+        <div class="mx-auto" style="width: 355px">
+          <v-img src="@/assets/pass-exam.svg" />
+        </div>
+        <div class="d-flex justify-center pt-6">
+          <v-checkbox
+            class="align-self-start mt-0 pt-0"
+            v-model="agree"
+            :rules="[$rules.checkbox]"
+          ></v-checkbox>
+          <div class="text-justify">
+            Hiện con tôi đã đạt yêu cầu của trường Lương Thế Vinh & có nguyện
+            vọng được vào học tại trường. Nếu con tôi được chấp nhận vào học tại
+            trường, gia đình chúng tôi cam đoan chấp hành hành mọi nội quy và
+            quy định của trường THCS & THPT Lương Thế Vinh. Đơn này đã được gia
+            đình thống nhất và nộp cho nhà trường ngày hôm nay.
+          </div>
+        </div>
+      </div>
+      <div class="py-6" v-if="!ltvExamResult.passExam">
+        <div class="mx-auto mb-6" style="width: 355px">
+          <v-img src="@/assets/fail-exam.svg" />
+        </div>
+        <div class="fail-card pa-4">
+          <div>
+            Nếu quý phụ huynh vẫn có nguyện vọng đăng ký vào danh sách dự
+            khuyết, xin vui lòng liên hệ trực tiếp văn phòng tại cơ sở đăng ký.
+          </div>
+          <div>
+            <div>Thông tin liên hệ:</div>
+            <div>Cơ Sở A: Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội</div>
+            <div>
+              SĐT: <span class="primary--text">0242.215.5985</span> –
+              <span class="primary--text">0246.663.8338</span>
+            </div>
+            <div>Cơ Sở I: Tân Triều, Thanh Trì, Hà Nội</div>
+            <div>SĐT: <span class="primary--text">0243.568.2603</span></div>
+          </div>
+        </div>
+      </div>
+    </v-card-text>
+  </v-form>
+</template>
+
+<script>
+export default {
+  props: {
+    documentStep: Number,
+    document: {
+      type: Object,
+      default: () => {},
+    },
+  },
+  computed: {
+    getTotal() {
+      return this.examMath + this.examLiterature + this.examEnglish || "0";
+    },
+  },
+  data() {
+    return {
+      isValid: false,
+      ltvExamResult: {
+        studentExamID: "",
+        examMath: "",
+        examLiterature: "",
+        examEnglish: "",
+        passExam: false,
+      },
+      agree: false,
+    };
+  },
+  created() {
+    if (this.document.ltvExamResult) {
+      this.ltvExamResult = this.document.ltvExamResult;
+    }
+  },
+  methods: {
+    validate() {
+      return this.$refs.form.validate();
+    },
+    reset() {
+      this.$refs.form.reset();
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation();
+    },
+    getData() {
+      return {
+        agree: this.agree,
+      };
+    },
+  },
+};
+</script>
+
+<style scoped>
+.field-label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: #797979;
+  margin-bottom: 4px;
+}
+.section-label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #3e3e3c;
+}
+.info-label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #3e3e3c;
+}
+hr.dashed {
+  width: 100%;
+  border: 1px dashed #e6e4eb;
+}
+.card-title {
+  padding: 0 !important;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 32px;
+}
+.card-subtitle {
+  padding: 0 !important;
+  margin-top: 0 !important;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #3e3e3c;
+}
+.fail-card {
+  background: rgba(255, 196, 16, 0.2);
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: #3e3e3c;
+}
+</style>

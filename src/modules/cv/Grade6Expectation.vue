@@ -16,8 +16,12 @@
           item-value="select-title"
           :items="expectations"
           :rules="[$rules.required]"
+          v-show="documentStep === 3"
           outlined
         />
+        <div class="info-label mt-2 mb-6" v-show="documentStep !== 3">
+          {{ expectation1 || "Chưa có thông tin" }}
+        </div>
       </v-col>
       <v-col cols="4">
         <div class="field-label">Nguyện vọng 2</div>
@@ -27,8 +31,12 @@
           item-text="title"
           item-value="select-title"
           :items="expectations"
+          v-show="documentStep === 3"
           outlined
         />
+        <div class="info-label mt-2 mb-6" v-show="documentStep !== 3">
+          {{ expectation2 || "Chưa có thông tin" }}
+        </div>
       </v-col>
       <v-col cols="4">
         <div class="field-label">Nguyện vọng 3</div>
@@ -38,13 +46,19 @@
           item-text="title"
           item-value="select-title"
           :items="expectations"
+          v-show="documentStep === 3"
           outlined
         />
+        <div class="info-label mt-2 mb-6" v-show="documentStep !== 3">
+          {{ expectation3 || "Chưa có thông tin" }}
+        </div>
       </v-col>
     </v-row>
     <v-row class="d-flex flex-column" no-gutters>
-      <div class="field-label"><b>Mô hình lớp học</b></div>
-      <table class="expectation-table" width="100%">
+      <div class="field-label" v-show="documentStep === 3">
+        <b>Mô hình lớp học</b>
+      </div>
+      <table class="expectation-table" width="100%" v-show="documentStep === 3">
         <tr>
           <td></td>
           <td
@@ -111,7 +125,8 @@
           </td>
         </tr>
       </table>
-      <div class="field-label py-6">
+
+      <div class="field-label py-6" v-show="documentStep === 3">
         <span style="color: red">(*)</span> Lưu ý: Học sinh không đăng ký nguyện
         vọng sẽ được nhà trường xếp lớp ngẫu nhiên.
       </div>

@@ -1,15 +1,20 @@
 <template>
   <v-card width="100%" class="elevation-0">
     <v-card-title class="card-title mb-2">Kết quả học tập</v-card-title>
-    <v-card-subtitle class="card-subtitle">
-      Vui lòng điền <b>Điểm thi cuối năm</b> môn Toán, Văn, Anh và điểm hạnh
-      kiểm cả năm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>
+    <v-card-subtitle class="card-subtitle" v-html="getSubtitle">
     </v-card-subtitle>
     <v-card-text class="d-flex pa-0">
       <Grade6ResultForm
         ref="grade6Result"
         :documentStep="documentStep"
         :document="document"
+        v-if="document.type === 'Khối 6'"
+      />
+      <Grade10ResultForm
+        ref="grade10Result"
+        :documentStep="documentStep"
+        :document="document"
+        v-if="document.type === 'Khối 10'"
       />
     </v-card-text>
     <v-card-text class="d-flex pa-0">
@@ -17,6 +22,7 @@
         ref="grade6Expectation"
         :documentStep="documentStep"
         :document="document"
+        v-if="document.type === 'Khối 6'"
       />
     </v-card-text>
     <hr class="dashed" />
@@ -24,7 +30,7 @@
       <v-btn
         class="px-6 py-3 mr-6 text-none"
         color="primary"
-        v-if="documentStep === 2"
+        v-if="documentStep === 3"
         @click="saveDraft"
         outlined
         large
@@ -35,7 +41,7 @@
       <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep === 2"
+        v-if="documentStep === 3"
         @click="completeStep"
         large
       >
@@ -44,7 +50,7 @@
       <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep !== 2"
+        v-if="documentStep !== 3"
         @click="nextStep"
         large
       >
@@ -57,63 +63,46 @@
 <script>
 import Grade6ResultForm from "@/modules/cv/Grade6ResultForm.vue";
 import Grade6Expectation from "@/modules/cv/Grade6Expectation.vue";
-import moment from "moment";
+import Grade10ResultForm from "@/modules/cv/Grade10ResultForm.vue";
 
 export default {
   components: {
     Grade6ResultForm,
     Grade6Expectation,
+    Grade10ResultForm,
   },
   props: {
     document: Object,
     documentStep: Number,
   },
+  computed: {
+    getSubtitle() {
+      if (this.document.type === "Khối 6")
+        return "Vui lòng điền <b>Điểm thi cuối năm</b> môn Toán, Văn, Anh và điểm hạnh kiểm cả năm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>";
+      return "Vui lòng điền <b>Điểm tổng kết cuối năm</b> môn Toán, Văn, Anh, Lý, Hóa & Xếp loại hạnh kiểm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>";
+    },
+  },
   methods: {
     reset() {
-      this.$refs.parentForm.reset();
-      this.$refs.studentForm.reset();
+      this.$refs.grade6Result.reset();
+      this.$refs.grade6Expectation.reset();
     },
-    getQuery(parentForm, studentForm) {
-      let query = {
-        parentName: parentForm.name,
-        parentResidentID: parentForm.cccd,
-        parentPhone: parentForm.phone,
-        parentJob: parentForm.job,
-        parentAddress: parentForm.address,
-        otherParentName: parentForm.otherName,
-        otherParentPhone: parentForm.otherPhone,
-        otherParentJob: parentForm.otherJob,
-        otherParentAddress: parentForm.otherAddress,
-        otherParentResidentID: parentForm.otherCCCD,
-        name: studentForm.studentName,
-        gender: studentForm.studentGender || "",
-        dob: studentForm.studentDob
-          ? moment.utc(studentForm.studentDob, "DD/MM/YYYY").toISOString()
-          : new Date().toISOString(),
-        studentId: studentForm.studentId,
-        school: studentForm.studentSchool,
-        city: studentForm.studentCity,
+    getQuery(resultForm, expectationForm) {
+      return {
+        studyRecord: resultForm.studyResult,
+        expectation1: expectationForm.expectation1,
+        expectation2: expectationForm.expectation2,
+        expectation3: expectationForm.expectation3,
       };
-      if (studentForm.studentAvatar !== "") {
-        query.avatar = studentForm.studentAvatar;
-      }
-      return query;
     },
     completeStep() {
-      const parentForm = this.$refs.parentForm.getData();
-      const studentForm = this.$refs.studentForm.getData();
+      const resultForm = this.$refs.grade6Result.getData();
+      const expectationForm = this.$refs.grade6Expectation.getData();
       if (
-        !this.$refs.parentForm.validate() ||
-        !this.$refs.studentForm.validate()
+        !this.$refs.grade6Result.validate() ||
+        !this.$refs.grade6Expectation.validate()
       ) {
         this.$alert.error("Xin vui lòng điền hết thông tin bắt buộc");
-        return;
-      }
-      if (
-        this.document.avatar.length === 0 &&
-        studentForm.studentAvatar === ""
-      ) {
-        this.$alert.error("Xin vui lòng bổ sung ảnh của con!");
         return;
       }
       this.$dialog.confirm({
@@ -128,15 +117,19 @@ export default {
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;
-          this.$emit("completeStep", this.getQuery(parentForm, studentForm));
+          this.$emit(
+            "completeStep",
+            this.getQuery(resultForm, expectationForm)
+          );
         },
       });
     },
     saveDraft() {
-      const parentForm = this.$refs.parentForm.getData();
-      const studentForm = this.$refs.studentForm.getData();
+      const resultForm = this.$refs.grade6Result.getData();
+      const expectationForm = this.$refs.grade6Expectation.getData();
+      console.log(resultForm);
       this.$loading.active = true;
-      this.$emit("saveDraft", this.getQuery(parentForm, studentForm));
+      this.$emit("saveDraft", this.getQuery(resultForm, expectationForm));
     },
     nextStep() {
       this.$loading.active = true;

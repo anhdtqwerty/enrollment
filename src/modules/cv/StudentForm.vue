@@ -1,7 +1,9 @@
 <template>
   <v-form v-model="isValid" ref="form" v-bind="this.$attrs" style="width: 100%">
     <div class="section-label py-6">
-      Ảnh 3x4 của con<span style="color: red" v-show="documentStep === 2">*</span>
+      Ảnh 3x4 của con<span style="color: red" v-show="documentStep === 2"
+        >*</span
+      >
     </div>
     <v-row class="d-flex flex-column pb-6" no-gutters>
       <picture-input
@@ -21,7 +23,9 @@
         }"
         @change="onChange"
       ></picture-input>
-      <div class="mt-4 text-center" v-show="documentStep === 2">Ảnh theo chuẩn ảnh Căn cước công dân</div>
+      <div class="mt-4 text-center" v-show="documentStep === 2">
+        Ảnh theo chuẩn ảnh Căn cước công dân
+      </div>
     </v-row>
     <hr class="dashed" />
     <div class="section-label py-6">
@@ -118,11 +122,19 @@
     <v-row no-gutters>
       <v-col class="mr-4">
         <div class="field-label">
-          Con tôi đã học hết lớp 5 tại trường
+          {{
+            document.type === "Khối 6"
+              ? "Con tôi đã học hết lớp 5 tại trường"
+              : "Con tôi đã học hết lớp 9 tại trường"
+          }}
           <span style="color: red" v-show="documentStep === 2">*</span>
         </div>
         <v-text-field
-          placeholder="VD: Trường Tiểu học K..."
+          :placeholder="
+            document.type === 'Khối 6'
+              ? 'VD: Trường Tiểu học ...'
+              : 'VD: Trường THCS ...'
+          "
           name="login"
           v-model="studentSchool"
           type="text"
