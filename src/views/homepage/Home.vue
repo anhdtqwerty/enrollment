@@ -28,8 +28,8 @@
         >
           <v-card
             v-for="n in 6"
-            :key="n"
             class="elevation-0 d-flex flex-column align-center py-3"
+            :key="n"
             :class="{
               'mobile-menu-blog': $vuetify.breakpoint.xsOnly,
               'tablet-menu-blog': $vuetify.breakpoint.smOnly,
@@ -43,9 +43,11 @@
               :width="getImageSize"
               :height="getImageSize"
             ></v-img>
-            <div class="justify-center menu-title mt-2">
-              {{ menu[n - 1].title }}
-            </div>
+            <div
+              class="justify-center menu-title text-center mt-2"
+              style="min-height: 48px"
+              v-html="menu[n - 1].title"
+            ></div>
           </v-card>
         </v-row>
         <div v-if="$vuetify.breakpoint.mdAndUp" style="height: 52px"></div>
@@ -157,7 +159,11 @@ export default {
         src: require("@/assets/homepage/Group-5.svg"),
       },
       {
-        title: "Quản lý hồ sơ",
+        title: "Hướng dẫn khai <br/>Hồ sơ tuyển sinh",
+        src: require("@/assets/homepage/Group-1.svg"),
+      },
+      {
+        title: "Hồ sơ tuyển sinh",
         src: require("@/assets/homepage/Group-2.svg"),
       },
       {
@@ -165,15 +171,11 @@ export default {
         src: require("@/assets/homepage/Group-4.svg"),
       },
       {
-        title: "Cơ cấu HĐQT",
-        src: require("@/assets/homepage/Group-1.svg"),
-      },
-      {
-        title: "Cơ sở vật chất",
+        title: "Tham quan <br/>Cơ sở Nhà trường",
         src: require("@/assets/homepage/Group-6.svg"),
       },
       {
-        title: "Hoạt động từ thiện",
+        title: "Hoạt động ngoại khóa",
         src: require("@/assets/homepage/Group-3.svg"),
       },
     ],
