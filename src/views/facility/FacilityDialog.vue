@@ -87,13 +87,13 @@
     </v-card>
     <FacilityTour
       title="Cơ sở A Nam Trung Yên"
-      :iframeSrc="`${$baseUrl}ltv-360/index.html`"
+      :iframeSrc="`${$baseUrl}cs-2/index.html`"
       :state="facilityADialog"
       @closeDialog="toggleFacilityADialog"
     />
     <FacilityTour
       title="Cơ sở 1 Tân Triều"
-      :iframeSrc="`${$baseUrl}cs-2/index.html`"
+      :iframeSrc="`${$baseUrl}ltv-360/index.html`"
       :state="facility1Dialog"
       @closeDialog="toggleFacility1Dialog"
     />

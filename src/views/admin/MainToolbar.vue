@@ -21,16 +21,28 @@
       ></v-img>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-toolbar-items> </v-toolbar-items>
+    <v-toolbar-items>
+      <v-btn
+        class="text-none"
+        :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
+        @click="onSignout"
+        color="white"
+        depressed
+        light
+        dense
+        large
+        >Đăng xuất</v-btn
+      >
+    </v-toolbar-items>
   </v-app-bar>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   components: {},
   computed: {
-    ...mapState("auth", ["user", "role"]),
+    ...mapGetters("auth", ["user", "role"]),
     isXsScreen() {
       return this.$vuetify.breakpoint.xs;
     },
@@ -39,9 +51,14 @@ export default {
     return { drawer: true };
   },
   methods: {
+    ...mapActions("auth", ["signOut"]),
     toggleDrawer: function() {
       this.drawer = !this.drawer;
       this.$emit("toggle-drawer", this.drawer);
+    },
+    onSignout() {
+      this.signOut();
+      this.$router.push("/admin/signin");
     },
   },
 };
