@@ -2,6 +2,7 @@
   <div>
     <v-btn
       class="text-none"
+      v-if="isOpen"
       :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
       @click="onSigninClick"
       color="white"
@@ -14,6 +15,7 @@
     <v-btn
       color="primary"
       class="text-none"
+      v-if="isOpen"
       :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
       @click="onSignupClick"
       outlined
@@ -21,12 +23,22 @@
       large
       >Đăng ký ngay</v-btn
     >
+    <div
+      class="info--text"
+      v-if="!isOpen"
+      :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
+    >
+      Xin chào quý phụ huynh!
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
+  props: {
+    isOpen: Boolean,
+  },
   computed: {
     ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
   },

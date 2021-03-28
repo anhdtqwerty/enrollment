@@ -100,7 +100,7 @@ export default {
       loading: false,
       showPassword: false,
       password: "Password",
-      phoneRules: [this.$rules.required],
+      phoneRules: [this.$rules.required, this.$rules.phone],
       passwordRules: [this.$rules.required, this.$rules.minLength(4)],
     };
   },

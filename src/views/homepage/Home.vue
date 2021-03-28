@@ -2,7 +2,7 @@
   <v-container class="overflow-auto pa-0" fluid fill-height>
     <v-row class="d-flex align-center" no-gutters>
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.mdAndUp">
-        <v-img src="@/assets/homepage/home-bg.svg" class="bg-image"></v-img>
+        <v-img src="@/assets/homepage/bg.jpg" class="bg-image"></v-img>
       </v-col>
       <v-col
         xs="12"
@@ -11,7 +11,10 @@
         :class="{ 'pt-6': $vuetify.breakpoint.xsOnly }"
       >
         <div
-          v-if="$vuetify.breakpoint.xsOnly"
+          v-if="
+            $vuetify.breakpoint.xsOnly &&
+              systemTime.checkSystemTime['open-document']
+          "
           style="width: 100%"
           class="d-flex justify-end pr-5"
         >
@@ -51,7 +54,6 @@
         <div v-if="$vuetify.breakpoint.mdAndUp" style="height: 52px"></div>
         <Footer />
       </v-col>
-
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.smAndDown">
         <v-img src="@/assets/homepage/home-bg.svg"></v-img>
       </v-col>
@@ -60,6 +62,23 @@
     <FacilityDialog
       :state="facilityDialog"
       @closeFacility="toggleFacilityDialog"
+    />
+    <IntroDialog
+      title="Giới thiệu chung "
+      :state="introDialog"
+      :src="`${$baseUrl}GTC.html`"
+      @closeDialog="toggleIntroDialog(false)"
+    />
+    <IntroDialog
+      title="Hướng dẫn khai Hồ sơ tuyển sinh"
+      :state="tutorialDialog"
+      :src="`${$baseUrl}HuongDanTuyenSinh.html`"
+      @closeDialog="toggleTutorialDialog(false)"
+    />
+    <CountdownTimer
+      :state="countdownDialog"
+      :date="systemTime.systemTime['open-document']"
+      @closeDialog="toggleCountdownDialog(false)"
     />
   </v-container>
 </template>
@@ -70,10 +89,14 @@ import UserToolbar from "@/components/layout/UserToolbar.vue";
 import Footer from "./Footer.vue";
 import EnrollDialog from "@/views/enroll/EnrollDialog.vue";
 import FacilityDialog from "@/views/facility/FacilityDialog.vue";
+import CountdownTimer from "@/components/basic/CountdownTimer.vue";
+import IntroDialog from "./IntroDialog.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
+    IntroDialog,
+    CountdownTimer,
     GuestToolbar,
     UserToolbar,
     Footer,
@@ -82,6 +105,7 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
+    ...mapGetters("cv", ["systemTime"]),
     isGuestBar() {
       if (this.isAuthenticated && this.user) return false;
       return true;
@@ -101,11 +125,7 @@ export default {
       "setConfirmSignupDialog",
       "setSignInDialog",
     ]),
-    ...mapActions("cv", [
-      "setDocumentDialog",
-      "setConfirmSignupDialog",
-      "setSignInDialog",
-    ]),
+    ...mapActions("cv", ["checkSystemTime"]),
     getImageSrc(n) {
       return this.menu[n - 1].src;
     },
@@ -115,9 +135,13 @@ export default {
           this.enrollDialog = true;
           break;
         case 1:
+          this.tutorialDialog = true;
           break;
         case 2:
           this.onDocumentClick();
+          break;
+        case 3:
+          this.introDialog = true;
           break;
         case 4:
           this.facilityDialog = true;
@@ -127,14 +151,25 @@ export default {
       }
     },
     onDocumentClick() {
-      if (this.user && this.isAuthenticated && this.isConfirmedOTP)
+      if (!this.systemTime.checkSystemTime["open-document"]) {
+        this.toggleCountdownDialog(true);
+      } else if (this.user && this.isAuthenticated && this.isConfirmedOTP)
         this.setDocumentDialog(true);
       else if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
         this.setConfirmSignupDialog(true);
       else this.setSignInDialog(true);
     },
+    toggleCountdownDialog(data) {
+      this.countdownDialog = data;
+    },
     toggleEnrollDialog(data) {
       this.enrollDialog = data;
+    },
+    toggleTutorialDialog(data) {
+      this.tutorialDialog = data;
+    },
+    toggleIntroDialog(data) {
+      this.introDialog = data;
     },
     toggleFacilityDialog(data) {
       this.facilityDialog = data;
@@ -144,7 +179,7 @@ export default {
       this.window.height = window.innerHeight;
     },
   },
-  created() {
+  async created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
@@ -154,6 +189,9 @@ export default {
   data: () => ({
     enrollDialog: false,
     facilityDialog: false,
+    countdownDialog: false,
+    introDialog: false,
+    tutorialDialog: false,
     window: {
       width: 0,
       height: 0,

@@ -11,7 +11,7 @@
           Xin chào quý phụ huynh!
         </div>
       </template>
-      <v-list>
+      <v-list v-if="isOpen">
         <v-list-item>
           <v-list-item-title @click="onSignOut()">Đăng xuất</v-list-item-title>
         </v-list-item>
@@ -20,6 +20,7 @@
     <v-btn
       color="error"
       class="text-none ml-6"
+      v-if="isOpen"
       :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
       @click="onSignOut()"
       outlined
@@ -32,6 +33,9 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 export default {
+  props: {
+    isOpen: Boolean,
+  },
   data() {
     return {
       showMenu: false,

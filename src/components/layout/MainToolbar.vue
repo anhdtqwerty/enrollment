@@ -24,15 +24,22 @@
       <div class="accent--text ml-1" id="school-title">LƯƠNG THẾ VINH</div>
     </div>
     <v-spacer></v-spacer>
-    <GuestToolbar v-if="$vuetify.breakpoint.smAndUp && isGuestBar" />
-    <UserToolbar v-if="$vuetify.breakpoint.smAndUp && !isGuestBar" />
+    <GuestToolbar
+      :isOpen="systemTime.checkSystemTime['open-document']"
+      v-if="$vuetify.breakpoint.smAndUp && isGuestBar"
+    />
+    <UserToolbar
+      :isOpen="systemTime.checkSystemTime['open-document']"
+      v-if="$vuetify.breakpoint.smAndUp && !isGuestBar"
+    />
   </v-app-bar>
 </template>
 
 <script>
 import GuestToolbar from "@/components/layout/GuestToolbar.vue";
 import UserToolbar from "@/components/layout/UserToolbar.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   components: {
     GuestToolbar,
@@ -40,6 +47,7 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
+    ...mapGetters("cv", ["systemTime"]),
     getBarHeight() {
       if (this.$vuetify.breakpoint.mdAndUp) return "80px";
       else return "68px";
@@ -48,6 +56,14 @@ export default {
       if (this.isAuthenticated && this.user) return false;
       return true;
     },
+  },
+  async created() {
+    this.$loading.active = true;
+    await this.checkSystemTime();
+    this.$loading.active = false;
+  },
+  methods: {
+    ...mapActions("cv", ["checkSystemTime"]),
   },
 };
 </script>

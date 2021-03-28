@@ -68,7 +68,7 @@
     </v-card>
     <DocumentTutorial
       :state="tutorialDialog"
-      src="http://enroll-api.quanlylop.com/HuongDan.html"
+      :src="`${$baseUrl}HuongDanTuyenSinh.html`"
       @closeDialog="toggleTutorial"
     />
   </v-dialog>

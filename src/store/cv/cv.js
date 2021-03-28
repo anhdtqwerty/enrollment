@@ -1,87 +1,96 @@
 /* eslint-disable no-unused-vars */
-import alert from '@/plugins/alert'
-import {CV} from '@/plugins/api'
+import alert from "@/plugins/alert";
+import { CV } from "@/plugins/api";
+import moment from "moment";
 export default {
   namespaced: true,
   state: {
     CVs: [],
     count: 0,
     step: 1,
+    systemTime: {
+      checkSystemTime: {
+        "open-document": false,
+      },
+      systemTime: {
+        "open-document": moment().format("DD/MM/YYYY hh:mm:ss"),
+      },
+    },
   },
   actions: {
-    async checkSystemTime({state}) {
+    async checkSystemTime({ commit }) {
       try {
-        return await CV.checkSystemTime()
+        commit("setSystemTime", await CV.checkSystemTime());
       } catch (e) {
-        alert.error(e)
+        alert.error(e);
       }
     },
-    async checkDocumentSystemTime({state}, {grade}) {
+    async checkDocumentSystemTime({ state }, { grade }) {
       try {
-        return await CV.checkDocumentSystemTime({grade})
+        return await CV.checkDocumentSystemTime({ grade });
       } catch (e) {
-        alert.error(e)
+        alert.error(e);
       }
     },
-    async fetchCVs({commit}, options) {
+    async fetchCVs({ commit }, options) {
       try {
-        commit('setCVs', await CV.fetch(options))
+        commit("setCVs", await CV.fetch(options));
       } catch (e) {
-        alert.error(e)
+        alert.error(e);
       }
     },
-    async countCVs({commit}, options) {
+    async countCVs({ commit }, options) {
       try {
-        commit('setCount', await CV.count(options))
+        commit("setCount", await CV.count(options));
       } catch (e) {
-        alert.error(e)
+        alert.error(e);
       }
     },
-    async fetchCV({commit}, {code, userId}) {
+    async fetchCV({ commit }, { code, userId }) {
       try {
-        const cv = await CV.search({code, parent: userId})
-        commit('setCV', cv[0])
-        commit('setStep', cv[0].step)
+        const cv = await CV.search({ code, parent: userId });
+        commit("setCV", cv[0]);
+        commit("setStep", cv[0].step);
       } catch (e) {
-        alert.error(e)
+        alert.error(e);
       }
     },
-    async createCV({commit}, {code, ...data}) {
+    async createCV({ commit }, { code, ...data }) {
       try {
-        const newCV = await CV.create(code, data)
-        commit('setCV', newCV)
-        alert.success('Tạo hồ sơ mới thành công!')
+        const newCV = await CV.create(code, data);
+        commit("setCV", newCV);
+        alert.success("Tạo hồ sơ mới thành công!");
       } catch (e) {
-        alert.error(e)
+        alert.error(e);
       }
     },
-    async updateCV({commit, state}, {code, ...Cv}) {
+    async updateCV({ commit, state }, { code, ...Cv }) {
       try {
-        const updatedCV = await CV.update(code, Cv)
-        commit('setCV', updatedCV)
-        alert.success('Đã lưu thành công')
+        const updatedCV = await CV.update(code, Cv);
+        commit("setCV", updatedCV);
+        alert.success("Đã lưu thành công");
       } catch (e) {
-        alert.error(e)
+        alert.error(e);
       }
     },
-    async removeCV({commit}, id) {
+    async removeCV({ commit }, id) {
       try {
-        const removedCV = await CV.remove(id)
-        commit('removeCV', removedCV.code)
-        alert.success('Xóa hồ sơ thành công!')
+        const removedCV = await CV.remove(id);
+        commit("removeCV", removedCV.code);
+        alert.success("Xóa hồ sơ thành công!");
       } catch (e) {
-        alert.error(e)
+        alert.error(e);
       }
     },
-    setCV({commit, state}, Cv) {
-      commit('setCV', Cv)
+    setCV({ commit, state }, Cv) {
+      commit("setCV", Cv);
     },
-    setStep({commit, state}, step) {
-      commit('setStep', step)
+    setStep({ commit, state }, step) {
+      commit("setStep", step);
     },
-    async removeCVs({dispatch}, items) {
+    async removeCVs({ dispatch }, items) {
       for (let item of items) {
-        await dispatch('removeCV', item.code)
+        await dispatch("removeCV", item.code);
       }
     },
   },
@@ -93,36 +102,42 @@ export default {
           [currentValue.code]: currentValue,
         }),
         {}
-      )
+      );
     },
     setCV(state, CV) {
       state.CVs = {
         ...state.CVs,
         [CV.code]: CV,
-      }
-      state.step = CV.step
+      };
+      state.step = CV.step;
     },
     setStep(state, step) {
-      state.step = step
+      state.step = step;
+    },
+    setSystemTime(state, systemTime) {
+      state.systemTime = systemTime;
     },
     removeCV(state, code) {
-      delete state.CVs[code]
-      state.CVs = {...state.CVs}
+      delete state.CVs[code];
+      state.CVs = { ...state.CVs };
     },
   },
   getters: {
+    systemTime: (state) => {
+      return state.systemTime;
+    },
     CVs: (state) => {
-      return Object.values(state.CVs)
+      return Object.values(state.CVs);
     },
     CV: (state) => (code) => {
-      return state.CVs[code]
+      return state.CVs[code];
     },
     count: (state) => {
-      return state.count
+      return state.count;
     },
     step: (state) => {
-      return state.step
+      return state.step;
     },
   },
-}
+};
 /* eslint-enable no-unused-vars */

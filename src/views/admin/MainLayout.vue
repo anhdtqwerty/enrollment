@@ -53,7 +53,6 @@ export default {
   },
   computed: {
     ...mapGetters("auth", ["user", "isAuthenticated"]),
-    ...mapGetters("app", ["users", "roles"]),
     simpleLayout() {
       const { meta = {}, matched = [] } = this.$route;
       return (
