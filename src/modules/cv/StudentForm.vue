@@ -1,7 +1,7 @@
 <template>
   <v-form v-model="isValid" ref="form" v-bind="this.$attrs" style="width: 100%">
     <div class="section-label py-6">
-      Ảnh 3x4 của con<span style="color: red" v-show="documentStep === 2"
+      Ảnh 3x4 của con<span style="color: red" v-if="documentStep === 2"
         >*</span
       >
     </div>
@@ -23,7 +23,7 @@
         }"
         @change="onChange"
       ></picture-input>
-      <div class="mt-4 text-center" v-show="documentStep === 2">
+      <div class="mt-4 text-center" v-if="documentStep === 2">
         Ảnh theo chuẩn ảnh Căn cước công dân
       </div>
     </v-row>
@@ -35,7 +35,7 @@
       <v-col>
         <div class="field-label">
           Họ tên học sinh
-          <span style="color: red" v-show="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2">*</span>
         </div>
         <v-text-field
           placeholder="VD: Nguyễn Văn B"
@@ -44,12 +44,12 @@
           type="text"
           color="primary"
           @keyup.enter="submit"
-          v-show="documentStep === 2"
+          v-if="documentStep === 2"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-show="documentStep !== 2">
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
           {{ document.name || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -58,7 +58,7 @@
       <v-col class="mr-4">
         <div class="field-label">
           Ngày tháng năm sinh
-          <span style="color: red" v-show="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2">*</span>
         </div>
         <v-text-field
           v-mask="'##/##/####'"
@@ -67,31 +67,31 @@
           v-model="studentDob"
           type="text"
           color="primary"
-          v-show="documentStep === 2"
+          v-if="documentStep === 2"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.dob]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-show="documentStep !== 2">
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
           {{ getStudentDob }}
         </div>
       </v-col>
       <v-col class="ml-4">
         <div class="field-label">
           Giới tính
-          <span style="color: red" v-show="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2">*</span>
         </div>
         <v-radio-group
           v-model="studentGender"
           :rules="[$rules.required]"
-          v-show="documentStep === 2"
+          v-if="documentStep === 2"
           row
         >
           <v-radio label="Nam" value="male"></v-radio>
           <v-radio label="Nữ" value="female"></v-radio>
         </v-radio-group>
-        <div class="info-label mt-2 mb-6" v-show="documentStep !== 2">
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
           {{ getStudentGender }}
         </div>
       </v-col>
@@ -100,7 +100,7 @@
       <v-col>
         <div class="field-label">
           Mã số học sinh (Sở GD&DT Hà Nội cấp)
-          <span style="color: red" v-show="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2">*</span>
         </div>
         <v-text-field
           placeholder="VD: 1231294124124"
@@ -108,13 +108,13 @@
           v-model="studentId"
           type="text"
           color="primary"
-          v-show="documentStep === 2"
+          v-if="documentStep === 2"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-show="documentStep !== 2">
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
           {{ document.studentId || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -127,7 +127,7 @@
               ? "Con tôi đã học hết lớp 5 tại trường"
               : "Con tôi đã học hết lớp 9 tại trường"
           }}
-          <span style="color: red" v-show="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2">*</span>
         </div>
         <v-text-field
           :placeholder="
@@ -139,20 +139,20 @@
           v-model="studentSchool"
           type="text"
           color="primary"
-          v-show="documentStep === 2"
+          v-if="documentStep === 2"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-show="documentStep !== 2">
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
           {{ document.school || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="ml-4">
         <div class="field-label">
           Thành phố
-          <span style="color: red" v-show="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2">*</span>
         </div>
         <v-text-field
           placeholder="VD: Hà Nội"
@@ -160,13 +160,13 @@
           v-model="studentCity"
           type="text"
           color="primary"
-          v-show="documentStep === 2"
+          v-if="documentStep === 2"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-show="documentStep !== 2">
+        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
           {{ document.city || "Chưa có thông tin" }}
         </div>
       </v-col>

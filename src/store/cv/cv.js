@@ -9,9 +9,16 @@ export default {
     step: 1,
   },
   actions: {
-    async checkSystemTime({state}, {grade}) {
+    async checkSystemTime({state}) {
       try {
-        return await CV.checkSystemTime({grade})
+        return await CV.checkSystemTime()
+      } catch (e) {
+        alert.error(e)
+      }
+    },
+    async checkDocumentSystemTime({state}, {grade}) {
+      try {
+        return await CV.checkDocumentSystemTime({grade})
       } catch (e) {
         alert.error(e)
       }

@@ -7,99 +7,115 @@
     <v-card-text class="d-flex flex-column pa-0">
       <v-row>
         <v-col>
-          <div class="field-label">
-            Số báo danh
-          </div>
-          <div class="info-label mt-2 mb-6" v-show="documentStep === 4">
+          <div class="field-label">Số báo danh</div>
+          <div class="info-label mt-2 mb-6" v-if="documentStep === 4">
             {{ ltvExamResult.studentExamID || "Chưa có thông tin" }}
           </div>
         </v-col>
       </v-row>
       <v-row>
         <v-col cols="3">
-          <div class="field-label">
-            Toán
-          </div>
+          <div class="field-label">Toán</div>
           <div
             class="info-label error--text mt-2 mb-6"
-            v-show="documentStep === 4"
+            v-if="documentStep === 4"
           >
             {{ ltvExamResult.examMath || "Chưa có thông tin" }}
           </div>
         </v-col>
         <v-col cols="3">
-          <div class="field-label">
-            Văn
-          </div>
+          <div class="field-label">Văn</div>
           <div
             class="info-label error--text mt-2 mb-6"
-            v-show="documentStep === 4"
+            v-if="documentStep === 4"
           >
             {{ ltvExamResult.examMath || "Chưa có thông tin" }}
           </div>
         </v-col>
         <v-col cols="3">
-          <div class="field-label">
-            Anh
-          </div>
+          <div class="field-label">Anh</div>
           <div
             class="info-label error--text mt-2 mb-6"
-            v-show="documentStep === 4"
+            v-if="documentStep === 4"
           >
-            {{ ltvExamResult.examMath || "Chưa có thông tin" }}
+            {{ ltvExamResult.examEnglish || "Chưa có thông tin" }}
           </div>
         </v-col>
         <v-col cols="3">
-          <div class="field-label mb-2">
-            Tổng điểm
-          </div>
+          <div class="field-label mb-2">Tổng điểm</div>
           <div
             class="info-label error--text mt-2 mb-6"
-            style="font-size: 24px;"
-            v-show="documentStep === 4"
+            style="font-size: 24px"
+            v-if="documentStep === 4"
           >
-            {{ getTotal }}
+            {{ ltvExamResult.totalMark || "Chưa có thông tin" }}
           </div>
         </v-col>
       </v-row>
-      <hr class="dashed" />
-      <div class="py-6" v-if="ltvExamResult.passExam">
-        <div class="mx-auto" style="width: 355px">
-          <v-img src="@/assets/pass-exam.svg" />
-        </div>
-        <div class="d-flex justify-center pt-6">
-          <v-checkbox
-            class="align-self-start mt-0 pt-0"
-            v-model="agree"
-            :rules="[$rules.checkbox]"
-          ></v-checkbox>
-          <div class="text-justify">
-            Hiện con tôi đã đạt yêu cầu của trường Lương Thế Vinh & có nguyện
-            vọng được vào học tại trường. Nếu con tôi được chấp nhận vào học tại
-            trường, gia đình chúng tôi cam đoan chấp hành hành mọi nội quy và
-            quy định của trường THCS & THPT Lương Thế Vinh. Đơn này đã được gia
-            đình thống nhất và nộp cho nhà trường ngày hôm nay.
+      <div v-if="ltvExamResult.passExam !== ''">
+        <hr class="dashed" />
+        <div class="py-6" v-if="ltvExamResult.passExam">
+          <div class="mx-auto" style="width: 355px">
+            <v-img src="@/assets/pass-exam.svg" />
           </div>
-        </div>
-      </div>
-      <div class="py-6" v-if="!ltvExamResult.passExam">
-        <div class="mx-auto mb-6" style="width: 355px">
-          <v-img src="@/assets/fail-exam.svg" />
-        </div>
-        <div class="fail-card pa-4">
-          <div>
-            Nếu quý phụ huynh vẫn có nguyện vọng đăng ký vào danh sách dự
-            khuyết, xin vui lòng liên hệ trực tiếp văn phòng tại cơ sở đăng ký.
-          </div>
-          <div>
-            <div>Thông tin liên hệ:</div>
-            <div>Cơ Sở A: Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội</div>
-            <div>
-              SĐT: <span class="primary--text">0242.215.5985</span> –
-              <span class="primary--text">0246.663.8338</span>
+          <div
+            class="d-flex justify-center pt-6"
+            v-if="document.status !== 'submitted'"
+          >
+            <v-checkbox
+              class="align-self-start mt-0 pt-0"
+              v-model="agree"
+              :rules="[$rules.checkbox]"
+            ></v-checkbox>
+            <div class="text-justify">
+              Hiện con tôi đã đạt yêu cầu của trường Lương Thế Vinh & có nguyện
+              vọng được vào học tại trường. Nếu con tôi được chấp nhận vào học
+              tại trường, gia đình chúng tôi cam đoan chấp hành hành mọi nội quy
+              và quy định của trường THCS & THPT Lương Thế Vinh. Đơn này đã được
+              gia đình thống nhất và nộp cho nhà trường ngày hôm nay.
             </div>
-            <div>Cơ Sở I: Tân Triều, Thanh Trì, Hà Nội</div>
-            <div>SĐT: <span class="primary--text">0243.568.2603</span></div>
+          </div>
+          <div
+            class="fail-card pa-4 mt-6"
+            v-if="document.status === 'submitted'"
+          >
+            <div>
+              Học sinh
+              <span class="font-weight-bold">{{ document.name }}</span> đã trúng
+              tuyển đợt 1 vào trường THCS & THPT Lương Thế Vinh.
+            </div>
+            <div>
+              Phụ huynh vui lòng làm thủ tục nhập học ngày
+              <span class="error--text">dd/mm/yyyy</span>
+            </div>
+            <div>Thời gian làm việc của Ban tuyển sinh</div>
+            <div>Sáng: 8:00 - 11:00</div>
+            <div>Chiều: 14:00 - 17:00</div>
+            <div class="font-weight-bold">
+              Nhà trường sẽ dừng tuyển sinh khi đủ chỉ tiêu
+            </div>
+          </div>
+        </div>
+        <div class="py-6" v-if="!ltvExamResult.passExam">
+          <div class="mx-auto mb-6" style="width: 355px">
+            <v-img src="@/assets/fail-exam.svg" />
+          </div>
+          <div class="fail-card pa-4">
+            <div>
+              Nếu quý phụ huynh vẫn có nguyện vọng đăng ký vào danh sách dự
+              khuyết, xin vui lòng liên hệ trực tiếp văn phòng tại cơ sở đăng
+              ký.
+            </div>
+            <div>
+              <div>Thông tin liên hệ:</div>
+              <div>Cơ Sở A: Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội</div>
+              <div>
+                SĐT: <span class="primary--text">0242.215.5985</span> –
+                <span class="primary--text">0246.663.8338</span>
+              </div>
+              <div>Cơ Sở I: Tân Triều, Thanh Trì, Hà Nội</div>
+              <div>SĐT: <span class="primary--text">0243.568.2603</span></div>
+            </div>
           </div>
         </div>
       </div>
@@ -116,11 +132,6 @@ export default {
       default: () => {},
     },
   },
-  computed: {
-    getTotal() {
-      return this.examMath + this.examLiterature + this.examEnglish || "0";
-    },
-  },
   data() {
     return {
       isValid: false,
@@ -129,7 +140,8 @@ export default {
         examMath: "",
         examLiterature: "",
         examEnglish: "",
-        passExam: false,
+        totalMark: "",
+        passExam: "",
       },
       agree: false,
     };

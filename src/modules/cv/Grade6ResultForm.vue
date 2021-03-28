@@ -428,25 +428,24 @@
       </v-col>
     </v-row>
     <hr class="dashed" />
-    <div class="section-label py-6">Thành tích đặc biệt</div>
-    <v-row class="pb-6">
-      <v-col cols="12">
-        <div class="field-label">Giải thưởng đã đạt được</div>
-        <v-text-field
-          placeholder="VD: Cháu đạt giải Nhì Toán Thành phố Năm 2020, giải Nhất Toán Thành phố Năm 2021"
-          v-model="studyResult.achievements"
-          type="text"
-          color="primary"
-          v-if="documentStep === 3"
-          messages="Vui lòng bỏ qua nếu không có thông tin"
-          outlined
-        />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
-          {{ studyResult.achievements || "Chưa có thông tin" }}
-        </div>
-      </v-col>
-    </v-row>
-    <hr class="dashed" />
+    <div v-if="documentStep === 3">
+      <div class="section-label py-6">Thành tích đặc biệt</div>
+      <v-row class="pb-6">
+        <v-col cols="12">
+          <div class="field-label">Giải thưởng đã đạt được</div>
+          <v-text-field
+            placeholder="VD: Cháu đạt giải Nhì Toán Thành phố Năm 2020, giải Nhất Toán Thành phố Năm 2021"
+            v-model="studyResult.achievements"
+            type="text"
+            color="primary"
+            v-if="documentStep === 3"
+            messages="Vui lòng bỏ qua nếu không có thông tin"
+            outlined
+          />
+        </v-col>
+      </v-row>
+      <hr class="dashed" />
+    </div>
   </v-form>
 </template>
 

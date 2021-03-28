@@ -66,10 +66,11 @@ export const CV = {
     axios.put(`/cvs/${code}`, {
       ...params,
     }),
-  checkSystemTime: (params) =>
-    axios.post(`/checkSystemTime`, {
+  checkDocmentSystemTime: (params) =>
+    axios.post(`/checkDocumentSystemTime`, {
       ...params,
     }),
+  checkSystemTime: () => axios.get(`/checkSystemTime`),
 }
 export const ActiveCode = {
   ...APIHelper(ACTIVE_CODE_API),

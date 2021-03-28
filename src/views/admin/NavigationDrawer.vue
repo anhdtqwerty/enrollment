@@ -29,18 +29,35 @@
           <v-icon>mdi-view-dashboard</v-icon>
         </v-list-item-icon>
         <v-list-item-action></v-list-item-action>
-        <v-list-item-title>
-          Dashboard
-        </v-list-item-title>
+        <v-list-item-title> Dashboard </v-list-item-title>
       </v-list-item>
       <v-list-item to="/admin/active-code" active-class="active-item" link>
         <v-list-item-icon class="mr-4">
           <v-icon>mdi-folder</v-icon>
         </v-list-item-icon>
         <v-list-item-action></v-list-item-action>
-        <v-list-item-title>
-          Quản lý mã kích hoạt
-        </v-list-item-title>
+        <v-list-item-title> Quản lý mã kích hoạt </v-list-item-title>
+      </v-list-item>
+      <v-list-item to="/admin/document" active-class="active-item" link>
+        <v-list-item-icon class="mr-4">
+          <v-icon>mdi-account-box-outline</v-icon>
+        </v-list-item-icon>
+        <v-list-item-action></v-list-item-action>
+        <v-list-item-title> Quản lý hồ sơ </v-list-item-title>
+      </v-list-item>
+      <v-list-item to="/admin/grade6-result" active-class="active-item" link>
+        <v-list-item-icon class="mr-4">
+          <v-icon>mdi-note-text</v-icon>
+        </v-list-item-icon>
+        <v-list-item-action></v-list-item-action>
+        <v-list-item-title> Kết quả thi Khối 6 </v-list-item-title>
+      </v-list-item>
+      <v-list-item to="/admin/grade10-result" active-class="active-item" link>
+        <v-list-item-icon class="mr-4">
+          <v-icon>mdi-note-text</v-icon>
+        </v-list-item-icon>
+        <v-list-item-action></v-list-item-action>
+        <v-list-item-title> Kết quả thi Khối 10 </v-list-item-title>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
