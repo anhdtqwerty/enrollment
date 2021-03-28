@@ -60,7 +60,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
   div >>> .v-dialog {
     margin: 24px 0px !important;
   }
