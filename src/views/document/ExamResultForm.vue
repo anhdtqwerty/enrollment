@@ -13,7 +13,7 @@
       v-if="document.type === 'Khối 10'"
     />
     <v-card-actions
-      class="d-flex justify-end pt-6 px-0"
+      class="d-flex flex-column align-end pt-6 px-0"
       v-if="document.status !== 'submitted'"
     >
       <hr class="dashed" />
@@ -38,7 +38,7 @@
         <span>Hoàn thành</span>
       </v-btn>
       <v-btn
-        class="px-6 py-3 text-none elevation-0"
+        class="px-6 py-3 text-none elevation-0 mt-6"
         color="primary"
         v-if="
           document.type === 'Khối 6' &&

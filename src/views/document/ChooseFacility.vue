@@ -182,7 +182,10 @@ export default {
         return;
       }
       this.$loading.active = true;
-      this.$emit("saveDraft", { department: this.department });
+      this.$emit("saveDraft", {
+        department: this.department,
+        status: "filling",
+      });
     },
     nextStep() {
       this.$loading.active = true;

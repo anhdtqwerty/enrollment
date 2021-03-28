@@ -10,47 +10,47 @@
           <span style="color: red" v-if="documentStep === 3">*</span>
         </div>
         <v-select
-          v-model="expectation1"
+          v-model="expectation1.clazz"
           placeholder="VD: Năng khiếu Anh"
           item-text="title"
-          item-value="select-title"
+          item-value="select-value"
           :items="expectations"
           :rules="[$rules.required]"
           v-if="documentStep === 3"
           outlined
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
-          {{ expectation1 || "Chưa có thông tin" }}
+          {{ expectation1.clazz || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col cols="4">
         <div class="field-label">Nguyện vọng 2</div>
         <v-select
-          v-model="expectation2"
+          v-model="expectation2.clazz"
           placeholder="VD: Năng khiếu Anh"
           item-text="title"
-          item-value="select-title"
+          item-value="select-value"
           :items="expectations"
           v-if="documentStep === 3"
           outlined
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
-          {{ expectation2 || "Chưa có thông tin" }}
+          {{ expectation2.clazz || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col cols="4">
         <div class="field-label">Nguyện vọng 3</div>
         <v-select
-          v-model="expectation3"
+          v-model="expectation3.clazz"
           placeholder="VD: Năng khiếu Anh"
           item-text="title"
-          item-value="select-title"
+          item-value="select-value"
           :items="expectations"
           v-if="documentStep === 3"
           outlined
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
-          {{ expectation3 || "Chưa có thông tin" }}
+          {{ expectation3.clazz || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
@@ -66,13 +66,13 @@
             :key="classType.title"
             :class="{
               'selected-td':
-                classType['select-title'] === expectation1 ||
-                classType['select-title'] === expectation2 ||
-                classType['select-title'] === expectation3,
+                classType['select-value'] === expectation1.clazz ||
+                classType['select-value'] === expectation2.clazz ||
+                classType['select-value'] === expectation3.clazz,
             }"
             class="table-th"
           >
-            {{ classType["select-title"] }}
+            {{ classType["select-value"] }}
           </td>
         </tr>
         <tr>
@@ -82,9 +82,9 @@
             :key="classType.title"
             :class="{
               'selected-td':
-                classType['select-title'] === expectation1 ||
-                classType['select-title'] === expectation2 ||
-                classType['select-title'] === expectation3,
+                classType['select-value'] === expectation1.clazz ||
+                classType['select-value'] === expectation2.clazz ||
+                classType['select-value'] === expectation3.clazz,
             }"
             class="table-td"
           >
@@ -98,9 +98,9 @@
             :key="classType.title"
             :class="{
               'selected-td':
-                classType['select-title'] === expectation1 ||
-                classType['select-title'] === expectation2 ||
-                classType['select-title'] === expectation3,
+                classType['select-value'] === expectation1.clazz ||
+                classType['select-value'] === expectation2.clazz ||
+                classType['select-value'] === expectation3.clazz,
             }"
             class="table-td"
             style="white-space: pre-line; vertical-align: top"
@@ -115,9 +115,9 @@
             :key="classType.title"
             :class="{
               'selected-td':
-                classType['select-title'] === expectation1 ||
-                classType['select-title'] === expectation2 ||
-                classType['select-title'] === expectation3,
+                classType['select-value'] === expectation1.clazz ||
+                classType['select-value'] === expectation2.clazz ||
+                classType['select-value'] === expectation3.clazz,
             }"
             class="table-td"
           >
@@ -146,13 +146,13 @@ export default {
   data() {
     return {
       isValid: false,
-      expectation1: "",
-      expectation2: "",
-      expectation3: "",
+      expectation1: { clazz: "" },
+      expectation2: { clazz: "" },
+      expectation3: { clazz: "" },
       expectations: [
         {
           title: "Chất lượng cao",
-          "select-title": "Lớp Chất lượng cao (CLC)",
+          "select-value": "Lớp Chất lượng cao (CLC)",
           sign: "A,V",
           program:
             "- Chuẩn chương trình Bộ GD&DT \n-Tăng các môn Toán, Văn, Anh 3 tiết/môn/tuần",
@@ -160,7 +160,7 @@ export default {
         },
         {
           title: "Chọn Chất lượng cao",
-          "select-title": "Lớp chọn Chất lượng cao (cCLC)",
+          "select-value": "Lớp chọn Chất lượng cao c(CLC)",
           sign: "A0,V0",
           program:
             "- Chuẩn chương trình Bộ GD&DT \n-Tăng các môn Toán, Văn, Anh 4 tiết/môn/tuần",
@@ -168,7 +168,7 @@ export default {
         },
         {
           title: "Năng khiếu Anh",
-          "select-title": "Lớp Năng khiếu Anh (NKA)",
+          "select-value": "Lớp Năng khiếu Anh (NKA)",
           sign: "CA,N",
           program:
             "- Chuẩn chương trình Bộ GD&DT \n-Tăng các môn Toán, Văn 3 tiết/môn/tuần\n-Tăng Anh 5 tiết/tuần",
@@ -176,7 +176,7 @@ export default {
         },
         {
           title: "Năng khiếu Toán",
-          "select-title": "Lớp Năng khiếu Toán (NKT)",
+          "select-value": "Lớp Năng khiếu Toán (NKT)",
           sign: "CT,T",
           program:
             "- Chuẩn chương trình Bộ GD&DT \n-Tăng các môn Toán, Văn 3 tiết/môn/tuần\n-Tăng Anh 5 tiết/tuần",
@@ -186,11 +186,12 @@ export default {
     };
   },
   created() {
-    if (this.document) {
+    if (this.document.expectation1)
       this.expectation1 = this.document.expectation1;
+    if (this.document.expectation2)
       this.expectation2 = this.document.expectation2;
+    if (this.document.expectation3)
       this.expectation3 = this.document.expectation3;
-    }
   },
   methods: {
     validate() {
