@@ -50,11 +50,7 @@
           </v-img>
           <div v-if="$vuetify.breakpoint.smAndUp" class="btn-overlay"></div>
         </v-card>
-        <v-card
-          class="d-flex flex-column align-center elevation-0"
-          :class="{ 'desktop-btn py-8': $vuetify.breakpoint.mdAndUp }"
-          @click="toggleFacility1Dialog(true)"
-        >
+        <v-card class="d-flex flex-column align-center elevation-0" :class="{'desktop-btn py-8': $vuetify.breakpoint.mdAndUp}" @click="toggleFacility1Dialog(true)">
           <v-img
             src="@/assets/facility/facility1.svg"
             :width="getImgWidth"
@@ -86,23 +82,13 @@
       </v-card-actions>
     </v-card>
     <!-- iframeSrc="https://d23d1hjjvbs4dk.cloudfront.net" -->
-    <FacilityTour
-      title="Cơ sở A Nam Trung Yên"
-      iframeSrc="http://enroll-api.quanlylop.com/ltv-360/index.html"
-      :state="facilityADialog"
-      @closeDialog="toggleFacilityADialog"
-    />
-    <FacilityTour
-      title="Cơ sở 1 Tân Triều"
-      iframeSrc="http://enroll-api.quanlylop.com/cs-2/index.html"
-      :state="facility1Dialog"
-      @closeDialog="toggleFacility1Dialog"
-    />
+    <FacilityTour title="Cơ sở A Nam Trung Yên" iframeSrc="https://enroll-api.quanlylop.com/ltv-360/index.html" :state="facilityADialog" @closeDialog="toggleFacilityADialog" />
+    <FacilityTour title="Cơ sở 1 Tân Triều" iframeSrc="https://enroll-api.quanlylop.com/cs-2/index.html" :state="facility1Dialog" @closeDialog="toggleFacility1Dialog" />
   </v-dialog>
 </template>
 <script>
 /* eslint-disable no-unused-vars */
-import FacilityTour from "./FacilityTour.vue";
+import FacilityTour from './FacilityTour.vue'
 export default {
   components: {
     FacilityTour,
@@ -112,14 +98,14 @@ export default {
   },
   watch: {
     state(state) {
-      this.dialog = state;
+      this.dialog = state
     },
   },
   computed: {
     getImgWidth() {
-      if (this.$vuetify.breakpoint.smOnly) return 350;
-      if (this.$vuetify.breakpoint.xsOnly) return 225;
-      return "100%";
+      if (this.$vuetify.breakpoint.smOnly) return 350
+      if (this.$vuetify.breakpoint.xsOnly) return 225
+      return '100%'
     },
   },
   data() {
@@ -127,32 +113,32 @@ export default {
       dialog: false,
       facility1Dialog: false,
       facilityADialog: false,
-    };
+    }
   },
   methods: {
     cancel() {
-      this.$emit("closeFacility", false);
+      this.$emit('closeFacility', false)
     },
     toggleFacility1Dialog(data) {
-      this.facility1Dialog = data;
+      this.facility1Dialog = data
     },
     toggleFacilityADialog(data) {
-      this.facilityADialog = data;
+      this.facilityADialog = data
     },
   },
-};
+}
 /* eslint-enable no-unused-vars */
 </script>
 <style scoped>
 .facility-subtitle {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
   line-height: 32px;
 }
 .facility-title {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: bold;
   font-size: 36px;

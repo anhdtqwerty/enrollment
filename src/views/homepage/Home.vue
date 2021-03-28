@@ -4,17 +4,8 @@
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.mdAndUp">
         <v-img src="@/assets/homepage/home-bg.svg" class="bg-image"></v-img>
       </v-col>
-      <v-col
-        xs="12"
-        sm="12"
-        md="6"
-        :class="{ 'pt-6': $vuetify.breakpoint.xsOnly }"
-      >
-        <div
-          v-if="$vuetify.breakpoint.xsOnly"
-          style="width: 100%"
-          class="d-flex justify-end pr-5"
-        >
+      <v-col xs="12" sm="12" md="6" :class="{'pt-6': $vuetify.breakpoint.xsOnly}">
+        <div v-if="$vuetify.breakpoint.xsOnly" style="width: 100%" class="d-flex justify-end pr-5">
           <GuestToolbar v-if="isGuestBar" />
           <UserToolbar v-if="!isGuestBar" />
         </div>
@@ -37,17 +28,8 @@
             }"
             @click="getBtnEvent(n)"
           >
-            <v-img
-              :src="getImageSrc(n)"
-              class="mx-auto"
-              :width="getImageSize"
-              :height="getImageSize"
-            ></v-img>
-            <div
-              class="justify-center menu-title text-center mt-2"
-              style="min-height: 48px"
-              v-html="menu[n - 1].title"
-            ></div>
+            <v-img :src="getImageSrc(n)" class="mx-auto" :width="getImageSize" :height="getImageSize"></v-img>
+            <div class="justify-center menu-title text-center mt-2" style="min-height: 48px" v-html="menu[n - 1].title"></div>
           </v-card>
         </v-row>
         <div v-if="$vuetify.breakpoint.mdAndUp" style="height: 52px"></div>
@@ -59,20 +41,17 @@
       </v-col>
     </v-row>
     <EnrollDialog :state="enrollDialog" @closeEnroll="toggleEnrollDialog" />
-    <FacilityDialog
-      :state="facilityDialog"
-      @closeFacility="toggleFacilityDialog"
-    />
+    <FacilityDialog :state="facilityDialog" @closeFacility="toggleFacilityDialog" />
   </v-container>
 </template>
 
 <script>
-import GuestToolbar from "@/components/layout/GuestToolbar.vue";
-import UserToolbar from "@/components/layout/UserToolbar.vue";
-import Footer from "./Footer.vue";
-import EnrollDialog from "@/views/enroll/EnrollDialog.vue";
-import FacilityDialog from "@/views/facility/FacilityDialog.vue";
-import { mapGetters, mapActions } from "vuex";
+import GuestToolbar from '@/components/layout/GuestToolbar.vue'
+import UserToolbar from '@/components/layout/UserToolbar.vue'
+import Footer from './Footer.vue'
+import EnrollDialog from '@/views/enroll/EnrollDialog.vue'
+import FacilityDialog from '@/views/facility/FacilityDialog.vue'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   components: {
@@ -83,68 +62,64 @@ export default {
     FacilityDialog,
   },
   computed: {
-    ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
+    ...mapGetters('auth', ['isAuthenticated', 'user', 'isConfirmedOTP']),
     isGuestBar() {
-      if (this.isAuthenticated && this.user) return false;
-      return true;
+      if (this.isAuthenticated && this.user) return false
+      return true
     },
     getImageSize() {
-      if (this.$vuetify.breakpoint.smAndDown) return 100;
-      const maxSize = (768 - 80 - 52 - 48) / 3 - 12 * 2 - 24 - 24;
-      let imageSize = (this.window.height - 80 - 52 - 48) / 3 - 12 * 2 - 24;
-      if (imageSize >= maxSize) imageSize = maxSize;
-      return imageSize;
+      if (this.$vuetify.breakpoint.smAndDown) return 100
+      const maxSize = (768 - 80 - 52 - 48) / 3 - 12 * 2 - 24 - 24
+      let imageSize = (this.window.height - 80 - 52 - 48) / 3 - 12 * 2 - 24
+      if (imageSize >= maxSize) imageSize = maxSize
+      return imageSize
     },
   },
-  name: "Home",
+  name: 'Home',
   methods: {
-    ...mapActions("layout", [
-      "setDocumentDialog",
-      "setConfirmSignupDialog",
-      "setSignInDialog",
-    ]),
+    ...mapActions('layout', ['setDocumentDialog', 'setConfirmSignupDialog', 'setSignInDialog']),
     getImageSrc(n) {
-      return this.menu[n - 1].src;
+      return this.menu[n - 1].src
     },
     getBtnEvent(n) {
       switch (n - 1) {
         case 0:
-          this.enrollDialog = true;
-          break;
+          this.enrollDialog = true
+          break
         case 1:
-          this.onDocumentClick();
-          break;
+          break
+        case 2:
+          this.onDocumentClick()
+          break
         case 4:
-          this.facilityDialog = true;
-          break;
+          this.facilityDialog = true
+          break
         default:
-          break;
+          break
       }
     },
     onDocumentClick() {
-      if (this.user && this.isAuthenticated && this.isConfirmedOTP)
-        this.setDocumentDialog(true);
-      else if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
-        this.setConfirmSignupDialog(true);
-      else this.setSignInDialog(true);
+      if (this.user && this.isAuthenticated && this.isConfirmedOTP) this.setDocumentDialog(true)
+      else if (this.user && this.isAuthenticated && !this.isConfirmedOTP) this.setConfirmSignupDialog(true)
+      else this.setSignInDialog(true)
     },
     toggleEnrollDialog(data) {
-      this.enrollDialog = data;
+      this.enrollDialog = data
     },
     toggleFacilityDialog(data) {
-      this.facilityDialog = data;
+      this.facilityDialog = data
     },
     handleResize() {
-      this.window.width = window.innerWidth;
-      this.window.height = window.innerHeight;
+      this.window.width = window.innerWidth
+      this.window.height = window.innerHeight
     },
   },
   created() {
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
   },
   destroyed() {
-    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener('resize', this.handleResize)
   },
   data: () => ({
     enrollDialog: false,
@@ -155,32 +130,32 @@ export default {
     },
     menu: [
       {
-        title: "Thông tin tuyển sinh",
-        src: require("@/assets/homepage/Group-5.svg"),
+        title: 'Thông tin tuyển sinh',
+        src: require('@/assets/homepage/Group-5.svg'),
       },
       {
-        title: "Hướng dẫn khai <br/>Hồ sơ tuyển sinh",
-        src: require("@/assets/homepage/Group-1.svg"),
+        title: 'Hướng dẫn  <br/> Khai hồ sơ tuyển sinh',
+        src: require('@/assets/homepage/Group-1.svg'),
       },
       {
-        title: "Hồ sơ tuyển sinh",
-        src: require("@/assets/homepage/Group-2.svg"),
+        title: 'Hồ sơ tuyển sinh',
+        src: require('@/assets/homepage/Group-2.svg'),
       },
       {
-        title: "Giới thiệu chung",
-        src: require("@/assets/homepage/Group-4.svg"),
+        title: 'Giới thiệu chung',
+        src: require('@/assets/homepage/Group-4.svg'),
       },
       {
-        title: "Tham quan <br/>Cơ sở Nhà trường",
-        src: require("@/assets/homepage/Group-6.svg"),
+        title: 'Tham quan <br/>Cơ sở Nhà trường',
+        src: require('@/assets/homepage/Group-6.svg'),
       },
       {
-        title: "Hoạt động ngoại khóa",
-        src: require("@/assets/homepage/Group-3.svg"),
+        title: 'Hoạt động ngoại khóa',
+        src: require('@/assets/homepage/Group-3.svg'),
       },
     ],
   }),
-};
+}
 </script>
 
 <style scoped>
@@ -192,7 +167,7 @@ export default {
   top: 0px;
 }
 .menu-title {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
