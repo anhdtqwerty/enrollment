@@ -63,6 +63,7 @@
   </v-navigation-drawer>
 </template>
 <script>
+
 export default {
   props: {
     drawer: { type: Boolean },

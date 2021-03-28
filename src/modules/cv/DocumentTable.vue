@@ -12,7 +12,7 @@
       <v-btn
         class="btn text-none text-decoration-underline"
         color="primary"
-        @click="onDocumentClick(item.code)"
+        @click="onDocumentClick(item.id)"
         plain
       >
         {{ item | getCode }}
@@ -36,7 +36,7 @@
     </template>
     <template v-slot:[`item.action`]="{ item }">
       <v-btn
-        @click="onDocumentClick(item.code)"
+        @click="onDocumentClick(item.id)"
         color="primary"
         class="btn text-none"
         plain
@@ -113,8 +113,8 @@ export default {
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
     ...mapActions("layout", ["setDocumentDialog"]),
-    onDocumentClick(documentCode) {
-      this.$router.push(`/document/${documentCode}`);
+    onDocumentClick(documentId) {
+      this.$router.push(`/document/${documentId}`);
       this.setDocumentDialog(false);
     },
     async refresh(query) {
@@ -132,12 +132,6 @@ export default {
     },
   },
   async beforeMount() {
-    await this.refresh({
-      _sort: "updatedAt:DESC",
-      parent: this.user.id,
-    });
-  },
-  async created() {
     await this.refresh({
       _sort: "updatedAt:DESC",
       parent: this.user.id,

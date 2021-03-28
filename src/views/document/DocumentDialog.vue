@@ -105,7 +105,11 @@ export default {
   methods: {
     ...mapActions("layout", ["setDocumentDialog"]),
     ...mapActions("cv", ["createCV"]),
-    ...mapActions("activeCode", ["validate"]),
+    ...mapActions("activeCode", [
+      "validate",
+      "updateActiveCode",
+      "fetchActiveCode",
+    ]),
     cancel() {
       this.setDocumentDialog(false);
     },
@@ -119,12 +123,17 @@ export default {
         this.user &&
         this.isAuthenticated
       ) {
-        await this.createCV({
+        const newCV = await this.createCV({
           code: this.activeCode,
           userPhone: this.user.username,
         });
+        const relatedActiveCode = await this.fetchActiveCode(this.activeCode);
+        await this.updateActiveCode({
+          id: relatedActiveCode.id,
+          department: newCV.department,
+        });
         await this.$refs.documentTable.refresh({
-          _sort: "createdAt:DESC",
+          _sort: "updatedAt:DESC",
           parent: this.user.id,
         });
         this.$refs.form.reset();

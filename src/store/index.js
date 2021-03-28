@@ -22,6 +22,7 @@ export default createStore(Vuex.Store, {
         "auth.isAuthenticated",
         "auth.jwt",
         "auth.isConfirmedOTP",
+        "auth.role",
       ],
     }),
     axiosPlugin,
@@ -31,7 +32,7 @@ export default createStore(Vuex.Store, {
     layout,
     activeCode,
     cv,
-    upload
+    upload,
   },
   mixins: {
     mutations: {

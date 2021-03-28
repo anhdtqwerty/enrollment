@@ -142,9 +142,10 @@ export default {
         this.$alert.success(
           "Đọc file thành công! Đang xử lý dữ liệu, xin vui lòng đợi ít phút"
         );
-        console.log(this.user.role.type);
+
         const results = readFileResult.rows;
         const promises = results.map(async (result) => {
+          if (result.deperment !== this.user.department) return;
           let query = {
             code: result.code,
             ltvExamResult: {

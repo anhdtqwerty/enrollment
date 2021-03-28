@@ -35,7 +35,7 @@ const routes = [
         },
       },
       {
-        path: "/document/:code",
+        path: "/document/:id",
         name: "DocumentDetail",
         component: DocumentDetail,
         meta: {

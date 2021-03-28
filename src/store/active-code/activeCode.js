@@ -29,9 +29,11 @@ export default {
         alert.error(e);
       }
     },
-    async fetchActiveCode({ commit }, ActiveCodeId) {
+    async fetchActiveCode({ commit }, code) {
       try {
-        commit("setActiveCode", await ActiveCode.fetchOne(ActiveCodeId));
+        const activeCode = await ActiveCode.search({ code });
+        commit("setActiveCode", activeCode[0]);
+        return activeCode;
       } catch (e) {
         alert.error(e);
       }

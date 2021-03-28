@@ -60,6 +60,7 @@ export default {
         const newCV = await CV.create(code, data);
         commit("setCV", newCV);
         alert.success("Tạo hồ sơ mới thành công!");
+        return newCV;
       } catch (e) {
         alert.error(e);
       }
@@ -99,7 +100,7 @@ export default {
       state.CVs = CVs.reduce(
         (accumulator, currentValue) => ({
           ...accumulator,
-          [currentValue.code]: currentValue,
+          [`${currentValue.id}`]: currentValue,
         }),
         {}
       );
@@ -107,7 +108,7 @@ export default {
     setCV(state, CV) {
       state.CVs = {
         ...state.CVs,
-        [CV.code]: CV,
+        [CV.id]: CV,
       };
       state.step = CV.step;
     },
@@ -117,8 +118,8 @@ export default {
     setSystemTime(state, systemTime) {
       state.systemTime = systemTime;
     },
-    removeCV(state, code) {
-      delete state.CVs[code];
+    removeCV(state, id) {
+      delete state.CVs[id];
       state.CVs = { ...state.CVs };
     },
   },
@@ -129,8 +130,8 @@ export default {
     CVs: (state) => {
       return Object.values(state.CVs);
     },
-    CV: (state) => (code) => {
-      return state.CVs[code];
+    CV: (state) => (id) => {
+      return state.CVs[id];
     },
     count: (state) => {
       return state.count;

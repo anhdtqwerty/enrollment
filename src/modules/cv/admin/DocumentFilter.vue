@@ -63,7 +63,7 @@ export default {
         status: this.status,
         grade: this.grade,
         code: this.code,
-        _sort: "createdAt:desc",
+        _sort: "updatedAt:desc",
       });
     },
   },

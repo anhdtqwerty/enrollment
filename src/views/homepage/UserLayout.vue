@@ -18,7 +18,6 @@
 </template>
 
 <script>
-
 import MainToolbar from "@/components/layout/MainToolbar.vue";
 import SignInDialog from "@/views/auth/SignInDialog.vue";
 import ForgotPasswordDialog from "@/views/auth/ForgotPasswordDialog.vue";

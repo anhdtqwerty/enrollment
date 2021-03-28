@@ -1,72 +1,75 @@
 <template>
-  <v-row class="d-flex align-center" no-gutters fill-height>
-    <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.mdAndUp">
-      <v-img src="@/assets/homepage/bg.jpg" class="bg-image"></v-img>
-    </v-col>
-    <v-col xs="12" sm="12" md="6" style="height: 100vh" class="">
-      <div class="signin-col">
-        <v-card class="elevation-0" width="90%">
-          <v-card-title
-            ><div class="title--text">Đăng nhập</div>
-            <v-spacer />
-            <v-icon @click="cancel()" class="mr-n1">mdi-close</v-icon>
-          </v-card-title>
-          <v-divider></v-divider>
-          <v-card-text class="pt-4 pb-2">
-            <v-form ref="form" v-model="isValid">
-              <div class="text-subtitle-1">
-                Tài khoản <span style="color: red">*</span>
-              </div>
-              <v-text-field
-                placeholder="Nhập tài khoản"
-                v-model="credentials.identifier"
-                name="login"
-                type="text"
-                color="primary"
-                @keyup.enter="submit"
-                :rules="phoneRules"
-                outlined
-                validate-on-blur
-              />
-              <div class="text-subtitle-1">
-                Mật khẩu <span style="color: red">*</span>
-              </div>
-              <v-text-field
-                placeholder="Nhập mật khẩu tại đây"
-                v-model="credentials.password"
-                :type="showPassword ? 'text' : 'password'"
-                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="passwordRules"
-                @click:append="showPassword = !showPassword"
-                @keyup.enter="submit"
-                color="primary"
-                outlined
-                validate-on-blur
-              />
-            </v-form>
-            <v-btn
-              depressed
-              x-large
-              color="primary"
-              class="white--text text-subtitle-1 text-none mt-6"
-              style="width: 100%"
-              :disabled="!isValid"
-              :loading="loading"
-              @click="submit()"
-              >Đăng nhập
-            </v-btn>
-          </v-card-text>
-        </v-card>
-      </div>
-    </v-col>
-    <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.smAndDown">
-      <v-img src="@/assets/homepage/home-bg.svg"></v-img>
-    </v-col>
-  </v-row>
+  <v-app>
+    <PluginAlert />
+    <v-row class="d-flex align-center" no-gutters fill-height>
+      <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.mdAndUp">
+        <v-img src="@/assets/homepage/bg.jpg" class="bg-image"></v-img>
+      </v-col>
+      <v-col xs="12" sm="12" md="6" style="height: 100vh" class="">
+        <div class="signin-col">
+          <v-card width="90%">
+            <v-card-title
+              ><div class="title--text">Đăng nhập</div>
+              <v-spacer />
+              <v-icon @click="cancel()" class="mr-n1">mdi-close</v-icon>
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text class="py-6">
+              <v-form ref="form" v-model="isValid">
+                <div class="text-subtitle-1">
+                  Tài khoản <span style="color: red">*</span>
+                </div>
+                <v-text-field
+                  placeholder="Nhập tài khoản"
+                  v-model="credentials.identifier"
+                  name="login"
+                  type="text"
+                  color="primary"
+                  @keyup.enter="submit"
+                  :rules="phoneRules"
+                  outlined
+                  validate-on-blur
+                />
+                <div class="text-subtitle-1">
+                  Mật khẩu <span style="color: red">*</span>
+                </div>
+                <v-text-field
+                  placeholder="Nhập mật khẩu tại đây"
+                  v-model="credentials.password"
+                  :type="showPassword ? 'text' : 'password'"
+                  :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  :rules="passwordRules"
+                  @click:append="showPassword = !showPassword"
+                  @keyup.enter="submit"
+                  color="primary"
+                  outlined
+                  validate-on-blur
+                />
+                <v-btn
+                  depressed
+                  x-large
+                  color="primary"
+                  :loading="loading"
+                  @click="submit"
+                  >Đăng nhập
+                </v-btn>
+              </v-form>
+            </v-card-text>
+          </v-card>
+        </div>
+      </v-col>
+      <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.smAndDown">
+        <v-img src="@/assets/homepage/bg.jpg"></v-img>
+      </v-col>
+    </v-row>
+  </v-app>
 </template>
 <script>
 import { mapActions, mapGetters } from "vuex";
+import PluginAlert from "@/components/plugin/PluginAlert";
+
 export default {
+  components: { PluginAlert },
   watch: {
     signInDialog(signInDialog) {
       this.dialog = signInDialog;
@@ -74,13 +77,7 @@ export default {
   },
   computed: {
     ...mapGetters("layout", ["signInDialog"]),
-    ...mapGetters("auth", [
-      "isAuthenticated",
-      "user",
-      "isRequestingReset",
-      "isConfirmedResetOTP",
-      "isConfirmedOTP",
-    ]),
+    ...mapGetters("auth", ["isAuthenticated", "user", "role"]),
   },
   data() {
     return {
@@ -93,21 +90,12 @@ export default {
       loading: false,
       showPassword: false,
       password: "Password",
-      phoneRules: [this.$rules.required, this.$rules.phone],
+      phoneRules: [this.$rules.required],
       passwordRules: [this.$rules.required, this.$rules.minLength(4)],
     };
   },
   methods: {
     ...mapActions("auth", ["signIn"]),
-    ...mapActions("layout", [
-      "setSignInDialog",
-      "setSignUpDialog",
-      "setForgotPasswordDialog",
-      "setConfirmSignupDialog",
-      "setConfirmForgotPasswordDialog",
-      "setNewPasswordDialog",
-      "setDocumentDialog",
-    ]),
     cancel() {
       this.$refs.form.reset();
       this.setSignInDialog(false);
@@ -116,13 +104,17 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true;
         await this.signIn(this.credentials);
-        if (this.user && this.isAuthenticated) {
-          this.$refs.form.reset();
-          this.setSignInDialog(false);
-          this.setDocumentDialog(true);
+        if (
+          !this.user ||
+          !this.isAuthenticated ||
+          this.user.role.type !== "admin"
+        ) {
+          this.$alert.error("Xin vui lòng đăng nhập bằng tài khoản Admin");
+          this.loading = false;
+          return;
         }
-        if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
-          this.setConfirmSignupDialog(true);
+        this.$refs.form.reset();
+        this.$router.push("/admin");
         this.loading = false;
       }
     },
@@ -180,6 +172,7 @@ export default {
   }
 }
 .signin-col {
+  font-family: "Roboto", sans-serif;
   height: 100%;
   display: flex;
   flex-direction: column;

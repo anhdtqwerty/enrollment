@@ -118,6 +118,7 @@ export default {
   components: { PrintActiveCode },
   computed: {
     ...mapGetters("activeCode", ["activeCodes", "activeCode"]),
+    ...mapGetters("auth", ["role", "user", "isAuthenticated"]),
   },
   data() {
     return {
@@ -129,7 +130,8 @@ export default {
   },
   async mounted() {
     await this.refresh({
-      _sort: "createdAt:DESC",
+      _sort: "updatedAt:DESC",
+      department: this.user.department,
     });
   },
   methods: {

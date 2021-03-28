@@ -52,7 +52,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("auth", ["user", "isAuthenticated"]),
+    ...mapGetters("auth", ["user", "isAuthenticated", "role"]),
     simpleLayout() {
       const { meta = {}, matched = [] } = this.$route;
       return (
@@ -64,13 +64,24 @@ export default {
       return true;
     },
   },
-  async created() {},
   methods: {
     ...mapActions("course", ["fetchCourses"]),
     ...mapActions("auth", ["setRole"]),
     toggleDrawer: function(updatedDrawer) {
       this.drawer = updatedDrawer;
     },
+  },
+  async created() {
+    this.$loading.active = true;
+    if (!this.user || !this.isAuthenticated || this.role.type !== "admin") {
+      this.$alert.error(
+        `Bạn cần phải đăng nhập tài khoản Admin để sử dụng chức năng này!`
+      );
+      this.$router.push("/admin/signin");
+      this.$loading.active = false;
+      return;
+    }
+    this.$loading.active = false;
   },
 };
 </script>

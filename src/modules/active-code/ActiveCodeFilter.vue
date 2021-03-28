@@ -1,44 +1,44 @@
 <template>
-    <v-form v-bind="this.$attrs" class="d-flex">
-      <v-text-field
-        v-model="code"
-        placeholder="Mã kích hoạt"
-        class="mr-6"
-        style="flex: 4 1 0px"
-        clearable
-        flat
-        outlined
-        dense
-        hide-details
-      />
-      <v-select
-        :items="grades"
-        item-text="title"
-        item-value="value"
-        v-model="grade"
-        placeholder="Khối"
-        class="mr-6"
-        style="flex: 4 1 0px"
-        outlined
-        dense
-        hide-details
-      />
-      <v-select
-        :items="statuses"
-        item-text="title"
-        item-value="value"
-        v-model="status"
-        placeholder="Trạng thái"
-        class="mr-6"
-        style="flex: 4 1 0px"
-        outlined
-        dense
-        hide-details
-      />
-      <v-btn color="admin" height="40px" style="flex 1 1 0px" outlined>
-        Tìm kiếm
-      </v-btn>
-    </v-form>
+  <v-form v-bind="this.$attrs" class="d-flex">
+    <v-text-field
+      v-model="code"
+      placeholder="Mã kích hoạt"
+      class="mr-6"
+      style="flex: 4 1 0px"
+      clearable
+      flat
+      outlined
+      dense
+      hide-details
+    />
+    <v-select
+      :items="grades"
+      item-text="title"
+      item-value="value"
+      v-model="grade"
+      placeholder="Khối"
+      class="mr-6"
+      style="flex: 4 1 0px"
+      outlined
+      dense
+      hide-details
+    />
+    <v-select
+      :items="statuses"
+      item-text="title"
+      item-value="value"
+      v-model="status"
+      placeholder="Trạng thái"
+      class="mr-6"
+      style="flex: 4 1 0px"
+      outlined
+      dense
+      hide-details
+    />
+    <v-btn color="admin" height="40px" style="flex 1 1 0px" outlined>
+      Tìm kiếm
+    </v-btn>
+  </v-form>
 </template>
 
 <script>
@@ -63,7 +63,7 @@ export default {
         status: this.status,
         grade: this.grade,
         code: this.code,
-        _sort: "createdAt:desc",
+        _sort: "updatedAt:desc",
       });
     },
   },

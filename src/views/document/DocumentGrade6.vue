@@ -134,7 +134,6 @@ export default {
     ...mapGetters("cv", ["step"]),
   },
   props: {
-    documentCode: String,
     document: Object,
     systemTime: Object,
   },

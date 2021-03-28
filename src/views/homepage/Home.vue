@@ -151,7 +151,10 @@ export default {
       }
     },
     onDocumentClick() {
-      if (!this.systemTime.checkSystemTime["open-document"]) {
+      if (
+        !this.systemTime.checkSystemTime["open-document"] &&
+        this.user.role.type !== "admin"
+      ) {
         this.toggleCountdownDialog(true);
       } else if (this.user && this.isAuthenticated && this.isConfirmedOTP)
         this.setDocumentDialog(true);

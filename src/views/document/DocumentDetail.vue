@@ -2,14 +2,12 @@
   <div>
     <DocumentGrade6
       v-if="document.type && document.type === 'Khối 6'"
-      :documentCode="documentCode"
       :systemTime="systemTime"
       :document="document"
       @updateDocument="updateDocument"
     />
     <DocumentGrade10
       v-if="document.type && document.type === 'Khối 10'"
-      :documentCode="documentCode"
       :systemTime="systemTime"
       :document="document"
       @updateDocument="updateDocument"
@@ -24,7 +22,7 @@ import DocumentGrade10 from "./DocumentGrade10.vue";
 
 export default {
   async created() {
-    this.documentCode = this.$route.params.code;
+    this.documentId = this.$route.params.id;
     this.$loading.active = true;
     if (!this.user || !this.isAuthenticated) {
       this.$alert.error(`Bạn cần phải đăng nhập để sử dụng chức năng này!`);
@@ -32,16 +30,16 @@ export default {
       this.$loading.active = false;
       return;
     }
-    await this.fetchCV({ code: this.documentCode, userId: this.user.id });
-    if (!this.CV(this.documentCode)) {
+    await this.fetchCV({ id: this.documentId, userId: this.user.id });
+    if (!this.CV(this.documentId)) {
       this.$alert.error(
-        `Hồ sơ ${this.documentCode} không tồn tại hoặc không có quyền truy cập!`
+        `Hồ sơ ${this.documentId} không tồn tại hoặc không có quyền truy cập!`
       );
       this.$router.push("/");
       this.$loading.active = false;
       return;
     }
-    this.document = this.CV(this.documentCode);
+    this.document = this.CV(this.documentId);
     this.systemTime = await this.checkSystemTime({ grade: this.document.type });
     console.log(this.systemTime);
     this.$loading.active = false;
@@ -75,7 +73,7 @@ export default {
         userPhone: this.user.username,
         ...data,
       });
-      this.document = this.CV(this.documentCode);
+      this.document = this.CV(this.documentId);
       this.systemTime = await this.checkSystemTime({
         grade: this.document.type,
       });
@@ -93,7 +91,7 @@ export default {
   },
   data() {
     return {
-      documentCode: "",
+      documentId: "",
       document: {},
       systemTime: {},
     };

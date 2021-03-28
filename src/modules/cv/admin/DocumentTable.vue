@@ -114,6 +114,7 @@ import moment from "moment";
 export default {
   computed: {
     ...mapGetters("cv", ["CVs", "CV"]),
+    ...mapGetters("auth", ["user", "role"]),
   },
   data() {
     return {
@@ -125,7 +126,8 @@ export default {
   },
   async mounted() {
     await this.refresh({
-      _sort: "createdAt:DESC",
+      _sort: "updatedAt:desc",
+      department: this.user.department,
     });
   },
   methods: {

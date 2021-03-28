@@ -146,6 +146,7 @@ import moment from "moment";
 export default {
   computed: {
     ...mapGetters("cv", ["CVs", "CV"]),
+    ...mapGetters("auth", ["user"]),
   },
   data() {
     return {
@@ -164,7 +165,11 @@ export default {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
     async refresh(query) {
       this.loading = true;
-      await this.fetchCVs({ ...query, type: "Khối 6" });
+      await this.fetchCVs({
+        ...query,
+        type: "Khối 6",
+        department: this.user.department,
+      });
       this.loading = false;
     },
     search() {},
