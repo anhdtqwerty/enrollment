@@ -3,10 +3,14 @@
     <PrintActiveCode
       class="d-none"
       id="printActiveCode"
-      :code="selectedCode"
-      :createdAt="selectedCreatedAt"
+      :activeCode="selectedActiveCode"
     />
-
+    <ConfirmPrintDialog
+      :activeCode="selectedActiveCode"
+      :state="confirmDialog"
+      @closeDialog="confirmDialog = false"
+      @onPrint="onPrint"
+    />
     <v-data-table
       item-key="id"
       :headers="headers"
@@ -28,6 +32,12 @@
       <template v-slot:[`item.created_at`]="{ item }">
         {{ getCreatedAt(item) }}
       </template>
+      <template v-slot:[`item.createdBy`]="{ item }">
+        {{ item | getCreatedBy }}
+      </template>
+      <template v-slot:[`item.printNum`]="{ item }">
+        {{ item | getPrintNum }}
+      </template>
       <template v-slot:[`item.activeDate`]="{ item }">
         {{ getActiveAt(item) }}
       </template>
@@ -43,7 +53,7 @@
         </v-chip>
       </template>
       <template v-slot:[`item.action`]="{ item }">
-        <v-btn @click="onPrint(item)" color="admin" icon>
+        <v-btn @click="onConfirmPrint(item)" color="admin" icon>
           <v-icon>
             mdi-printer
           </v-icon>
@@ -55,7 +65,6 @@
 
 <script>
 /* eslint-disable no-unused-vars */
-
 const originHeaders = [
   {
     text: "Mã kích hoạt",
@@ -86,6 +95,20 @@ const originHeaders = [
     show: true,
   },
   {
+    text: "Người tạo mã",
+    value: "createdBy",
+    align: "left",
+    sortable: false,
+    show: true,
+  },
+  {
+    text: "Số lần in",
+    value: "printNum",
+    align: "left",
+    sortable: false,
+    show: true,
+  },
+  {
     text: "Ngày kích hoạt",
     value: "activeDate",
     align: "left",
@@ -108,6 +131,7 @@ const originHeaders = [
   },
 ];
 
+import ConfirmPrintDialog from "./ConfirmPrintDialog";
 import PrintActiveCode from "./PrintActiveCode.vue";
 import { mapActions, mapGetters } from "vuex";
 import { get } from "lodash";
@@ -115,7 +139,7 @@ import moment from "moment";
 moment.locale("vi");
 
 export default {
-  components: { PrintActiveCode },
+  components: { PrintActiveCode, ConfirmPrintDialog },
   computed: {
     ...mapGetters("activeCode", ["activeCodes", "activeCode"]),
     ...mapGetters("auth", ["role", "user", "isAuthenticated"]),
@@ -124,15 +148,18 @@ export default {
     return {
       loading: false,
       headers: originHeaders,
-      selectedCode: "",
-      selectedCreatedAt: "",
+      selectedActiveCode: {},
+      confirmDialog: false,
     };
   },
   async mounted() {
-    await this.refresh({
+    let query = {
       _sort: "updatedAt:DESC",
-      department: this.user.department,
-    });
+    };
+    if (this.user.department === "both")
+      query.department_in = ["Cơ sở A", "Cơ sở 1"];
+    else query.department = this.user.department;
+    await this.refresh(query);
   },
   methods: {
     ...mapActions("activeCode", [
@@ -152,10 +179,13 @@ export default {
     sleep(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
-    async onPrint(data) {
+    onConfirmPrint(data) {
+      this.selectedActiveCode = data;
+      this.confirmDialog = true;
+    },
+    async onPrint() {
+      this.confirmDialog = false;
       this.$loading.active = true;
-      this.selectedCode = data.code;
-      this.selectedCreatedAt = data.createdAt;
       await this.sleep(250);
       this.$loading.active = false;
       this.$htmlToPaper("printActiveCode");
@@ -183,8 +213,15 @@ export default {
     getCode: (item) => {
       return get(item, "code", "---");
     },
+    getCreatedBy: (item) => {
+      return get(item, "createdBy", "---");
+    },
+    getPrintNum: (item) => {
+      return get(item, "printNum", "0");
+    },
     getGrade: (item) => {
-      return get(item, "grade", "Khối 6");
+      if (item.type === "Khối 6") return "6";
+      else return "10";
     },
   },
 };

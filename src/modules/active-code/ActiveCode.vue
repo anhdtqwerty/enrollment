@@ -14,7 +14,7 @@
         >
           <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
         </v-btn>
-        <v-btn color="admin" @click="dialog = !dialog" dark
+        <v-btn color="admin" @click="dialog = !dialog" class="elevation-0" dark
           ><v-icon left>mdi-plus</v-icon>Thêm mã kích hoạt</v-btn
         >
       </div>

@@ -156,10 +156,14 @@ export default {
       selectedCreatedAt: "",
     };
   },
-  async beforeMount() {
-    await this.refresh({
+  async mounted() {
+    let query = {
       _sort: "updatedAt:DESC",
-    });
+    };
+    if (this.user.department === "both")
+      query.department_in = ["Cơ sở A", "Cơ sở 1"];
+    else query.department = this.user.department;
+    await this.refresh(query);
   },
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),

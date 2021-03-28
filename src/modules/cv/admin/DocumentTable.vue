@@ -125,10 +125,13 @@ export default {
     };
   },
   async mounted() {
-    await this.refresh({
-      _sort: "updatedAt:desc",
-      department: this.user.department,
-    });
+    let query = {
+      _sort: "updatedAt:DESC",
+    };
+    if (this.user.department === "both")
+      query.department_in = ["Cơ sở A", "Cơ sở 1"];
+    else query.department = this.user.department;
+    await this.refresh(query);
   },
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
@@ -168,7 +171,8 @@ export default {
       return get(item, "code", "---");
     },
     getGrade: (item) => {
-      return get(item, "grade", "---");
+      if (item.type === "Khối 6") return "6";
+      else return "10";
     },
   },
 };

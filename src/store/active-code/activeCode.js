@@ -47,10 +47,9 @@ export default {
         alert.error(e);
       }
     },
-    async updateActiveCode({ commit }, { id, ...ActiveCode }) {
+    async updateActiveCode({ commit }, { id, ...activeCode }) {
       try {
-        commit("setActiveCodes", [await ActiveCode.update(id, ActiveCode)]);
-        alert.success("Cập nhật mã kích hoạt thành công!");
+        commit("setActiveCode", await ActiveCode.update(id, activeCode));
       } catch (e) {
         alert.error(e);
       }

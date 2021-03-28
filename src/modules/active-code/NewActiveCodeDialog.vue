@@ -3,8 +3,13 @@
     <PrintActiveCode
       id="printNewActiveCode"
       class="d-none"
-      :code="activeCode.code"
-      :createdAt="activeCode.createdAt"
+      :activeCode="activeCode"
+    />
+    <ConfirmPrintDialog
+      :activeCode="activeCode"
+      :state="confirmDialog"
+      @closeDialog="confirmDialog = false"
+      @onPrint="onPrint"
     />
     <v-card>
       <v-card-title class="admin white--text text-uppercase dialog-title">
@@ -60,7 +65,7 @@
             style="flex: 1 1 0px"
             :loading="loading"
             :disabled="!activeCode.code"
-            @click="onPrint()"
+            @click="onConfirmPrint()"
             class="px-3 py-2 text-none"
             outlined
             light
@@ -79,17 +84,20 @@
 import { get } from "lodash";
 import { mapActions, mapGetters } from "vuex";
 import PrintActiveCode from "./PrintActiveCode.vue";
+import ConfirmPrintDialog from "./ConfirmPrintDialog.vue";
 
 /* eslint-disable no-unused-vars */
 export default {
   components: {
     PrintActiveCode,
+    ConfirmPrintDialog,
   },
   props: {
     state: Boolean,
   },
   computed: {
     ...mapGetters("activeCode", ["activeCodes"]),
+    ...mapGetters("auth", ["user"]),
     getCode() {
       return get(this.activeCode, "code", "---");
     },
@@ -99,6 +107,7 @@ export default {
   },
   data() {
     return {
+      confirmDialog: false,
       activeCode: {},
       dialog: false,
       loading: false,
@@ -125,10 +134,14 @@ export default {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
     async onPrint() {
+      this.confirmDialog = false;
       this.$loading.active = true;
       await this.sleep(250);
       this.$loading.active = false;
       this.$htmlToPaper("printNewActiveCode");
+    },
+    onConfirmPrint() {
+      this.confirmDialog = true;
     },
     reset() {
       this.activeCode = {};
@@ -136,9 +149,13 @@ export default {
     },
     async submit() {
       this.loading = true;
-      const newActiveCode = await this.createActiveCode({
+      let query = {
         grade: this.grade,
-      });
+        createdBy: this.user.name || "Admin",
+      };
+      if (this.user.department === "both") query.department = "Cơ sở A";
+      else query.department = this.user.department;
+      const newActiveCode = await this.createActiveCode(query);
       if (newActiveCode) {
         this.activeCode = newActiveCode;
       }

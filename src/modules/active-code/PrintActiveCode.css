@@ -708,7 +708,3 @@ h4 {
     line-height: 150% !important;
   }
 }
-@media print {
-    header {display:none;}
-    footer {display:none;}
- }
