@@ -53,7 +53,11 @@ export const inputRules = {
     /^(\d{9}|\d{12})$/.test(v.trim()) ||
     'Sai định dạng số CMND / Thẻ CCCD',
   activeCode: (v) =>
+<<<<<<< HEAD
     (v && /(?<!\d)\d{8}(?!\d)/.test(v.trim())) || 'Mã kích hoạt gồm 8 chữ số',
+=======
+    (v && /^(\d{8})$/.test(v.trim())) || "Mã kích hoạt gồm 8 chữ số",
+>>>>>>> 16567c0 (fix)
   dob: (v) =>
     !v ||
     (moment(v, 'DD/MM/YYYY').isValid() &&
