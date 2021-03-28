@@ -5,7 +5,6 @@
       <div class="flex-center">
         <v-btn
           color="admin"
-          class="mr-4"
           dark
           outlined
           :loading="isSelecting"
@@ -145,7 +144,16 @@ export default {
 
         const results = readFileResult.rows;
         const promises = results.map(async (result) => {
-          if (result.deperment !== this.user.department) return;
+          if (
+            result.department !== this.user.department &&
+            this.user.department !== "both"
+          )
+            return;
+          const existingCV = await this.fetchCV({
+            code: result.code,
+            type: "Khối 6",
+          });
+          if (!existingCV) return;
           let query = {
             code: result.code,
             ltvExamResult: {
@@ -172,6 +180,7 @@ export default {
             query.ltvExamResult.passExam = false;
             query.ltvExamResult.passExamText = result.passExamText;
           }
+          console.log(query);
           await this.updateCV(query);
         });
         await Promise.all(promises);

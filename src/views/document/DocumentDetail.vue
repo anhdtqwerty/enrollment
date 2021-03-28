@@ -2,13 +2,13 @@
   <div>
     <DocumentGrade6
       v-if="document.type && document.type === 'Khối 6'"
-      :systemTime="systemTime"
+      :systemTime="documentSystemTime"
       :document="document"
       @updateDocument="updateDocument"
     />
     <DocumentGrade10
       v-if="document.type && document.type === 'Khối 10'"
-      :systemTime="systemTime"
+      :systemTime="documentSystemTime"
       :document="document"
       @updateDocument="updateDocument"
     />
@@ -30,7 +30,10 @@ export default {
       this.$loading.active = false;
       return;
     }
-    await this.fetchCV({ id: this.documentId, userId: this.user.id });
+    await this.fetchCV({
+      id: this.documentId,
+      parent: this.user.id,
+    });
     if (!this.CV(this.documentId)) {
       this.$alert.error(
         `Hồ sơ ${this.documentId} không tồn tại hoặc không có quyền truy cập!`
@@ -40,7 +43,9 @@ export default {
       return;
     }
     this.document = this.CV(this.documentId);
-    this.systemTime = await this.checkSystemTime({ grade: this.document.type });
+    this.systemTime = await this.checkDocumentSystemTime({
+      grade: this.document.type,
+    });
     console.log(this.systemTime);
     this.$loading.active = false;
   },
@@ -49,7 +54,12 @@ export default {
     ...mapGetters("cv", ["CVs", "CV", "step"]),
   },
   methods: {
-    ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV", "checkSystemTime"]),
+    ...mapActions("cv", [
+      "fetchCVs",
+      "fetchCV",
+      "updateCV",
+      "checkDocumentSystemTime",
+    ]),
     ...mapActions("upload", ["upload", "destroy"]),
     async updateDocument(data, isDraft) {
       let avatarId = "";
@@ -74,7 +84,7 @@ export default {
         ...data,
       });
       this.document = this.CV(this.documentId);
-      this.systemTime = await this.checkSystemTime({
+      this.documentSystemTime = await this.checkDocumentSystemTime({
         grade: this.document.type,
       });
       this.$loading.active = false;
@@ -93,7 +103,7 @@ export default {
     return {
       documentId: "",
       document: {},
-      systemTime: {},
+      documentSystemTime: {},
     };
   },
   components: {

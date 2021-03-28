@@ -21,26 +21,20 @@
       <template v-slot:[`item.dob`]="{ item }">
         {{ item | getStudentDob }}
       </template>
-      <template v-slot:[`item.examMath`]="{ item }">
-        {{ item | getExamMath }}
+      <template v-slot:[`item.totalA`]="{ item }">
+        {{ item | getTotalA }}
       </template>
-      <template v-slot:[`item.examLiterature`]="{ item }">
-        {{ item | getExamLiterature }}
+      <template v-slot:[`item.totalA1`]="{ item }">
+        {{ item | getTotalA1 }}
       </template>
-      <template v-slot:[`item.examEnglish`]="{ item }">
-        {{ item | getExamEnglish }}
+      <template v-slot:[`item.totalD`]="{ item }">
+        {{ item | getTotalD }}
       </template>
-      <template v-slot:[`item.totalMark`]="{ item }">
-        {{ item | getTotalMark }}
-      </template>
-      <template v-slot:[`item.expectation1`]="{ item }">
+      <template v-slot:[`item.groupExpectation1`]="{ item }">
         {{ getExpectation1(item) }}
       </template>
-      <template v-slot:[`item.expectation2`]="{ item }">
+      <template v-slot:[`item.groupExpectation2`]="{ item }">
         {{ getExpectation2(item) }}
-      </template>
-      <template v-slot:[`item.expectation3`]="{ item }">
-        {{ getExpectation3(item) }}
       </template>
       <template v-slot:[`item.examPass`]="{ item }">
         <span :class="getColor(item)">{{ item | isPassExam }}</span>
@@ -82,50 +76,36 @@ const originHeaders = [
     show: true,
   },
   {
-    text: "Toán",
-    value: "examMath",
+    text: "Điểm ban A",
+    value: "totalA",
     align: "left",
     sortable: false,
     show: true,
   },
   {
-    text: "Văn",
-    value: "examLiterature",
+    text: "Điểm ban A1",
+    value: "totalA1",
     align: "left",
     sortable: false,
     show: true,
   },
   {
-    text: "Anh",
-    value: "examEnglish",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-  {
-    text: "Tổng điểm",
-    value: "totalMark",
+    text: "Điểm ban D",
+    value: "totalD",
     align: "left",
     sortable: false,
     show: true,
   },
   {
     text: "NV1",
-    value: "expectation1",
+    value: "groupExpectation1",
     align: "left",
     sortable: false,
     show: true,
   },
   {
     text: "NV2",
-    value: "expectation2",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-  {
-    text: "NV3",
-    value: "expectation3",
+    value: "groupExpectation2",
     align: "left",
     sortable: false,
     show: true,
@@ -171,7 +151,7 @@ export default {
       this.loading = true;
       await this.fetchCVs({
         ...query,
-        type: "Khối 6",
+        type: "Khối 10",
       });
       this.loading = false;
     },
@@ -181,33 +161,14 @@ export default {
         return item.ltvExamResult.passExam ? "success--text" : "error--text";
       return "";
     },
-    getShortClassName(clazz) {
-      switch (clazz) {
-        case "Lớp Chất lượng cao (CLC)":
-          return "(CLC)";
-        case "Lớp chọn Chất lượng cao c(CLC)":
-          return "c(CLC)";
-        case "Lớp Năng khiếu Anh (NKA)":
-          return "(NKA)";
-        case "Lớp Năng khiếu Toán (NKT)":
-          return "(NKT)";
-        default:
-          return "---";
-      }
-    },
     getExpectation1(item) {
-      if (item.expectation1 && item.expectation1.clazz)
-        return this.getShortClassName(item.expectation1.clazz);
+      if (item.ltvExamResult && item.ltvExamResult.groupExpectation1)
+        return item.ltvExamResult.groupExpectation1;
       return "---";
     },
     getExpectation2(item) {
-      if (item.expectation2 && item.expectation2.clazz)
-        return this.getShortClassName(item.expectation2.clazz);
-      return "---";
-    },
-    getExpectation3(item) {
-      if (item.expectation3 && item.expectation3.clazz)
-        return this.getShortClassName(item.expectation3.clazz);
+      if (item.expectation2 && item.ltvExamResult.groupExpectation2)
+        return item.ltvExamResult.groupExpectation2;
       return "---";
     },
   },
@@ -225,17 +186,14 @@ export default {
       if (item.dob) return moment(item.dob).format("DD/MM/YYYY");
       return "---";
     },
-    getExamMath: (item) => {
-      return get(item, "ltvExamResult.examMath", "---");
+    getTotalA: (item) => {
+      return get(item, "ltvExamResult.totalA", "---");
     },
-    getExamLiterature: (item) => {
-      return get(item, "ltvExamResult.examLiterature", "---");
+    getTotalA1: (item) => {
+      return get(item, "ltvExamResult.totalA1", "---");
     },
-    getExamEnglish: (item) => {
-      return get(item, "ltvExamResult.examEnglish", "---");
-    },
-    getTotalMark: (item) => {
-      return get(item, "ltvExamResult.totalMark", "---");
+    getTotalD: (item) => {
+      return get(item, "ltvExamResult.totalD", "---");
     },
     isPassExam: (item) => {
       return get(item, "ltvExamResult.passExamText", "---");

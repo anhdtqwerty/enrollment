@@ -66,7 +66,7 @@ export const CV = {
     axios.put(`/cvs/${code}`, {
       ...params,
     }),
-  checkDocmentSystemTime: (params) =>
+  checkDocumentSystemTime: (params) =>
     axios.post(`/checkDocumentSystemTime`, {
       ...params,
     }),

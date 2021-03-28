@@ -46,11 +46,14 @@ export default {
         alert.error(e);
       }
     },
-    async fetchCV({ commit }, { code, userId }) {
+    async fetchCV({ commit }, { ...item }) {
       try {
-        const cv = await CV.search({ code, parent: userId });
-        commit("setCV", cv[0]);
-        commit("setStep", cv[0].step);
+        const cv = await CV.search({ ...item });
+        if (cv.length > 0) {
+          commit("setCV", cv[0]);
+          commit("setStep", cv[0].step);
+          return cv[0];
+        }
       } catch (e) {
         alert.error(e);
       }
@@ -60,7 +63,6 @@ export default {
         const newCV = await CV.create(code, data);
         commit("setCV", newCV);
         alert.success("Tạo hồ sơ mới thành công!");
-        return newCV;
       } catch (e) {
         alert.error(e);
       }

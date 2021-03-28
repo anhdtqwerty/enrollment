@@ -3,15 +3,12 @@
     <div class="d-flex justify-space-between align-center mb-6">
       <div class="component-title">Quản lý hồ sơ</div>
       <div class="flex-center">
-        <v-btn
-          color="admin"
-          @click="sendState = !sendState"
-          class="mr-4"
-          dark
-          outlined
-        >
-          <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
-        </v-btn>
+        <JsonExcel :data="getCVs">
+          <!-- <v-btn color="admin" @click="sendState = !sendState" dark outlined>
+            <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
+          </v-btn> -->
+          Download
+        </JsonExcel>
       </div>
     </div>
     <v-card class="pa-6 elevation-1 mb-6">
@@ -27,9 +24,9 @@
 <script>
 /* eslint-disable no-unused-vars */
 import { mapActions, mapState, mapGetters } from "vuex";
-
 import DocumentFilter from "./DocumentFilter";
 import DocumentTable from "./DocumentTable";
+import JsonExcel from "vue-json-excel";
 // import moment from "moment";
 // import _ from "lodash";
 
@@ -37,6 +34,7 @@ export default {
   components: {
     DocumentFilter,
     DocumentTable,
+    JsonExcel,
   },
   props: {
     role: String,
@@ -47,6 +45,11 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("cv", ["CVs", "CV"]),
+    ...mapGetters("auth", ["user", "isAuthenticated"]),
+    getCVs() {
+      return Object.values(this.CVs);
+    },
     addButtonText() {
       switch (this.$vuetify.breakpoint.name) {
         case "xs":

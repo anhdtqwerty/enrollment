@@ -131,7 +131,7 @@ export default {
       else return "rgba(255,196,16,0.5)";
     },
   },
-  async beforeMount() {
+  async created() {
     await this.refresh({
       _sort: "updatedAt:DESC",
       parent: this.user.id,

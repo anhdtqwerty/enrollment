@@ -59,7 +59,7 @@ const routes = [
     },
     children: [
       {
-        path: "/dashboard",
+        path: "dashboard",
         name: "Dashboard",
         component: Dashboard,
         meta: {
