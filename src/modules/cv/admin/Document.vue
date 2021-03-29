@@ -27,7 +27,7 @@ import { mapActions, mapState, mapGetters } from "vuex";
 import DocumentFilter from "./DocumentFilter";
 import DocumentTable from "./DocumentTable";
 import JsonExcel from "vue-json-excel";
-// import moment from "moment";
+import moment from "moment";
 // import _ from "lodash";
 
 export default {
@@ -42,6 +42,55 @@ export default {
   data() {
     return {
       dialog: false,
+      json_fields: {
+        "Mã hồ sơ": "code",
+        "Trạng thái": {
+          field: "status",
+          callback: (value) => {
+            if (value === "submitted") return "Đã nộp";
+            else if (value === "created") return "Vừa tạo";
+            else return "Đang khai";
+          },
+        },
+        Khối: {
+          field: "type",
+          callback: (value) => {
+            if (value === "Khối 6") return "6";
+            else return "10";
+          },
+        },
+        "Tạo lúc": {
+          field: "createdAt",
+          callback: (value) => {
+            return moment(value).format("DD/MM/YYYY hh:mm:ss");
+          },
+        },
+        "Cập nhật lúc": {
+          field: "updatedAt",
+          callback: (value) => {
+            return moment(value).format("DD/MM/YYYY hh:mm:ss");
+          },
+        },
+        "Cơ sở": "department",
+        "Họ và tên": "name",
+        "Ngày sinh": {
+          field: "dob",
+          callback: (value) => {
+            return moment(value, "YYYY-MM-DD").format("DD/MM/YYYY");
+          },
+        },
+        "Giới tính": {
+          field: "gender",
+          callback: (value) => {
+            return value === "female" ? "Nữ" : "Nam";
+          },
+        },
+        "Mã học sinh": "studentId",
+        "Trường từng học": "school",
+        "Thành phố": "city",
+        "Họ và tên người khai": "parentName",
+        "Số điện thoại người khai": "parentPhone"
+      },
     };
   },
   computed: {
