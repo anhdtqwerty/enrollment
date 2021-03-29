@@ -89,7 +89,36 @@ export default {
         "Trường từng học": "school",
         "Thành phố": "city",
         "Họ và tên người khai": "parentName",
-        "Số điện thoại người khai": "parentPhone"
+        "Số điện thoại người khai": "parentPhone",
+        "Số chứng minh thư người khai": "parentResidentID",
+        "Nghề nghiệp người khai": "parentJob",
+        "Địa chỉ người khai": "parentAddress",
+        "Họ và tên vợ(chồng) người khai": "otherParentName",
+        "Số điện thoại vợ(chồng) người khai": "otherParentPhone",
+        "Số chứng minh thư vợ(chồng) người khai": "otherParentResidentID",
+        "Nghề nghiệp vợ(chồng) người khai": "otherParentJob",
+        "Địa chỉ vợ(chồng) người khai": "otherParentAddress",
+        "Nguyện vọng 1": {
+          field: "expectation1",
+          callback: (value) => {
+            if (value.clazz) return value.clazz;
+            else return value.school;
+          },
+        },
+        "Nguyện vọng 2": {
+          field: "expectation2",
+          callback: (value) => {
+            if (value.clazz) return value.clazz;
+            else return value.school;
+          },
+        },
+        "Nguyện vọng 3": {
+          field: "expectation3",
+          callback: (value) => {
+            if (value.clazz) return value.clazz;
+            else return value.school;
+          },
+        },
       },
     };
   },
