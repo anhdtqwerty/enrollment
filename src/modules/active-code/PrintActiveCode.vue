@@ -73,13 +73,12 @@
                                   <span
                                     ><img
                                       data-file-id="5182366"
-                                      height="104"
+                                      height="45"
                                       src="https://mcusercontent.com/38f8a40e7fcf0da44ad2f2a33/images/85effe48-8e8c-482f-8c69-952ebfce2475.png"
-                                      style="border: 0px initial ; width: 128px; height: 104px; margin: 0px;"
-                                      width="128"
+                                      style="border: 0px initial ; width: 56px; height: 45px; margin: 0px;"
+                                      width="56"
                                   /></span>
-                                  <br/>
-                                  <br/>
+                                  <br />
                                 </div>
                               </td>
                             </tr>
@@ -137,7 +136,7 @@
                                 style="padding: 0px 6px 3px; line-height: 100%;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size: 20px"
+                                  <span style="font-size: 18px"
                                     ><strong
                                       ><span
                                         ><span
@@ -204,7 +203,7 @@
                                 style="padding: 0px 6px 3px; line-height: 100%;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size: 20px"
+                                  <span style="font-size: 18px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>LƯƠNG THẾ VINH</strong></font
@@ -272,8 +271,7 @@
                               >
                                 <div style="text-align: center;">
                                   <br />
-                                  <br />
-                                  <span style="font-size: 20px"
+                                  <span style="font-size: 18px"
                                     ><span style="color:#757575"
                                       ><font
                                         face="roboto, helvetica neue, helvetica, arial, sans-serif"
@@ -281,8 +279,9 @@
                                       ></span
                                     ></span
                                   ><br />
-                                  <br />
-                                  <span style="font-size: 20px;"
+
+                                  <span
+                                    style="font-size: 18px; padding-top:8px;"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Hồ sơ tuyển sinh năm 2021 - 2022</font
@@ -298,7 +297,7 @@
                                     ></span
                                   ><br />
                                   <br />
-                                  <span style="font-size: 20px"
+                                  <span style="font-size: 18px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >{{ activeCode.grade || "---" }}</font
@@ -361,14 +360,14 @@
                                 style="padding-top:0; padding-left:18px; padding-bottom:9px; padding-right:18px;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size: 20px"
+                                  <span style="font-size: 18px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Người xuất mã</font
                                     ></span
                                   ><br />
-                                  <br />
-                                  <span style="font-size: 20px"
+                                  <span
+                                    style="font-size: 18px; padding-top:16px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>{{
@@ -404,14 +403,14 @@
                                 style="padding-top:0; padding-left:18px; padding-bottom:9px; padding-right:18px;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size: 20px"
+                                  <span style="font-size: 18px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Ngày xuất mã</font
                                     ></span
                                   ><br />
-                                  <br />
-                                  <span style="font-size: 20px"
+                                  <span
+                                    style="font-size: 18px; padding-top:16px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>{{ getCreatedAt }}</strong></font
