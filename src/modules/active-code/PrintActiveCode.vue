@@ -8,7 +8,7 @@
       height="100%"
       width="100%"
       id="bodyTable"
-      style="line-height: 24px !important"
+      style="line-height: 16px !important"
     >
       <tr>
         <td align="center" valign="top" id="bodyCell">
@@ -136,7 +136,7 @@
                                 style="padding: 0px 6px 3px; line-height: 100%;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size: 18px"
+                                  <span style="font-size: 14px"
                                     ><strong
                                       ><span
                                         ><span
@@ -146,64 +146,8 @@
                                       ></strong
                                     ></span
                                   >
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <!--[if mso]>
-				</td>
-				<![endif]-->
-
-                        <!--[if mso]>
-				</tr>
-				</table>
-				<![endif]-->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <table
-                  border="0"
-                  cellpadding="0"
-                  cellspacing="0"
-                  width="100%"
-                  class="mcnTextBlock"
-                  style="min-width:100%;"
-                >
-                  <tbody class="mcnTextBlockOuter">
-                    <tr>
-                      <td
-                        valign="top"
-                        class="mcnTextBlockInner"
-                        style="padding-top:8px;"
-                      >
-                        <!--[if mso]>
-				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
-				<tr>
-				<![endif]-->
-
-                        <!--[if mso]>
-				<td valign="top" width="600" style="width:600px;">
-				<![endif]-->
-                        <table
-                          align="left"
-                          border="0"
-                          cellpadding="0"
-                          cellspacing="0"
-                          style="max-width:100%; min-width:100%;"
-                          width="100%"
-                          class="mcnTextContentContainer"
-                        >
-                          <tbody>
-                            <tr>
-                              <td
-                                valign="top"
-                                class="mcnTextContent"
-                                style="padding: 0px 6px 3px; line-height: 100%;"
-                              >
-                                <div style="text-align: center;">
-                                  <span style="font-size: 18px"
+                                  <br />
+                                  <span style="font-size: 14px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>LƯƠNG THẾ VINH</strong></font
@@ -271,7 +215,7 @@
                               >
                                 <div style="text-align: center;">
                                   <br />
-                                  <span style="font-size: 18px"
+                                  <span style="font-size: 14px"
                                     ><span style="color:#757575"
                                       ><font
                                         face="roboto, helvetica neue, helvetica, arial, sans-serif"
@@ -281,14 +225,14 @@
                                   ><br />
 
                                   <span
-                                    style="font-size: 18px; padding-top:8px;"
+                                    style="font-size: 14px; padding-top:8px;"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Hồ sơ tuyển sinh năm 2021 - 2022</font
                                     ></span
                                   ><br />
                                   <br />
-                                  <span style="font-size:32px"
+                                  <span style="font-size:24px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>{{
@@ -297,13 +241,15 @@
                                     ></span
                                   ><br />
                                   <br />
-                                  <span style="font-size: 18px"
+                                  <span
+                                    style="font-size: 16px; padding-top:8px; font-weight: 500"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
-                                      >{{ activeCode.grade || "---" }}</font
+                                      >{{
+                                        activeCode.grade.toUpperCase() || "---"
+                                      }}</font
                                     ></span
                                   ><br />
-                                  <br />
                                 </div>
                               </td>
                             </tr>
@@ -360,14 +306,14 @@
                                 style="padding-top:0; padding-left:18px; padding-bottom:9px; padding-right:18px;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size: 18px"
+                                  <span style="font-size: 14px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Người xuất mã</font
                                     ></span
                                   ><br />
                                   <span
-                                    style="font-size: 18px; padding-top:16px"
+                                    style="font-size: 14px; padding-top:16px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>{{
@@ -403,14 +349,14 @@
                                 style="padding-top:0; padding-left:18px; padding-bottom:9px; padding-right:18px;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size: 18px"
+                                  <span style="font-size: 14px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Ngày xuất mã</font
                                     ></span
                                   ><br />
                                   <span
-                                    style="font-size: 18px; padding-top:16px"
+                                    style="font-size: 14px; padding-top:16px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>{{ getCreatedAt }}</strong></font
