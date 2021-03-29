@@ -1,7 +1,5 @@
 <template>
-  <center
-    style="display: flex; flex-direction: column; align-items: center; justify-content: center"
-  >
+  <center>
     <table
       align="center"
       border="0"
@@ -10,7 +8,7 @@
       height="100%"
       width="100%"
       id="bodyTable"
-      style="line-height: 48px"
+      style="line-height: 24px !important"
     >
       <tr>
         <td align="center" valign="top" id="bodyCell">
@@ -45,7 +43,7 @@
                       <td
                         valign="top"
                         class="mcnTextBlockInner"
-                        style="padding-top:24px;"
+                        style="padding-top:8px;"
                       >
                         <!--[if mso]>
 				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
@@ -69,17 +67,19 @@
                               <td
                                 valign="top"
                                 class="mcnTextContent"
-                                style="padding: 0px 18px 9px; line-height: 100%;"
+                                style="padding: 0px 6px 3px; line-height: 100%;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size:18px"
+                                  <span
                                     ><img
                                       data-file-id="5182366"
-                                      height="169"
+                                      height="104"
                                       src="https://mcusercontent.com/38f8a40e7fcf0da44ad2f2a33/images/85effe48-8e8c-482f-8c69-952ebfce2475.png"
-                                      style="border: 0px initial ; width: 208px; height: 169px; margin: 0px;"
-                                      width="208"/></span
-                                  >&nbsp;&nbsp;
+                                      style="border: 0px initial ; width: 128px; height: 104px; margin: 0px;"
+                                      width="128"
+                                  /></span>
+                                  <br/>
+                                  <br/>
                                 </div>
                               </td>
                             </tr>
@@ -110,7 +110,7 @@
                       <td
                         valign="top"
                         class="mcnTextBlockInner"
-                        style="padding-top:24px;"
+                        style="padding-top:8px;"
                       >
                         <!--[if mso]>
 				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
@@ -134,10 +134,10 @@
                               <td
                                 valign="top"
                                 class="mcnTextContent"
-                                style="padding: 0px 18px 9px; line-height: 100%;"
+                                style="padding: 0px 6px 3px; line-height: 100%;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size:34px"
+                                  <span style="font-size: 20px"
                                     ><strong
                                       ><span
                                         ><span
@@ -177,7 +177,7 @@
                       <td
                         valign="top"
                         class="mcnTextBlockInner"
-                        style="padding-top:24px;"
+                        style="padding-top:8px;"
                       >
                         <!--[if mso]>
 				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
@@ -201,10 +201,10 @@
                               <td
                                 valign="top"
                                 class="mcnTextContent"
-                                style="padding: 0px 18px 9px; line-height: 100%;"
+                                style="padding: 0px 6px 3px; line-height: 100%;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size:34px"
+                                  <span style="font-size: 20px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>LƯƠNG THẾ VINH</strong></font
@@ -244,7 +244,7 @@
                       <td
                         valign="top"
                         class="mcnTextBlockInner"
-                        style="padding-top:24px;"
+                        style="padding-top:8px;"
                       >
                         <!--[if mso]>
 				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
@@ -273,10 +273,7 @@
                                 <div style="text-align: center;">
                                   <br />
                                   <br />
-                                  <br />
-                                  <br />
-                                  <br />
-                                  <span style="font-size:42px"
+                                  <span style="font-size: 20px"
                                     ><span style="color:#757575"
                                       ><font
                                         face="roboto, helvetica neue, helvetica, arial, sans-serif"
@@ -285,15 +282,14 @@
                                     ></span
                                   ><br />
                                   <br />
-                                  <span style="font-size:34px;"
+                                  <span style="font-size: 20px;"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Hồ sơ tuyển sinh năm 2021 - 2022</font
                                     ></span
                                   ><br />
                                   <br />
-                                  <br />
-                                  <span style="font-size:76px"
+                                  <span style="font-size:32px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>{{
@@ -302,21 +298,13 @@
                                     ></span
                                   ><br />
                                   <br />
-                                  <br />
-                                  <span style="font-size:42px"
+                                  <span style="font-size: 20px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >{{ activeCode.grade || "---" }}</font
                                     ></span
                                   ><br />
                                   <br />
-                                  <br />
-                                  <br />
-                                  <br />
-                                  <br />
-                                  <br />
-                                  <br />
-                                  &nbsp;
                                 </div>
                               </td>
                             </tr>
@@ -347,7 +335,7 @@
                       <td
                         valign="top"
                         class="mcnTextBlockInner"
-                        style="padding-top:24px;"
+                        style="padding-top:8px;"
                       >
                         <!--[if mso]>
 				<table align="left" border="0" cellspacing="0" cellpadding="0" width="100%" style="width:100%;">
@@ -373,14 +361,14 @@
                                 style="padding-top:0; padding-left:18px; padding-bottom:9px; padding-right:18px;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size:34px"
+                                  <span style="font-size: 20px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Người xuất mã</font
                                     ></span
                                   ><br />
                                   <br />
-                                  <span style="font-size:34px"
+                                  <span style="font-size: 20px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>{{
@@ -416,14 +404,14 @@
                                 style="padding-top:0; padding-left:18px; padding-bottom:9px; padding-right:18px;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size:34px"
+                                  <span style="font-size: 20px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Ngày xuất mã</font
                                     ></span
                                   ><br />
                                   <br />
-                                  <span style="font-size:34px"
+                                  <span style="font-size: 20px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>{{ getCreatedAt }}</strong></font
@@ -462,90 +450,6 @@
         </td>
       </tr>
     </table>
-
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
   </center>
 </template>
 
