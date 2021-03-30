@@ -1,141 +1,151 @@
 <template>
-  <div class="document-container d-flex py-8 mx-auto">
-    <v-col class="px-8" style="flex: 1 1 0px; border-right: 1px solid #e6e4eb">
-      <v-card class="elevation-0" width="100%">
-        <div class="d-flex align-center">
-          <span class="mr-6"
-            ><v-icon @click="backToHome()"> mdi-arrow-left </v-icon></span
-          >
-          <div>
-            <div class="document-title">
-              Đăng ký vào
-              {{ this.document.type === "Khối 6" ? "lớp 6" : "lớp 10" }}
-            </div>
-            <div class="document-subtitle mt-1">
-              Mã hồ sơ: {{ this.document.code }}
+  <div class="document-container py-8 mx-auto">
+    <v-row no-gutters>
+      <v-col
+        class="px-8"
+        :class="{ 'pb-6': $vuetify.breakpoint.smAndDown }"
+        style="border-right: 1px solid #e6e4eb"
+        cols="12"
+        xs="12"
+        sm="12"
+        md="4"
+      >
+        <v-card class="elevation-0" width="100%">
+          <div class="d-flex align-center">
+            <span class="mr-6"
+              ><v-icon @click="backToHome()"> mdi-arrow-left </v-icon></span
+            >
+            <div>
+              <div class="document-title">
+                Đăng ký vào
+                {{ this.document.type === "Khối 6" ? "lớp 6" : "lớp 10" }}
+              </div>
+              <div class="document-subtitle mt-1">
+                Mã hồ sơ: {{ this.document.code }}
+              </div>
             </div>
           </div>
-        </div>
-        <v-stepper class="elevation-0" v-model="step" vertical non-linear>
-          <v-stepper-step
-            class="mb-4"
-            step="1"
-            :complete="isCompleted(1)"
-            @click="onStepClick('choose-department', 1)"
-          >
-            <span class="step-title mb-1">Chọn cơ sở</span>
-            <div
-              class="step-subtitle"
-              :class="getStatusColor('choose-department', 1)"
+          <v-stepper class="elevation-0" v-model="step" vertical non-linear>
+            <v-stepper-step
+              class="mb-4"
+              step="1"
+              :complete="isCompleted(1)"
+              @click="onStepClick('choose-department', 1)"
             >
-              {{ getStatus("choose-department", 1) }}
-            </div></v-stepper-step
-          >
-          <v-stepper-step
-            class="mb-4"
-            step="2"
-            :complete="isCompleted(2)"
-            @click="onStepClick('fill-info', 2)"
-          >
-            <span class="step-title mb-1">Thông tin phụ huynh, học sinh</span>
-            <div class="step-subtitle" :class="getStatusColor('fill-info', 2)">
-              {{ getStatus("fill-info", 2) }}
-            </div></v-stepper-step
-          >
-          <v-stepper-step
-            class="mb-4"
-            step="3"
-            :complete="isCompleted(3)"
-            @click="onStepClick('register-expectation', 3)"
-          >
-            <span class="step-title mb-1">Đăng ký nguyện vọng</span>
-            <div
-              class="step-subtitle"
-              :class="getStatusColor('register-expectation', 3)"
+              <span class="step-title mb-1">Chọn cơ sở</span>
+              <div
+                class="step-subtitle"
+                :class="getStatusColor('choose-department', 1)"
+              >
+                {{ getStatus("choose-department", 1) }}
+              </div></v-stepper-step
             >
-              {{ getStatus("register-expectation", 3) }}
-            </div>
-          </v-stepper-step>
-          <v-stepper-step
-            class="mb-4"
-            step="4"
-            :complete="isCompleted(4)"
-            @click="onStepClick('study-result', 4)"
-          >
-            <span class="step-title mb-1">Kết quả học tập</span>
-            <div
-              class="step-subtitle"
-              :class="getStatusColor('study-result', 4)"
+            <v-stepper-step
+              class="mb-4"
+              step="2"
+              :complete="isCompleted(2)"
+              @click="onStepClick('fill-info', 2)"
             >
-              {{ getStatus("study-result", 4) }}
-            </div>
-          </v-stepper-step>
-          <v-stepper-step
-            step="5"
-            :complete="isCompleted(5)"
-            @click="onStepClick('exam-result', 5)"
-          >
-            <span class="step-title">Kết quả khảo sát năng lực</span>
-            <div
-              class="step-subtitle"
-              :class="getStatusColor('exam-result', 5)"
+              <span class="step-title mb-1">Thông tin phụ huynh, học sinh</span>
+              <div
+                class="step-subtitle"
+                :class="getStatusColor('fill-info', 2)"
+              >
+                {{ getStatus("fill-info", 2) }}
+              </div></v-stepper-step
             >
-              {{ getStatus("exam-result", 5) }}
-            </div>
-          </v-stepper-step>
-        </v-stepper>
-        <div class="notice pa-4" v-if="step < 5">
-          Quý phụ huynh lưu ý thông tin tiếp theo sẽ được mở để khai báo sau.
-          Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm
-          tra để nhận thông báo.
-        </div>
-      </v-card>
-    </v-col>
-    <v-col v-if="step === 1" class="d-flex px-8" style="flex: 2 1 0px">
-      <ChooseFacility
-        :document="document"
-        :documentStep="document.step"
-        @completeStep="updateDocument($event, false)"
-        @saveDraft="updateDocument($event, true)"
-        @nextStep="nextStep"
-      />
-    </v-col>
-    <v-col v-if="step === 2" class="d-flex px-8" style="flex: 2 1 0px">
-      <InfoForm
-        :document="document"
-        :documentStep="document.step"
-        @completeStep="updateDocument($event, false)"
-        @saveDraft="updateDocument($event, true)"
-        @nextStep="nextStep"
-      />
-    </v-col>
-    <v-col v-if="step === 3" class="d-flex px-8" style="flex: 2 1 0px">
-      <Grade10Expectation
-        :document="document"
-        :documentStep="document.step"
-        @completeStep="updateDocument($event, false)"
-        @saveDraft="updateDocument($event, true)"
-        @nextStep="nextStep"
-      />
-    </v-col>
-    <v-col v-if="step === 4" class="d-flex px-8" style="flex: 2 1 0px">
-      <ResultForm
-        :document="document"
-        :documentStep="document.step"
-        @completeStep="updateDocument($event, false)"
-        @saveDraft="updateDocument($event, true)"
-        @nextStep="nextStep"
-      />
-    </v-col>
-    <v-col v-if="step === 5" class="d-flex px-8" style="flex: 2 1 0px">
-      <ExamResultForm
-        :document="document"
-        :documentStep="document.step"
-        @completeStep="updateDocument($event, false)"
-        @saveDraft="updateDocument($event, true)"
-        @nextStep="nextStep"
-      />
-    </v-col>
+            <v-stepper-step
+              class="mb-4"
+              step="3"
+              :complete="isCompleted(3)"
+              @click="onStepClick('register-expectation', 3)"
+            >
+              <span class="step-title mb-1">Đăng ký nguyện vọng</span>
+              <div
+                class="step-subtitle"
+                :class="getStatusColor('register-expectation', 3)"
+              >
+                {{ getStatus("register-expectation", 3) }}
+              </div>
+            </v-stepper-step>
+            <v-stepper-step
+              class="mb-4"
+              step="4"
+              :complete="isCompleted(4)"
+              @click="onStepClick('study-result', 4)"
+            >
+              <span class="step-title mb-1">Kết quả học tập</span>
+              <div
+                class="step-subtitle"
+                :class="getStatusColor('study-result', 4)"
+              >
+                {{ getStatus("study-result", 4) }}
+              </div>
+            </v-stepper-step>
+            <v-stepper-step
+              step="5"
+              :complete="isCompleted(5)"
+              @click="onStepClick('exam-result', 5)"
+            >
+              <span class="step-title">Kết quả khảo sát năng lực</span>
+              <div
+                class="step-subtitle"
+                :class="getStatusColor('exam-result', 5)"
+              >
+                {{ getStatus("exam-result", 5) }}
+              </div>
+            </v-stepper-step>
+          </v-stepper>
+          <div class="notice pa-4" v-if="step < 5">
+            Quý phụ huynh lưu ý thông tin tiếp theo sẽ được mở để khai báo sau.
+            Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm
+            tra để nhận thông báo.
+          </div>
+        </v-card>
+      </v-col>
+      <v-col class="d-flex px-8" cols="12" xs="12" sm="12" md="8">
+        <ChooseFacility
+          v-if="step === 1"
+          :document="document"
+          :documentStep="document.step"
+          @completeStep="updateDocument($event, false)"
+          @saveDraft="updateDocument($event, true)"
+          @nextStep="nextStep"
+        />
+        <InfoForm
+          v-if="step === 2"
+          :document="document"
+          :documentStep="document.step"
+          @completeStep="updateDocument($event, false)"
+          @saveDraft="updateDocument($event, true)"
+          @nextStep="nextStep"
+        />
+        <Grade10Expectation
+          v-if="step === 3"
+          :document="document"
+          :documentStep="document.step"
+          @completeStep="updateDocument($event, false)"
+          @saveDraft="updateDocument($event, true)"
+          @nextStep="nextStep"
+        />
+        <ResultForm
+          v-if="step === 4"
+          :document="document"
+          :documentStep="document.step"
+          @completeStep="updateDocument($event, false)"
+          @saveDraft="updateDocument($event, true)"
+          @nextStep="nextStep"
+        />
+        <ExamResultForm
+          v-if="step === 5"
+          :document="document"
+          :documentStep="document.step"
+          @completeStep="updateDocument($event, false)"
+          @saveDraft="updateDocument($event, true)"
+          @nextStep="nextStep"
+        />
+      </v-col>
+    </v-row>
   </div>
 </template>
 

@@ -1,9 +1,7 @@
 <template>
   <v-form v-model="isValid" ref="form" v-bind="this.$attrs" style="width: 100%">
     <div class="section-label py-6">
-      Ảnh 3x4 của con<span style="color: red" v-if="documentStep === 2"
-        >*</span
-      >
+      Ảnh 3x4 của con<span style="color: red" v-if="documentStep === 2">*</span>
     </div>
     <v-row class="d-flex flex-column pb-6" no-gutters>
       <picture-input
@@ -31,8 +29,8 @@
     <div class="section-label py-6">
       Thông tin con
     </div>
-    <v-row no-gutters>
-      <v-col>
+    <v-row class="my-0">
+      <v-col class="py-0">
         <div class="field-label">
           Họ tên học sinh
           <span style="color: red" v-if="documentStep === 2">*</span>
@@ -54,8 +52,8 @@
         </div>
       </v-col>
     </v-row>
-    <v-row no-gutters>
-      <v-col class="mr-4">
+    <v-row class="my-0">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Ngày tháng năm sinh
           <span style="color: red" v-if="documentStep === 2">*</span>
@@ -77,13 +75,14 @@
           {{ getStudentDob }}
         </div>
       </v-col>
-      <v-col class="ml-4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Giới tính
           <span style="color: red" v-if="documentStep === 2">*</span>
         </div>
         <v-radio-group
           v-model="studentGender"
+          :class="{ 'mt-0': $vuetify.breakpoint.smAndDown }"
           :rules="[$rules.required]"
           v-if="documentStep === 2"
           row
@@ -96,8 +95,8 @@
         </div>
       </v-col>
     </v-row>
-    <v-row no-gutters>
-      <v-col>
+    <v-row class="my-0">
+      <v-col class="py-0">
         <div class="field-label">
           Mã số học sinh (Sở GD&DT Hà Nội cấp)
           <span style="color: red" v-if="documentStep === 2">*</span>
@@ -119,8 +118,8 @@
         </div>
       </v-col>
     </v-row>
-    <v-row no-gutters>
-      <v-col class="mr-4">
+    <v-row class="my-0">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           {{
             document.type === "Khối 6"
@@ -149,7 +148,7 @@
           {{ document.school || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col class="ml-4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Thành phố
           <span style="color: red" v-if="documentStep === 2">*</span>

@@ -1,18 +1,24 @@
 <template>
   <v-card width="100%" class="elevation-0">
+    <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
     <v-card-title class="card-title mb-2">Chọn cơ sở</v-card-title>
     <v-card-subtitle class="card-subtitle">
       Xin quý phụ huynh lưu ý trước khi xác nhận cơ sở đăng ký cho con: Hồ sơ
       đăng ký tại cơ sở nào sẽ chỉ được thi và nhập học tại cơ sở đó.
     </v-card-subtitle>
-    <v-card-text class="d-flex py-6">
+    <v-card-text
+      class="py-6"
+      :class="{ 'd-flex': $vuetify.breakpoint.mdAndUp }"
+    >
       <v-card
-        style="flex: 1 1 0px"
+        style="flex: 1 1 0px; min-height: 292px"
         color="#F8F8F8"
-        class="elevation-0 mr-8"
+        class="elevation-0"
         :class="{
           'selected-card': department === 'Cơ sở A',
           'cursor-default': documentStep !== 1,
+          'mr-8': $vuetify.breakpoint.mdAndUp,
+          'mb-8': $vuetify.breakpoint.smAndDown,
         }"
         :disabled="department !== 'Cơ sở A' && department !== ''"
         @click="chooseFacility(true)"
@@ -44,7 +50,7 @@
         </ul>
       </v-card>
       <v-card
-        style="flex: 1 1 0px"
+        style="flex: 1 1 0px; min-height: 292px"
         color="#F8F8F8"
         class="elevation-0"
         :class="{

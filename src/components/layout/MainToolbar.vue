@@ -19,9 +19,18 @@
         contain
         src="@/assets/homepage/logo.svg"
         transition="scale-transition"
-        width="56"
+        :width="getImgHeight"
       />
-      <div class="accent--text ml-1" id="school-title">LƯƠNG THẾ VINH</div>
+      <div
+        class="accent--text ml-1"
+        :class="{
+          'desktop-title': $vuetify.breakpoint.mdAndUp,
+          'mobile-title': $vuetify.breakpoint.smAndDown,
+        }"
+        id="school-title"
+      >
+        LƯƠNG THẾ VINH
+      </div>
     </div>
     <v-spacer></v-spacer>
     <GuestToolbar
@@ -48,6 +57,10 @@ export default {
   computed: {
     ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
     ...mapGetters("cv", ["systemTime"]),
+    getImgHeight() {
+      if (this.$vuetify.breakpoint.mdAndUp) return "56px";
+      else return "42px";
+    },
     getBarHeight() {
       if (this.$vuetify.breakpoint.mdAndUp) return "80px";
       else return "68px";
@@ -74,7 +87,12 @@ export default {
   font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 22px;
-  line-height: 22px;
+  line-height: 21px;
+}
+.desktop-title {
+  font-size: 21px;
+}
+.mobile-title {
+  font-size: 18px;
 }
 </style>

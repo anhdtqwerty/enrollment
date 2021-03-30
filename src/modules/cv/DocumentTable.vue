@@ -6,12 +6,12 @@
     :items="CVs"
     :items-per-page="10"
     :disable-sort="$vuetify.breakpoint.smAndDown"
-    
+    class="document-table"
     v-bind="this.$attrs"
   >
     <template v-slot:[`item.code`]="{ item }">
       <v-btn
-        class="btn text-none text-decoration-underline"
+        class="btn text-none text-decoration-underline px-0"
         color="primary"
         @click="onDocumentClick(item.id)"
         plain
@@ -49,10 +49,16 @@
       <v-btn
         @click="onDocumentClick(item.id)"
         color="primary"
-        class="btn text-none"
+        class="btn text-none px-0"
         plain
         >{{ item | getActionName }}</v-btn
       >
+    </template>
+    <template v-slot:no-data>
+      <div class="d-flex flex-column align-center justify-center pa-6">
+        <v-img width="70" src="@/assets/homepage/no-data.svg" />
+        <div class="mt-4">Nhập mã kích hoạt để bắt đầu tạo hồ sơ</div>
+      </div>
     </template>
   </v-data-table>
 </template>
@@ -67,6 +73,7 @@ const originHeaders = [
     align: "center",
     sortable: false,
     show: true,
+    width: 90,
   },
   {
     text: "Khối",
@@ -81,13 +88,15 @@ const originHeaders = [
     align: "center",
     sortable: false,
     show: true,
+    width: 90,
   },
   {
     text: "Học sinh",
     value: "student",
-    align: "center",
+    align: "left",
     sortable: false,
     show: true,
+    width: 220,
   },
   {
     text: "Trạng thái",
@@ -102,6 +111,7 @@ const originHeaders = [
     align: "center",
     sortable: false,
     show: true,
+    width: 90,
   },
 ];
 
@@ -176,7 +186,7 @@ export default {
 /* eslint-enable no-unused-vars */
 </script>
 
-<style scoped>
+<style>
 .btn {
   letter-spacing: 0.5px;
   font-family: "Roboto";
@@ -184,5 +194,14 @@ export default {
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
+}
+.document-table th span {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #797979;
 }
 </style>

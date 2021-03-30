@@ -16,11 +16,16 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-row class="pa-6" style="background: #0084ff" no-gutters>
-        <v-col cols="4">
-          <v-card class="mr-6">
+        <v-col cols="12" sm="12" xs="12" md="4">
+          <v-card
+            :class="{
+              'mr-6': $vuetify.breakpoint.mdAndUp,
+              'mb-6': $vuetify.breakpoint.smAndDown,
+            }"
+          >
             <v-card-title class="subtitle">Tạo hồ sơ mới</v-card-title>
             <v-divider></v-divider>
-            <v-card-text class="pa-4">
+            <v-card-text class="pa-4" style="background: #F2F0F1">
               <v-form ref="form" v-model="isValid">
                 <div class="text-subtitle-1 mb-2">
                   Mã kích hoạt
@@ -34,7 +39,7 @@
                   >
                 </div>
                 <v-text-field
-                  placeholder="Nhập mã kích hoạt tại đây (Ví dụ: 12345678)"
+                  placeholder="Nhập mã kích hoạt tại đây"
                   v-model="activeCode"
                   name="login"
                   type="number"
@@ -59,7 +64,7 @@
             </v-card-text>
           </v-card>
         </v-col>
-        <v-col cols="8">
+        <v-col cols="12" sm="12" xs="12" md="8">
           <v-card>
             <DocumentTable ref="documentTable" />
           </v-card>
@@ -149,6 +154,7 @@ export default {
   font-size: 12px;
   line-height: 16px;
   text-transform: uppercase;
+  color: #797979;
 }
 .btn {
   border-radius: 4px;
@@ -157,5 +163,11 @@ export default {
   font-weight: 500;
   font-size: 14px;
   line-height: 20px;
+}
+</style>
+
+<style>
+.v-text-field--outlined > .v-input__control > .v-input__slot {
+  background: white !important;
 }
 </style>

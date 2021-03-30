@@ -1,5 +1,6 @@
 <template>
   <v-card width="100%" class="elevation-0">
+    <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
     <v-card-title class="card-title mb-2">1. Thông tin phụ huynh</v-card-title>
     <v-card-subtitle class="card-subtitle">
       Vui lòng điền đầy đủ thông tin bằng tiếng Việt có dấu, viết hoa đầy đủ.
@@ -26,9 +27,10 @@
       />
     </v-card-text>
     <hr class="dashed" />
-    <v-card-actions class="d-flex justify-end pt-6 px-0">
+    <v-card-actions class="d-flex justify-end pt-8 px-0">
       <v-btn
-        class="px-6 py-3 mr-6 text-none"
+        :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
+        class="py-3 mr-6 text-none"
         color="primary"
         v-if="documentStep === 2"
         @click="saveDraft"

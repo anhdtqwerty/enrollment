@@ -1,8 +1,8 @@
 <template>
   <v-form v-model="isValid" ref="form" v-bind="this.$attrs" style="width: 100%">
     <div class="section-label py-6">Thông tin bản thân</div>
-    <v-row no-gutters>
-      <v-col>
+    <v-row class="my-0">
+      <v-col class="py-0">
         <div class="field-label">
           Họ tên tôi là
           <span style="color: red" v-if="documentStep === 2">*</span>
@@ -20,12 +20,12 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.parentName || "Chưa có thông tin"}}
+          {{ document.parentName || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
-    <v-row no-gutters>
-      <v-col class="mr-4">
+    <v-row class="my-0">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Số điện thoại
           <span style="color: red" v-if="documentStep === 2">*</span>
@@ -43,10 +43,10 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.parentPhone || "Chưa có thông tin"}}
+          {{ document.parentPhone || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col class="ml-4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Số Chứng minh nhân dân / Thẻ CCCD
           <span style="color: red" v-if="documentStep === 2">*</span>
@@ -64,12 +64,12 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.parentResidentID || "Chưa có thông tin"}}
+          {{ document.parentResidentID || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
-    <v-row no-gutters>
-      <v-col class="mr-4">
+    <v-row class="my-0">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Nghề nghiệp
           <span style="color: red" v-if="documentStep === 2">*</span>
@@ -87,10 +87,10 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.parentJob || "Chưa có thông tin"}}
+          {{ document.parentJob || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col class="ml-4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Nơi ở hiện tại
           <span style="color: red" v-if="documentStep === 2">*</span>
@@ -108,14 +108,14 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.parentAddress || "Chưa có thông tin"}}
+          {{ document.parentAddress || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
     <hr class="dashed" />
     <div class="section-label py-6">Thông tin vợ (chồng)</div>
-    <v-row no-gutters>
-      <v-col>
+    <v-row class="my-0">
+      <v-col class="py-0" cols="12">
         <div class="field-label">
           Họ tên vợ (chồng)
         </div>
@@ -131,12 +131,12 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.otherParentName || "Chưa có thông tin"}}
+          {{ document.otherParentName || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
-    <v-row no-gutters>
-      <v-col class="mr-4">
+    <v-row class="my-0">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Số điện thoại
         </div>
@@ -153,10 +153,10 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.otherParentPhone || "Chưa có thông tin"}}
+          {{ document.otherParentPhone || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col class="ml-4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Số Chứng minh nhân dân / Thẻ CCCD
         </div>
@@ -173,12 +173,12 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.otherParentResidentID || "Chưa có thông tin"}}
+          {{ document.otherParentResidentID || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
-    <v-row no-gutters>
-      <v-col class="mr-4">
+    <v-row class="my-0">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Nghề nghiệp
         </div>
@@ -194,10 +194,10 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.otherParentJob || "Chưa có thông tin"}}
+          {{ document.otherParentJob || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col class="ml-4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Nơi ở hiện tại
         </div>
@@ -213,7 +213,7 @@
           validate-on-blur
         />
         <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
-          {{ document.otherParentAddress || "Chưa có thông tin"}}
+          {{ document.otherParentAddress || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
