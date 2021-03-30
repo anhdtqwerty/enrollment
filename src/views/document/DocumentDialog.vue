@@ -37,7 +37,7 @@
                   placeholder="Nhập mã kích hoạt tại đây (Ví dụ: 12345678)"
                   v-model="activeCode"
                   name="login"
-                  type="text"
+                  type="number"
                   color="primary"
                   :rules="codeRules"
                   @keyup.enter="submit"
@@ -47,7 +47,7 @@
                 <div class="d-flex justify-center">
                   <v-btn
                     color="primary"
-                    class="text-none btn px-6 py-3 text-center"
+                    class="elevation-0 text-none btn px-6 py-3 text-center"
                     @click="onCreateDocument"
                     :loading="loading"
                     :disabled="!isValid"
@@ -123,14 +123,11 @@ export default {
         this.user &&
         this.isAuthenticated
       ) {
+        const relatedActiveCode = await this.fetchActiveCode(this.activeCode);
         const newCV = await this.createCV({
           code: this.activeCode,
           userPhone: this.user.username,
-        });
-        const relatedActiveCode = await this.fetchActiveCode(this.activeCode);
-        await this.updateActiveCode({
-          id: relatedActiveCode.id,
-          department: newCV.department,
+          department: relatedActiveCode.department,
         });
         await this.$refs.documentTable.refresh({
           _sort: "updatedAt:DESC",

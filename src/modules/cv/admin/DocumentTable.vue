@@ -129,8 +129,8 @@ export default {
       _sort: "updatedAt:DESC",
     };
     if (this.user.department === "both")
-      query.department_in = ["Cơ sở A", "Cơ sở 1"];
-    else query.department = this.user.department;
+      query.department_in = ["Cơ sở A", "Cơ sở 1", "unset"];
+    else query.department_in = [this.user.department, "unset"];
     await this.refresh(query);
   },
   methods: {
@@ -165,7 +165,8 @@ export default {
       else return "Vừa tạo";
     },
     getDepartment: (item) => {
-      return get(item, "department", "---");
+      if(!item.department || item.department ==='unset') return "---"
+      else return item.department
     },
     getCode: (item) => {
       return get(item, "code", "---");

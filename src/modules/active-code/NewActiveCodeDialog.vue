@@ -13,7 +13,7 @@
     />
     <v-card>
       <v-card-title class="admin white--text text-uppercase dialog-title">
-        Thêm mã kích hoạt
+        Thêm mã kích hoạt {{ grade }}
         <v-spacer></v-spacer>
         <v-btn dark icon>
           <v-icon @click="cancel" class="mr-n1">mdi-close</v-icon>
@@ -21,23 +21,10 @@
       </v-card-title>
       <v-divider />
       <v-card-text class="pa-0">
-        <div class="d-flex pa-6">
-          <v-select
-            :items="grades"
-            item-text="title"
-            item-value="value"
-            v-model="grade"
-            placeholder="Khối"
-            class="mr-6"
-            style="flex: 2 1 0px"
-            outlined
-            dense
-            hide-details
-          />
+        <div class="d-flex justify-center pa-6">
           <v-btn
-            height="40px"
             color="admin"
-            style="flex: 1 1 0px;"
+            width="200px"
             :loading="loading"
             @click="submit()"
             depressed
@@ -58,11 +45,11 @@
             {{ getCode }}
           </div>
           <div class="dialog-title mb-10" style="color: #212121;">
-            {{ getGrade }}
+            {{ grade }}
           </div>
           <v-btn
             color="#0D47A1"
-            style="flex: 1 1 0px"
+            width="200px"
             :loading="loading"
             :disabled="!activeCode.code"
             @click="onConfirmPrint()"
@@ -73,9 +60,6 @@
           >
         </div>
       </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -94,6 +78,7 @@ export default {
   },
   props: {
     state: Boolean,
+    grade: String,
   },
   computed: {
     ...mapGetters("activeCode", ["activeCodes"]),
@@ -111,11 +96,6 @@ export default {
       activeCode: {},
       dialog: false,
       loading: false,
-      grade: "Khối 6",
-      grades: [
-        { title: "Khối 6", value: "Khối 6" },
-        { title: "Khối 10", value: "Khối 10" },
-      ],
     };
   },
   watch: {
@@ -145,7 +125,6 @@ export default {
     },
     reset() {
       this.activeCode = {};
-      this.grade = "Khối 6";
     },
     async submit() {
       this.loading = true;
@@ -153,12 +132,13 @@ export default {
         grade: this.grade,
         createdBy: this.user.name || "Admin",
       };
-      if (this.user.department === "both") query.department = "Cơ sở A";
+      if (this.user.department === "both") query.department = "unset";
       else query.department = this.user.department;
       const newActiveCode = await this.createActiveCode(query);
       if (newActiveCode) {
         this.activeCode = newActiveCode;
       }
+      this.$emit("refresh");
       this.loading = false;
     },
     cancel() {

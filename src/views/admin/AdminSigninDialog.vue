@@ -79,6 +79,11 @@ export default {
     ...mapGetters("layout", ["signInDialog"]),
     ...mapGetters("auth", ["isAuthenticated", "user", "role"]),
   },
+  async created() {
+    this.$loading.active = true;
+    if (this.user && this.isAuthenticated && this.user.role.type === "admin")
+      this.$router.push("/admin");
+  },
   data() {
     return {
       isValid: true,
@@ -95,7 +100,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("auth", ["signIn"]),
+    ...mapActions("auth", ["signIn", "signOut"]),
     cancel() {
       this.$refs.form.reset();
       this.setSignInDialog(false);
@@ -110,6 +115,7 @@ export default {
           this.user.role.type !== "admin"
         ) {
           this.$alert.error("Xin vui lòng đăng nhập bằng tài khoản Admin");
+          this.signOut();
           this.loading = false;
           return;
         }

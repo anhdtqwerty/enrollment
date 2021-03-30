@@ -152,14 +152,8 @@ export default {
       confirmDialog: false,
     };
   },
-  async mounted() {
-    let query = {
-      _sort: "updatedAt:DESC",
-    };
-    if (this.user.department === "both")
-      query.department_in = ["Cơ sở A", "Cơ sở 1"];
-    else query.department = this.user.department;
-    await this.refresh(query);
+  async beforeMount() {
+    await this.refresh();
   },
   methods: {
     ...mapActions("activeCode", [
@@ -190,8 +184,14 @@ export default {
       this.$loading.active = false;
       this.$htmlToPaper("printActiveCode");
     },
-    async refresh(query) {
+    async refresh() {
       this.loading = true;
+      let query = {
+        _sort: "updatedAt:DESC",
+      };
+      if (this.user.department === "both")
+        query.department_in = ["Cơ sở A", "Cơ sở 1", "unset"];
+      else query.department_in = [this.user.department, "unset"];
       await this.fetchActiveCodes({ ...query });
       this.loading = false;
     },
@@ -208,7 +208,8 @@ export default {
       else return "---";
     },
     getDepartment: (item) => {
-      return get(item, "department", "---");
+      if (!item.department || item.department === "unset") return "---";
+      else return item.department;
     },
     getCode: (item) => {
       return get(item, "code", "---");
@@ -220,7 +221,7 @@ export default {
       return get(item, "printNum", "0");
     },
     getGrade: (item) => {
-      if (item.type === "Khối 6") return "6";
+      if (item.grade === "Khối 6") return "6";
       else return "10";
     },
   },

@@ -6,6 +6,7 @@
     :items="CVs"
     :items-per-page="10"
     :disable-sort="$vuetify.breakpoint.smAndDown"
+    
     v-bind="this.$attrs"
   >
     <template v-slot:[`item.code`]="{ item }">
@@ -19,7 +20,12 @@
       </v-btn>
     </template>
     <template v-slot:[`item.type`]="{ item }">
-      <v-chip :color="getGradeColor(item.type)" small>
+      <v-chip
+        :color="getGradeColor(item.type)"
+        class="d-flex justify-center"
+        style="width: 65px"
+        small
+      >
         {{ item | getGrade }}
       </v-chip>
     </template>
@@ -30,7 +36,12 @@
       {{ item | getStudentName }}
     </template>
     <template v-slot:[`item.status`]="{ item }">
-      <v-chip :color="getStatusColor(item.status)" small>
+      <v-chip
+        :color="getStatusColor(item.status)"
+        class="d-flex justify-center"
+        style="width: 80px"
+        small
+      >
         {{ item.status | getStatus }}
       </v-chip>
     </template>
@@ -127,7 +138,7 @@ export default {
       else return "deep-purple lighten-4";
     },
     getStatusColor(status) {
-      if (status === "Đã nộp") return "rgba(75,202,129,0.5)";
+      if (status === "submitted") return "rgba(75,202,129,0.5)";
       else return "rgba(255,196,16,0.5)";
     },
   },

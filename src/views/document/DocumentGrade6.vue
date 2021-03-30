@@ -154,19 +154,36 @@ export default {
       this.$emit("updateDocument", data, isDraft);
     },
     getStatus(key, step) {
-      if (!this.systemTime[key] || this.document.step < step) return "Chưa mở";
+      if (
+        !this.systemTime.checkDocumentSystemTime ||
+        !this.systemTime.checkDocumentSystemTime[key] ||
+        this.document.step < step
+      )
+        return "Chưa mở";
       else {
-        if (!this.document.isDraft) return "Mới mở";
-        else if (this.document.isDraft) return "Đang khai báo";
+        if (!this.document.status === "created") return "Mới mở";
+        else if (
+          this.document.status === "filling" &&
+          this.document.step <= step
+        )
+          return "Đang khai báo";
       }
       return "Đã hoàn tất";
     },
     getStatusColor(key, step) {
-      if (!this.systemTime[key] || this.document.step < step)
+      if (
+        !this.systemTime.checkDocumentSystemTime ||
+        !this.systemTime.checkDocumentSystemTime[key] ||
+        this.document.step < step
+      )
         return "dark-gray--text";
       else {
-        if (!this.document.isDraft) return "error--text";
-        else if (this.document.isDraft) return "warning--text";
+        if (!this.document.status === "created") return "error--text";
+        else if (
+          this.document.status === "filling" &&
+          this.document.step <= step
+        )
+          return "warning--text";
       }
       return "success--text";
     },
@@ -174,15 +191,19 @@ export default {
       return this.document.step > step;
     },
     onStepClick(key, step) {
-      // if (!this.systemTime[key]) {
-      //   this.$alert.error(
-      //     "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
-      //   );
-      //   return;
-      // }
-      // if (this.document.step < step) {
-      //   this.$alert.error("Xin vui lòng hoàn thành bước trước");
-      // }
+      if (
+        !this.systemTime.checkDocumentSystemTime ||
+        !this.systemTime.checkDocumentSystemTime[key]
+      ) {
+        this.$alert.error(
+          "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+        );
+        return;
+      }
+      if (this.document.step < step) {
+        this.$alert.error("Xin vui lòng hoàn thành bước trước");
+        return;
+      }
       this.setStep(step);
     },
     nextStep() {
@@ -244,5 +265,11 @@ div >>> .v-stepper--vertical .v-stepper__step__step {
 .document-container {
   height: 100%;
   max-width: 1280px;
+}
+div >>> .v-stepper__step--active .v-stepper__label {
+  text-shadow: none !important;
+}
+div >>> .v-stepper__step--active .v-stepper__label span.step-title {
+  color: #0084ff;
 }
 </style>

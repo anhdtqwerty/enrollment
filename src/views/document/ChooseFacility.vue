@@ -172,6 +172,7 @@ export default {
           this.$emit("completeStep", {
             department: this.department,
             status: "filling",
+            isChooseFacility: true,
           });
         },
       });

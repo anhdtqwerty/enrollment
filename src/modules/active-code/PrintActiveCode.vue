@@ -246,7 +246,9 @@
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >{{
-                                        activeCode.grade.toUpperCase() || "---"
+                                        activeCode.grade
+                                          ? activeCode.grade.toUpperCase()
+                                          : "---"
                                       }}</font
                                     ></span
                                   ><br />

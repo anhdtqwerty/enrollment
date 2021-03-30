@@ -5,12 +5,14 @@
       :systemTime="documentSystemTime"
       :document="document"
       @updateDocument="updateDocument"
+      @updateActiveCode="updateActiveCode"
     />
     <DocumentGrade10
       v-if="document.type && document.type === 'Khối 10'"
       :systemTime="documentSystemTime"
       :document="document"
       @updateDocument="updateDocument"
+      @updateActiveCode="updateActiveCode"
     />
   </div>
 </template>
@@ -43,10 +45,10 @@ export default {
       return;
     }
     this.document = this.CV(this.documentId);
-    this.systemTime = await this.checkDocumentSystemTime({
+    this.documentSystemTime = await this.checkDocumentSystemTime({
       grade: this.document.type,
     });
-    console.log(this.systemTime);
+    console.log(this.documentSystemTime);
     this.$loading.active = false;
   },
   computed: {
@@ -61,6 +63,7 @@ export default {
       "checkDocumentSystemTime",
     ]),
     ...mapActions("upload", ["upload", "destroy"]),
+    ...mapActions("activeCode", ["updateActiveCode", "fetchActiveCode"]),
     async updateDocument(data, isDraft) {
       let avatarId = "";
       if (!data) {
@@ -84,6 +87,12 @@ export default {
         ...data,
       });
       this.document = this.CV(this.documentId);
+      if (data.isChooseFacility) {
+        await this.updateActiveCode({
+          id: this.document.activeCode.id,
+          department: this.document.department,
+        });
+      }
       this.documentSystemTime = await this.checkDocumentSystemTime({
         grade: this.document.type,
       });

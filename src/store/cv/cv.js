@@ -63,6 +63,7 @@ export default {
         const newCV = await CV.create(code, data);
         commit("setCV", newCV);
         alert.success("Tạo hồ sơ mới thành công!");
+        return newCV;
       } catch (e) {
         alert.error(e);
       }
