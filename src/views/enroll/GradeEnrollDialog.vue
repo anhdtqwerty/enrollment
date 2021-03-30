@@ -16,7 +16,7 @@
       </v-card-title>
       <v-divider></v-divider>
       <div class="iframe-container" :style="getIframeContainerHeight">
-        <iframe :src="src" class="responsive-iframe" />
+        <iframe :src="src" class="responsive-iframe" style="border: none"/>
       </div>
     </v-card>
   </v-dialog>
