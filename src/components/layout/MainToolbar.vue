@@ -19,7 +19,7 @@
         contain
         src="@/assets/homepage/logo.svg"
         transition="scale-transition"
-        width="40"
+        width="56"
       />
       <div class="accent--text ml-1" id="school-title">LƯƠNG THẾ VINH</div>
     </div>
@@ -74,7 +74,7 @@ export default {
   font-family: "Roboto Condensed", sans-serif;
   font-style: normal;
   font-weight: bold;
-  font-size: 19px;
+  font-size: 22px;
   line-height: 22px;
 }
 </style>

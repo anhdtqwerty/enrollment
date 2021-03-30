@@ -26,7 +26,7 @@
         >
           <v-img src="@/assets/enroll/khoi-6.svg" width="160px"></v-img>
           <div class="btn-title title--text mt-6">
-            Thông tin tuyển sinh khối lớp 6
+            Thông tin tuyển sinh Lớp 6
           </div>
         </v-card>
         <v-card
@@ -36,7 +36,7 @@
         >
           <v-img src="@/assets/enroll/khoi-10.svg" width="160px"></v-img>
           <div class="btn-title title--text mt-6">
-            Thông tin tuyển sinh khối lớp 10
+            Thông tin tuyển sinh Lớp 10
           </div>
         </v-card>
       </v-card-actions>

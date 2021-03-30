@@ -22,7 +22,7 @@
           <UserToolbar v-if="!isGuestBar" />
         </div>
         <v-row
-          class="d-flex justify-center align-center mx-auto py-3"
+          class="items-container d-flex justify-center align-center mx-auto py-3"
           :class="{
             'tablet-container': $vuetify.breakpoint.smOnly,
             'desktop-container': $vuetify.breakpoint.mdAndUp,
@@ -38,6 +38,7 @@
               'tablet-menu-blog': $vuetify.breakpoint.smOnly,
               'desktop-menu-blog': $vuetify.breakpoint.mdAndUp,
             }"
+            style="background-color: transparent;"
             @click="getBtnEvent(n)"
           >
             <v-img
@@ -46,9 +47,10 @@
               :width="getImageSize"
               :height="getImageSize"
             ></v-img>
-            <div class="justify-center menu-title text-center mt-2">
-              {{ menu[n - 1].title }}
-            </div>
+            <div
+              class="justify-center menu-title text-center mt-2"
+              v-html="menu[n - 1].title"
+            ></div>
           </v-card>
         </v-row>
         <div v-if="$vuetify.breakpoint.mdAndUp" style="height: 52px"></div>
@@ -220,7 +222,7 @@ export default {
         src: require("@/assets/homepage/Group-4.svg"),
       },
       {
-        title: "Cơ sở Nhà trường",
+        title: "Tham quan Cơ sở Nhà trường",
         src: require("@/assets/homepage/Group-6.svg"),
       },
       {
@@ -265,6 +267,13 @@ export default {
   width: 100%;
   max-width: 600px;
   max-height: calc(100% - 80px - 52px - 12px * 2);
+}
+.items-container {
+  background-image: url("../../assets/watermark.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: calc(100% - 48px) calc(100% - 48px);
 }
 @media screen and (min-width: 600px) {
   div.v-card--link:hover {
