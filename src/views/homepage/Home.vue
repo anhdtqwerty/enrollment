@@ -13,7 +13,7 @@
         <div
           v-if="
             $vuetify.breakpoint.xsOnly &&
-              systemTime.checkSystemTime['open-document']
+            systemTime.checkSystemTime['open-document']
           "
           style="width: 100%"
           class="d-flex justify-end pr-5"
@@ -38,7 +38,7 @@
               'tablet-menu-blog': $vuetify.breakpoint.smOnly,
               'desktop-menu-blog': $vuetify.breakpoint.mdAndUp,
             }"
-            style="background-color: transparent;"
+            style="background-color: transparent"
             @click="getBtnEvent(n)"
           >
             <v-img
@@ -277,7 +277,7 @@ export default {
 }
 @media screen and (min-width: 600px) {
   div.v-card--link:hover {
-    background: rgb(62, 62, 60, 0.1) !important;
+    background: rgb(116, 160, 246, 0.15) !important;
   }
 }
 </style>

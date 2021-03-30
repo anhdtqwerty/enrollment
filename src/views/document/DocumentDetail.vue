@@ -5,14 +5,12 @@
       :systemTime="documentSystemTime"
       :document="document"
       @updateDocument="updateDocument"
-      @updateActiveCode="updateActiveCode"
     />
     <DocumentGrade10
       v-if="document.type && document.type === 'Khối 10'"
       :systemTime="documentSystemTime"
       :document="document"
       @updateDocument="updateDocument"
-      @updateActiveCode="updateActiveCode"
     />
   </div>
 </template>
@@ -112,6 +110,8 @@ export default {
       this.documentSystemTime = await this.checkDocumentSystemTime({
         grade: this.document.type,
       });
+      if (isDraft) this.$alert.success("Đã lưu thành công");
+      else this.$alert.success("Đã hoàn thành khai báo thông tin");
       this.$loading.active = false;
     },
     async uploadAvatar(image) {

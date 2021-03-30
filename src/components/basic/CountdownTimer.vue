@@ -42,11 +42,14 @@ export default {
     }
   },
   watch: {
-    date: function(newVal) {
+    date: function (newVal) {
       this.setCountdown(newVal);
     },
     state(state) {
       this.dialog = state;
+    },
+    dialog(dialog) {
+      if (!dialog) this.$emit("closeDialog");
     },
   },
   mounted() {
@@ -57,7 +60,7 @@ export default {
   },
   computed: {
     getOpenDate() {
-      return `Hệ thống sẽ mở vào ngày ${this.date.substring(
+      return `Hệ thống đăng ký Hồ sơ sẽ mở vào ngày ${this.date.substring(
         0,
         11
       )} lúc ${this.date.substring(11, 16)}`;
@@ -71,9 +74,7 @@ export default {
       if (date) {
         this.countdown = moment(date, "DD/MM/YYYY hh:mm:ss");
       } else {
-        this.countdown = moment()
-          .endOf("day")
-          .format("DD/MM/YYYY hh:mm:ss");
+        this.countdown = moment().endOf("day").format("DD/MM/YYYY hh:mm:ss");
       }
     },
     update() {

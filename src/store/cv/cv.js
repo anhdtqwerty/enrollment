@@ -88,7 +88,6 @@ export default {
       try {
         const updatedCV = await CV.update(code, Cv);
         commit("setCV", updatedCV);
-        alert.success("Đã lưu thành công");
       } catch (e) {
         alert.error(e);
       }
