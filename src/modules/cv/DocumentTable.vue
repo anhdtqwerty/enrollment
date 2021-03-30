@@ -6,12 +6,17 @@
     :items="CVs"
     :items-per-page="10"
     :disable-sort="$vuetify.breakpoint.smAndDown"
+    :footer-props="{ 'items-per-page-text': 'Số Hồ Sơ một trang' }"
     class="document-table"
     v-bind="this.$attrs"
   >
+    <template v-slot:[`footer.page-text`]="{ items }">
+      Hồ sơ thứ {{ items.pageStart }} - {{ items.pageStop }} trên tổng
+      {{ items.itemsLength }} Hồ sơ
+    </template>
     <template v-slot:[`item.code`]="{ item }">
       <v-btn
-        class="btn text-none text-decoration-underline px-0"
+        class="document-btn text-none text-decoration-underline px-0"
         color="primary"
         @click="onDocumentClick(item.id)"
         plain
@@ -49,7 +54,7 @@
       <v-btn
         @click="onDocumentClick(item.id)"
         color="primary"
-        class="btn text-none px-0"
+        class="document-btn text-none px-0"
         plain
         >{{ item | getActionName }}</v-btn
       >
@@ -73,7 +78,7 @@ const originHeaders = [
     align: "center",
     sortable: false,
     show: true,
-    width: 90,
+    width: 96,
   },
   {
     text: "Khối",
@@ -81,6 +86,7 @@ const originHeaders = [
     align: "center",
     sortable: false,
     show: true,
+    width: 72,
   },
   {
     text: "Cơ sở",
@@ -88,7 +94,7 @@ const originHeaders = [
     align: "center",
     sortable: false,
     show: true,
-    width: 90,
+    width: 72,
   },
   {
     text: "Học sinh",
@@ -96,7 +102,6 @@ const originHeaders = [
     align: "left",
     sortable: false,
     show: true,
-    width: 220,
   },
   {
     text: "Trạng thái",
@@ -104,6 +109,7 @@ const originHeaders = [
     align: "center",
     sortable: false,
     show: true,
+    width: 88,
   },
   {
     text: "Thao tác",
@@ -111,7 +117,7 @@ const originHeaders = [
     align: "center",
     sortable: false,
     show: true,
-    width: 90,
+    width: 96,
   },
 ];
 
@@ -187,8 +193,8 @@ export default {
 </script>
 
 <style>
-.btn {
-  letter-spacing: 0.5px;
+.document-btn {
+  letter-spacing: 0.1px !important;
   font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
@@ -203,5 +209,9 @@ export default {
   line-height: 16px;
   text-transform: uppercase;
   color: #797979;
+}
+.document-table td,
+.document-table th {
+  padding: 0px 8px !important;
 }
 </style>
