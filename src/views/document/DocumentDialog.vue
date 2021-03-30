@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="980px" persistent>
+  <v-dialog v-model="dialog" max-width="980px">
     <v-card>
       <v-card-title
         ><div
@@ -25,7 +25,7 @@
           >
             <v-card-title class="subtitle">Tạo hồ sơ mới</v-card-title>
             <v-divider></v-divider>
-            <v-card-text class="pa-4" style="background: #F2F0F1">
+            <v-card-text class="pa-4" style="background: #f2f0f1">
               <v-form ref="form" v-model="isValid">
                 <div class="text-subtitle-1 mb-2">
                   Mã kích hoạt
@@ -95,6 +95,9 @@ export default {
   watch: {
     documentDialog(documentDialog) {
       this.dialog = documentDialog;
+    },
+    dialog(dialog) {
+      if (!dialog) this.setDocumentDialog(false);
     },
   },
   data() {

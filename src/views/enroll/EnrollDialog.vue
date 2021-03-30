@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="740px" persistent>
+  <v-dialog v-model="dialog" max-width="740px">
     <v-card>
       <v-card-title
         ><div class="title--text">Thông tin tuyển sinh</div>
@@ -67,6 +67,9 @@ export default {
   watch: {
     state(state) {
       this.dialog = state;
+    },
+    dialog(dialog) {
+      if (!dialog) this.$emit("closeEnroll", false);
     },
   },
   computed: {},

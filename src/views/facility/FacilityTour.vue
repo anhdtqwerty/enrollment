@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-height="900px" persistent>
+  <v-dialog v-model="dialog" max-height="900px">
     <v-card>
       <v-card-title
         ><div
@@ -16,7 +16,11 @@
       </v-card-title>
       <v-divider></v-divider>
       <div class="iframe-container">
-        <iframe :src="iframeSrc" class="responsive-iframe" style="border: none"/>
+        <iframe
+          :src="iframeSrc"
+          class="responsive-iframe"
+          style="border: none"
+        />
       </div>
     </v-card>
   </v-dialog>
@@ -31,6 +35,9 @@ export default {
   watch: {
     state(state) {
       this.dialog = state;
+    },
+    dialog(dialog) {
+      if (!dialog) this.$emit("closeDialog", false);
     },
   },
   methods: {

@@ -23,13 +23,6 @@
       large
       >Đăng ký ngay</v-btn
     >
-    <div
-      class="info--text"
-      v-if="!isOpen"
-      :class="{ 'mr-4 btn-text': $vuetify.breakpoint.mdAndUp }"
-    >
-      Xin chào quý phụ huynh!
-    </div>
   </div>
 </template>
 

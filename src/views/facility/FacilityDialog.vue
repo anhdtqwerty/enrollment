@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" max-width="980px" persistent>
+  <v-dialog v-model="dialog" max-width="980px">
     <v-card>
       <v-card-title
         ><div class="title--text">Cơ sở vật chất</div>
@@ -112,6 +112,9 @@ export default {
   watch: {
     state(state) {
       this.dialog = state;
+    },
+    dialog(dialog) {
+      if (!dialog) this.$emit("closeFacility", false);
     },
   },
   computed: {
