@@ -173,6 +173,33 @@ export default {
     document: Object,
     systemTime: Object,
   },
+  watch: {
+    step(step) {
+      switch (step) {
+        case 3:
+          if (
+            !this.systemTime.checkDocumentSystemTime["register-expectation"] &&
+            this.user.role.type !== "admin"
+          )
+            this.setStep(this.step - 1);
+          break;
+        case 4:
+          if (
+            !this.systemTime.checkDocumentSystemTime["study-result"] &&
+            this.user.role.type !== "admin"
+          )
+            this.setStep(this.step - 1);
+          break;
+        case 5:
+          if (
+            !this.systemTime.checkDocumentSystemTime["exam-result"] &&
+            this.user.role.type !== "admin"
+          )
+            this.setStep(this.step - 1);
+          break;
+      }
+    },
+  },
   methods: {
     ...mapActions("cv", [
       "fetchCVs",
@@ -228,15 +255,16 @@ export default {
     },
     onStepClick(key, step) {
       if (
-        !this.systemTime.checkDocumentSystemTime ||
-        !this.systemTime.checkDocumentSystemTime[key]
+        (!this.systemTime.checkDocumentSystemTime ||
+          !this.systemTime.checkDocumentSystemTime[key]) &&
+        this.user.role.type !== "admin"
       ) {
         this.$alert.error(
           "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
         );
         return;
       }
-      if (this.document.step < step) {
+      if (this.document.step < step && this.user.role.type !== "admin") {
         this.$alert.error("Xin vui lòng hoàn thành bước trước");
         return;
       }

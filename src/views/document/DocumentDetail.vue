@@ -21,6 +21,7 @@
 import { mapActions, mapGetters } from "vuex";
 import DocumentGrade6 from "./DocumentGrade6.vue";
 import DocumentGrade10 from "./DocumentGrade10.vue";
+import moment from "moment";
 
 export default {
   async created() {
@@ -28,6 +29,20 @@ export default {
     this.$loading.active = true;
     if (!this.user || !this.isAuthenticated) {
       this.$alert.error(`Bạn cần phải đăng nhập để sử dụng chức năng này!`);
+      this.$router.push("/");
+      this.$loading.active = false;
+      return;
+    }
+    const systemTime = await this.checkSystemTime();
+    if (
+      (!systemTime || !systemTime.checkSystemTime["open-document"]) &&
+      this.user.role.type !== "admin"
+    ) {
+      this.$alert.error(
+        `Hệ thống sẽ mở vào ngày ${moment(
+          systemTime.systemTime["open-document"]
+        ).format("DD/MM/YYYY hh:mm:ss")}!`
+      );
       this.$router.push("/");
       this.$loading.active = false;
       return;
@@ -61,6 +76,8 @@ export default {
       "fetchCV",
       "updateCV",
       "checkDocumentSystemTime",
+      "checkSystemTime",
+      "startHourlySMSTask",
     ]),
     ...mapActions("upload", ["upload", "destroy"]),
     ...mapActions("activeCode", ["updateActiveCode", "fetchActiveCode"]),

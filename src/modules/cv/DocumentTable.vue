@@ -10,7 +10,7 @@
     class="document-table"
     v-bind="this.$attrs"
   >
-    <template v-slot:[`footer.page-text`]="{ items }">
+    <template v-slot:[`footer.page-text`]="items">
       Hồ sơ thứ {{ items.pageStart }} - {{ items.pageStop }} trên tổng
       {{ items.itemsLength }} Hồ sơ
     </template>

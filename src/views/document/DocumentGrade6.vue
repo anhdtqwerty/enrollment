@@ -1,7 +1,15 @@
 <template>
   <div class="document-container d-flex py-8 mx-auto">
     <v-row no-gutters>
-      <v-col class="px-8" style="border-right: 1px solid #e6e4eb">
+      <v-col
+        class="px-8"
+        :class="{ 'pb-6': $vuetify.breakpoint.smAndDown }"
+        style="border-right: 1px solid #e6e4eb"
+        cols="12"
+        xs="12"
+        sm="12"
+        md="4"
+      >
         <v-card class="elevation-0" width="100%">
           <div class="d-flex align-center">
             <span class="mr-6"
@@ -81,7 +89,7 @@
           </div>
         </v-card>
       </v-col>
-      <v-col class="d-flex px-8">
+      <v-col class="d-flex px-8" cols="12" xs="12" sm="12" md="8">
         <ChooseFacility
           v-if="step === 1"
           :document="document"
@@ -140,6 +148,26 @@ export default {
     document: Object,
     systemTime: Object,
   },
+  watch: {
+    step(step) {
+      switch (step) {
+        case 3:
+          if (
+            !this.systemTime.checkDocumentSystemTime["study-result"] &&
+            this.user.role.type !== "admin"
+          )
+            this.setStep(this.step - 1);
+          break;
+        case 4:
+          if (
+            !this.systemTime.checkDocumentSystemTime["exam-result"] &&
+            this.user.role.type !== "admin"
+          )
+            this.setStep(this.step - 1);
+          break;
+      }
+    },
+  },
   methods: {
     ...mapActions("cv", [
       "fetchCVs",
@@ -158,9 +186,9 @@ export default {
     },
     getStatus(key, step) {
       if (
-        !this.systemTime.checkDocumentSystemTime ||
-        !this.systemTime.checkDocumentSystemTime[key] ||
-        this.document.step < step
+        (!this.systemTime.checkDocumentSystemTime ||
+          !this.systemTime.checkDocumentSystemTime[key]) &&
+        this.user.role.type !== "admin"
       )
         return "Chưa mở";
       else {

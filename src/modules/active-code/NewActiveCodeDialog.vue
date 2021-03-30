@@ -131,9 +131,8 @@ export default {
       let query = {
         grade: this.grade,
         createdBy: this.user.name || "Admin",
+        department: "unset",
       };
-      if (this.user.department === "both") query.department = "unset";
-      else query.department = this.user.department;
       const newActiveCode = await this.createActiveCode(query);
       if (newActiveCode) {
         this.activeCode = newActiveCode;

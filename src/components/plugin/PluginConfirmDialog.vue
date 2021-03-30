@@ -9,24 +9,14 @@
           name="top-content"
           style="white-space: pre-line"
           class="mb-4"
-          :class="{ 'error--text': dialog.isRedText[0] }"
-        >
-          {{ dialog.topContent }}
-        </div>
-        <div
-          name="mid-content"
-          class="mb-4"
-          :class="{ 'error--text': dialog.isRedText[1] }"
-        >
-          {{ dialog.midContent }}
-        </div>
+          v-html="dialog.topContent"
+        ></div>
+        <div name="mid-content" class="mb-4" v-html="dialog.midContent"></div>
         <div
           name="bottom-content"
           class="mb-6"
-          :class="{ 'error--text': dialog.isRedText[2] }"
-        >
-          {{ dialog.botContent }}
-        </div>
+          v-html="dialog.botContent"
+        ></div>
       </v-card-text>
       <v-card-actions class="justify-space-between pa-0">
         <v-btn

@@ -167,11 +167,10 @@ export default {
       this.$dialog.confirm({
         title: "Hoàn thành",
         okText: "Xác nhận",
-        topContent: `Quý phụ huynh đã chọn cơ sở đăng ký là: \n${fullAddress}`,
+        topContent: `Quý phụ huynh đã chọn cơ sở đăng ký là: \n<strong>${fullAddress}</strong>`,
         midContent: "Vui lòng ấn xác nhận nếu thông tin trên là đúng",
         botContent:
-          "Lưu ý: Hồ sơ đăng ký tại cơ sở nào sẽ chỉ được thi và nhập học tại cơ sở đó",
-        isRedText: [false, false, true],
+          "<span class='error--text'>Lưu ý: Hồ sơ đăng ký tại cơ sở nào sẽ chỉ được thi và nhập học tại cơ sở đó</span>",
         cancelText: "Chọn lại",
         done: async () => {
           this.$loading.active = true;

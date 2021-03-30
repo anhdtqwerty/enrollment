@@ -18,6 +18,22 @@ export default {
     },
   },
   actions: {
+    async startHourlySMSTask() {
+      try {
+        await CV.startHourlySMSTask();
+        alert.success("Start Hourly SMS task successfully!");
+      } catch (e) {
+        alert.error(e);
+      }
+    },
+    async stopHourlySMSTask() {
+      try {
+        await CV.startHourlySMSTask();
+        alert.success("Stop Hourly SMS task successfully!");
+      } catch (e) {
+        alert.error(e);
+      }
+    },
     async checkSystemTime({ commit }) {
       try {
         commit("setSystemTime", await CV.checkSystemTime());

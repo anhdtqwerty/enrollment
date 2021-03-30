@@ -71,6 +71,8 @@ export const CV = {
       ...params,
     }),
   checkSystemTime: () => axios.get(`/checkSystemTime`),
+  startHourlySMSTask: () => axios.get(`/startHourlySMSTask`),
+  stopHourlySMSTask: () => axios.get(`/stopHourlySMSTask`),
 };
 export const ActiveCode = {
   ...APIHelper(ACTIVE_CODE_API),

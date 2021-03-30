@@ -127,12 +127,11 @@ export default {
       this.$dialog.confirm({
         title: "Hoàn thành",
         okText: "Xác nhận",
-        topContent: `Sau khi hoàn thành, thông tin đã được khai báo sẽ KHÔNG ĐƯỢC CHỈNH SỬA.`,
+        topContent: `Sau khi hoàn thành, thông tin đã được khai báo sẽ <span class="error--text">KHÔNG ĐƯỢC CHỈNH SỬA</span>.`,
         midContent:
           "Quý phụ huynh vui lòng kiểm tra lại một cách kỹ lưỡng trước khi chuyển sang bước tiếp theo.",
         botContent:
           "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục.",
-        isRedText: [true, false, false],
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;

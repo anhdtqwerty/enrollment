@@ -6,7 +6,6 @@ const _initConfirmData = {
   topContent: '',
   midContent: '',
   botContent: '',
-  isRedText: [false, false, false],
   okText: 'Yes',
   cancelText: 'No',
   hideCancel: false,

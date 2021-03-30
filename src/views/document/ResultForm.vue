@@ -143,7 +143,6 @@ export default {
           "Quý phụ huynh vui lòng kiểm tra lại một cách kỹ lưỡng trước khi chuyển sang bước tiếp theo.",
         botContent:
           "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục.",
-        isRedText: [true, false, false],
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;
