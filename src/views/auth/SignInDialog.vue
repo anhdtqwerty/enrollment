@@ -141,7 +141,8 @@ export default {
     },
     register() {
       this.setSignInDialog(false);
-      this.setSignUpDialog(true);
+      if (this.user && !this.isConfirmedOTP) this.setConfirmSignupDialog(true);
+      else this.setSignUpDialog(true);
     },
   },
 };

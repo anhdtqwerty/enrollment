@@ -77,7 +77,6 @@ export default {
       "updateCV",
       "checkDocumentSystemTime",
       "checkSystemTime",
-      "startHourlySMSTask",
     ]),
     ...mapActions("upload", ["upload", "destroy"]),
     ...mapActions("activeCode", ["updateActiveCode", "fetchActiveCode"]),
