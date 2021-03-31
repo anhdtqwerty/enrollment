@@ -34,11 +34,15 @@
     </div>
     <v-spacer></v-spacer>
     <GuestToolbar
-      :isOpen="systemTime.checkSystemTime['open-document']"
+      :isOpen="
+        systemTime.checkSystemTime['open-document'] || ENV === 'development'
+      "
       v-if="$vuetify.breakpoint.smAndUp && isGuestBar"
     />
     <UserToolbar
-      :isOpen="systemTime.checkSystemTime['open-document']"
+      :isOpen="
+        systemTime.checkSystemTime['open-document'] || ENV === 'development'
+      "
       v-if="$vuetify.breakpoint.smAndUp && !isGuestBar"
     />
   </v-app-bar>
@@ -53,6 +57,11 @@ export default {
   components: {
     GuestToolbar,
     UserToolbar,
+  },
+  data() {
+    return {
+      ENV: "",
+    };
   },
   computed: {
     ...mapGetters("auth", ["isAuthenticated", "user", "isConfirmedOTP"]),
@@ -73,6 +82,7 @@ export default {
   async created() {
     this.$loading.active = true;
     await this.checkSystemTime();
+    this.ENV = process.env.NODE_ENV;
     this.$loading.active = false;
   },
   methods: {

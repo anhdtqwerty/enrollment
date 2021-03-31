@@ -57,7 +57,7 @@ export default {
     },
     async countCVs({ commit }, options) {
       try {
-        commit("setCount", await CV.count(options));
+        return await CV.count(options);
       } catch (e) {
         alert.error(e);
       }
