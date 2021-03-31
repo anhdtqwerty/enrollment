@@ -23,7 +23,7 @@
           @click="toggleFacilityADialog(true)"
         >
           <v-img
-            src="@/assets/facility/facilityA.svg"
+            src="@/assets/facility/facility1.svg"
             class="d-flex align-end"
             :width="getImgWidth"
             :class="{
@@ -56,7 +56,7 @@
           @click="toggleFacility1Dialog(true)"
         >
           <v-img
-            src="@/assets/facility/facility1.svg"
+            src="@/assets/facility/facilityA.svg"
             :width="getImgWidth"
             class="d-flex align-end"
             :class="{
