@@ -2,7 +2,7 @@
   <v-container class="overflow-auto pa-0" fluid fill-height>
     <v-row class="d-flex align-center" no-gutters>
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.mdAndUp">
-        <v-img src="@/assets/homepage/bg.jpg" class="bg-image"></v-img>
+        <v-img src="@/assets/homepage/home-bg.svg" class="bg-image"></v-img>
       </v-col>
       <v-col
         xs="12"
@@ -57,7 +57,7 @@
         <Footer />
       </v-col>
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.smAndDown">
-        <v-img src="@/assets/homepage/bg.jpg"></v-img>
+        <v-img src="@/assets/homepage/home-bg.svg"></v-img>
       </v-col>
     </v-row>
     <EnrollDialog :state="enrollDialog" @closeEnroll="toggleEnrollDialog" />
