@@ -24,7 +24,7 @@ export default {
     },
     async countActiveCodes({ commit }, options) {
       try {
-        commit("setCount", await ActiveCode.count(options));
+        return await ActiveCode.count(options);
       } catch (e) {
         alert.error(e);
       }

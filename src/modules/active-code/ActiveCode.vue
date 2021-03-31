@@ -8,7 +8,6 @@
         <v-btn
           color="admin"
           @click="sendState = !sendState"
-          class="mr-4"
           dark
           outlined
         >
@@ -102,6 +101,7 @@ export default {
   justify-content: center;
 }
 .component-title {
+  color: #0D47A1;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;

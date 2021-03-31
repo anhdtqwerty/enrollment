@@ -148,6 +148,7 @@ export default {
   justify-content: center;
 }
 .component-title {
+  color: #0d47a1;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;

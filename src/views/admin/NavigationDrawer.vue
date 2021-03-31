@@ -29,7 +29,7 @@
           <v-icon>mdi-view-dashboard</v-icon>
         </v-list-item-icon>
         <v-list-item-action></v-list-item-action>
-        <v-list-item-title> Dashboard </v-list-item-title>
+        <v-list-item-title> Báo cáo </v-list-item-title>
       </v-list-item>
       <v-list-item to="/admin/active-code" active-class="active-item" link>
         <v-list-item-icon class="mr-4">

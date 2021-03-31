@@ -5,12 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build --mode development",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
     "axios": "^0.21.1",
     "browser-image-compression": "^1.0.14",
+    "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
     "dom-parser": "^0.1.6",
     "easy-soap-request": "^4.1.2",
@@ -24,6 +26,7 @@
     "roboto-fontface": "*",
     "v-mask": "^2.2.4",
     "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.1",
     "vue-html-to-paper": "^1.3.1",
     "vue-json-excel": "^0.3.0",
     "vue-picture-input": "^2.1.6",
