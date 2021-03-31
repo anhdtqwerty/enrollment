@@ -1,7 +1,7 @@
 <template>
   <v-form v-model="isValid" ref="form" v-bind="this.$attrs" style="width: 100%">
     <div class="section-label py-6">Lớp 1</div>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Toán
@@ -59,7 +59,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Hạnh kiểm cả năm
@@ -82,7 +82,7 @@
     </v-row>
     <hr class="dashed" />
     <div class="section-label py-6">Lớp 2</div>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Toán
@@ -140,7 +140,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Hạnh kiểm cả năm
@@ -163,7 +163,7 @@
     </v-row>
     <hr class="dashed" />
     <div class="section-label py-6">Lớp 3</div>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Toán
@@ -221,7 +221,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Hạnh kiểm cả năm
@@ -244,7 +244,7 @@
     </v-row>
     <hr class="dashed" />
     <div class="section-label py-6">Lớp 4</div>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Toán
@@ -302,7 +302,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Hạnh kiểm cả năm
@@ -325,7 +325,7 @@
     </v-row>
     <hr class="dashed" />
     <div class="section-label py-6">Lớp 5</div>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Toán
@@ -383,7 +383,7 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="4">
         <div class="field-label">
           Hạnh kiểm cả năm
@@ -406,7 +406,7 @@
     </v-row>
     <hr class="dashed" />
     <div class="section-label py-6">Tổng</div>
-    <v-row>
+    <v-row class="my-0">
       <v-col cols="12">
         <div class="field-label">
           Tổng điểm 2 môn Toán, Văn của 5 năm học khối Tiểu học (tối đa 100

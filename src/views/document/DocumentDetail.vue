@@ -79,7 +79,18 @@ export default {
     ...mapActions("upload", ["upload", "destroy"]),
     ...mapActions("activeCode", ["updateActiveCode", "fetchActiveCode"]),
     async updateDocument(data, isDraft) {
+      this.documentSystemTime = await this.checkDocumentSystemTime({
+        grade: this.document.type,
+      });
       let avatarId = "";
+      if (
+        this.documentSystemTime.checkDocumentSystemTime["close-fill-document"]
+      ) {
+        this.$alert.error(
+          `Hệ thống hồ sơ đã đóng vào ngày ${this.documentSystemTime.documentSystemTime["close-fill-document"]}`
+        );
+        return;
+      }
       if (!data) {
         this.$alert.error("Đã có lỗi xảy ra trong quá trình cập nhật hồ sơ");
         return;
@@ -107,9 +118,6 @@ export default {
           department: this.document.department,
         });
       }
-      this.documentSystemTime = await this.checkDocumentSystemTime({
-        grade: this.document.type,
-      });
       if (isDraft) this.$alert.success("Đã lưu thành công");
       else this.$alert.success("Đã hoàn thành khai báo thông tin");
       this.$loading.active = false;

@@ -4,21 +4,23 @@
       ref="agreeForm"
       :documentStep="documentStep"
       :document="document"
+      :systemTime="systemTime"
       v-if="document.type === 'Khối 6'"
     />
     <ExamResultGrade10
       ref="grade10ExamResult"
       :documentStep="documentStep"
       :document="document"
+      :systemTime="systemTime"
       v-if="document.type === 'Khối 10'"
     />
+    <hr class="dashed" />
     <v-card-actions
-      class="d-flex flex-column align-end pt-6 px-0"
+      class="d-flex justify-end pt-6 px-0"
       v-if="document.status !== 'submitted'"
     >
-      <hr class="dashed" />
       <v-btn
-        class="px-6 py-3 mr-6 text-none"
+        class="py-3 mr-6 text-none"
         color="primary"
         v-if="document.type === 'Khối 10'"
         @click="saveDraft"
@@ -66,6 +68,7 @@ export default {
   props: {
     document: Object,
     documentStep: Number,
+    systemTime: Object,
   },
   methods: {
     reset() {
@@ -82,7 +85,7 @@ export default {
       this.$dialog.confirm({
         title: "Hoàn thành",
         okText: "Xác nhận",
-        topContent: `Sau khi hoàn thành, thông tin đã được khai báo sẽ KHÔNG ĐƯỢC CHỈNH SỬA.`,
+        topContent: `Sau khi hoàn thành, thông tin đã được khai báo sẽ <span class="error--text">KHÔNG ĐƯỢC CHỈNH SỬA</span>.`,
         midContent:
           "Quý phụ huynh vui lòng kiểm tra lại một cách kỹ lưỡng trước khi chuyển sang bước tiếp theo.",
         botContent:
@@ -107,7 +110,7 @@ export default {
       this.$dialog.confirm({
         title: "Hoàn thành",
         okText: "Xác nhận",
-        topContent: `Sau khi hoàn thành, thông tin đã được khai báo sẽ KHÔNG ĐƯỢC CHỈNH SỬA.`,
+        topContent: `Sau khi hoàn thành, thông tin đã được khai báo sẽ <span class="error--text">KHÔNG ĐƯỢC CHỈNH SỬA</span>.`,
         midContent:
           "Quý phụ huynh vui lòng kiểm tra lại một cách kỹ lưỡng trước khi chuyển sang bước tiếp theo.",
         botContent:

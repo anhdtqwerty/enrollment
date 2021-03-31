@@ -124,6 +124,7 @@
           v-if="step === 3"
           :document="document"
           :documentStep="document.step"
+          :systemTime="systemTime"
           @completeStep="updateDocument($event, false)"
           @saveDraft="updateDocument($event, true)"
           @nextStep="nextStep"
@@ -132,6 +133,7 @@
           v-if="step === 4"
           :document="document"
           :documentStep="document.step"
+          :systemTime="systemTime"
           @completeStep="updateDocument($event, false)"
           @saveDraft="updateDocument($event, true)"
           @nextStep="nextStep"
@@ -140,6 +142,7 @@
           v-if="step === 5"
           :document="document"
           :documentStep="document.step"
+          :systemTime="systemTime"
           @completeStep="updateDocument($event, false)"
           @saveDraft="updateDocument($event, true)"
           @nextStep="nextStep"
@@ -178,22 +181,31 @@ export default {
       switch (step) {
         case 3:
           if (
-            !this.systemTime.checkDocumentSystemTime["register-expectation"] &&
-            this.user.role.type !== "admin"
+            (!this.systemTime.checkDocumentSystemTime["register-expectation"] &&
+              this.user.role.type !== "admin") ||
+            (this.document.isDraft &&
+              this.document.step > 3 &&
+              this.user.role.type !== "admin")
           )
             this.setStep(this.step - 1);
           break;
         case 4:
           if (
-            !this.systemTime.checkDocumentSystemTime["study-result"] &&
-            this.user.role.type !== "admin"
+            (!this.systemTime.checkDocumentSystemTime["study-result"] &&
+              this.user.role.type !== "admin") ||
+            (this.document.isDraft &&
+              this.document.step > 4 &&
+              this.user.role.type !== "admin")
           )
             this.setStep(this.step - 1);
           break;
         case 5:
           if (
-            !this.systemTime.checkDocumentSystemTime["exam-result"] &&
-            this.user.role.type !== "admin"
+            (!this.systemTime.checkDocumentSystemTime["exam-result"] &&
+              this.user.role.type !== "admin") ||
+            (this.document.isDraft &&
+              this.document.step > 5 &&
+              this.user.role.type !== "admin")
           )
             this.setStep(this.step - 1);
           break;
@@ -224,12 +236,9 @@ export default {
       )
         return "Chưa mở";
       else {
-        if (!this.document.status === "created") return "Mới mở";
-        else if (
-          this.document.status === "filling" &&
-          this.document.step <= step
-        )
-          return "Đang khai báo";
+      if (!this.document.status === "created") return "Mới mở";
+      else if (this.document.status === "filling" && this.document.step <= step)
+        return "Đang khai báo";
       }
       return "Đã hoàn tất";
     },
@@ -241,16 +250,14 @@ export default {
       )
         return "dark-gray--text";
       else {
-        if (!this.document.status === "created") return "error--text";
-        else if (
-          this.document.status === "filling" &&
-          this.document.step <= step
-        )
-          return "warning--text";
+      if (!this.document.status === "created") return "error--text";
+      else if (this.document.status === "filling" && this.document.step <= step)
+        return "warning--text";
       }
       return "success--text";
     },
     isCompleted(step) {
+      if (step === 5) return this.document.status === "submitted";
       return this.document.step > step;
     },
     onStepClick(key, step) {

@@ -219,6 +219,7 @@ export default {
       return "success--text";
     },
     isCompleted(step) {
+      if (step === 4) return this.document.status === "submitted";
       return this.document.step > step;
     },
     onStepClick(key, step) {

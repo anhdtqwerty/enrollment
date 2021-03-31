@@ -1,29 +1,46 @@
 <template>
   <v-card width="100%" class="elevation-0">
+    <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
     <v-card-title class="card-title mb-2">Kết quả học tập</v-card-title>
-    <v-card-subtitle class="card-subtitle" v-html="getSubtitle">
+    <div class="field-label pt-6" v-if="documentStep !== 4 && !isEditing">
+      <span class="error--text">(*)</span> Phụ huynh lưu ý: Các thông tin này có
+      thể được chỉnh sửa nhưng sẽ bị khóa vào ngày
+      <span class="error--text">30/05/1021</span>.
+    </div>
+    <v-card-subtitle
+      v-if="documentStep === 4 || isEditing"
+      class="card-subtitle"
+      v-html="getSubtitle"
+    >
     </v-card-subtitle>
-    <v-card-text class="d-flex pa-0">
-      <Grade6ResultForm
-        ref="grade6Result"
-        :documentStep="documentStep"
-        :document="document"
-        v-if="document.type === 'Khối 6'"
-      />
+    <v-card-text class="d-flex pa-0" v-if="document.type === 'Khối 10'">
       <Grade10ResultForm
         ref="grade10Result"
         :documentStep="documentStep"
         :document="document"
-        v-if="document.type === 'Khối 10'"
+        :isEditing="isEditing"
       />
     </v-card-text>
-    <v-card-text class="d-flex pa-0">
-      <Grade6Expectation
-        ref="grade6Expectation"
-        :documentStep="documentStep"
-        :document="document"
-        v-if="document.type === 'Khối 6'"
-      />
+    <v-card-text
+      class="d-flex flex-column pa-0"
+      v-if="document.type === 'Khối 6'"
+    >
+      <div>
+        <Grade6ResultForm
+          ref="grade6Result"
+          :documentStep="documentStep"
+          :document="document"
+          v-if="document.type === 'Khối 6'"
+        />
+      </div>
+      <div>
+        <Grade6Expectation
+          ref="grade6Expectation"
+          :documentStep="documentStep"
+          :document="document"
+          v-if="document.type === 'Khối 6'"
+        />
+      </div>
     </v-card-text>
     <hr class="dashed" />
     <v-card-actions class="d-flex justify-end pt-6 px-0">
@@ -32,7 +49,8 @@
         color="primary"
         v-if="
           (documentStep === 3 && document.type === 'Khối 6') ||
-          (documentStep === 4 && document.type === 'Khối 10')
+          (documentStep === 4 && document.type === 'Khối 10') ||
+          isEditing
         "
         @click="saveDraft"
         outlined
@@ -46,7 +64,8 @@
         color="primary"
         v-if="
           (documentStep === 3 && document.type === 'Khối 6') ||
-          (documentStep === 4 && document.type === 'Khối 10')
+          (documentStep === 4 && document.type === 'Khối 10') ||
+          isEditing
         "
         @click="completeStep"
         large
@@ -54,11 +73,26 @@
         <span>Hoàn thành</span>
       </v-btn>
       <v-btn
+        class="px-6 py-3 mr-6 text-none"
+        color="primary"
+        v-if="
+          documentStep !== 4 &&
+          document.type === 'Khối 10' &&
+          !isEditing &&
+          !this.systemTime.checkDocumentSystemTime['close-fill-info']
+        "
+        @click="onEdit"
+        outlined
+        large
+      >
+        <span>Chỉnh sửa</span>
+      </v-btn>
+      <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
         v-if="
           (documentStep !== 3 && document.type === 'Khối 6') ||
-          (documentStep !== 4 && document.type === 'Khối 10')
+          (documentStep !== 4 && document.type === 'Khối 10' && !isEditing)
         "
         @click="nextStep"
         large
@@ -83,6 +117,7 @@ export default {
   props: {
     document: Object,
     documentStep: Number,
+    systemTime: Object,
   },
   computed: {
     getSubtitle() {
@@ -91,7 +126,29 @@ export default {
       return "Vui lòng điền <b>Điểm tổng kết cuối năm</b> môn Toán, Văn, Anh, Lý, Hóa & Xếp loại hạnh kiểm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>";
     },
   },
+  created() {
+    if (this.documentStep !== 4) this.isEditing = false;
+  },
+  data() {
+    return {
+      isEditing: true,
+    };
+  },
   methods: {
+    onEdit() {
+      this.$dialog.confirm({
+        title: "Chỉnh sửa",
+        okText: "Xác nhận",
+        topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">30/05/2021</span>`,
+        midContent:
+          "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
+        botContent: "",
+        cancelText: "Hủy",
+        done: async () => {
+          this.isEditing = true;
+        },
+      });
+    },
     reset() {
       this.$refs.grade6Result.reset();
       this.$refs.grade6Expectation.reset();
@@ -136,13 +193,13 @@ export default {
           "Có lỗi trong quá trình cập nhật hồ sơ, xin vui lòng thử lại"
         );
       this.$dialog.confirm({
-        title: "Hoàn thành",
+        title: "Chú ý",
         okText: "Xác nhận",
-        topContent: `Sau khi hoàn thành, thông tin đã được khai báo sẽ KHÔNG ĐƯỢC CHỈNH SỬA.`,
+        topContent: `Quý phụ huynh lưu ý:`,
         midContent:
-          "Quý phụ huynh vui lòng kiểm tra lại một cách kỹ lưỡng trước khi chuyển sang bước tiếp theo.",
+          "Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>30/05/2021</span>.",
         botContent:
-          "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục.",
+          "<span class='error--text'>Sau 00:00</span> ngày <span class='error--text'>31/05/2021</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.",
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;

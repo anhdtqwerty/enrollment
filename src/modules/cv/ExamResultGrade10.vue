@@ -1,16 +1,17 @@
 <template>
   <v-form ref="form" v-bind="this.$attrs">
+    <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
     <v-card-title class="card-title"
       >Kết quả Kỳ thi tuyển sinh vào lớp 10 THPT năm 2021 - 2022</v-card-title
     >
     <v-card-subtitle class="card-subtitle py-6">
       Phụ huynh vui lòng khai báo đầy đủ thông tin và ấn "Hoàn thành" trước ngày
-      dd/mm/yyyy
+      <strong>{{ getCloseFillDocumentDate }}</strong>
     </v-card-subtitle>
     <v-card-text class="d-flex flex-column pa-0">
       <div class="section-label py-6">Số báo danh</div>
-      <v-row>
-        <v-col cols="12">
+      <v-row class="my-0">
+        <v-col class="py-0">
           <div class="field-label">
             Số báo danh dự thi vào kỳ thi vào lớp 10 của Sở GD&ĐT TP. Hà Nội năm
             2021
@@ -41,8 +42,8 @@
       <div class="section-label py-6">
         Kết quả kỳ thi tuyển vào lớp 10 của trường Sở GD&ĐT Hà Nội năm 2021
       </div>
-      <v-row>
-        <v-col cols="4">
+      <v-row class="my-0">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Toán
             <span style="color: red" v-if="document.status !== 'submitted'"
@@ -68,7 +69,7 @@
             {{ ltvExamResult.examMath || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Văn
             <span style="color: red" v-if="document.status !== 'submitted'"
@@ -94,7 +95,7 @@
             {{ ltvExamResult.examLiterature || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Anh
             <span style="color: red" v-if="document.status !== 'submitted'"
@@ -121,8 +122,8 @@
           </div>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="4">
+      <v-row class="my-0">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Lịch sử
             <span style="color: red" v-if="document.status !== 'submitted'"
@@ -149,8 +150,8 @@
           </div>
         </v-col>
       </v-row>
-      <v-row v-if="document.status !== 'submitted'">
-        <v-col cols="8">
+      <v-row v-if="document.status !== 'submitted'" class="my-0">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="8">
           <div class="field-label">
             Loại ưu tiên
             <span style="color: red" v-if="document.status !== 'submitted'"
@@ -174,7 +175,7 @@
             {{ ltvExamResult.priorityType || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">Điểm cộng ưu tiên (nếu có)</div>
           <v-text-field
             placeholder="VD: 3"
@@ -199,8 +200,8 @@
           </div>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="4">
+      <v-row class="my-0">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">Tổng điểm ban A</div>
           <v-text-field
             placeholder="VD: 10"
@@ -223,7 +224,17 @@
             {{ ltvExamResult.totalA || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col
+          class="py-0"
+          :class="{
+            'mt-8':
+              $vuetify.breakpoint.smAndDown && document.status !== 'submitted',
+          }"
+          cols="12"
+          xs="12"
+          sm="12"
+          md="4"
+        >
           <div class="field-label">Tổng điểm ban A1</div>
           <v-text-field
             placeholder="VD: 10"
@@ -246,7 +257,17 @@
             {{ ltvExamResult.totalA1 || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col
+          class="py-0"
+          :class="{
+            'mt-8':
+              $vuetify.breakpoint.smAndDown && document.status !== 'submitted',
+          }"
+          cols="12"
+          xs="12"
+          sm="12"
+          md="4"
+        >
           <div class="field-label">Tổng điểm ban D</div>
           <v-text-field
             placeholder="VD: 10"
@@ -294,8 +315,8 @@
       </div>
       <hr class="dashed" />
       <div class="section-label py-6">Đăng ký nguyện vọng ban tại trường</div>
-      <v-row>
-        <v-col cols="6">
+      <v-row class="my-0">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
           <div class="field-label">
             Nguyện vọng 1
             <span style="color: red" v-if="document.status !== 'submitted'"
@@ -304,7 +325,7 @@
           </div>
           <v-select
             v-model="ltvExamResult.groupExpectation1"
-            placeholder="VD: Tốt"
+            placeholder="VD: Ban A"
             item-text="title"
             item-value="value"
             :items="groups"
@@ -319,11 +340,11 @@
             {{ ltvExamResult.groupExpectation1 || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="6">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
           <div class="field-label">Nguyện vọng 2</div>
           <v-select
             v-model="ltvExamResult.groupExpectation2"
-            placeholder="VD: Tốt"
+            placeholder="VD: Ban A1"
             item-text="title"
             item-value="value"
             :items="groups"
@@ -338,11 +359,11 @@
           </div>
         </v-col>
       </v-row>
-      <hr class="dashed" />
       <div
         class="d-flex justify-center py-6"
         v-if="document.status !== 'submitted'"
       >
+        <hr class="dashed" />
         <v-checkbox
           class="align-self-start mt-0 pt-0"
           v-model="agree"
@@ -355,9 +376,16 @@
           đã được gia đình thống nhất và nộp cho nhà trường ngày hôm nay.
         </p>
       </div>
-      <div v-if="ltvExamResult.passExam !== ''">
-        <div v-if="ltvExamResult.passExam">
-          <div class="mx-auto py-6" style="width: 355px">
+      <div
+        v-if="
+          ltvExamResult.passExam !== '' &&
+          systemTime.checkDocumentSystemTime &&
+          !systemTime.checkDocumentSystemTime['close-fill-document']
+        "
+      >
+        <hr class="dashed" />
+        <div v-if="ltvExamResult.passExam === true">
+          <div class="mx-auto py-6" style="max-width: 355px">
             <v-img src="@/assets/pass-exam.svg" />
           </div>
           <div class="fail-card pa-4">
@@ -368,7 +396,7 @@
             </div>
             <div>
               Phụ huynh vui lòng làm thủ tục nhập học ngày
-              <span class="error--text">dd/mm/yyyy</span>
+              <span class="error--text">{{ getRegisterDay }}</span>
             </div>
             <div>Thời gian làm việc của Ban tuyển sinh</div>
             <div>Sáng: 8:00 - 11:00</div>
@@ -378,8 +406,8 @@
             </div>
           </div>
         </div>
-        <div class="py-6" v-if="!ltvExamResult.passExam">
-          <div class="mx-auto mb-6" style="width: 355px">
+        <div class="py-6" v-if="ltvExamResult.passExam === false">
+          <div class="mx-auto mb-6" style="max-width: 355px">
             <v-img src="@/assets/fail-exam.svg" />
           </div>
           <div class="fail-card pa-4">
@@ -406,6 +434,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   props: {
     documentStep: Number,
@@ -413,8 +443,27 @@ export default {
       type: Object,
       default: () => {},
     },
+    systemTime: Object,
   },
   computed: {
+    getCloseFillDocumentDate() {
+      return this.systemTime.documentSystemTime &&
+        this.systemTime.documentSystemTime["close-fill-document"]
+        ? moment(
+            this.systemTime.documentSystemTime["close-fill-document"],
+            "DD/MM/YYYY hh:mm:ss"
+          ).format("DD/MM/YYYY")
+        : "01/07/2021";
+    },
+    getRegisterDay() {
+      return this.systemTime.documentSystemTime &&
+        this.systemTime.documentSystemTime["register-day"]
+        ? moment(
+            this.systemTime.documentSystemTime["register-day"],
+            "DD/MM/YYYY hh:mm:ss"
+          ).format("DD/MM/YYYY")
+        : "01/07/2021";
+    },
     getPriorityMark() {
       switch (this.ltvExamResult.priorityType) {
         case "Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội":
@@ -526,6 +575,7 @@ export default {
     if (this.document.ltvExamResult) {
       this.ltvExamResult = this.document.ltvExamResult;
       this.agree = this.document.status === "submitted";
+      console.log(this.ltvExamResult.passExam);
     }
   },
   methods: {
@@ -557,6 +607,9 @@ export default {
 </script>
 
 <style scoped>
+.mobile-card-title {
+  font-size: 22px !important;
+}
 .field-label {
   font-family: "Roboto";
   font-style: normal;
@@ -612,5 +665,22 @@ hr.dashed {
   font-size: 14px;
   line-height: 20px;
   color: #3e3e3c;
+}
+
+@media only screen and (max-width: 400px) {
+  .card-title {
+    font-size: 20px;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .card-title {
+    font-size: 17px;
+  }
+}
+
+@media only screen and (max-width: 500px) and (min-width: 400px) {
+  .card-title {
+    font-size: 21px;
+  }
 }
 </style>

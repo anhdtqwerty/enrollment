@@ -58,74 +58,75 @@
       <div class="field-label" v-if="documentStep === 3">
         <b>Mô hình lớp học</b>
       </div>
-      <table class="expectation-table" width="100%" v-if="documentStep === 3">
-        <tr>
-          <td></td>
-          <td
-            v-for="classType in expectations"
-            :key="classType.title"
-            :class="{
-              'selected-td':
-                classType['select-value'] === expectation1.clazz ||
-                classType['select-value'] === expectation2.clazz ||
-                classType['select-value'] === expectation3.clazz,
-            }"
-            class="table-th"
-          >
-            {{ classType["select-value"] }}
-          </td>
-        </tr>
-        <tr>
-          <td class="table-th text-center">Tên kí hiệu</td>
-          <td
-            v-for="classType in expectations"
-            :key="classType.title"
-            :class="{
-              'selected-td':
-                classType['select-value'] === expectation1.clazz ||
-                classType['select-value'] === expectation2.clazz ||
-                classType['select-value'] === expectation3.clazz,
-            }"
-            class="table-td"
-          >
-            {{ classType.sign }}
-          </td>
-        </tr>
-        <tr>
-          <td class="table-th text-center">Chương trình</td>
-          <td
-            v-for="classType in expectations"
-            :key="classType.title"
-            :class="{
-              'selected-td':
-                classType['select-value'] === expectation1.clazz ||
-                classType['select-value'] === expectation2.clazz ||
-                classType['select-value'] === expectation3.clazz,
-            }"
-            class="table-td"
-            style="white-space: pre-line; vertical-align: top"
-          >
-            {{ classType.program }}
-          </td>
-        </tr>
-        <tr>
-          <td class="table-th text-center">Tiếng Anh giáo viên nước ngoài</td>
-          <td
-            v-for="classType in expectations"
-            :key="classType.title"
-            :class="{
-              'selected-td':
-                classType['select-value'] === expectation1.clazz ||
-                classType['select-value'] === expectation2.clazz ||
-                classType['select-value'] === expectation3.clazz,
-            }"
-            class="table-td"
-          >
-            {{ classType.nativeLessons }}
-          </td>
-        </tr>
-      </table>
-
+      <div style="overflow-x: auto">
+        <table class="expectation-table" v-if="documentStep === 3">
+          <tr>
+            <td></td>
+            <td
+              v-for="classType in expectations"
+              :key="classType.title"
+              :class="{
+                'selected-td':
+                  classType['select-value'] === expectation1.clazz ||
+                  classType['select-value'] === expectation2.clazz ||
+                  classType['select-value'] === expectation3.clazz,
+              }"
+              class="table-th"
+            >
+              {{ classType["select-value"] }}
+            </td>
+          </tr>
+          <tr>
+            <td class="table-th text-center">Tên kí hiệu</td>
+            <td
+              v-for="classType in expectations"
+              :key="classType.title"
+              :class="{
+                'selected-td':
+                  classType['select-value'] === expectation1.clazz ||
+                  classType['select-value'] === expectation2.clazz ||
+                  classType['select-value'] === expectation3.clazz,
+              }"
+              class="table-td"
+            >
+              {{ classType.sign }}
+            </td>
+          </tr>
+          <tr>
+            <td class="table-th text-center">Chương trình</td>
+            <td
+              v-for="classType in expectations"
+              :key="classType.title"
+              :class="{
+                'selected-td':
+                  classType['select-value'] === expectation1.clazz ||
+                  classType['select-value'] === expectation2.clazz ||
+                  classType['select-value'] === expectation3.clazz,
+              }"
+              class="table-td"
+              style="white-space: pre-line; vertical-align: top"
+            >
+              {{ classType.program }}
+            </td>
+          </tr>
+          <tr>
+            <td class="table-th text-center">Tiếng Anh giáo viên nước ngoài</td>
+            <td
+              v-for="classType in expectations"
+              :key="classType.title"
+              :class="{
+                'selected-td':
+                  classType['select-value'] === expectation1.clazz ||
+                  classType['select-value'] === expectation2.clazz ||
+                  classType['select-value'] === expectation3.clazz,
+              }"
+              class="table-td"
+            >
+              {{ classType.nativeLessons }}
+            </td>
+          </tr>
+        </table>
+      </div>
       <div class="field-label py-6" v-if="documentStep === 3">
         <span style="color: red">(*)</span> Lưu ý: Học sinh không đăng ký nguyện
         vọng sẽ được nhà trường xếp lớp ngẫu nhiên.
@@ -243,6 +244,11 @@ export default {
 hr.dashed {
   width: 100%;
   border: 1px dashed #e6e4eb;
+}
+.expectation-table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
 }
 .expectation-table tr {
   border: 1px solid #e6e4eb;

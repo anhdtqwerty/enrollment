@@ -3,9 +3,15 @@
     <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
     <v-card-title
       class="card-title mb-2"
-      :class="{ 'mobile-card-title': $vuetify.breakpoint.smAndDown }"
-      >Đăng ký nguyện vọng vào lớp 10 THPT năm 2021 - 2022</v-card-title
+      >Đăng ký nguyện vọng vào lớp 10
+      <br v-if="$vuetify.breakpoint.smAndDown" />THPT năm 2021 -
+      2022</v-card-title
     >
+    <div class="field-label pt-6">
+      <span class="error--text">(*)</span> Phụ huynh lưu ý: Các thông tin này có
+      thể được chỉnh sửa nhưng sẽ bị khóa vào ngày
+      <span class="error--text">30/05/1021</span>.
+    </div>
     <v-card-text class="pa-0">
       <v-form
         v-model="isValid"
@@ -26,13 +32,16 @@
               v-model="expectation1.school"
               type="text"
               color="primary"
-              v-if="documentStep === 3"
+              v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               :rules="[$rules.required]"
               outlined
               validate-on-blur
             />
-            <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
               {{ expectation1.school || "Chưa có thông tin" }}
             </div>
           </v-col>
@@ -49,13 +58,16 @@
               v-model="expectation1.district"
               type="text"
               color="primary"
-              v-if="documentStep === 3"
+              v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               :rules="[$rules.required]"
               outlined
               validate-on-blur
             />
-            <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
               {{ expectation1.district || "Chưa có thông tin" }}
             </div>
           </v-col>
@@ -70,13 +82,16 @@
               v-model="expectation1.city"
               type="text"
               color="primary"
-              v-if="documentStep === 3"
+              v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               :rules="[$rules.required]"
               outlined
               validate-on-blur
             />
-            <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
               {{ expectation1.city || "Chưa có thông tin" }}
             </div>
           </v-col>
@@ -92,12 +107,15 @@
               v-model="expectation2.school"
               type="text"
               color="primary"
-              v-if="documentStep === 3"
+              v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               outlined
               validate-on-blur
             />
-            <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
               {{ expectation2.school || "Chưa có thông tin" }}
             </div>
           </v-col>
@@ -111,12 +129,15 @@
               v-model="expectation2.district"
               type="text"
               color="primary"
-              v-if="documentStep === 3"
+              v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               outlined
               validate-on-blur
             />
-            <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
               {{ expectation2.district || "Chưa có thông tin" }}
             </div>
           </v-col>
@@ -128,12 +149,15 @@
               v-model="expectation2.city"
               type="text"
               color="primary"
-              v-if="documentStep === 3"
+              v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               outlined
               validate-on-blur
             />
-            <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
               {{ expectation2.city || "Chưa có thông tin" }}
             </div>
           </v-col>
@@ -149,12 +173,15 @@
               v-model="expectation3.school"
               type="text"
               color="primary"
-              v-if="documentStep === 3"
+              v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               outlined
               validate-on-blur
             />
-            <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
               {{ expectation3.school || "Chưa có thông tin" }}
             </div>
           </v-col>
@@ -168,12 +195,15 @@
               v-model="expectation3.district"
               type="text"
               color="primary"
-              v-if="documentStep === 3"
+              v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               outlined
               validate-on-blur
             />
-            <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
               {{ expectation3.district || "Chưa có thông tin" }}
             </div>
           </v-col>
@@ -185,12 +215,15 @@
               v-model="expectation3.city"
               type="text"
               color="primary"
-              v-if="documentStep === 3"
+              v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               outlined
               validate-on-blur
             />
-            <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
               {{ expectation3.city || "Chưa có thông tin" }}
             </div>
           </v-col>
@@ -203,7 +236,7 @@
         :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
         class="py-3 mr-6 text-none"
         color="primary"
-        v-if="documentStep === 3"
+        v-if="documentStep === 3 || isEditing"
         @click="saveDraft"
         outlined
         large
@@ -214,20 +247,35 @@
       <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep === 3"
+        v-if="documentStep === 3 || isEditing"
         @click="completeStep"
         large
       >
         <span>Hoàn thành</span>
       </v-btn>
       <v-btn
+        :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
+        class="py-3 mr-6 text-none"
+        color="primary"
+        v-if="
+          documentStep !== 3 &&
+          !isEditing &&
+          !this.systemTime.checkDocumentSystemTime['close-fill-info']
+        "
+        @click="onEdit"
+        outlined
+        large
+      >
+        <span>Chỉnh sửa</span>
+      </v-btn>
+      <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep !== 3"
+        v-if="documentStep !== 3 && !isEditing"
         @click="nextStep"
         large
       >
-        <span>Tiếp tục</span>
+        <span>Tiếp theo</span>
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -239,6 +287,7 @@ export default {
   props: {
     document: Object,
     documentStep: Number,
+    systemTime: Object,
   },
   created() {
     if (this.document.expectation1)
@@ -247,10 +296,12 @@ export default {
       this.expectation2 = this.document.expectation2;
     if (this.document.expectation3)
       this.expectation3 = this.document.expectation3;
+    if (this.documentStep > 3) this.isEditing = false;
   },
   data() {
     return {
       isValid: false,
+      isEditing: true,
       expectation1: {
         school: "",
         district: "",
@@ -282,7 +333,7 @@ export default {
         okText: "Xác nhận",
         topContent: `Quý phụ huynh lưu ý:`,
         midContent:
-          "Sau khí ấn 'Xác nhận', hệ thống tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đôiủ thông tin này trước ngày <span class='error--text'>30/05/2021</span>.",
+          "Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>30/05/2021</span>.",
         botContent:
           "<span class='error--text'>Sau 00:00</span> ngày <span class='error--text'>31/05/2021</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.",
         cancelText: "Kiểm tra lại",
@@ -309,6 +360,20 @@ export default {
       this.$loading.active = true;
       this.$emit("nextStep");
     },
+    onEdit() {
+      this.$dialog.confirm({
+        title: "Chỉnh sửa",
+        okText: "Xác nhận",
+        topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">30/05/2021</span>`,
+        midContent:
+          "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
+        botContent: "",
+        cancelText: "Hủy",
+        done: async () => {
+          this.isEditing = true;
+        },
+      });
+    },
   },
 };
 </script>
@@ -321,9 +386,6 @@ export default {
   font-weight: 500;
   font-size: 24px;
   line-height: 32px;
-}
-.mobile-card-title {
-  font-size: 22px !important;
 }
 .card-subtitle {
   padding: 0 !important;
@@ -363,5 +425,23 @@ hr.dashed {
   font-size: 16px;
   line-height: 24px;
   color: #3e3e3c;
+}
+
+@media only screen and (max-width: 420px) {
+  .card-title {
+    font-size: 20px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .card-title {
+    font-size: 17px;
+  }
+}
+
+@media only screen and (max-width: 500px) and (min-width: 400px) {
+  .card-title {
+    font-size: 21px;
+  }
 }
 </style>

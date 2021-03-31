@@ -11,7 +11,7 @@
           Xin chào quý phụ huynh!
         </div>
       </template>
-      <v-list v-if="isOpen">
+      <v-list>
         <v-list-item>
           <v-list-item-title @click="onSignOut()">Đăng xuất</v-list-item-title>
         </v-list-item>
