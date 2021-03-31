@@ -1,20 +1,21 @@
 <template>
   <v-form ref="form" v-bind="this.$attrs">
+    <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
     <v-card-title class="card-title">Điểm thi</v-card-title>
     <v-card-subtitle class="card-subtitle py-6">
       Kết quả kỳ khảo sát & đánh giá năng lực để vào trường THCS Lương Thế Vinh
     </v-card-subtitle>
     <v-card-text class="d-flex flex-column pa-0">
-      <v-row>
-        <v-col>
+      <v-row class="my-0">
+        <v-col class="py-0">
           <div class="field-label">Số báo danh</div>
           <div class="info-label mt-2 mb-6" v-if="documentStep === 4">
             {{ ltvExamResult.studentExamID || "Chưa có thông tin" }}
           </div>
         </v-col>
       </v-row>
-      <v-row>
-        <v-col cols="3">
+      <v-row class="my-0">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
           <div class="field-label">Toán</div>
           <div
             class="info-label error--text mt-2 mb-6"
@@ -23,7 +24,7 @@
             {{ ltvExamResult.examMath || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="3">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
           <div class="field-label">Văn</div>
           <div
             class="info-label error--text mt-2 mb-6"
@@ -32,7 +33,7 @@
             {{ ltvExamResult.examMath || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="3">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
           <div class="field-label">Anh</div>
           <div
             class="info-label error--text mt-2 mb-6"
@@ -41,7 +42,7 @@
             {{ ltvExamResult.examEnglish || "Chưa có thông tin" }}
           </div>
         </v-col>
-        <v-col cols="3">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
           <div class="field-label mb-2">Tổng điểm</div>
           <div
             class="info-label error--text mt-2 mb-6"
@@ -55,7 +56,7 @@
       <div v-if="ltvExamResult.passExam !== ''">
         <hr class="dashed" />
         <div class="py-6" v-if="ltvExamResult.passExam">
-          <div class="mx-auto" style="width: 355px">
+          <div class="mx-auto" style="max-width: 355px">
             <v-img src="@/assets/pass-exam.svg" />
           </div>
           <div
@@ -97,7 +98,7 @@
           </div>
         </div>
         <div class="py-6" v-if="!ltvExamResult.passExam">
-          <div class="mx-auto mb-6" style="width: 355px">
+          <div class="mx-auto mb-6" style="max-width: 355px">
             <v-img src="@/assets/fail-exam.svg" />
           </div>
           <div class="fail-card pa-4">

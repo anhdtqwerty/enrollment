@@ -1,60 +1,71 @@
 <template>
-  <v-form v-model="isValid" ref="form" v-bind="this.$attrs" style="width: 100%">
-    <div class="section-label py-6">
-      Gia đình chúng tôi có nguyện vọng cho con theo học lớp:
-    </div>
-    <v-row class="pb-6">
-      <v-col cols="4">
-        <div class="field-label">
-          Nguyện vọng 1
-          <span style="color: red" v-if="documentStep === 3">*</span>
-        </div>
-        <v-select
-          v-model="expectation1.clazz"
-          placeholder="VD: Năng khiếu Anh"
-          item-text="title"
-          item-value="select-value"
-          :items="expectations"
-          :rules="[$rules.required]"
-          v-if="documentStep === 3"
-          outlined
-        />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
-          {{ expectation1.clazz || "Chưa có thông tin" }}
-        </div>
-      </v-col>
-      <v-col cols="4">
-        <div class="field-label">Nguyện vọng 2</div>
-        <v-select
-          v-model="expectation2.clazz"
-          placeholder="VD: Năng khiếu Anh"
-          item-text="title"
-          item-value="select-value"
-          :items="expectations"
-          v-if="documentStep === 3"
-          outlined
-        />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
-          {{ expectation2.clazz || "Chưa có thông tin" }}
-        </div>
-      </v-col>
-      <v-col cols="4">
-        <div class="field-label">Nguyện vọng 3</div>
-        <v-select
-          v-model="expectation3.clazz"
-          placeholder="VD: Năng khiếu Anh"
-          item-text="title"
-          item-value="select-value"
-          :items="expectations"
-          v-if="documentStep === 3"
-          outlined
-        />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
-          {{ expectation3.clazz || "Chưa có thông tin" }}
-        </div>
-      </v-col>
-    </v-row>
-    <v-row class="d-flex flex-column" no-gutters>
+  <div>
+    <v-form
+      v-model="isValid"
+      ref="form"
+      v-bind="this.$attrs"
+      style="width: 100%"
+    >
+      <div class="section-label py-6">
+        Gia đình chúng tôi có nguyện vọng cho con theo học lớp:
+      </div>
+      <v-row class="pb-6">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
+          <div class="field-label">
+            Nguyện vọng 1
+            <span style="color: red" v-if="documentStep === 3">*</span>
+          </div>
+          <v-select
+            v-model="expectation1.clazz"
+            placeholder="VD: Năng khiếu Anh"
+            item-text="title"
+            item-value="select-value"
+            :items="expectations"
+            :rules="[$rules.required]"
+            v-if="documentStep === 3"
+            outlined
+          />
+          <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            {{ expectation1.clazz || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
+          <div class="field-label">Nguyện vọng 2</div>
+          <v-select
+            v-model="expectation2.clazz"
+            placeholder="VD: Năng khiếu Anh"
+            item-text="title"
+            item-value="select-value"
+            :items="expectations"
+            v-if="documentStep === 3"
+            outlined
+          />
+          <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            {{ expectation2.clazz || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
+          <div class="field-label">Nguyện vọng 3</div>
+          <v-select
+            v-model="expectation3.clazz"
+            placeholder="VD: Năng khiếu Anh"
+            item-text="title"
+            item-value="select-value"
+            :items="expectations"
+            v-if="documentStep === 3"
+            outlined
+          />
+          <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+            {{ expectation3.clazz || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+      </v-row>
+    </v-form>
+    <v-row
+      class="d-flex flex-column"
+      no-gutters
+      style="max-width: 100%; overflow-x: auto"
+    >
       <div class="field-label" v-if="documentStep === 3">
         <b>Mô hình lớp học</b>
       </div>
@@ -132,7 +143,7 @@
         vọng sẽ được nhà trường xếp lớp ngẫu nhiên.
       </div>
     </v-row>
-  </v-form>
+  </div>
 </template>
 
 <script>

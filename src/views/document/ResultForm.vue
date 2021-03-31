@@ -45,12 +45,13 @@
     <hr class="dashed" />
     <v-card-actions class="d-flex justify-end pt-6 px-0">
       <v-btn
-        class="px-6 py-3 mr-6 text-none"
+        :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
+        class="py-3 mr-6 text-none"
         color="primary"
         v-if="
           (documentStep === 3 && document.type === 'Khối 6') ||
-          (documentStep === 4 && document.type === 'Khối 10') ||
-          isEditing
+            (documentStep === 4 && document.type === 'Khối 10') ||
+            isEditing
         "
         @click="saveDraft"
         outlined
@@ -64,8 +65,8 @@
         color="primary"
         v-if="
           (documentStep === 3 && document.type === 'Khối 6') ||
-          (documentStep === 4 && document.type === 'Khối 10') ||
-          isEditing
+            (documentStep === 4 && document.type === 'Khối 10') ||
+            isEditing
         "
         @click="completeStep"
         large
@@ -77,9 +78,9 @@
         color="primary"
         v-if="
           documentStep !== 4 &&
-          document.type === 'Khối 10' &&
-          !isEditing &&
-          !this.systemTime.checkDocumentSystemTime['close-fill-info']
+            document.type === 'Khối 10' &&
+            !isEditing &&
+            !this.systemTime.checkDocumentSystemTime['close-fill-info']
         "
         @click="onEdit"
         outlined
@@ -92,7 +93,7 @@
         color="primary"
         v-if="
           (documentStep !== 3 && document.type === 'Khối 6') ||
-          (documentStep !== 4 && document.type === 'Khối 10' && !isEditing)
+            (documentStep !== 4 && document.type === 'Khối 10' && !isEditing)
         "
         @click="nextStep"
         large

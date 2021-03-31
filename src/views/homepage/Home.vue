@@ -13,7 +13,7 @@
         <div
           v-if="
             $vuetify.breakpoint.xsOnly &&
-            systemTime.checkSystemTime['open-document']
+              systemTime.checkSystemTime['open-document']
           "
           style="width: 100%"
           class="d-flex justify-end pr-5"
@@ -57,7 +57,7 @@
         <Footer />
       </v-col>
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.smAndDown">
-        <v-img src="@/assets/homepage/home-bg.svg"></v-img>
+        <v-img src="@/assets/homepage/bg.jpg"></v-img>
       </v-col>
     </v-row>
     <EnrollDialog :state="enrollDialog" @closeEnroll="toggleEnrollDialog" />
@@ -254,19 +254,22 @@ export default {
   max-width: 276px;
 }
 .tablet-menu-blog {
-  width: calc(680px / 3 - 12px * 2);
+  width: calc(720px / 3 - 12px * 2);
 }
 .desktop-menu-blog {
   width: calc(640px / 2 - 12px * 4);
   max-width: 220px;
 }
 .tablet-container {
-  max-width: 680px;
+  max-width: 720px;
 }
 .desktop-container {
   width: 100%;
   max-width: 600px;
   max-height: calc(100% - 80px - 52px - 12px * 2);
+}
+.mobile-menu-title {
+  height: 48px;
 }
 .items-container {
   background-image: url("../../assets/watermark.svg");

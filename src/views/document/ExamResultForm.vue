@@ -40,12 +40,16 @@
         <span>Hoàn thành</span>
       </v-btn>
       <v-btn
-        class="px-6 py-3 text-none elevation-0 mt-6"
+        :class="{
+          'mt-6': $vuetify.breakpoint.mdAndUp,
+          'mt-3': $vuetify.breakpoint.smAndDown,
+        }"
+        class="px-6 py-3 text-none elevation-0"
         color="primary"
         v-if="
           document.type === 'Khối 6' &&
-          document.ltvExamResult &&
-          document.ltvExamResult.passExam
+            document.ltvExamResult &&
+            document.ltvExamResult.passExam
         "
         @click="completeGrade6"
         large

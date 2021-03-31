@@ -2,7 +2,7 @@
   <v-form v-model="isValid" ref="form" v-bind="this.$attrs" style="width: 100%">
     <div class="section-label py-6">Lớp 1</div>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -22,7 +22,7 @@
           {{ studyResult.grade1Math || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -42,7 +42,7 @@
           {{ studyResult.grade1Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
@@ -60,7 +60,7 @@
       </v-col>
     </v-row>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -83,7 +83,7 @@
     <hr class="dashed" />
     <div class="section-label py-6">Lớp 2</div>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -103,7 +103,7 @@
           {{ studyResult.grade2Math || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -123,7 +123,7 @@
           {{ studyResult.grade2Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
@@ -141,7 +141,7 @@
       </v-col>
     </v-row>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -164,7 +164,7 @@
     <hr class="dashed" />
     <div class="section-label py-6">Lớp 3</div>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -184,7 +184,7 @@
           {{ studyResult.grade3Math || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -204,7 +204,7 @@
           {{ studyResult.grade3Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
@@ -222,7 +222,7 @@
       </v-col>
     </v-row>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -245,7 +245,7 @@
     <hr class="dashed" />
     <div class="section-label py-6">Lớp 4</div>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -265,7 +265,7 @@
           {{ studyResult.grade4Math || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -285,7 +285,7 @@
           {{ studyResult.grade4Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
@@ -303,7 +303,7 @@
       </v-col>
     </v-row>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -326,7 +326,7 @@
     <hr class="dashed" />
     <div class="section-label py-6">Lớp 5</div>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -346,7 +346,7 @@
           {{ studyResult.grade5Math || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
           <span style="color: red" v-if="documentStep === 3">*</span>
@@ -366,7 +366,7 @@
           {{ studyResult.grade5Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">Anh (nếu có)</div>
         <v-text-field
           placeholder="VD: 10"
@@ -384,7 +384,7 @@
       </v-col>
     </v-row>
     <v-row class="my-0">
-      <v-col cols="4">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
           <span style="color: red" v-if="documentStep === 3">*</span>

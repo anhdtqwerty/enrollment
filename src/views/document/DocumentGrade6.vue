@@ -1,6 +1,6 @@
 <template>
   <div class="document-container d-flex py-8 mx-auto">
-    <v-row no-gutters>
+    <v-row no-gutters style="max-width:100%">
       <v-col
         class="px-8"
         :class="{ 'pb-6': $vuetify.breakpoint.smAndDown }"
@@ -153,15 +153,21 @@ export default {
       switch (step) {
         case 3:
           if (
-            !this.systemTime.checkDocumentSystemTime["study-result"] &&
-            this.user.role.type !== "admin"
+            (!this.systemTime.checkDocumentSystemTime["study-result"] &&
+              this.user.role.type !== "admin") ||
+            (this.document.isDraft &&
+              this.document.step > 3 &&
+              this.user.role.type !== "admin")
           )
             this.setStep(this.step - 1);
           break;
         case 4:
           if (
-            !this.systemTime.checkDocumentSystemTime["exam-result"] &&
-            this.user.role.type !== "admin"
+            (!this.systemTime.checkDocumentSystemTime["exam-result"] &&
+              this.user.role.type !== "admin") ||
+            (this.document.isDraft &&
+              this.document.step > 4 &&
+              this.user.role.type !== "admin")
           )
             this.setStep(this.step - 1);
           break;
@@ -224,15 +230,16 @@ export default {
     },
     onStepClick(key, step) {
       if (
-        !this.systemTime.checkDocumentSystemTime ||
-        !this.systemTime.checkDocumentSystemTime[key]
+        (!this.systemTime.checkDocumentSystemTime ||
+          !this.systemTime.checkDocumentSystemTime[key]) &&
+        this.user.role.type !== "admin"
       ) {
         this.$alert.error(
           "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
         );
         return;
       }
-      if (this.document.step < step) {
+      if (this.document.step < step && this.user.role.type !== "admin") {
         this.$alert.error("Xin vui lòng hoàn thành bước trước");
         return;
       }
