@@ -150,28 +150,7 @@ export default {
   },
   watch: {
     step(step) {
-      switch (step) {
-        case 3:
-          if (
-            (!this.systemTime.checkDocumentSystemTime["study-result"] &&
-              this.user.role.type !== "admin") ||
-            (this.document.isDraft &&
-              this.document.step > 3 &&
-              this.user.role.type !== "admin")
-          )
-            this.setStep(this.step - 1);
-          break;
-        case 4:
-          if (
-            (!this.systemTime.checkDocumentSystemTime["exam-result"] &&
-              this.user.role.type !== "admin") ||
-            (this.document.isDraft &&
-              this.document.step > 4 &&
-              this.user.role.type !== "admin")
-          )
-            this.setStep(this.step - 1);
-          break;
-      }
+      this.checkStep(step);
     },
   },
   methods: {
@@ -183,6 +162,35 @@ export default {
       "setStep",
     ]),
     ...mapActions("layout", ["setDocumentDialog"]),
+    checkStep(step) {
+      switch (step) {
+        case 3:
+          if (
+            !this.systemTime.checkDocumentSystemTime["study-result"] &&
+            this.user.role.type !== "admin"
+          ) {
+            this.$alert.error(
+              "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+            );
+            this.setStep(this.step - 1);
+          }
+          break;
+        case 4:
+          if (
+            (!this.systemTime.checkDocumentSystemTime["exam-result"] &&
+              this.user.role.type !== "admin") ||
+            (this.document.isDraft &&
+              this.document.step > 4 &&
+              this.user.role.type !== "admin")
+          ) {
+            this.$alert.error(
+              "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+            );
+            this.setStep(this.step - 1);
+          }
+          break;
+      }
+    },
     backToHome() {
       this.$router.push("/");
       this.setDocumentDialog(true);

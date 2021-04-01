@@ -87,7 +87,9 @@
               :complete="isCompleted(5)"
               @click="onStepClick('exam-result', 5)"
             >
-              <span class="step-title">Kết quả khảo sát năng lực</span>
+              <span class="step-title"
+                >Kết qủa kỳ thi tuyển sinh vào Lớp 10</span
+              >
               <div
                 class="step-subtitle"
                 :class="getStatusColor('exam-result', 5)"
@@ -178,38 +180,7 @@ export default {
   },
   watch: {
     step(step) {
-      switch (step) {
-        case 3:
-          if (
-            (!this.systemTime.checkDocumentSystemTime["register-expectation"] &&
-              this.user.role.type !== "admin") ||
-            (this.document.isDraft &&
-              this.document.step > 3 &&
-              this.user.role.type !== "admin")
-          )
-            this.setStep(this.step - 1);
-          break;
-        case 4:
-          if (
-            (!this.systemTime.checkDocumentSystemTime["study-result"] &&
-              this.user.role.type !== "admin") ||
-            (this.document.isDraft &&
-              this.document.step > 4 &&
-              this.user.role.type !== "admin")
-          )
-            this.setStep(this.step - 1);
-          break;
-        case 5:
-          if (
-            (!this.systemTime.checkDocumentSystemTime["exam-result"] &&
-              this.user.role.type !== "admin") ||
-            (this.document.isDraft &&
-              this.document.step > 5 &&
-              this.user.role.type !== "admin")
-          )
-            this.setStep(this.step - 1);
-          break;
-      }
+      this.checkStep(step);
     },
   },
   methods: {
@@ -221,6 +192,52 @@ export default {
       "setStep",
     ]),
     ...mapActions("layout", ["setDocumentDialog"]),
+    checkStep(step) {
+      switch (step) {
+        case 3:
+          if (
+            (!this.systemTime.checkDocumentSystemTime["register-expectation"] &&
+              this.user.role.type !== "admin") ||
+            (this.document.isDraft &&
+              this.document.step > 3 &&
+              this.user.role.type !== "admin")
+          ) {
+            this.$alert.error(
+              "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+            );
+            this.setStep(this.step - 1);
+          }
+          break;
+        case 4:
+          if (
+            (!this.systemTime.checkDocumentSystemTime["study-result"] &&
+              this.user.role.type !== "admin") ||
+            (this.document.isDraft &&
+              this.document.step > 4 &&
+              this.user.role.type !== "admin")
+          ) {
+            this.$alert.error(
+              "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+            );
+            this.setStep(this.step - 1);
+          }
+          break;
+        case 5:
+          if (
+            (!this.systemTime.checkDocumentSystemTime["exam-result"] &&
+              this.user.role.type !== "admin") ||
+            (this.document.isDraft &&
+              this.document.step > 5 &&
+              this.user.role.type !== "admin")
+          ) {
+            this.$alert.error(
+              "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+            );
+            this.setStep(this.step - 1);
+          }
+          break;
+      }
+    },
     backToHome() {
       this.$router.push("/");
       this.setDocumentDialog(true);
@@ -236,9 +253,12 @@ export default {
       )
         return "Chưa mở";
       else {
-      if (!this.document.status === "created") return "Mới mở";
-      else if (this.document.status === "filling" && this.document.step <= step)
-        return "Đang khai báo";
+        if (!this.document.status === "created") return "Mới mở";
+        else if (
+          this.document.status === "filling" &&
+          this.document.step <= step
+        )
+          return "Đang khai báo";
       }
       return "Đã hoàn tất";
     },
@@ -250,9 +270,12 @@ export default {
       )
         return "dark-gray--text";
       else {
-      if (!this.document.status === "created") return "error--text";
-      else if (this.document.status === "filling" && this.document.step <= step)
-        return "warning--text";
+        if (!this.document.status === "created") return "error--text";
+        else if (
+          this.document.status === "filling" &&
+          this.document.step <= step
+        )
+          return "warning--text";
       }
       return "success--text";
     },

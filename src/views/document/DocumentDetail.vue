@@ -62,6 +62,9 @@ export default {
     this.documentSystemTime = await this.checkDocumentSystemTime({
       grade: this.document.type,
     });
+    if (this.document.type === "Khối 6")
+      this.checkStepGrade6(this.document.step, this.documentSystemTime);
+    else this.checkStepGrade10(this.document, this.documentSystemTime);
     console.log(this.documentSystemTime);
     this.$loading.active = false;
   },
@@ -76,9 +79,62 @@ export default {
       "updateCV",
       "checkDocumentSystemTime",
       "checkSystemTime",
+      "setStep",
     ]),
     ...mapActions("upload", ["upload", "destroy"]),
     ...mapActions("activeCode", ["updateActiveCode", "fetchActiveCode"]),
+    checkStepGrade10(document, systemTime) {
+      switch (document.step) {
+        case 3:
+          if (
+            (!systemTime.checkDocumentSystemTime["register-expectation"] &&
+              this.user.role.type !== "admin") ||
+            (document.isDraft &&
+              document.step > 3 &&
+              this.user.role.type !== "admin")
+          )
+            this.setStep(this.step - 1);
+          break;
+        case 4:
+          if (
+            (!systemTime.checkDocumentSystemTime["study-result"] &&
+              this.user.role.type !== "admin") ||
+            (document.isDraft &&
+              document.step > 4 &&
+              this.user.role.type !== "admin")
+          )
+            this.setStep(this.step - 1);
+          break;
+        case 5:
+          if (
+            (!systemTime.checkDocumentSystemTime["exam-result"] &&
+              this.user.role.type !== "admin") ||
+            (document.isDraft &&
+              document.step > 5 &&
+              this.user.role.type !== "admin")
+          )
+            this.setStep(this.step - 1);
+          break;
+      }
+    },
+    checkStepGrade6(step, systemTime) {
+      switch (step) {
+        case 3:
+          if (
+            !systemTime.checkDocumentSystemTime["study-result"] &&
+            this.user.role.type !== "admin"
+          )
+            this.setStep(step - 1);
+          break;
+        case 4:
+          if (
+            !systemTime.checkDocumentSystemTime["exam-result"] &&
+            this.user.role.type !== "admin"
+          )
+            this.setStep(step - 1);
+          break;
+      }
+    },
     async updateDocument(data, isDraft) {
       this.documentSystemTime = await this.checkDocumentSystemTime({
         grade: this.document.type,
