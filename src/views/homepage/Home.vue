@@ -167,7 +167,11 @@ export default {
           this.user.role.type === "admin"
         )
           this.setDocumentDialog(true);
-        else if (process.env.NODE_ENV === "development")
+        else if (
+          process.env.NODE_ENV === "development" &&
+          this.user &&
+          this.isAuthenticated
+        )
           this.setDocumentDialog(true);
         else this.toggleCountdownDialog(true);
       } else if (this.user && this.isAuthenticated && this.isConfirmedOTP)
