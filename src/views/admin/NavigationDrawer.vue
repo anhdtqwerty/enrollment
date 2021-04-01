@@ -60,17 +60,27 @@
         <v-list-item-title> Kết quả thi Khối 10 </v-list-item-title>
       </v-list-item>
     </v-list>
+    <div id="notice" v-if="isDevelopmentBuild">
+      <div class="error--text text-subtitle-1">
+        Development Build. v{{ version }}
+      </div>
+    </div>
   </v-navigation-drawer>
 </template>
 <script>
-
 export default {
   props: {
     drawer: { type: Boolean },
   },
+  created() {
+    this.version = process.env.VUE_APP_API_VERSION;
+    this.isDevelopmentBuild = process.env.NODE_ENV === "development";
+  },
   data() {
     return {
       state: false,
+      isDevelopmentBuild: true,
+      version: "0.1",
     };
   },
   watch: {
@@ -99,5 +109,10 @@ export default {
 .active-item {
   background: #0d47a1;
   color: white !important;
+}
+#notice {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
 }
 </style>

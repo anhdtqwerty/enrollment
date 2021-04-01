@@ -24,11 +24,6 @@
       >
         <router-view style="max-width: 1200px; margin: auto"></router-view>
       </v-container>
-      <div id="notice" v-if="isDevelopmentBuild">
-        <div class="error--text text-subtitle-1">
-          Development Build. v{{ version }}
-        </div>
-      </div>
     </v-main>
   </v-app>
 </template>
