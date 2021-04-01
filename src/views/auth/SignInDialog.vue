@@ -125,9 +125,11 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true;
         await this.signIn(this.credentials);
-        if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
+        if (this.user && this.isAuthenticated && !this.isConfirmedOTP) {
+          this.$refs.form.reset();
+          this.setSignInDialog(false);
           this.setConfirmSignupDialog(true);
-        else if (this.user && this.isAuthenticated) {
+        } else if (this.user && this.isAuthenticated) {
           this.$refs.form.reset();
           this.setSignInDialog(false);
           this.setDocumentDialog(true);
