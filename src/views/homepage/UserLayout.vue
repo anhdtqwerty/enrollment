@@ -13,6 +13,11 @@
       <NewPasswordDialog />
       <SignUpDialog />
       <ConfirmSignupDialog />
+      <div id="notice" v-if="isDevelopmentBuild">
+        <div class="error--text text-subtitle-1">
+          Development Build. v{{ version }}
+        </div>
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -44,6 +49,16 @@ export default {
     PluginConfirmDialog,
     PluginLoading,
   },
+  data() {
+    return {
+      isDevelopmentBuild: true,
+      version: "0.1",
+    };
+  },
+  created() {
+    this.version = process.env.VUE_APP_API_VERSION;
+    this.isDevelopmentBuild = process.env.NODE_ENV === "development";
+  },
 };
 </script>
 <style>
@@ -54,5 +69,10 @@ export default {
 
 .v-card--link:focus:before {
   opacity: 0 !important;
+}
+#notice {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
 }
 </style>

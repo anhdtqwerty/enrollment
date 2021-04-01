@@ -63,6 +63,11 @@
         <v-img src="@/assets/homepage/bg.jpg"></v-img>
       </v-col>
     </v-row>
+    <div id="notice" v-if="isDevelopmentBuild">
+      <div class="error--text text-subtitle-1">
+        Development Build. v{{ version }}
+      </div>
+    </div>
   </v-app>
 </template>
 <script>
@@ -87,6 +92,8 @@ export default {
   },
   data() {
     return {
+      isDevelopmentBuild: true,
+      version: "0.1",
       isValid: true,
       dialog: true,
       credentials: {
@@ -185,5 +192,10 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+#notice {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
 }
 </style>

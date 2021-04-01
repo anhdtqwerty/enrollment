@@ -24,6 +24,11 @@
       >
         <router-view style="max-width: 1200px; margin: auto"></router-view>
       </v-container>
+      <div id="notice" v-if="isDevelopmentBuild">
+        <div class="error--text text-subtitle-1">
+          Development Build. v{{ version }}
+        </div>
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -48,6 +53,8 @@ export default {
   data() {
     return {
       drawer: true,
+      isDevelopmentBuild: true,
+      version: "0.1",
     };
   },
   computed: {
@@ -72,6 +79,8 @@ export default {
   },
   async created() {
     this.$loading.active = true;
+    this.version = process.env.VUE_APP_API_VERSION;
+    this.isDevelopmentBuild = process.env.NODE_ENV === "development";
     if (!this.user || !this.isAuthenticated || this.role.type !== "admin") {
       this.$alert.error(
         `Bạn cần phải đăng nhập tài khoản Admin để sử dụng chức năng này!`
@@ -85,3 +94,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#notice {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+}
+</style>
