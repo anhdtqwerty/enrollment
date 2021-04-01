@@ -293,11 +293,11 @@
       <div class="py-6" v-if="document.status !== 'submitted'">
         <div class="font-weight-bold">Cách tính tổng điểm</div>
         <div>
-          - Ban A: ĐXT = Điểm Toán x4 + Điểm Anh x4 + Điểm Văn + Lịch sử + Điểm
+          - Ban A: ĐXT = (Điểm Toán + Điểm Anh) x4 + Điểm Văn + Lịch sử + Điểm
           ưu tiên
         </div>
         <div>
-          - Ban A1: ĐXT = Điểm Toán x4 + Điểm Anh x4 + Điểm Văn + Lịch sử + Điểm
+          - Ban A1: ĐXT = (Điểm Toán + Điểm Anh) x4 + Điểm Văn + Lịch sử + Điểm
           ưu tiên
         </div>
         <div>
