@@ -167,8 +167,8 @@ export default {
       return "---";
     },
     getExpectation2(item) {
-      if (item.expectation2 && item.ltvExamResult.groupExpectation2)
-        return item.ltvExamResult.groupExpectation2;
+      if (item.ltvExamResult && item.ltvExamResult.groupExpectation2)
+        return item.ltvExamResult.groupExpectation2 || "---";
       return "---";
     },
   },
