@@ -66,7 +66,7 @@ export default {
   methods: {
     ...mapActions("course", ["fetchCourses"]),
     ...mapActions("auth", ["setRole"]),
-    toggleDrawer: function (updatedDrawer) {
+    toggleDrawer: function(updatedDrawer) {
       this.drawer = updatedDrawer;
     },
   },
@@ -80,7 +80,7 @@ export default {
       this.$loading.active = false;
       return;
     }
-    if (this.$router.url === "/") this.$router.push("/admin/dashboard");
+    if (this.$route.path === "/admin") this.$router.push("/admin/dashboard");
     this.$loading.active = false;
   },
 };

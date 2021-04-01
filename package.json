@@ -34,7 +34,8 @@
     "vuetify": "^2.4.0",
     "vuex": "^3.4.0",
     "vuex-extensions": "^1.1.5",
-    "vuex-persistedstate": "^4.0.0-beta.3"
+    "vuex-persistedstate": "^4.0.0-beta.3",
+    "xls-to-json": "^2.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

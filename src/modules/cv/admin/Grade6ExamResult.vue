@@ -8,9 +8,9 @@
           :fields="json_fields"
           :before-generate="toggleLoadingScreen(true)"
           :before-finish="toggleLoadingScreen(false)"
-          type="xlsx"
+          type="xls"
           worksheet="Hồ sơ"
-          name="ho-so-khoi-6.xlsx"
+          name="ho-so-khoi-6.xls"
         >
           <v-btn color="admin" dark outlined>
             <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel

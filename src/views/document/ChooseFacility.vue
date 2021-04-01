@@ -160,14 +160,14 @@ export default {
         return;
       }
       let fullAddress = "";
-      if (this.department === "Cơ sở 1")
+      if (this.department === "Cơ sở A")
         fullAddress = "Số 35 Đinh Núp, Phường Trung Hòa, Quận Cầu Giấy, Hà Nội";
-      else if (this.department === "Cơ sở A")
+      else if (this.department === "Cơ sở 1")
         fullAddress = "Thôn Yên Xã, Tân Triều, Thanh Trì, Hà Nội";
       this.$dialog.confirm({
         title: "Hoàn thành",
         okText: "Xác nhận",
-        topContent: `Quý phụ huynh đã chọn cơ sở đăng ký là: \n<strong>${fullAddress}</strong>`,
+        topContent: `Quý phụ huynh đã chọn cơ sở đăng ký là: \n<strong>${this.department}: ${fullAddress}</strong>`,
         midContent: "Vui lòng ấn xác nhận nếu thông tin trên là đúng",
         botContent:
           "<span class='error--text'>Lưu ý: Hồ sơ đăng ký tại cơ sở nào sẽ chỉ được thi và nhập học tại cơ sở đó</span>",

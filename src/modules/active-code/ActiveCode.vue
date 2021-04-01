@@ -5,14 +5,19 @@
         Quản lý mã kích hoạt
       </div>
       <div class="flex-center">
-        <v-btn
-          color="admin"
-          @click="sendState = !sendState"
-          dark
-          outlined
+        <JsonExcel
+          :data="activeCodes"
+          :fields="json_fields"
+          :before-generate="toggleLoadingScreen(true)"
+          :before-finish="toggleLoadingScreen(false)"
+          type="xls"
+          worksheet="Hồ sơ"
+          name="ma-kich-hoat.xls"
         >
-          <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
-        </v-btn>
+          <v-btn color="admin" dark outlined>
+            <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
+          </v-btn>
+        </JsonExcel>
       </div>
     </div>
     <v-card
@@ -49,14 +54,15 @@ import { mapActions, mapState, mapGetters } from "vuex";
 import NewActiveCodeDialog from "./NewActiveCodeDialog";
 import ActiveCodeFilter from "./ActiveCodeFilter";
 import ActiveCodeTable from "./ActiveCodeTable";
-// import moment from "moment";
-// import _ from "lodash";
+import moment from "moment";
+import JsonExcel from "vue-json-excel";
 
 export default {
   components: {
     NewActiveCodeDialog,
     ActiveCodeFilter,
     ActiveCodeTable,
+    JsonExcel,
   },
   props: {
     role: String,
@@ -65,9 +71,39 @@ export default {
     return {
       dialog: false,
       grade: "Khối 6",
+      json_fields: {
+        "Mã kích hoạt": "code",
+        Khối: "grade",
+        "Cơ sở": {
+          field: "department",
+          callback: (value) => {
+            if (value && value !== "unset") return value;
+            else return "";
+          },
+        },
+        "Trạng thái": {
+          field: "status",
+          callback: (value) => {
+            if (value === "active") return "Đã kích hoạt";
+            else if (value === "inactive") return "Chưa kích hoạt";
+            else return "";
+          },
+        },
+        "Ngày kích hoạt": {
+          field: "activeDate",
+          callback: (value) => {
+            if (value) return moment(value).format("DD/MM/YYYY hh:mm:ss");
+            else return "";
+          },
+        },
+        "Tài khoản kích hoạt": "userPhone",
+        "Số lần in": "printNum",
+        "Người xuất mã": "createdBy",
+      },
     };
   },
   computed: {
+    ...mapGetters("activeCode", ["activeCodes", "activeCode"]),
     addButtonText() {
       switch (this.$vuetify.breakpoint.name) {
         case "xs":
@@ -81,6 +117,9 @@ export default {
   methods: {
     async refresh() {
       await this.$refs.activeCodeTable.refresh();
+    },
+    toggleLoadingScreen(data) {
+      this.$loading.active = data;
     },
     toggleGrade6Dialog() {
       this.dialog = !this.dialog;
@@ -101,7 +140,7 @@ export default {
   justify-content: center;
 }
 .component-title {
-  color: #0D47A1;
+  color: #0d47a1;
   font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
