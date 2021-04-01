@@ -87,6 +87,12 @@
             Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm
             tra để nhận thông báo.
           </div>
+          <div class="notice pa-4" v-if="step === 4">
+            "Kết quả khảo sát năng lực" sẽ được thông báo đến quý phú huynh sau
+            khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông
+            báo: <br />- SMS đến số điện thoại đăng ký <br />- Tại mục Kết quả
+            khảo sát năng lực
+          </div>
         </v-card>
       </v-col>
       <v-col class="d-flex px-8" cols="12" xs="12" sm="12" md="8">

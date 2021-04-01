@@ -10,7 +10,7 @@
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade1Math"
-          type="number"
+          type="text"
           color="primary"
           v-if="documentStep === 3"
           @keyup.enter="submit"
@@ -585,5 +585,19 @@ export default {
 hr.dashed {
   width: 100%;
   border: 1px dashed #e6e4eb;
+}
+</style>
+
+<style>
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 </style>

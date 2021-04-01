@@ -60,7 +60,7 @@
             <v-img src="@/assets/pass-exam.svg" />
           </div>
           <div
-            class="d-flex justify-center pt-6"
+            class="d-flex align-center pt-6"
             v-if="document.status !== 'submitted'"
           >
             <v-checkbox
@@ -69,11 +69,9 @@
               :rules="[$rules.checkbox]"
             ></v-checkbox>
             <div class="text-justify">
-              Hiện con tôi đã đạt yêu cầu của trường Lương Thế Vinh & có nguyện
-              vọng được vào học tại trường. Nếu con tôi được chấp nhận vào học
-              tại trường, gia đình chúng tôi cam đoan chấp hành hành mọi nội quy
-              và quy định của trường THCS & THPT Lương Thế Vinh. Đơn này đã được
-              gia đình thống nhất và nộp cho nhà trường ngày hôm nay.
+              Nếu được nhận vào học, gia đình chúng tôi và cháu sẽ chấp hành mọi
+              nội quy, quy định của nhà trường. Đơn này đã được gia đình thống
+              nhất và nộp cho nhà trường ngày hôm nay.
             </div>
           </div>
           <div

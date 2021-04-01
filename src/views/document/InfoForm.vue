@@ -47,7 +47,7 @@
         @click="completeStep"
         large
       >
-        <span>Hoàn thành</span>
+        <span>Tiếp tục</span>
       </v-btn>
       <v-btn
         class="px-6 py-3 text-none elevation-0"

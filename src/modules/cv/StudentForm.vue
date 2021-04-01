@@ -19,8 +19,12 @@
           upload: '<b>Thiết bị không hỗ trợ tải lên file ảnh</b>',
           drag: 'Kéo vào để upload avatar',
         }"
+        v-if="documentStep === 2"
         @change="onChange"
       ></picture-input>
+      <div>
+        <v-img width="120" height="160" :src="avatar" v-if="documentStep !== 2" />
+      </div>
       <div class="mt-4 text-center" v-if="documentStep === 2">
         Ảnh theo chuẩn ảnh Căn cước công dân
       </div>

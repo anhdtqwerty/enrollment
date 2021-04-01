@@ -5,8 +5,7 @@
       >Kết quả Kỳ thi tuyển sinh vào lớp 10 THPT năm 2021 - 2022</v-card-title
     >
     <v-card-subtitle class="card-subtitle py-6">
-      Phụ huynh vui lòng khai báo đầy đủ thông tin và ấn "Hoàn thành" trước ngày
-      <strong>{{ getCloseFillDocumentDate }}</strong>
+      Phụ huynh vui lòng nhập nguyện vọng của con mình và ấn lưu tạm thời.
     </v-card-subtitle>
     <v-card-text class="d-flex flex-column pa-0">
       <div class="section-label py-6">Số báo danh</div>
@@ -187,7 +186,7 @@
             :rules="[$rules.priorityMark]"
             :disabled="
               ltvExamResult.priorityType !==
-              'Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội'
+                'Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội'
             "
             outlined
             validate-on-blur
@@ -221,7 +220,7 @@
             style="font-size: 24px"
             v-if="document.status === 'submitted'"
           >
-            {{ ltvExamResult.totalA || "Chưa có thông tin" }}
+            {{ getTotalA }}
           </div>
         </v-col>
         <v-col
@@ -254,7 +253,7 @@
             style="font-size: 24px"
             v-if="document.status === 'submitted'"
           >
-            {{ ltvExamResult.totalA1 || "Chưa có thông tin" }}
+            {{ getTotalA1 }}
           </div>
         </v-col>
         <v-col
@@ -287,7 +286,7 @@
             style="font-size: 24px"
             v-if="document.status === 'submitted'"
           >
-            {{ ltvExamResult.totalD || "Chưa có thông tin" }}
+            {{ getTotalD }}
           </div>
         </v-col>
       </v-row>
@@ -359,28 +358,27 @@
           </div>
         </v-col>
       </v-row>
+      <hr class="dashed" v-if="document.status !== 'submitted'" />
       <div
         class="d-flex justify-center py-6"
         v-if="document.status !== 'submitted'"
       >
-        <hr class="dashed" />
         <v-checkbox
           class="align-self-start mt-0 pt-0"
           v-model="agree"
           :rules="[$rules.checkbox]"
         ></v-checkbox>
         <p class="text-justify">
-          Con tôi đã đạt đủ điểm chuẩn vào trường Lương Thế Vinh & có nguyện
-          vọng được vào học tại trường. Nếu được nhận vào học, gia đình chúng
-          tôi và cháu sẽ chấp hành mọi nội quy, quy định của nhà trường. Đơn này
-          đã được gia đình thống nhất và nộp cho nhà trường ngày hôm nay.
+          Nếu được nhận vào học, gia đình chúng tôi và cháu sẽ chấp hành mọi nội
+          quy, quy định của nhà trường. Đơn này đã được gia đình thống nhất và
+          nộp cho nhà trường ngày hôm nay.
         </p>
       </div>
       <div
         v-if="
           ltvExamResult.passExam !== '' &&
-          systemTime.checkDocumentSystemTime &&
-          !systemTime.checkDocumentSystemTime['close-fill-document']
+            systemTime.checkDocumentSystemTime &&
+            !systemTime.checkDocumentSystemTime['close-fill-document']
         "
       >
         <hr class="dashed" />
@@ -486,7 +484,7 @@ export default {
         !this.ltvExamResult.examHistory ||
         isNaN(this.getPriorityMark)
       )
-        return "";
+        return "Chưa có thông tin";
       return (
         parseFloat(this.ltvExamResult.examMath) * 4 +
         parseFloat(this.ltvExamResult.examEnglish) * 4 +
@@ -503,7 +501,7 @@ export default {
         !this.ltvExamResult.examHistory ||
         isNaN(this.getPriorityMark)
       )
-        return "";
+        return "Chưa có thông tin";
       return (
         parseFloat(this.ltvExamResult.examMath) * 4 +
         parseFloat(this.ltvExamResult.examEnglish) * 4 +
@@ -520,7 +518,7 @@ export default {
         !this.ltvExamResult.examHistory ||
         isNaN(this.getPriorityMark)
       )
-        return "";
+        return "Chưa có thông tin";
       return (
         (parseFloat(this.ltvExamResult.examMath) +
           parseFloat(this.ltvExamResult.examEnglish) +
@@ -575,7 +573,7 @@ export default {
     if (this.document.ltvExamResult) {
       this.ltvExamResult = this.document.ltvExamResult;
       this.agree = this.document.status === "submitted";
-      console.log(this.ltvExamResult.passExam);
+      console.log(this.ltvExamResult);
     }
   },
   methods: {

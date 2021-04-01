@@ -103,6 +103,16 @@
             Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm
             tra để nhận thông báo.
           </div>
+          <div
+            class="notice pa-4"
+            v-if="step === 5 && document.status === 'submitted'"
+          >
+            Cảm ơn quý phụ huynh đã hoàn thành khai báo đầy đủ thông tin như yêu
+            cầu. Nhà trường sẽ thông báo trạng thái trúng tuyển/chưa trúng tuyển
+            cho phụ huynh học sinh sau khi có điểm chuẩn của nhà trường qua 2
+            hình thức: <br />+ SMS cho số điện thoại đăng ký <br />+ Thông báo
+            trên hệ thống tuyển sinh online của nhà trường.
+          </div>
         </v-card>
       </v-col>
       <v-col class="d-flex px-8" cols="12" xs="12" sm="12" md="8">
