@@ -34,7 +34,8 @@ export default {
     const systemTime = await this.checkSystemTime();
     if (
       (!systemTime || !systemTime.checkSystemTime["open-document"]) &&
-      this.user.role.type !== "admin"
+      this.user.role.type !== "admin" &&
+      process.env.NODE_ENV !== "development"
     ) {
       this.$alert.error(
         `Hệ thống sẽ mở vào ngày ${moment(
