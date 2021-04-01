@@ -66,4 +66,5 @@ export const inputRules = {
     !v ||
     (parseFloat(v) >= 0 && parseFloat(v) <= 3) ||
     "Điểm cộng không hợp lệ",
+  number: (v) => !v || /^\d+$/.test(v) || "Chỉ bao gồm các chữ số",
 };

@@ -8,7 +8,7 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="py-8">
-        <v-form ref="form" v-model="isValid">
+        <v-form ref="form">
           <div class="text-subtitle-1">
             Mật khẩu <span style="color: red">*</span>
           </div>
@@ -47,7 +47,6 @@
           class="white--text text-subtitle-1 btn-text mt-6"
           style="width: 100%"
           @click="submit()"
-          :disabled="!isValid"
           :loading="loading"
           >Xác nhận
         </v-btn>

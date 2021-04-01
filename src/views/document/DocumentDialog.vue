@@ -42,10 +42,11 @@
                   placeholder="Nhập mã kích hoạt tại đây"
                   v-model="activeCode"
                   name="login"
-                  type="number"
+                  type="text"
                   color="primary"
                   :rules="codeRules"
                   @keyup.enter="submit"
+                  @keyup="$refs.form.validate()"
                   outlined
                   validate-on-blur
                 />

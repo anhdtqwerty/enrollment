@@ -41,6 +41,7 @@
                   :rules="passwordRules"
                   @click:append="showPassword = !showPassword"
                   @keyup.enter="submit"
+                  @keyup="$refs.form.validate()"
                   color="primary"
                   outlined
                   validate-on-blur

@@ -141,6 +141,7 @@ export default {
   },
   beforeMount() {
     if (this.document.department) this.department = this.document.department;
+    if (this.department === "unset") this.department = "";
   },
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),

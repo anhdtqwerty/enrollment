@@ -8,7 +8,7 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pt-4 pb-2">
-        <v-form ref="form" v-model="isValid">
+        <v-form ref="form">
           <div class="text-subtitle-1">
             Số điện thoại <span style="color: red">*</span>
           </div>
@@ -49,6 +49,7 @@
             :rules="confirmPasswordRules"
             @click:append="showConfirmPassword = !showConfirmPassword"
             @keyup.enter="submit"
+            @keyup="$refs.form.validate()"
             color="primary"
             outlined
             validate-on-blur
@@ -60,7 +61,6 @@
           color="primary"
           class="white--text text-subtitle-1 mt-4 text-none"
           style="width: 100%"
-          :disabled="!isValid"
           :loading="loading"
           @click="submit"
           >Đăng ký

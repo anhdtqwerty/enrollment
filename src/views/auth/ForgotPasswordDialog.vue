@@ -8,7 +8,7 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="py-8">
-        <v-form ref="form" v-model="isValid">
+        <v-form ref="form">
           <div class="text-subtitle-1">
             Số điện thoại <span style="color: red">*</span>
           </div>
@@ -31,7 +31,6 @@
           color="primary"
           class="white--text text-subtitle-1 btn-text text-none mt-6"
           style="width: 100%"
-          :disabled="!isValid"
           :loading="loading"
           @click="submit()"
           >Tiếp theo

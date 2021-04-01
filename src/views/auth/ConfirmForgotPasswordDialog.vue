@@ -8,7 +8,7 @@
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="pt-4 pb-2">
-        <v-form ref="form" v-model="isValid">
+        <v-form ref="form">
           <div class="text-subtitle-1">
             Nhập mã OTP được gửi tới điện thoại bạn
             <span style="color: red">*</span>
@@ -33,7 +33,7 @@
           style="width: 100%"
           @click="submit()"
           :loading="loading"
-          :disabled="!isValid || countdownLockReset > 0"
+          :disabled="countdownLockReset > 0"
           >{{ getConfirmCountdown }}
         </v-btn>
         <v-btn

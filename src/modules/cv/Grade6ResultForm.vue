@@ -50,6 +50,7 @@
           type="number"
           color="primary"
           v-if="documentStep === 3"
+          :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
@@ -95,7 +96,7 @@
           color="primary"
           v-if="documentStep === 3"
           @keyup.enter="submit"
-          :rules="[$rules.required]"
+          :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
@@ -115,7 +116,7 @@
           color="primary"
           v-if="documentStep === 3"
           @keyup.enter="submit"
-          :rules="[$rules.required]"
+          :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
@@ -131,6 +132,7 @@
           type="number"
           color="primary"
           v-if="documentStep === 3"
+          :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
@@ -176,7 +178,7 @@
           color="primary"
           v-if="documentStep === 3"
           @keyup.enter="submit"
-          :rules="[$rules.required]"
+          :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
@@ -196,7 +198,7 @@
           color="primary"
           v-if="documentStep === 3"
           @keyup.enter="submit"
-          :rules="[$rules.required]"
+          :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
@@ -212,6 +214,7 @@
           type="number"
           color="primary"
           v-if="documentStep === 3"
+          :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
@@ -257,7 +260,7 @@
           color="primary"
           v-if="documentStep === 3"
           @keyup.enter="submit"
-          :rules="[$rules.required]"
+          :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
@@ -277,7 +280,7 @@
           color="primary"
           v-if="documentStep === 3"
           @keyup.enter="submit"
-          :rules="[$rules.required]"
+          :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
@@ -293,6 +296,7 @@
           type="number"
           color="primary"
           v-if="documentStep === 3"
+          :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
@@ -329,7 +333,6 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
-          <span style="color: red" v-if="documentStep === 3">*</span>
         </div>
         <v-text-field
           placeholder="VD: 10"
@@ -337,8 +340,8 @@
           type="number"
           color="primary"
           v-if="documentStep === 3"
+          :rules="[$rules.mark]"
           @keyup.enter="submit"
-          :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
@@ -349,7 +352,6 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
-          <span style="color: red" v-if="documentStep === 3">*</span>
         </div>
         <v-text-field
           placeholder="VD: 10"
@@ -357,8 +359,8 @@
           type="number"
           color="primary"
           v-if="documentStep === 3"
+          :rules="[$rules.mark]"
           @keyup.enter="submit"
-          :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
@@ -374,6 +376,7 @@
           type="number"
           color="primary"
           v-if="documentStep === 3"
+          :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
@@ -387,7 +390,6 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
-          <span style="color: red" v-if="documentStep === 3">*</span>
         </div>
         <v-select
           v-model="studyResult.grade5Morality"
@@ -395,7 +397,6 @@
           item-text="title"
           item-value="value"
           :items="moralities"
-          :rules="[$rules.required]"
           v-if="documentStep === 3"
           outlined
         />
@@ -468,11 +469,15 @@ export default {
         this.studyResult.grade3Literature == "" ||
         this.studyResult.grade3Math == "" ||
         this.studyResult.grade4Literature == "" ||
-        this.studyResult.grade4Math == "" ||
-        this.studyResult.grade5Literature == "" ||
-        this.studyResult.grade5Math == ""
+        this.studyResult.grade4Math == ""
       )
         return "Xin vui lòng điền tất cả các điểm thành phần bên trên";
+      let grade5Literature = this.studyResult.grade5Literature
+        ? parseFloat(this.studyResult.grade5Literature)
+        : 0;
+      let grade5Math = this.studyResult.grade5Math
+        ? parseFloat(this.studyResult.grade5Math)
+        : 0;
       return (
         parseFloat(this.studyResult.grade1Literature) +
         parseFloat(this.studyResult.grade1Math) +
@@ -482,8 +487,8 @@ export default {
         parseFloat(this.studyResult.grade3Math) +
         parseFloat(this.studyResult.grade4Literature) +
         parseFloat(this.studyResult.grade4Math) +
-        parseFloat(this.studyResult.grade5Literature) +
-        parseFloat(this.studyResult.grade5Math)
+        +grade5Literature +
+        grade5Math
       );
     },
   },

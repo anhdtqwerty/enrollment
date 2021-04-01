@@ -109,7 +109,7 @@
           color="primary"
           v-if="documentStep === 2"
           @keyup.enter="submit"
-          :rules="[$rules.required]"
+          :rules="[$rules.required, $rules.number]"
           outlined
           validate-on-blur
         />

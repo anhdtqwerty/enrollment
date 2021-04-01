@@ -34,6 +34,7 @@
             :rules="passwordRules"
             @click:append="showPassword = !showPassword"
             @keyup.enter="submit"
+            @keyup="$refs.form.validate()"
             color="primary"
             outlined
             validate-on-blur
@@ -141,7 +142,8 @@ export default {
     },
     register() {
       this.setSignInDialog(false);
-      if (this.user && !this.isConfirmedOTP) this.setConfirmSignupDialog(true);
+      if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
+        this.setConfirmSignupDialog(true);
       else this.setSignUpDialog(true);
     },
   },
