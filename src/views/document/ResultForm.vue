@@ -2,10 +2,13 @@
   <v-card width="100%" class="elevation-0">
     <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
     <v-card-title class="card-title mb-2">Kết quả học tập</v-card-title>
-    <div class="field-label pt-6" v-if="documentStep !== 4 && !isEditing">
+    <div
+      class="field-label pt-6"
+      v-if="documentStep !== 4 && !isEditing && !isFillInfoClose"
+    >
       <span class="error--text">(*)</span> Phụ huynh lưu ý: Các thông tin này có
       thể được chỉnh sửa nhưng sẽ bị khóa vào ngày
-      <span class="error--text">30/05/1021</span>.
+      <span class="error--text">30/05/2021</span>.
     </div>
     <v-card-subtitle
       v-if="documentStep === 4 || isEditing"
@@ -80,7 +83,7 @@
           documentStep !== 4 &&
             document.type === 'Khối 10' &&
             !isEditing &&
-            !this.systemTime.checkDocumentSystemTime['close-fill-info']
+            !isFillInfoClose
         "
         @click="onEdit"
         outlined
@@ -126,8 +129,14 @@ export default {
         return "Vui lòng điền <b>Điểm thi cuối năm</b> môn Toán, Văn, Anh và điểm hạnh kiểm cả năm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>";
       return "Vui lòng điền <b>Điểm tổng kết cuối năm</b> môn Toán, Văn, Anh, Lý, Hóa & Xếp loại hạnh kiểm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>";
     },
+    isFillInfoClose() {
+      if (this.systemTime && this.systemTime.checkDocumentSystemTime)
+        return this.systemTime.checkDocumentSystemTime["close-fill-info"];
+      return false;
+    },
   },
   created() {
+    this.isEditing = false
     if (this.documentStep !== 4) this.isEditing = false;
   },
   data() {
@@ -255,5 +264,14 @@ export default {
 hr.dashed {
   width: 100%;
   border: 1px dashed #e6e4eb;
+}
+.field-label {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: #797979;
+  margin-bottom: 4px;
 }
 </style>

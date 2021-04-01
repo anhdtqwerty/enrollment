@@ -251,7 +251,7 @@
                                           : "---"
                                       }}</font
                                     ></span
-                                  ><br />
+                                  ><br /><br />
                                 </div>
                               </td>
                             </tr>
@@ -308,14 +308,14 @@
                                 style="padding-top:0; padding-left:18px; padding-bottom:9px; padding-right:18px;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size: 14px"
+                                  <span style="font-size: 11px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       >Người xuất mã</font
                                     ></span
                                   ><br />
                                   <span
-                                    style="font-size: 14px; padding-top:16px"
+                                    style="font-size: 11px; padding-top:16px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
                                       ><strong>{{
@@ -351,17 +351,28 @@
                                 style="padding-top:0; padding-left:18px; padding-bottom:9px; padding-right:18px;"
                               >
                                 <div style="text-align: center;">
-                                  <span style="font-size: 14px"
+                                  <span style="font-size: 11px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
-                                      >Ngày xuất mã</font
+                                      >Thời gian xuất mã</font
                                     ></span
                                   ><br />
                                   <span
-                                    style="font-size: 14px; padding-top:16px"
+                                    style="font-size: 11px; padding-top:16px"
                                     ><font
                                       face="roboto, helvetica neue, helvetica, arial, sans-serif"
-                                      ><strong>{{ getCreatedAt }}</strong></font
+                                      ><strong>{{
+                                        getCreatedAtDate
+                                      }}</strong></font
+                                    ></span
+                                  ><br />
+                                  <span
+                                    style="font-size: 11px; padding-top:16px"
+                                    ><font
+                                      face="roboto, helvetica neue, helvetica, arial, sans-serif"
+                                      ><strong>{{
+                                        getCreatedAtTime
+                                      }}</strong></font
                                     ></span
                                   >
                                 </div>
@@ -407,9 +418,14 @@ export default {
     activeCode: Object,
   },
   computed: {
-    getCreatedAt() {
+    getCreatedAtDate() {
       if (this.activeCode.createdAt)
         return moment(this.activeCode.createdAt).format("DD/MM/YYYY");
+      return "---";
+    },
+    getCreatedAtTime() {
+      if (this.activeCode.createdAt)
+        return moment(this.activeCode.createdAt).format("hh:mm:ss");
       return "---";
     },
   },

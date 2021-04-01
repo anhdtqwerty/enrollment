@@ -82,12 +82,7 @@
               </div>
             </v-stepper-step>
           </v-stepper>
-          <div class="notice pa-4" v-if="step < 4">
-            Quý phụ huynh lưu ý thông tin tiếp theo sẽ được mở để khai báo sau.
-            Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm
-            tra để nhận thông báo.
-          </div>
-          <div class="notice pa-4" v-if="step === 4">
+          <div class="notice pa-4">
             "Kết quả khảo sát năng lực" sẽ được thông báo đến quý phú huynh sau
             khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông
             báo: <br />- SMS đến số điện thoại đăng ký <br />- Tại mục Kết quả
@@ -158,6 +153,18 @@ export default {
     step(step) {
       this.checkStep(step);
     },
+    systemTime(systemTime) {
+      if (
+        systemTime &&
+        systemTime.checkDocumentSystemTime &&
+        systemTime.checkDocumentSystemTime["exam-result"] &&
+        this.document.step === 4 &&
+        (!this.document.ltvExamResult || !this.document.ltvExamResult.examMath)
+      )
+        this.$alert.error(
+          "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
+        );
+    },
   },
   methods: {
     ...mapActions("cv", [
@@ -183,17 +190,21 @@ export default {
           break;
         case 4:
           if (
-            (!this.systemTime.checkDocumentSystemTime["exam-result"] &&
-              this.user.role.type !== "admin") ||
-            (this.document.isDraft &&
-              this.document.step > 4 &&
-              this.user.role.type !== "admin")
+            !this.systemTime.checkDocumentSystemTime["exam-result"] &&
+            this.user.role.type !== "admin"
           ) {
             this.$alert.error(
-              "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+              "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
             );
             this.setStep(this.step - 1);
-          }
+          } else if (
+            this.systemTime.checkDocumentSystemTime["exam-result"] &&
+            (!this.document.ltvExamResult ||
+              !this.document.ltvExamResult.examMath)
+          )
+            this.$alert.error(
+              "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
+            );
           break;
       }
     },
@@ -248,9 +259,14 @@ export default {
           !this.systemTime.checkDocumentSystemTime[key]) &&
         this.user.role.type !== "admin"
       ) {
-        this.$alert.error(
-          "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
-        );
+        if (step === 4)
+          this.$alert.error(
+            "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: \n- SMS đến số điện thoại đăng ký\n- Tại mục Kết quả khảo sát năng lực"
+          );
+        else
+          this.$alert.error(
+            "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+          );
         return;
       }
       if (this.document.step < step && this.user.role.type !== "admin") {

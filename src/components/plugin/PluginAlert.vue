@@ -7,8 +7,8 @@
     top
     class="plugin__alert"
   >
-    <v-icon class="mr-3 mt-n1">{{icon}}</v-icon>
-    <span class="text-h6">{{alert.message}}</span>
+    <v-icon class="mr-3 mt-n1">{{ icon }}</v-icon>
+    <span class="text-h6" v-html="alert.message"></span>
     <!-- <v-btn icon @click="close">
       <v-icon>mdi-close</v-icon>
     </v-btn> -->
@@ -17,40 +17,40 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      alert: this.$alert.alertData
-    }
+      alert: this.$alert.alertData,
+    };
   },
   computed: {
-    icon () {
+    icon() {
       return {
-        error: 'mdi-alert',
-        success: 'mdi-checkbox-marked-circle',
-        warning: 'mdi-alert'
-      }[this.alert.type]
+        error: "mdi-alert",
+        success: "mdi-checkbox-marked-circle",
+        warning: "mdi-alert",
+      }[this.alert.type];
     },
-    color () {
+    color() {
       return {
-        error: 'error',
-        success: 'success',
-        warning: 'yellow darken-2'
-      }[this.alert.type]
+        error: "error",
+        success: "success",
+        warning: "yellow darken-2",
+      }[this.alert.type];
     },
-    timeout () {
+    timeout() {
       return (
         {
-          error: 8000
+          error: 8000,
         }[this.$alert.type] || 5000
-      )
-    }
+      );
+    },
   },
   methods: {
-    close () {
-      this.$alert.close()
-    }
-  }
-}
+    close() {
+      this.$alert.close();
+    },
+  },
+};
 </script>
 
 <style lang="scss">

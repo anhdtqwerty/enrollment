@@ -312,59 +312,13 @@
         </div>
         <div>- Học sinh THCS Lương Thế Vinh được cộng 3 điểm.</div>
       </div>
-      <hr class="dashed" />
-      <div class="section-label py-6">Đăng ký nguyện vọng ban tại trường</div>
-      <v-row class="my-0">
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-          <div class="field-label">
-            Nguyện vọng 1
-            <span style="color: red" v-if="document.status !== 'submitted'"
-              >*</span
-            >
-          </div>
-          <v-select
-            v-model="ltvExamResult.groupExpectation1"
-            placeholder="VD: Ban A"
-            item-text="title"
-            item-value="value"
-            :items="groups"
-            :rules="[$rules.required]"
-            v-if="document.status !== 'submitted'"
-            outlined
-          />
-          <div
-            class="info-label mt-2 mb-6"
-            v-if="document.status === 'submitted'"
-          >
-            {{ ltvExamResult.groupExpectation1 || "Chưa có thông tin" }}
-          </div>
-        </v-col>
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-          <div class="field-label">Nguyện vọng 2</div>
-          <v-select
-            v-model="ltvExamResult.groupExpectation2"
-            placeholder="VD: Ban A1"
-            item-text="title"
-            item-value="value"
-            :items="groups"
-            v-if="document.status !== 'submitted'"
-            outlined
-          />
-          <div
-            class="info-label mt-2 mb-6"
-            v-if="document.status === 'submitted'"
-          >
-            {{ ltvExamResult.groupExpectation2 || "Chưa có thông tin" }}
-          </div>
-        </v-col>
-      </v-row>
       <hr class="dashed" v-if="document.status !== 'submitted'" />
       <div
         class="d-flex justify-center py-6"
         v-if="document.status !== 'submitted'"
       >
         <v-checkbox
-          class="align-self-start mt-0 pt-0"
+          class="align-self-start mt-3 pt-0"
           v-model="agree"
           :rules="[$rules.checkbox]"
         ></v-checkbox>
@@ -378,7 +332,7 @@
         v-if="
           ltvExamResult.passExam !== '' &&
             systemTime.checkDocumentSystemTime &&
-            !systemTime.checkDocumentSystemTime['close-fill-document']
+            systemTime.checkDocumentSystemTime['close-fill-document']
         "
       >
         <hr class="dashed" />
@@ -433,7 +387,6 @@
 
 <script>
 import moment from "moment";
-
 export default {
   props: {
     documentStep: Number,
@@ -540,8 +493,6 @@ export default {
         examHistory: "",
         passExam: "",
         priorityType: "",
-        groupExpectation1: "",
-        groupExpectation2: "",
       },
       agree: false,
       priorityTypes: [
@@ -561,11 +512,6 @@ export default {
           title: "Không có điểm cộng",
           value: "Không có điểm cộng",
         },
-      ],
-      groups: [
-        { title: "Ban A", value: "Ban A" },
-        { title: "Ban A1", value: "Ban A1" },
-        { title: "Ban D", value: "Ban D" },
       ],
     };
   },

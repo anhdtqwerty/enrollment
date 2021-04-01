@@ -7,8 +7,12 @@
         <v-icon @click="cancel()" class="mr-n1">mdi-close</v-icon>
       </v-card-title>
       <v-divider></v-divider>
-      <v-card-text class="pt-4 pb-2">
+      <v-card-text class="pa-6">
         <v-form ref="form">
+          <div class="text-subtitle-1 pb-8">
+            Số điện thoại của bạn là
+            <strong>{{ this.userPhone }}</strong>
+          </div>
           <div class="text-subtitle-1">
             Nhập mã OTP được gửi tới điện thoại bạn
             <span style="color: red">*</span>
@@ -29,17 +33,21 @@
           depressed
           x-large
           color="primary"
-          class="white--text text-subtitle-1 btn-text mt-4"
+          class="white--text text-none text-subtitle-1 btn-text mt-4"
           style="width: 100%"
           @click="submit()"
           :loading="loading"
           :disabled="countdownLockReset > 0"
           >{{ getConfirmCountdown }}
         </v-btn>
+        <div class="text-subtitle-1 pt-12 pb-6">
+          <span class="error--text">(*)</span> Phụ huynh vui lòng kiểm tra lại
+          số điện thoại nếu chưa nhận được tin nhắn chứa mã OTP từ Nhà trường.
+        </div>
         <v-btn
           depressed
           plain
-          class="primary--text text-subtitle-1 font-weight-bold btn-text mt-2"
+          class="primary--text text-none text-subtitle-1 font-weight-bold btn-text mt-2"
           style="width: 100%"
           @click="resendOTP()"
           :loading="loading"

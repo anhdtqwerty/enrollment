@@ -134,6 +134,7 @@ export default {
           this.setSignInDialog(false);
           this.setDocumentDialog(true);
         }
+        this.loading = false;
       }
     },
     resetPassword() {

@@ -1,16 +1,16 @@
 <template>
   <v-card width="100%" class="elevation-0">
     <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
-    <v-card-title
-      class="card-title mb-2"
+    <v-card-title class="card-title mb-2"
       >Đăng ký nguyện vọng vào lớp 10
       <br v-if="$vuetify.breakpoint.smAndDown" />THPT năm 2021 -
       2022</v-card-title
     >
-    <div class="field-label pt-6">
+    <div class="field-label pt-6" v-if="!isCloseFillInfo">
       <span class="error--text">(*)</span> Phụ huynh lưu ý: Các thông tin này có
       thể được chỉnh sửa nhưng sẽ bị khóa vào ngày
-      <span class="error--text">30/05/1021</span>.
+      <span class="error--text">{{ closeFillInfoTime }}</span
+      >.
     </div>
     <v-card-text class="pa-0">
       <v-form
@@ -23,8 +23,29 @@
         <v-row class="my-0">
           <v-col class="py-0">
             <div class="field-label">
+              Con tôi đã đăng ký số nguyện vọng vào lớp 10
+              <span style="color: red" v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
+            </div>
+            <v-select
+              v-model="expectationNumber"
+              placeholder="VD: 1"
+              :items="[1, 2, 3]"
+              :rules="[$rules.required]"
+              v-if="documentStep === 3 || isEditing"
+              outlined
+            />
+          </v-col>
+        </v-row>
+        <div class="section-label pb-6">Nguyện vọng 1</div>
+        <v-row class="my-0">
+          <v-col class="py-0">
+            <div class="field-label">
               Con tôi đã đăng ký nguyện vọng 1 vào lớp 10 trường THPT
-              <span style="color: red" v-if="documentStep === 3">*</span>
+              <span style="color: red" v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
             </div>
             <v-text-field
               placeholder="VD: Trường THPT..."
@@ -50,7 +71,9 @@
           <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
             <div class="field-label">
               Quận (Huyện)
-              <span style="color: red" v-if="documentStep === 3">*</span>
+              <span style="color: red" v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
             </div>
             <v-text-field
               placeholder="VD: Ba Đình"
@@ -74,7 +97,9 @@
           <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
             <div class="field-label">
               Thành phố
-              <span style="color: red" v-if="documentStep === 3">*</span>
+              <span style="color: red" v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
             </div>
             <v-text-field
               placeholder="VD: Hà Nội"
@@ -96,7 +121,10 @@
             </div>
           </v-col>
         </v-row>
-        <v-row class="my-0">
+        <div class="section-label pb-6" v-if="expectationNumber >= 2">
+          Nguyện vọng 2
+        </div>
+        <v-row class="my-0" v-if="expectationNumber >= 2">
           <v-col class="py-0">
             <div class="field-label">
               Con tôi đã đăng ký nguyện vọng 2 vào lớp 10 trường THPT
@@ -120,7 +148,7 @@
             </div>
           </v-col>
         </v-row>
-        <v-row class="my-0">
+        <v-row class="my-0" v-if="expectationNumber >= 2">
           <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
             <div class="field-label">Quận (Huyện)</div>
             <v-text-field
@@ -162,7 +190,10 @@
             </div>
           </v-col>
         </v-row>
-        <v-row class="my-0">
+        <div class="section-label pb-6" v-if="expectationNumber >= 3">
+          Nguyện vọng 3
+        </div>
+        <v-row class="my-0" v-if="expectationNumber >= 3">
           <v-col class="py-0">
             <div class="field-label">
               Con tôi đã đăng ký nguyện vọng 3 vào lớp 10 trường THPT
@@ -186,7 +217,7 @@
             </div>
           </v-col>
         </v-row>
-        <v-row class="my-0">
+        <v-row class="my-0" v-if="expectationNumber >= 3">
           <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
             <div class="field-label">Quận (Huyện)</div>
             <v-text-field
@@ -228,6 +259,53 @@
             </div>
           </v-col>
         </v-row>
+        <hr class="dashed" />
+        <div class="section-label py-6">Đăng ký nguyện vọng ban tại trường</div>
+        <v-row class="my-0">
+          <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
+            <div class="field-label">
+              Nguyện vọng 1
+              <span style="color: red" v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
+            </div>
+            <v-select
+              v-model="ltvExamResult.groupExpectation1"
+              placeholder="VD: Ban A"
+              item-text="title"
+              item-value="value"
+              :items="groups"
+              :rules="[$rules.required]"
+              v-if="documentStep === 3 || isEditing"
+              outlined
+            />
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
+              {{ ltvExamResult.groupExpectation1 || "Chưa có thông tin" }}
+            </div>
+          </v-col>
+          <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
+            <div class="field-label">Nguyện vọng 2</div>
+            <v-select
+              v-model="ltvExamResult.groupExpectation2"
+              placeholder="VD: Ban A1"
+              item-text="title"
+              item-value="value"
+              :rules="groupExpectationRule"
+              :items="groups"
+              v-if="documentStep === 3 || isEditing"
+              outlined
+            />
+            <div
+              class="info-label mt-2 mb-6"
+              v-if="documentStep !== 3 && !isEditing"
+            >
+              {{ ltvExamResult.groupExpectation2 || "Chưa có thông tin" }}
+            </div>
+          </v-col>
+        </v-row>
       </v-form>
     </v-card-text>
     <hr class="dashed" />
@@ -257,11 +335,7 @@
         :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
         class="py-3 mr-6 text-none"
         color="primary"
-        v-if="
-          documentStep !== 3 &&
-          !isEditing &&
-          !this.systemTime.checkDocumentSystemTime['close-fill-info']
-        "
+        v-if="documentStep !== 3 && !isEditing && !isCloseFillInfo"
         @click="onEdit"
         outlined
         large
@@ -282,6 +356,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   components: {},
   props: {
@@ -290,16 +366,50 @@ export default {
     systemTime: Object,
   },
   created() {
-    if (this.document.expectation1)
+    if (this.document.expectation1 && this.document.expectation1.school)
       this.expectation1 = this.document.expectation1;
-    if (this.document.expectation2)
+    if (this.document.expectation2 && this.document.expectation2.school) {
       this.expectation2 = this.document.expectation2;
-    if (this.document.expectation3)
+      this.expectationNumber = 2;
+    }
+    if (this.document.expectation3 && this.document.expectation3.school) {
       this.expectation3 = this.document.expectation3;
+      this.expectationNumber = 3;
+    }
     if (this.documentStep > 3) this.isEditing = false;
+    if (this.document.ltvExamResult)
+      this.ltvExamResult = this.document.ltvExamResult;
+  },
+  computed: {
+    closeFillInfoTime() {
+      if (
+        this.systemTime.documentSystemTime &&
+        this.systemTime.documentSystemTime["close-fill-info"]
+      )
+        return moment(
+          this.systemTime.documentSystemTime["close-fill-info"],
+          "DD/MM/YYYY hh:mm:mm"
+        ).format("DD/MM/YYYY");
+      return "30/05/2021";
+    },
+    isCloseFillInfo() {
+      if (
+        this.systemTime.checkDocumentSystemTime &&
+        this.systemTime.checkDocumentSystemTime["close-fill-info"]
+      )
+        return true;
+      return false;
+    },
   },
   data() {
     return {
+      groupExpectationRule: [
+        (v) =>
+          !v ||
+          v !== this.ltvExamResult.groupExpectation1 ||
+          "Nguyện vọng 2 không được trùng với nguyện vọng 1",
+      ],
+      expectationNumber: 1,
       isValid: false,
       isEditing: true,
       expectation1: {
@@ -317,6 +427,15 @@ export default {
         district: "",
         city: "",
       },
+      ltvExamResult: {
+        groupExpectation1: "",
+        groupExpectation2: "",
+      },
+      groups: [
+        { title: "Ban A", value: "Ban A" },
+        { title: "Ban A1", value: "Ban A1" },
+        { title: "Ban D", value: "Ban D" },
+      ],
     };
   },
   methods: {
@@ -328,6 +447,18 @@ export default {
         this.$alert.error("Xin vui lòng điền hết các thông tin bắt buộc");
         return;
       }
+      if (this.expectationNumber < 3)
+        this.expectation3 = {
+          school: "",
+          district: "",
+          city: "",
+        };
+      if (this.expectationNumber < 2)
+        this.expectation2 = {
+          school: "",
+          district: "",
+          city: "",
+        };
       this.$dialog.confirm({
         title: "Chú ý",
         okText: "Xác nhận",
@@ -343,6 +474,11 @@ export default {
             expectation1: this.expectation1,
             expectation2: this.expectation2,
             expectation3: this.expectation3,
+            ltvExamResult: {
+              ...this.document.ltvExamResult,
+              groupExpectation1: this.ltvExamResult.groupExpectation1,
+              groupExpectation2: this.ltvExamResult.groupExpectation2,
+            },
           });
         },
       });
@@ -354,6 +490,10 @@ export default {
         expectation1: this.expectation1,
         expectation2: this.expectation2,
         expectation3: this.expectation3,
+        ltvExamResult: {
+          ...this.document.ltvExamResult,
+          ...this.ltvExamResult,
+        },
       });
     },
     nextStep() {

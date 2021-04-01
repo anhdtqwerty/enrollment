@@ -88,7 +88,7 @@
               @click="onStepClick('exam-result', 5)"
             >
               <span class="step-title"
-                >Kết qủa kỳ thi tuyển sinh vào Lớp 10</span
+                >Kết quả kỳ thi tuyển sinh vào Lớp 10</span
               >
               <div
                 class="step-subtitle"
@@ -99,9 +99,11 @@
             </v-stepper-step>
           </v-stepper>
           <div class="notice pa-4" v-if="step < 5">
-            Quý phụ huynh lưu ý thông tin tiếp theo sẽ được mở để khai báo sau.
-            Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm
-            tra để nhận thông báo.
+            Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP
+            Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi
+            thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm
+            tra tin nhắn yêu cầu khai báo điểm của nhà trường. Dự kiến sau ngày
+            {{ getExamResultDate }}. Xin cảm ơn phụ huynh.
           </div>
           <div
             class="notice pa-4"
@@ -171,6 +173,8 @@ import InfoForm from "./InfoForm.vue";
 import ResultForm from "./ResultForm.vue";
 import ExamResultForm from "./ExamResultForm.vue";
 import Grade10Expectation from "@/modules/cv/Grade10Expectation.vue";
+import moment from "moment";
+
 export default {
   components: {
     ChooseFacility,
@@ -182,6 +186,14 @@ export default {
   computed: {
     ...mapGetters("auth", ["user", "isAuthenticated"]),
     ...mapGetters("cv", ["step"]),
+    getExamResultDate() {
+      if (this.systemTime.documentSystemTime)
+        return moment(
+          this.systemTime.documentSystemTime["exam-result"],
+          "DD/MM/YYYY hh:mm:ss"
+        ).format("DD/MM/YYYY");
+      return "12/06/2021";
+    },
   },
   props: {
     documentCode: String,
@@ -206,11 +218,8 @@ export default {
       switch (step) {
         case 3:
           if (
-            (!this.systemTime.checkDocumentSystemTime["register-expectation"] &&
-              this.user.role.type !== "admin") ||
-            (this.document.isDraft &&
-              this.document.step > 3 &&
-              this.user.role.type !== "admin")
+            !this.systemTime.checkDocumentSystemTime["register-expectation"] &&
+            this.user.role.type !== "admin"
           ) {
             this.$alert.error(
               "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
@@ -220,11 +229,8 @@ export default {
           break;
         case 4:
           if (
-            (!this.systemTime.checkDocumentSystemTime["study-result"] &&
-              this.user.role.type !== "admin") ||
-            (this.document.isDraft &&
-              this.document.step > 4 &&
-              this.user.role.type !== "admin")
+            !this.systemTime.checkDocumentSystemTime["study-result"] &&
+            this.user.role.type !== "admin"
           ) {
             this.$alert.error(
               "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
@@ -234,14 +240,11 @@ export default {
           break;
         case 5:
           if (
-            (!this.systemTime.checkDocumentSystemTime["exam-result"] &&
-              this.user.role.type !== "admin") ||
-            (this.document.isDraft &&
-              this.document.step > 5 &&
-              this.user.role.type !== "admin")
+            !this.systemTime.checkDocumentSystemTime["exam-result"] &&
+            this.user.role.type !== "admin"
           ) {
             this.$alert.error(
-              "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+              `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Dự kiến sau ngày ${this.getExamResultDate}. Xin cảm ơn phụ huynh.`
             );
             this.setStep(this.step - 1);
           }
@@ -299,9 +302,14 @@ export default {
           !this.systemTime.checkDocumentSystemTime[key]) &&
         this.user.role.type !== "admin"
       ) {
-        this.$alert.error(
-          "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
-        );
+        if (step === 5)
+          this.$alert.error(
+            `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Dự kiến sau ngày ${this.getExamResultDate}. Xin cảm ơn phụ huynh.`
+          );
+        else
+          this.$alert.error(
+            "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+          );
         return;
       }
       if (this.document.step < step && this.user.role.type !== "admin") {
