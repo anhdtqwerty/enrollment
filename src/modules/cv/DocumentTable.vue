@@ -171,6 +171,7 @@ export default {
       else return "Vừa tạo";
     },
     getDepartment: (item) => {
+      if (!item.department || item.department === "unset") return "---";
       return get(item, "department", "---");
     },
     getCode: (item) => {

@@ -19,10 +19,10 @@
         fluid
         grid-list-xl
         class="overflow-auto pa-0"
-        :style="{ height: `calc(100vh - 64px)` }"
         style="overflow-x: hidden; background-color: #fafafa"
+        :style="{ height: `calc(100vh - 64px)` }"
       >
-        <router-view></router-view>
+        <router-view style="max-width: 1200px; margin: auto"></router-view>
       </v-container>
     </v-main>
   </v-app>
@@ -66,7 +66,7 @@ export default {
   methods: {
     ...mapActions("course", ["fetchCourses"]),
     ...mapActions("auth", ["setRole"]),
-    toggleDrawer: function(updatedDrawer) {
+    toggleDrawer: function (updatedDrawer) {
       this.drawer = updatedDrawer;
     },
   },
@@ -80,6 +80,7 @@ export default {
       this.$loading.active = false;
       return;
     }
+    if (this.$router.url === "/") this.$router.push("/admin/dashboard");
     this.$loading.active = false;
   },
 };

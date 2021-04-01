@@ -1,9 +1,7 @@
 <template>
   <div class="pa-6">
     <div class="d-flex justify-space-between align-center">
-      <div class="component-title">
-        Báo cáo
-      </div>
+      <div class="component-title">Báo cáo</div>
     </div>
     <div class="section-title py-6">Mã kích hoạt</div>
     <v-row class="d-flex">
@@ -20,13 +18,13 @@
             </div>
             <div>
               <div class="text-number pb-3 success--text">
-                {{ grade6ActiveCode.inactiveActiveCodes }}
+                {{ grade6ActiveCode.activatedActiveCodes }}
               </div>
               <div>Số mã đã kích hoạt</div>
             </div>
             <div>
               <div class="text-number pb-3 warning--text">
-                {{ grade6ActiveCode.activatedActiveCodes }}
+                {{ grade6ActiveCode.inactiveActiveCodes }}
               </div>
               <div>Số mã chưa kích hoạt</div>
             </div>
@@ -46,13 +44,13 @@
             </div>
             <div>
               <div class="text-number pb-3 success--text">
-                {{ grade10ActiveCode.inactiveActiveCodes }}
+                {{ grade10ActiveCode.activatedActiveCodes }}
               </div>
               <div>Số mã đã kích hoạt</div>
             </div>
             <div>
               <div class="text-number pb-3 warning--text">
-                {{ grade10ActiveCode.activatedActiveCodes }}
+                {{ grade10ActiveCode.inactiveActiveCodes }}
               </div>
               <div>Số mã chưa kích hoạt</div>
             </div>
@@ -65,8 +63,8 @@
       <v-card style="width: 100%">
         <v-card-title class="card-title pa-6">Khối 6</v-card-title>
         <v-divider></v-divider>
-        <v-card-text>
-          <div class="section-title py-6 px-2">Phát sinh hồ sơ</div>
+        <v-card-text class="pa-6">
+          <div class="section-title px-2">Phát sinh hồ sơ</div>
           <div>
             <LineChart
               style="height: 275px; width: 100%; position: 'relative'"
@@ -74,17 +72,293 @@
               :options="lineChartOptions"
             />
           </div>
-          <div class="section-title py-8 px-2">Tình trạng hồ sơ</div>
-          <v-row class="d-flex justify-center" no-gutters>
-            <v-col cols="6">
+          <v-row class="d-flex mt-6" no-gutters>
+            <v-col
+              cols="7"
+              class="d-flex flex-column align-start"
+              style="border-right: 1px solid #e0e0e0"
+            >
+              <div class="section-title py-8 px-2">Tình trạng hồ sơ</div>
               <PieChart
                 :chartdata="grade6PieChart"
                 :options="pieChartOptions"
+                class="align-self-center"
                 style="width: 315px"
               />
+              <div class="text-number align-self-center black--text">
+                {{ grade6Document.total }}
+              </div>
+              <div class="timeline-title align-self-center py-1">
+                Hồ sơ đã tạo
+              </div>
             </v-col>
-            <v-divider vertical></v-divider>
-            <v-col cols="5"></v-col>
+            <v-col cols="5" class="d-flex flex-column align-start">
+              <div class="section-title py-8 px-6">Hồ sơ đang khai báo</div>
+              <v-timeline dense clipped>
+                <v-timeline-item
+                  fill-dot
+                  class="white--text mb-12 pb-0"
+                  color="white"
+                  small
+                >
+                  <template v-slot:icon>
+                    <v-icon color="admin"> mdi-checkbox-marked-circle</v-icon>
+                  </template>
+                  <div>
+                    <div class="timeline-title">Chọn sơ sở</div>
+                    <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
+                    <div class="text-number admin--text text-start">
+                      {{ grade6Document.chooseFacility }}
+                    </div>
+                    <div class="timeline-subtitle py-2">
+                      Cơ sở A:
+                      <span class="admin--text">{{
+                        grade6Document.chooseFacilityA
+                      }}</span>
+                      / Cơ sở 1:
+                      <span class="admin--text">{{
+                        grade6Document.chooseFacility1
+                      }}</span>
+                    </div>
+                  </div>
+                </v-timeline-item>
+                <v-timeline-item
+                  fill-dot
+                  class="white--text mb-12 pb-0"
+                  color="white"
+                  small
+                >
+                  <template v-slot:icon>
+                    <v-icon color="admin"> mdi-checkbox-marked-circle</v-icon>
+                  </template>
+                  <div>
+                    <div class="timeline-title">
+                      Thông tin phụ huynh, học sinh
+                    </div>
+                    <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
+                    <div class="text-number admin--text text-start">
+                      {{ grade6Document.infoForm }}
+                    </div>
+                    <div class="timeline-subtitle py-2">
+                      Cơ sở A:
+                      <span class="admin--text">{{
+                        grade6Document.infoFormA
+                      }}</span>
+                      / Cơ sở 1:
+                      <span class="admin--text">{{
+                        grade6Document.infoForm1
+                      }}</span>
+                    </div>
+                  </div>
+                </v-timeline-item>
+                <v-timeline-item
+                  fill-dot
+                  class="white--text mb-12 pb-0"
+                  color="white"
+                  small
+                >
+                  <template v-slot:icon>
+                    <v-icon color="admin"> mdi-checkbox-marked-circle</v-icon>
+                  </template>
+                  <div>
+                    <div class="timeline-title">Kết quả học tập</div>
+                    <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
+                    <div class="text-number admin--text text-start">
+                      {{ grade6Document.studyResult }}
+                    </div>
+                    <div class="timeline-subtitle py-2">
+                      Cơ sở A:
+                      <span class="admin--text">{{
+                        grade6Document.studyResultA
+                      }}</span>
+                      / Cơ sở 1:
+                      <span class="admin--text">{{
+                        grade6Document.studyResult1
+                      }}</span>
+                    </div>
+                  </div>
+                </v-timeline-item>
+              </v-timeline>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-row>
+    <v-row class="mt-6" no-gutters>
+      <v-card style="width: 100%">
+        <v-card-title class="card-title pa-6">Khối 10</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text class="pa-6">
+          <div class="section-title px-2">Phát sinh hồ sơ</div>
+          <div>
+            <LineChart
+              style="height: 275px; width: 100%; position: 'relative'"
+              :chartdata="grade10LineChart"
+              :options="lineChartOptions"
+            />
+          </div>
+          <v-row class="d-flex mt-6" no-gutters>
+            <v-col
+              cols="7"
+              class="d-flex flex-column align-start"
+              style="border-right: 1px solid #e0e0e0"
+            >
+              <div class="section-title py-8 px-2">Tình trạng hồ sơ</div>
+              <PieChart
+                :chartdata="grade10PieChart"
+                :options="pieChartOptions"
+                class="align-self-center"
+                style="width: 315px"
+              />
+              <div class="text-number align-self-center black--text">
+                {{ grade10Document.total }}
+              </div>
+              <div class="timeline-title align-self-center py-1">
+                Hồ sơ đã tạo
+              </div>
+            </v-col>
+            <v-col cols="5" class="d-flex flex-column align-start">
+              <div class="section-title py-8 px-6">Hồ sơ đang khai báo</div>
+              <v-timeline dense clipped>
+                <v-timeline-item
+                  fill-dot
+                  class="white--text mb-12 pb-0"
+                  color="white"
+                  small
+                >
+                  <template v-slot:icon>
+                    <v-icon color="admin"> mdi-checkbox-marked-circle</v-icon>
+                  </template>
+                  <div>
+                    <div class="timeline-title">Chọn sơ sở</div>
+                    <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
+                    <div class="text-number admin--text text-start">
+                      {{ grade10Document.chooseFacility }}
+                    </div>
+                    <div class="timeline-subtitle py-2">
+                      Cơ sở A:
+                      <span class="admin--text">{{
+                        grade10Document.chooseFacilityA
+                      }}</span>
+                      / Cơ sở 1:
+                      <span class="admin--text">{{
+                        grade10Document.chooseFacility1
+                      }}</span>
+                    </div>
+                  </div>
+                </v-timeline-item>
+                <v-timeline-item
+                  fill-dot
+                  class="white--text mb-12 pb-0"
+                  color="white"
+                  small
+                >
+                  <template v-slot:icon>
+                    <v-icon color="admin"> mdi-checkbox-marked-circle</v-icon>
+                  </template>
+                  <div>
+                    <div class="timeline-title">
+                      Thông tin phụ huynh, học sinh
+                    </div>
+                    <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
+                    <div class="text-number admin--text text-start">
+                      {{ grade10Document.infoForm }}
+                    </div>
+                    <div class="timeline-subtitle py-2">
+                      Cơ sở A:
+                      <span class="admin--text">{{
+                        grade10Document.infoFormA
+                      }}</span>
+                      / Cơ sở 1:
+                      <span class="admin--text">{{
+                        grade10Document.infoForm1
+                      }}</span>
+                    </div>
+                  </div>
+                </v-timeline-item>
+                <v-timeline-item
+                  fill-dot
+                  class="white--text mb-12 pb-0"
+                  color="white"
+                  small
+                >
+                  <template v-slot:icon>
+                    <v-icon color="admin"> mdi-checkbox-marked-circle</v-icon>
+                  </template>
+                  <div>
+                    <div class="timeline-title">Đăng ký nguyện vọng</div>
+                    <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
+                    <div class="text-number admin--text text-start">
+                      {{ grade10Document.expectation }}
+                    </div>
+                    <div class="timeline-subtitle py-2">
+                      Cơ sở A:
+                      <span class="admin--text">{{
+                        grade10Document.expectationA
+                      }}</span>
+                      / Cơ sở 1:
+                      <span class="admin--text">{{
+                        grade10Document.expectationA
+                      }}</span>
+                    </div>
+                  </div>
+                </v-timeline-item>
+                <v-timeline-item
+                  fill-dot
+                  class="white--text mb-12 pb-0"
+                  color="white"
+                  small
+                >
+                  <template v-slot:icon>
+                    <v-icon color="admin"> mdi-checkbox-marked-circle</v-icon>
+                  </template>
+                  <div>
+                    <div class="timeline-title">Kết quả học tập</div>
+                    <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
+                    <div class="text-number admin--text text-start">
+                      {{ grade10Document.studyResult }}
+                    </div>
+                    <div class="timeline-subtitle py-2">
+                      Cơ sở A:
+                      <span class="admin--text">{{
+                        grade10Document.studyResultA
+                      }}</span>
+                      / Cơ sở 1:
+                      <span class="admin--text">{{
+                        grade10Document.studyResult1
+                      }}</span>
+                    </div>
+                  </div>
+                </v-timeline-item>
+                <v-timeline-item
+                  fill-dot
+                  class="white--text mb-12 pb-0"
+                  color="white"
+                  small
+                >
+                  <template v-slot:icon>
+                    <v-icon color="admin"> mdi-checkbox-marked-circle</v-icon>
+                  </template>
+                  <div>
+                    <div class="timeline-title">Kết quả Kỳ thi tuyển sinh</div>
+                    <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
+                    <div class="text-number admin--text text-start">
+                      {{ grade10Document.examResult }}
+                    </div>
+                    <div class="timeline-subtitle py-2">
+                      Cơ sở A:
+                      <span class="admin--text">{{
+                        grade10Document.examResultA
+                      }}</span>
+                      / Cơ sở 1:
+                      <span class="admin--text">{{
+                        grade10Document.examResult1
+                      }}</span>
+                    </div>
+                  </div>
+                </v-timeline-item>
+              </v-timeline>
+            </v-col>
           </v-row>
         </v-card-text>
       </v-card>
@@ -125,17 +399,22 @@ export default {
     },
     async getPieChartData(grade) {
       return {
-        labels: ["Hồ sơ đã nộp", "Hồ sơ đang khai báo"],
+        labels: ["Hồ sơ chưa khai báo", "Hồ sơ đang khai báo", "Hồ sơ đã nộp"],
         datasets: [
           {
-            backgroundColor: ["#0D47A1", "#BBDEFB"],
-            data: [
-              await this.countCVs({ type: grade, status: "submitted" }),
-              await this.countCVs({
-                type: grade,
-                status_in: ["filling", "created"],
-              }),
-            ],
+            backgroundColor: ["#0D47A1", "#BBDEFB", "#85A7C2"],
+            data:
+              grade === "Khối 6"
+                ? [
+                    this.grade6Document.totalCreated,
+                    this.grade6Document.totalFilling,
+                    this.grade6Document.totalSubmitted,
+                  ]
+                : [
+                    this.grade10Document.totalCreated,
+                    this.grade10Document.totalFilling,
+                    this.grade10Document.totalSubmitted,
+                  ],
           },
         ],
       };
@@ -150,9 +429,7 @@ export default {
         startDate
       );
       daysArray = daysArray.map((index) => {
-        return moment(startDate)
-          .add(index, "days")
-          .format("DD/MM/YYYY");
+        return moment(startDate).add(index, "days").format("DD/MM/YYYY");
       });
       return {
         labels: daysArray,
@@ -171,9 +448,7 @@ export default {
       const promises = days.map(async (n, index) => {
         const query = {
           type: grade,
-          createdAt_gt: moment(startDate)
-            .add(index, "days")
-            .toISOString(),
+          createdAt_gt: moment(startDate).add(index, "days").toISOString(),
           createdAt_lt: moment(startDate)
             .add(index + 1, "days")
             .toISOString(),
@@ -183,18 +458,131 @@ export default {
       return await Promise.all(promises);
     },
     /* eslint-enable no-unused-vars */
+    async getDocumentInfo(grade) {
+      const cvs = await this.fetchCVs({ type: grade });
+      let query = {
+        total: cvs.length,
+        totalSubmitted: cvs.filter((cv) => cv.status === "submitted").length,
+        totalFilling: cvs.filter((cv) => cv.status === "filling").length,
+        totalCreated: cvs.filter((cv) => cv.status === "created").length,
+        chooseFacility: cvs.filter(
+          (cv) => cv.step >= 2 && cv.status === "filling"
+        ).length,
+        chooseFacility1: cvs.filter(
+          (cv) =>
+            cv.step >= 2 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở 1"
+        ).length,
+        chooseFacilityA: cvs.filter(
+          (cv) =>
+            cv.step >= 2 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở A"
+        ).length,
+
+        infoForm: cvs.filter((cv) => cv.step >= 3 && cv.status === "filling")
+          .length,
+        infoForm1: cvs.filter(
+          (cv) =>
+            cv.step >= 3 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở 1"
+        ).length,
+        infoFormA: cvs.filter(
+          (cv) =>
+            cv.step >= 3 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở A"
+        ).length,
+      };
+      if (grade === "Khối 6") {
+        query.studyResult = cvs.filter(
+          (cv) => cv.step >= 4 && cv.status === "filling"
+        ).length;
+        query.studyResult1 = cvs.filter(
+          (cv) =>
+            cv.step >= 4 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở 1"
+        ).length;
+        query.studyResultA = cvs.filter(
+          (cv) =>
+            cv.step >= 4 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở A"
+        ).length;
+      } else {
+        query.expectation = cvs.filter(
+          (cv) => cv.step >= 4 && cv.status === "filling"
+        ).length;
+        query.expectation1 = cvs.filter(
+          (cv) =>
+            cv.step >= 4 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở 1"
+        ).length;
+        query.expectationA = cvs.filter(
+          (cv) =>
+            cv.step >= 4 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở A"
+        ).length;
+        query.studyResult = cvs.filter(
+          (cv) => cv.step >= 5 && cv.status === "filling"
+        ).length;
+        query.studyResultA = cvs.filter(
+          (cv) =>
+            cv.step >= 5 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở A"
+        ).length;
+        query.studyResult1 = cvs.filter(
+          (cv) =>
+            cv.step >= 5 &&
+            cv.status === "filling" &&
+            cv.department === "Cơ sở 1"
+        ).length;
+        query.examResult = cvs.filter(
+          (cv) => cv.step >= 5 && cv.status === "submitted"
+        ).length;
+        query.examResultA = cvs.filter(
+          (cv) =>
+            cv.step >= 5 &&
+            cv.status === "submitted" &&
+            cv.department === "Cơ sở A"
+        ).length;
+        query.examResult1 = cvs.filter(
+          (cv) =>
+            cv.step >= 5 &&
+            cv.status === "submitted" &&
+            cv.department === "Cơ sở 1"
+        ).length;
+      }
+      return query;
+    },
   },
   async created() {
     this.$loading.active = true;
+    //Grade 6
     this.grade6ActiveCode = await this.getActiveCodeStatistics("Khối 6");
-    this.grade10ActiveCode = await this.getActiveCodeStatistics("Khối 10");
+    this.grade6Document = await this.getDocumentInfo("Khối 6");
     this.grade6LineChart = await this.getLineChartData(
       "Khối 6",
       this.grade6StartDate,
       this.grade6EndDate
     );
     this.grade6PieChart = await this.getPieChartData("Khối 6");
-    console.log(this.grade6PieChart);
+
+    // //Grade 10
+    this.grade10ActiveCode = await this.getActiveCodeStatistics("Khối 10");
+    this.grade10Document = await this.getDocumentInfo("Khối 10");
+    this.grade10LineChart = await this.getLineChartData(
+      "Khối 10",
+      this.grade10StartDate,
+      this.grade10EndDate
+    );
+    this.grade10PieChart = await this.getPieChartData("Khối 10");
     this.$loading.active = false;
   },
   data() {
@@ -216,27 +604,61 @@ export default {
           ],
         },
       },
-      grade6LineChart: {},
-      grade6PieChart: {},
-      grade6StartDate: moment()
-        .utc()
-        .clone()
-        .startOf("week")
-        .toISOString(),
-      grade6EndDate: moment()
-        .utc()
-        .clone()
-        .endOf("week")
-        .toISOString(),
+      //Grade 6
       grade6ActiveCode: {
         totalActiveCodes: 0,
         inactiveActiveCodes: 0,
         activatedActiveCodes: 0,
       },
+      grade6LineChart: {},
+      grade6PieChart: {},
+      grade6StartDate: moment().utc().clone().startOf("week").toISOString(),
+      grade6EndDate: moment().utc().clone().endOf("week").toISOString(),
+      grade6Document: {
+        total: 0,
+        totalCreated: 0,
+        totalSubmitted: 0,
+        totalFilling: 0,
+        chooseFacility: 0,
+        chooseFacility1: 0,
+        chooseFacilityA: 0,
+        infoForm: 0,
+        infoForm1: 0,
+        infoFormA: 0,
+        studyForm: 0,
+        studyForm1: 0,
+        studyFormA: 0,
+      },
+      //Grade 10
       grade10ActiveCode: {
         totalActiveCodes: 0,
         inactiveActiveCodes: 0,
         activatedActiveCodes: 0,
+      },
+      grade10LineChart: {},
+      grade10PieChart: {},
+      grade10StartDate: moment().utc().clone().startOf("week").toISOString(),
+      grade10EndDate: moment().utc().clone().endOf("week").toISOString(),
+      grade10Document: {
+        total: 0,
+        totalCreated: 0,
+        totalSubmitted: 0,
+        totalFilling: 0,
+        chooseFacility: 0,
+        chooseFacility1: 0,
+        chooseFacilityA: 0,
+        infoForm: 0,
+        infoForm1: 0,
+        infoFormA: 0,
+        expectation: 0,
+        expectation1: 0,
+        expectationA: 0,
+        studyForm: 0,
+        studyForm1: 0,
+        studyFormA: 0,
+        examResult: 0,
+        examResult1: 0,
+        examResultA: 0,
       },
     };
   },
@@ -275,6 +697,20 @@ export default {
   font-size: 18px;
   line-height: 21px;
   text-transform: uppercase;
+  color: #757575;
+}
+.timeline-title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #757575;
+}
+.timeline-subtitle {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
   color: #757575;
 }
 </style>

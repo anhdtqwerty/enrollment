@@ -131,12 +131,11 @@ export default {
         this.user &&
         this.isAuthenticated
       ) {
-        const relatedActiveCode = await this.fetchActiveCode(this.activeCode);
         const newCV = await this.createCV({
           code: this.activeCode,
           userPhone: this.user.username,
-          department: relatedActiveCode.department,
         });
+        console.log(newCV);
         await this.$refs.documentTable.refresh({
           _sort: "updatedAt:DESC",
           parent: this.user.id,

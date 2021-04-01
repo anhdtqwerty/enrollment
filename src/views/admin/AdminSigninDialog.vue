@@ -3,11 +3,11 @@
     <PluginAlert />
     <v-row class="d-flex align-center" no-gutters fill-height>
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.mdAndUp">
-        <v-img src="@/assets/homepage/bg.jpg" class="bg-image"></v-img>
+        <v-img src="@/assets/homepage/home-bg.svg" class="bg-image"></v-img>
       </v-col>
       <v-col xs="12" sm="12" md="6" style="height: 100vh" class="">
         <div class="signin-col">
-          <v-card width="90%">
+          <v-card width="90%" max-width="560px">
             <v-card-title
               ><div class="title--text">Đăng nhập</div>
               <v-spacer />
