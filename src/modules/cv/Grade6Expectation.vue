@@ -285,6 +285,6 @@ hr.dashed {
   color: #3e3e3c;
 }
 .selected-td {
-  background: #f8f8f8;
+  background: rgb(116, 160, 246, 0.25);
 }
 </style>

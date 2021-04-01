@@ -57,7 +57,7 @@
           'selected-card': department === 'Cơ sở 1',
           'cursor-default': documentStep !== 1,
         }"
-        :disabled="department !== 'Cơ sở 1' && department !== ''"
+        :disabled="documentStep !== 1"
         @click="chooseFacility(false)"
       >
         <v-card-title

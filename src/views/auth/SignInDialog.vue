@@ -125,14 +125,13 @@ export default {
       if (this.$refs.form.validate()) {
         this.loading = true;
         await this.signIn(this.credentials);
-        if (this.user && this.isAuthenticated) {
+        if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
+          this.setConfirmSignupDialog(true);
+        else if (this.user && this.isAuthenticated) {
           this.$refs.form.reset();
           this.setSignInDialog(false);
           this.setDocumentDialog(true);
         }
-        else if (this.user && this.isAuthenticated && !this.isConfirmedOTP)
-          this.setConfirmSignupDialog(true);
-        this.loading = false;
       }
     },
     resetPassword() {
