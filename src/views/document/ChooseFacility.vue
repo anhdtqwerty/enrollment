@@ -20,7 +20,7 @@
           'mr-8': $vuetify.breakpoint.mdAndUp,
           'mb-8': $vuetify.breakpoint.smAndDown,
         }"
-        :disabled="department !== 'Cơ sở A' && department !== ''"
+        :disabled="documentStep !== 1"
         @click="chooseFacility(true)"
       >
         <v-card-title

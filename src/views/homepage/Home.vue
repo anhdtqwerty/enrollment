@@ -157,8 +157,17 @@ export default {
         if (
           this.user &&
           this.isAuthenticated &&
+          !this.isConfirmedOTP &&
+          process.env.NODE_ENV === "development"
+        )
+          this.setConfirmSignupDialog(true);
+        else if (
+          this.user &&
+          this.isAuthenticated &&
           this.user.role.type === "admin"
         )
+          this.setDocumentDialog(true);
+        else if (process.env.NODE_ENV === "development")
           this.setDocumentDialog(true);
         else this.toggleCountdownDialog(true);
       } else if (this.user && this.isAuthenticated && this.isConfirmedOTP)

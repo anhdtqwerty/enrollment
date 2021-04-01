@@ -26,7 +26,7 @@
             <v-card-title class="subtitle">Tạo hồ sơ mới</v-card-title>
             <v-divider></v-divider>
             <v-card-text class="pa-4" style="background: #f2f0f1">
-              <v-form ref="form" v-model="isValid">
+              <v-form ref="form">
                 <div class="text-subtitle-1 mb-2">
                   Mã kích hoạt
                   <span
@@ -41,12 +41,13 @@
                 <v-text-field
                   placeholder="Nhập mã kích hoạt tại đây"
                   v-model="activeCode"
+                  v-mask="'############'"
                   name="login"
                   type="text"
                   color="primary"
                   :rules="codeRules"
                   @keyup.enter="submit"
-                  @keyup="$refs.form.validate()"
+                  @keydown="onKeyDown"
                   outlined
                   validate-on-blur
                 />
@@ -119,6 +120,9 @@ export default {
       "updateActiveCode",
       "fetchActiveCode",
     ]),
+    onKeyDown() {
+      if (this.activeCode != "") this.isValid = true;
+    },
     cancel() {
       this.setDocumentDialog(false);
     },
