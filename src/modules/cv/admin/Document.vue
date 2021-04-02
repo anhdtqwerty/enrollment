@@ -1,5 +1,10 @@
 <template>
   <div class="pa-6">
+    <DocumentDetailDialog
+      :state="dialog"
+      :documentId="selectedDocumentId"
+      @closeDialog="dialog = !dialog"
+    />
     <div class="d-flex justify-space-between align-center mb-6">
       <div class="component-title">Quản lý hồ sơ</div>
       <div class="flex-center">
@@ -22,7 +27,7 @@
     </v-card>
 
     <v-card class="elevation-1">
-      <DocumentTable ref="documentTable" />
+      <DocumentTable ref="documentTable" @onDocumentDetail="onDocumentDetail" />
     </v-card>
   </div>
 </template>
@@ -32,12 +37,14 @@
 import { mapActions, mapState, mapGetters } from "vuex";
 import DocumentFilter from "./DocumentFilter";
 import DocumentTable from "./DocumentTable";
+import DocumentDetailDialog from "./DocumentDetailDialog";
 import JsonExcel from "vue-json-excel";
 import moment from "moment";
 // import _ from "lodash";
 
 export default {
   components: {
+    DocumentDetailDialog,
     DocumentFilter,
     DocumentTable,
     JsonExcel,
@@ -48,6 +55,7 @@ export default {
   data() {
     return {
       loading: false,
+      selectedDocumentId: "",
       updatedCVs: [],
       dialog: false,
       json_fields: {
@@ -255,6 +263,10 @@ export default {
     },
   },
   methods: {
+    onDocumentDetail(data) {
+      this.dialog = true;
+      this.selectedDocumentId = data;
+    },
     toggleLoadingScreen(data) {
       this.loading = data;
       this.$loading.active = data;

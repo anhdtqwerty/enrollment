@@ -12,14 +12,25 @@
       >
         <div
           v-if="
-            $vuetify.breakpoint.xsOnly &&
-              systemTime.checkSystemTime['open-document']
+            ($vuetify.breakpoint.xsOnly &&
+              systemTime.checkSystemTime['open-document']) ||
+              ($vuetify.breakpoint.xsOnly && isDevelopmentBuild)
           "
           style="width: 100%"
           class="d-flex justify-end pr-5"
         >
-          <GuestToolbar v-if="isGuestBar" />
-          <UserToolbar v-if="!isGuestBar" />
+          <GuestToolbar
+            v-if="isGuestBar"
+            :isOpen="
+              systemTime.checkSystemTime['open-document'] || isDevelopmentBuild
+            "
+          />
+          <UserToolbar
+            v-if="!isGuestBar"
+            :isOpen="
+              systemTime.checkSystemTime['open-document'] || isDevelopmentBuild
+            "
+          />
         </div>
         <v-row
           class="items-container d-flex justify-center align-center mx-auto py-3"
@@ -49,6 +60,7 @@
             ></v-img>
             <div
               class="justify-center menu-title text-center mt-2"
+              :class="{ 'mobile-menu-title': n === 5 || n === 6 }"
               v-html="menu[n - 1].title"
             ></div>
           </v-card>
@@ -118,6 +130,10 @@ export default {
       let imageSize = (this.window.height - 80 - 52 - 48) / 3 - 12 * 2 - 24;
       if (imageSize >= maxSize) imageSize = maxSize;
       return imageSize;
+    },
+    isDevelopmentBuild() {
+      console.log(process.env.NODE_ENV === "development");
+      return process.env.NODE_ENV === "development";
     },
   },
   name: "Home",
@@ -261,6 +277,9 @@ export default {
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
+}
+.mobile-menu-title {
+  height: 48px;
 }
 .mobile-menu-blog {
   width: calc(100% / 2 - 12px * 2);

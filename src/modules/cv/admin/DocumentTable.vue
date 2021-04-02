@@ -6,11 +6,23 @@
       :loading="loading"
       :items="CVs"
       :items-per-page="10"
+      :footer-props="{ 'items-per-page-text': 'Số Hồ Sơ một trang' }"
       :disable-sort="$vuetify.breakpoint.smAndDown"
       v-bind="this.$attrs"
     >
+      <template v-slot:[`footer.page-text`]="items">
+        Hồ sơ thứ {{ items.pageStart }} - {{ items.pageStop }} trên tổng
+        {{ items.itemsLength }} Hồ sơ
+      </template>
       <template v-slot:[`item.code`]="{ item }">
-        {{ item | getCode }}
+        <v-btn
+          class="document-btn text-none text-decoration-underline px-0"
+          color="primary"
+          @click="onDocumentClick(item.id)"
+          plain
+        >
+          {{ item | getCode }}
+        </v-btn>
       </template>
       <template v-slot:[`item.grade`]="{ item }">
         {{ item | getGrade }}
@@ -144,6 +156,9 @@ export default {
       if (status === "submitted") return "success";
       else return "orange accent-2";
     },
+    onDocumentClick(documentId) {
+      this.$emit("onDocumentDetail", documentId);
+    },
     search() {},
   },
   filters: {
@@ -165,8 +180,8 @@ export default {
       else return "Vừa tạo";
     },
     getDepartment: (item) => {
-      if(!item.department || item.department ==='unset') return "---"
-      else return item.department
+      if (!item.department || item.department === "unset") return "---";
+      else return item.department;
     },
     getCode: (item) => {
       return get(item, "code", "---");

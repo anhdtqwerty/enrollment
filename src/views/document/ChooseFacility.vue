@@ -129,6 +129,7 @@ export default {
   props: {
     document: Object,
     documentStep: Number,
+    isAdminPreview: Boolean,
   },
   data() {
     return {
