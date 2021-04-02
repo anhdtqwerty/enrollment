@@ -78,10 +78,16 @@
       @closeFacility="toggleFacilityDialog"
     />
     <IntroDialog
-      title="Giới thiệu chung "
+      title="Giới thiệu chung"
       :state="introDialog"
       :src="`${$baseUrl}GTC.html`"
       @closeDialog="toggleIntroDialog(false)"
+    />
+    <IntroDialog
+      title="Hoạt động ngoại khóa"
+      :state="activityDialog"
+      :src="`${$baseUrl}HoatDong.html`"
+      @closeDialog="toggleActivityDialog(false)"
     />
     <IntroDialog
       title="Hướng dẫn khai Hồ sơ tuyển sinh"
@@ -163,6 +169,9 @@ export default {
         case 4:
           this.facilityDialog = true;
           break;
+        case 5:
+          this.activityDialog = true;
+          break;
         default:
           break;
       }
@@ -201,6 +210,9 @@ export default {
     toggleEnrollDialog(data) {
       this.enrollDialog = data;
     },
+    toggleActivityDialog(data) {
+      this.activityDialog = data;
+    },
     toggleTutorialDialog(data) {
       this.tutorialDialog = data;
     },
@@ -223,6 +235,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   data: () => ({
+    activityDialog: false,
     enrollDialog: false,
     facilityDialog: false,
     countdownDialog: false,
