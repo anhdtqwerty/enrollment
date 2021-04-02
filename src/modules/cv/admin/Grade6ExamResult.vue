@@ -40,7 +40,7 @@
       </div>
     </div>
     <v-card class="pa-6 elevation-1 mb-6">
-      <DocumentFilter @onFilterChanged="onFilterChanged"/>
+      <DocumentFilter @onFilterChanged="onFilterChanged" />
     </v-card>
 
     <v-card class="elevation-1">
@@ -148,6 +148,10 @@ const schema = {
   },
   "Điểm thi Anh": {
     prop: "examEnglish",
+    type: String,
+  },
+  "Điểm cộng": {
+    prop: "priorityMark",
     type: String,
   },
   "Tổng điểm": {
@@ -323,6 +327,7 @@ export default {
         "Điểm thi Toán": "ltvExamResult.examMath",
         "Điểm thi Văn": "ltvExamResult.examLiterature",
         "Điểm thi Anh": "ltvExamResult.examEnglish",
+        "Điểm cộng": "ltvExamResult.priorityMark",
         "Tổng điểm": "ltvExamResult.totalMark",
         "Kết quả trúng tuyển": "ltvExamResult.passExamText",
       },
