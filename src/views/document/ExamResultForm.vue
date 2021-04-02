@@ -5,6 +5,7 @@
       :documentStep="documentStep"
       :document="document"
       :systemTime="systemTime"
+      :isAdminPreview="isAdminPreview"
       v-if="document.type === 'Khối 6'"
     />
     <ExamResultGrade10
@@ -12,6 +13,7 @@
       :documentStep="documentStep"
       :document="document"
       :systemTime="systemTime"
+      :isAdminPreview="isAdminPreview"
       v-if="document.type === 'Khối 10'"
     />
     <hr class="dashed" />
@@ -73,6 +75,7 @@ export default {
     document: Object,
     documentStep: Number,
     systemTime: Object,
+    isAdminPreview: Boolean,
   },
   methods: {
     reset() {

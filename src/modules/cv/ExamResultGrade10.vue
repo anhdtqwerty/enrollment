@@ -4,7 +4,7 @@
     <v-card-title class="card-title"
       >Kết quả Kỳ thi tuyển sinh vào lớp 10 THPT năm 2021 - 2022</v-card-title
     >
-    <v-card-subtitle class="card-subtitle py-6">
+    <v-card-subtitle class="card-subtitle py-6" v-if="!isAdminPreview">
       Phụ huynh vui lòng nhập nguyện vọng của con mình và ấn lưu tạm thời.
     </v-card-subtitle>
     <v-card-text class="d-flex flex-column pa-0">
@@ -395,6 +395,7 @@ export default {
       default: () => {},
     },
     systemTime: Object,
+    isAdminPreview: Boolean,
   },
   computed: {
     getCloseFillDocumentDate() {
@@ -519,7 +520,6 @@ export default {
     if (this.document.ltvExamResult) {
       this.ltvExamResult = this.document.ltvExamResult;
       this.agree = this.document.status === "submitted";
-      console.log(this.ltvExamResult);
     }
   },
   methods: {

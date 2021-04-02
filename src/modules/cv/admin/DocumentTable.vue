@@ -97,7 +97,7 @@ const originHeaders = [
     show: true,
   },
   {
-    text: "Họ và tên Phụ huynh",
+    text: "Họ và tên Người khai",
     value: "parentName",
     align: "left",
     sortable: false,

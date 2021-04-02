@@ -7,6 +7,7 @@ import _ from "lodash";
 import { axiosPlugin } from "@/plugins/axios";
 import activeCode from "./active-code/activeCode.js";
 import auth from "./app/auth.js";
+import user from "./app/user.js";
 import layout from "./app/layout.js";
 import cv from "./cv/cv.js";
 import upload from "./other/upload.js";
@@ -33,6 +34,7 @@ export default createStore(Vuex.Store, {
     activeCode,
     cv,
     upload,
+    user,
   },
   mixins: {
     mutations: {

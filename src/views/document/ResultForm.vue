@@ -4,7 +4,9 @@
     <v-card-title class="card-title mb-2">Kết quả học tập</v-card-title>
     <div
       class="field-label pt-6"
-      v-if="documentStep !== 4 && !isEditing && !isFillInfoClose"
+      v-if="
+        documentStep !== 4 && !isEditing && !isFillInfoClose && !isAdminPreview
+      "
     >
       <span class="error--text">(*)</span> Phụ huynh lưu ý: Các thông tin này có
       thể được chỉnh sửa nhưng sẽ bị khóa vào ngày
@@ -83,7 +85,8 @@
           documentStep !== 4 &&
             document.type === 'Khối 10' &&
             !isEditing &&
-            !isFillInfoClose
+            !isFillInfoClose &&
+            !isAdminPreview
         "
         @click="onEdit"
         outlined
@@ -122,6 +125,7 @@ export default {
     document: Object,
     documentStep: Number,
     systemTime: Object,
+    isAdminPreview: Boolean,
   },
   computed: {
     getSubtitle() {
@@ -136,7 +140,7 @@ export default {
     },
   },
   created() {
-    this.isEditing = false
+    this.isEditing = false;
     if (this.documentStep !== 4) this.isEditing = false;
   },
   data() {

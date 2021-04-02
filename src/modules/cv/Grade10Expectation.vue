@@ -6,7 +6,7 @@
       <br v-if="$vuetify.breakpoint.smAndDown" />THPT năm 2021 -
       2022</v-card-title
     >
-    <div class="field-label pt-6" v-if="!isCloseFillInfo">
+    <div class="field-label pt-6" v-if="!isCloseFillInfo && !isAdminPreview">
       <span class="error--text">(*)</span> Phụ huynh lưu ý: Các thông tin này có
       thể được chỉnh sửa nhưng sẽ bị khóa vào ngày
       <span class="error--text">{{ closeFillInfoTime }}</span
@@ -335,7 +335,12 @@
         :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
         class="py-3 mr-6 text-none"
         color="primary"
-        v-if="documentStep !== 3 && !isEditing && !isCloseFillInfo"
+        v-if="
+          documentStep !== 3 &&
+            !isEditing &&
+            !isCloseFillInfo &&
+            !isAdminPreview
+        "
         @click="onEdit"
         outlined
         large
@@ -364,6 +369,7 @@ export default {
     document: Object,
     documentStep: Number,
     systemTime: Object,
+    isAdminPreview: Boolean,
   },
   created() {
     if (this.document.expectation1 && this.document.expectation1.school)

@@ -1,5 +1,10 @@
 <template>
   <div class="pa-6">
+    <DocumentDetailDialog
+      :state="dialog"
+      :documentId="selectedDocumentId"
+      @closeDialog="dialog = !dialog"
+    />
     <div class="d-flex justify-space-between align-center mb-6">
       <div class="component-title">Kết quả thi Khối 10</div>
       <div class="d-flex flex-center">
@@ -35,11 +40,14 @@
       </div>
     </div>
     <v-card class="pa-6 elevation-1 mb-6">
-      <DocumentFilter />
+      <DocumentFilter @onFilterChanged="onFilterChanged" />
     </v-card>
 
     <v-card class="elevation-1">
-      <Grade10ResultTable ref="grade6Result" />
+      <Grade10ResultTable
+        ref="grade6Result"
+        @onDocumentDetail="onDocumentDetail"
+      />
     </v-card>
   </div>
 </template>
@@ -176,6 +184,7 @@ import { mapActions, mapGetters } from "vuex";
 
 import DocumentFilter from "./DocumentFilter";
 import Grade10ResultTable from "./Grade10ResultTable";
+import DocumentDetailDialog from "./DocumentDetailDialog";
 import readXlsxFile from "read-excel-file";
 import JsonExcel from "vue-json-excel";
 import moment from "moment";
@@ -185,6 +194,7 @@ export default {
     DocumentFilter,
     Grade10ResultTable,
     JsonExcel,
+    DocumentDetailDialog,
   },
   props: {
     role: String,
@@ -192,6 +202,7 @@ export default {
   data() {
     return {
       dialog: false,
+      selectedDocumentId: "",
       isSelecting: false,
       selectedFile: null,
       updatedCVs: [],
@@ -362,6 +373,14 @@ export default {
   },
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
+    async onFilterChanged(data) {
+      this.$loading.active = true;
+      await this.fetchCVs({
+        ...data,
+        _sort: "updatedAt:DESC",
+      });
+      this.$loading.active = false;
+    },
     toggleLoadingScreen(data) {
       this.$loading.active = data;
     },
@@ -376,6 +395,10 @@ export default {
       );
 
       this.$refs.uploader.click();
+    },
+    onDocumentDetail(data) {
+      this.dialog = true;
+      this.selectedDocumentId = data;
     },
     updateCVs(data) {
       this.updatedCVs = data.map((cv) => {

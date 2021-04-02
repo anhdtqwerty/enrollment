@@ -75,6 +75,7 @@ export default {
     ...mapActions("upload", ["upload", "destroy"]),
     ...mapActions("activeCode", ["updateActiveCode", "fetchActiveCode"]),
     cancel() {
+      this.setStep(1);
       this.$emit("closeDialog");
     },
     async loadDocumentData() {
@@ -84,10 +85,10 @@ export default {
         parent: this.user.id,
       });
       this.document = this.CV(this.documentId);
+      this.setStep(1);
       this.documentSystemTime = await this.checkDocumentSystemTime({
         grade: this.document.type,
       });
-      console.log(this.documentSystemTime);
       this.$loading.active = false;
     },
   },

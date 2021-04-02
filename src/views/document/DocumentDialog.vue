@@ -140,7 +140,6 @@ export default {
           code: this.activeCode,
           userPhone: this.user.username,
         });
-        console.log(newCV);
         await this.$refs.documentTable.refresh({
           _sort: "updatedAt:DESC",
           parent: this.user.id,

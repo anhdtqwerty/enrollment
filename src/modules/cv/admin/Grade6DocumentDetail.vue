@@ -120,22 +120,8 @@ export default {
     document: Object,
     systemTime: Object,
   },
-  watch: {
-    step(step) {
-      this.checkStep(step);
-    },
-    systemTime(systemTime) {
-      if (
-        systemTime &&
-        systemTime.checkDocumentSystemTime &&
-        systemTime.checkDocumentSystemTime["exam-result"] &&
-        this.document.step === 4 &&
-        (!this.document.ltvExamResult || !this.document.ltvExamResult.examMath)
-      )
-        this.$alert.error(
-          "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
-        );
-    },
+  created() {
+    this.setStep(1);
   },
   methods: {
     ...mapActions("cv", [
@@ -146,46 +132,6 @@ export default {
       "setStep",
     ]),
     ...mapActions("layout", ["setDocumentDialog"]),
-    checkStep(step) {
-      switch (step) {
-        case 3:
-          if (
-            !this.systemTime.checkDocumentSystemTime["study-result"] &&
-            this.user.role.type !== "admin"
-          ) {
-            this.$alert.error(
-              "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
-            );
-            this.setStep(this.step - 1);
-          }
-          break;
-        case 4:
-          if (
-            !this.systemTime.checkDocumentSystemTime["exam-result"] &&
-            this.user.role.type !== "admin"
-          ) {
-            this.$alert.error(
-              "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
-            );
-            this.setStep(this.step - 1);
-          } else if (
-            this.systemTime.checkDocumentSystemTime["exam-result"] &&
-            (!this.document.ltvExamResult ||
-              !this.document.ltvExamResult.examMath)
-          )
-            this.$alert.error(
-              "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
-            );
-          break;
-      }
-    },
-    backToHome() {
-      this.$router.push("/");
-      this.setDocumentDialog(true);
-    },
-    updateDocument(data, isDraft) {
-      this.$emit("updateDocument", data, isDraft);
-    },
     getStatus(key, step) {
       if (
         (!this.systemTime.checkDocumentSystemTime ||

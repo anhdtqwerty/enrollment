@@ -65,7 +65,6 @@ export default {
     if (this.document.type === "Khối 6")
       this.checkStepGrade6(this.document.step, this.documentSystemTime);
     else this.checkStepGrade10(this.document, this.documentSystemTime);
-    console.log(this.documentSystemTime);
     this.$loading.active = false;
   },
   computed: {

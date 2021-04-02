@@ -26,12 +26,13 @@
       <v-btn color="admin" @click="toggleGrade6Dialog" class="elevation-0" dark
         ><v-icon left>mdi-plus</v-icon>Thêm mã kích hoạt khối 6</v-btn
       >
+      <v-divider vertical></v-divider>
       <v-btn color="admin" @click="toggleGrade10Dialog" class="elevation-0" dark
         ><v-icon left>mdi-plus</v-icon>Thêm mã kích hoạt khối 10</v-btn
       >
     </v-card>
     <v-card class="pa-6 elevation-1 mb-6">
-      <active-code-filter />
+      <active-code-filter @onFilterChanged="onFilterChanged" />
     </v-card>
 
     <v-card class="elevation-1">
@@ -115,6 +116,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions("activeCode", ["fetchActiveCodes"]),
     async refresh() {
       await this.$refs.activeCodeTable.refresh();
     },
@@ -128,6 +130,14 @@ export default {
     toggleGrade10Dialog() {
       this.dialog = !this.dialog;
       this.grade = "Khối 10";
+    },
+    async onFilterChanged(data) {
+      this.$loading.active = true;
+      await this.fetchActiveCodes({
+        ...data,
+        _sort: "updatedAt:DESC",
+      });
+      this.$loading.active = false;
     },
   },
 };

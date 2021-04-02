@@ -223,6 +223,7 @@ export default {
       )
         return "Chưa mở";
       else {
+        if (this.document.step === 4) return "Đã hoàn tất";
         if (!this.document.status === "created") return "Mới mở";
         else if (
           this.document.status === "filling" &&

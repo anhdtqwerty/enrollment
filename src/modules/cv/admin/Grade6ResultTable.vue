@@ -7,10 +7,22 @@
       :items="CVs"
       :items-per-page="10"
       :disable-sort="$vuetify.breakpoint.smAndDown"
+      :footer-props="{ 'items-per-page-text': 'Số Hồ Sơ một trang' }"
       v-bind="this.$attrs"
     >
+      <template v-slot:[`footer.page-text`]="items">
+        Hồ sơ thứ {{ items.pageStart }} - {{ items.pageStop }} trên tổng
+        {{ items.itemsLength }} Hồ sơ
+      </template>
       <template v-slot:[`item.code`]="{ item }">
-        {{ item | getCode }}
+        <v-btn
+          class="document-btn text-none text-decoration-underline px-0"
+          color="primary"
+          @click="onDocumentClick(item.id)"
+          plain
+        >
+          {{ item | getCode }}
+        </v-btn>
       </template>
       <template v-slot:[`item.department`]="{ item }">
         {{ item | getDepartment }}
@@ -167,6 +179,9 @@ export default {
   },
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
+    onDocumentClick(documentId) {
+      this.$emit("onDocumentDetail", documentId);
+    },
     async refresh(query) {
       this.loading = true;
       await this.fetchCVs({

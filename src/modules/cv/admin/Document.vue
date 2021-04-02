@@ -23,7 +23,7 @@
       </div>
     </div>
     <v-card class="pa-6 elevation-1 mb-6">
-      <DocumentFilter />
+      <DocumentFilter @onFilterChanged="onFilterChanged" />
     </v-card>
 
     <v-card class="elevation-1">
@@ -263,6 +263,15 @@ export default {
     },
   },
   methods: {
+    ...mapActions("cv", ["fetchCVs"]),
+    async onFilterChanged(data) {
+      this.$loading.active = true;
+      await this.fetchCVs({
+        ...data,
+        _sort: "updatedAt:DESC",
+      });
+      this.$loading.active = false;
+    },
     onDocumentDetail(data) {
       this.dialog = true;
       this.selectedDocumentId = data;

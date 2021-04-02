@@ -18,8 +18,13 @@
       :items="activeCodes"
       :items-per-page="10"
       :disable-sort="$vuetify.breakpoint.smAndDown"
+      :footer-props="{ 'items-per-page-text': 'Số Mã kích hoạt một trang' }"
       v-bind="this.$attrs"
     >
+      <template v-slot:[`footer.page-text`]="items">
+        Mã kích hoạt thứ {{ items.pageStart }} - {{ items.pageStop }} trên tổng
+        {{ items.itemsLength }} Mã kích hoạt
+      </template>
       <template v-slot:[`item.code`]="{ item }">
         {{ item | getCode }}
       </template>
@@ -58,6 +63,11 @@
             mdi-printer
           </v-icon>
         </v-btn>
+      </template>
+      <template v-slot:no-data>
+        <div class="d-flex flex-column align-center justify-center pa-6">
+          <div class="mt-4 text-subtitle-1">Chưa có dữ liệu</div>
+        </div>
       </template>
     </v-data-table>
   </div>

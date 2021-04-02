@@ -59,6 +59,7 @@ export const inputRules = {
     (moment(v, "DD/MM/YYYY").isValid() &&
       moment(v, "DD/MM/YYYY").isBefore(new Date())) ||
     "Ngày tháng năm sinh không hợp lệ",
+  date: (v) => !v || moment(v, "DD/MM/YYYY").isValid() || "Ngày không hợp lệ",
   mark: (v) =>
     !v || (parseFloat(v) >= 0.25 && parseFloat(v) <= 10) || "Điểm không hợp lệ",
   checkbox: (v) => v || "",

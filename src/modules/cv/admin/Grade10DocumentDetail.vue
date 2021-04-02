@@ -109,6 +109,7 @@
           :document="document"
           :documentStep="5"
           :systemTime="systemTime"
+          :isAdminPreview="true"
           @nextStep="nextStep"
         />
         <ResultForm
@@ -116,12 +117,14 @@
           :document="document"
           :documentStep="5"
           :systemTime="systemTime"
+          :isAdminPreview="true"
           @nextStep="nextStep"
         />
         <ExamResultForm
           v-if="step === 5"
           :document="document"
           :documentStep="5"
+          :isAdminPreview="true"
           :systemTime="systemTime"
           @nextStep="nextStep"
         />
@@ -164,10 +167,8 @@ export default {
     document: Object,
     systemTime: Object,
   },
-  watch: {
-    step(step) {
-      this.checkStep(step);
-    },
+  created() {
+    this.setStep(1);
   },
   methods: {
     ...mapActions("cv", [
