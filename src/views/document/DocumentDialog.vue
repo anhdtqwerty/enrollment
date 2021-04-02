@@ -93,6 +93,7 @@ export default {
   computed: {
     ...mapGetters("layout", ["documentDialog"]),
     ...mapGetters("auth", ["user", "isAuthenticated"]),
+    ...mapGetters("cv", ["systemTime"]),
   },
   watch: {
     documentDialog(documentDialog) {
@@ -136,6 +137,27 @@ export default {
         this.user &&
         this.isAuthenticated
       ) {
+        const existingActiveCode = await this.fetchActiveCode(this.activeCode);
+        if (
+          !this.systemTime.checkSystemTime["grade6-close-create"] &&
+          existingActiveCode &&
+          existingActiveCode.type === "Khối 6"
+        ) {
+          this.$alert.error(
+            `Xin lỗi hệ thống tạo hồ sơ khối 6 đã đóng vào lúc ${this.systemTime.systemTime["grade6-close-create"]}`
+          );
+          return;
+        }
+        if (
+          !this.systemTime.checkSystemTime["grade10-close-create"] &&
+          existingActiveCode &&
+          existingActiveCode.type === "Khối 10"
+        ) {
+          this.$alert.error(
+            `Xin lỗi hệ thống tạo hồ sơ khối 10 đã đóng vào lúc ${this.systemTime.systemTime["grade10-close-create"]}`
+          );
+          return;
+        }
         const newCV = await this.createCV({
           code: this.activeCode,
           userPhone: this.user.username,

@@ -5,40 +5,50 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade1Math"
           type="text"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade1Math || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade1Literature"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade1Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -49,13 +59,16 @@
           v-model="studyResult.grade1English"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade1English || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -64,7 +77,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-select
           v-model="studyResult.grade1Morality"
@@ -73,10 +88,13 @@
           item-value="value"
           :items="moralities"
           :rules="[$rules.required]"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade1Morality || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -87,40 +105,50 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade2Math"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade2Math || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade2Literature"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade2Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -131,13 +159,16 @@
           v-model="studyResult.grade2English"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade2English || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -146,7 +177,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-select
           v-model="studyResult.grade2Morality"
@@ -155,10 +188,13 @@
           item-value="value"
           :items="moralities"
           :rules="[$rules.required]"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade2Morality || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -169,40 +205,50 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade3Math"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade3Math || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade3Literature"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade3Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -213,13 +259,16 @@
           v-model="studyResult.grade3English"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade3English || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -228,7 +277,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-select
           v-model="studyResult.grade3Morality"
@@ -237,10 +288,13 @@
           item-value="value"
           :items="moralities"
           :rules="[$rules.required]"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade3Morality || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -251,40 +305,50 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade4Math"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade4Math || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade4Literature"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.mark]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade4Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -295,13 +359,16 @@
           v-model="studyResult.grade4English"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade4English || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -310,7 +377,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
-          <span style="color: red" v-if="documentStep === 3">*</span>
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
         </div>
         <v-select
           v-model="studyResult.grade4Morality"
@@ -319,10 +388,13 @@
           item-value="value"
           :items="moralities"
           :rules="[$rules.required]"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade4Morality || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -331,40 +403,42 @@
     <div class="section-label py-6">Lớp 5</div>
     <v-row class="my-0">
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
-        <div class="field-label">
-          Toán
-        </div>
+        <div class="field-label">Toán</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade5Math"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade5Math || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
-        <div class="field-label">
-          Văn
-        </div>
+        <div class="field-label">Văn</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade5Literature"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade5Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -375,40 +449,92 @@
           v-model="studyResult.grade5English"
           type="number"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           :rules="[$rules.mark]"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade5English || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
     <v-row class="my-0">
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
-        <div class="field-label">
-          Hạnh kiểm cả năm
-        </div>
+        <div class="field-label">Hạnh kiểm cả năm</div>
         <v-select
           v-model="studyResult.grade5Morality"
           placeholder="VD: Tốt"
           item-text="title"
           item-value="value"
           :items="moralities"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.grade5Morality || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+    </v-row>
+    <hr class="dashed" />
+    <div class="section-label py-6">Điểm ưu tiên</div>
+    <v-row class="my-0">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="8">
+        <div class="field-label">
+          Loại ưu tiên
+          <span style="color: red" v-if="documentStep === 3 || isEditing"
+            >*</span
+          >
+        </div>
+        <v-select
+          v-model="ltvExamResult.priorityType"
+          placeholder="VD: Không thuộc diện ưu tiên"
+          item-text="title"
+          item-value="value"
+          :rules="[$rules.required]"
+          :items="priorityTypes"
+          v-if="documentStep === 3 || isEditing"
+          outlined
+        />
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
+          {{ ltvExamResult.priorityType || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
+        <div class="field-label">Điểm cộng</div>
+        <v-text-field
+          placeholder="VD: 10"
+          :value="getPriorityMark"
+          type="number"
+          color="primary"
+          v-if="documentStep === 3 || isEditing"
+          @keyup.enter="submit"
+          disabled
+          outlined
+          validate-on-blur
+        />
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
+          {{ ltvExamResult.priorityMark || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
     <hr class="dashed" />
     <div class="section-label py-6">Tổng</div>
     <v-row class="my-0">
-      <v-col cols="12">
+      <v-col class="py-0" cols="12">
         <div class="field-label">
           Tổng điểm 2 môn Toán, Văn của 5 năm học khối Tiểu học (tối đa 100
           điểm)
@@ -418,18 +544,21 @@
           :value="getTotal"
           type="text"
           color="primary"
-          v-if="documentStep === 3"
+          v-if="documentStep === 3 || isEditing"
           filled
           disabled
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 3 && !isEditing"
+        >
           {{ studyResult.totalMathLiterature || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
     <hr class="dashed" />
-    <div v-if="documentStep === 3">
+    <div v-if="documentStep === 3 || isEditing">
       <div class="section-label py-6">Thành tích đặc biệt</div>
       <v-row class="pb-6">
         <v-col cols="12">
@@ -439,7 +568,7 @@
             v-model="studyResult.achievements"
             type="text"
             color="primary"
-            v-if="documentStep === 3"
+            v-if="documentStep === 3 || isEditing"
             messages="Vui lòng bỏ qua nếu không có thông tin"
             outlined
           />
@@ -458,8 +587,23 @@ export default {
       type: Object,
       default: () => {},
     },
+    isEditing: Boolean,
   },
   computed: {
+    getPriorityMark() {
+      switch (this.ltvExamResult.priorityType) {
+        case "Có bố mẹ hoặc anh chị đã hoặc đang theo học tại trường Lương Thế Vinh":
+          return 20;
+        case "Là con, em ruột của giáo viên đang công tác tại trường Lương Thế Vinh":
+          return 20;
+        case "Thuộc gia đình có công với cách mạng; gia đình thương binh, liệt sĩ":
+          return 20;
+        case "Là con cán bộ Y tế, Bộ đội, Công an tham gia phòng chống dịch Covid-19":
+          return 30;
+        default:
+          return 0;
+      }
+    },
     getTotal() {
       if (
         this.studyResult.grade1Literature == "" ||
@@ -488,13 +632,18 @@ export default {
         parseFloat(this.studyResult.grade4Literature) +
         parseFloat(this.studyResult.grade4Math) +
         +grade5Literature +
-        grade5Math
+        grade5Math +
+        this.getPriorityMark
       );
     },
   },
   data() {
     return {
       isValid: false,
+      ltvExamResult: {
+        priorityType: "",
+        priorityMark: 0,
+      },
       studyResult: {
         grade1Literature: "",
         grade1Math: "",
@@ -519,6 +668,36 @@ export default {
         totalMathLiterature: "",
         achievements: "",
       },
+      priorityTypes: [
+        {
+          title:
+            "Có bố mẹ hoặc anh chị đã hoặc đang theo học tại trường Lương Thế Vinh",
+          value:
+            "Có bố mẹ hoặc anh chị đã hoặc đang theo học tại trường Lương Thế Vinh",
+        },
+        {
+          title:
+            "Là con, em ruột của giáo viên đang công tác tại trường Lương Thế Vinh",
+          value:
+            "Là con, em ruột của giáo viên đang công tác tại trường Lương Thế Vinh",
+        },
+        {
+          title:
+            "Thuộc gia đình có công với cách mạng; gia đình thương binh, liệt sĩ",
+          value:
+            "Thuộc gia đình có công với cách mạng; gia đình thương binh, liệt sĩ",
+        },
+        {
+          title:
+            "Là con cán bộ Y tế, Bộ đội, Công an tham gia phòng chống dịch Covid-19",
+          value:
+            "Là con cán bộ Y tế, Bộ đội, Công an tham gia phòng chống dịch Covid-19",
+        },
+        {
+          title: "Không thuộc diện ưu tiên",
+          value: "Không thuộc diện ưu tiên",
+        },
+      ],
       moralities: [
         { title: "Tốt", value: "Tốt" },
         { title: "Khá", value: "Khá" },
@@ -533,6 +712,8 @@ export default {
       this.studyResult = this.document.studyRecord;
       this.agree = this.document.status === "submitted";
     }
+    if (this.document.ltvExamResult)
+      this.ltvExamResult = this.document.ltvExamResult;
   },
   methods: {
     validate() {
@@ -549,6 +730,10 @@ export default {
         studyResult: {
           ...this.studyResult,
           totalMathLiterature: !isNaN(this.getTotal) ? this.getTotal : "",
+        },
+        ltvExamResult: {
+          ...this.ltvExamResult,
+          priorityMark: this.getPriorityMark,
         },
       };
     },

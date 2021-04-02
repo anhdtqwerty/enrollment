@@ -425,7 +425,7 @@ export default {
     },
     getCreatedAtTime() {
       if (this.activeCode.createdAt)
-        return moment(this.activeCode.createdAt).format("hh:mm:ss");
+        return moment(this.activeCode.createdAt).format("HH:mm:ss");
       return "---";
     },
   },

@@ -98,7 +98,7 @@
               </div>
             </v-stepper-step>
           </v-stepper>
-          <div class="notice pa-4" v-if="step < 5">
+          <div class="notice pa-4" v-if="step === 4">
             Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP
             Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi
             thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm
@@ -187,12 +187,18 @@ export default {
     ...mapGetters("auth", ["user", "isAuthenticated"]),
     ...mapGetters("cv", ["step"]),
     getExamResultDate() {
-      if (this.systemTime.documentSystemTime)
-        return moment(
+      if (
+        this.systemTime.documentSystemTime &&
+        this.systemTime.documentSystemTime["exam-result"]
+      )
+        return `${moment(
           this.systemTime.documentSystemTime["exam-result"],
-          "DD/MM/YYYY hh:mm:ss"
-        ).format("DD/MM/YYYY");
-      return "12/06/2021";
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("DD/MM/YYYY")} lúc ${moment(
+          this.systemTime.documentSystemTime["exam-result"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("HH:mm")}`;
+      return "12/06/2021 lúc 00:00";
     },
   },
   props: {

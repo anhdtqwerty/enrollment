@@ -208,13 +208,13 @@ export default {
         "Tạo lúc": {
           field: "createdAt",
           callback: (value) => {
-            return moment(value).format("DD/MM/YYYY hh:mm:ss");
+            return moment(value).format("DD/MM/YYYY HH:mm:ss");
           },
         },
         "Cập nhật lúc": {
           field: "updatedAt",
           callback: (value) => {
-            return moment(value).format("DD/MM/YYYY hh:mm:ss");
+            return moment(value).format("DD/MM/YYYY HH:mm:ss");
           },
         },
         "Cơ sở": "department",

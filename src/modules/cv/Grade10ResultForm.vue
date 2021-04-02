@@ -5,7 +5,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
-          <span style="color: red" v-if="documentStep === 4 || isEditing">*</span>
+          <span style="color: red" v-if="documentStep === 4 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
@@ -18,14 +20,19 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade6Math || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
-          <span style="color: red" v-if="documentStep === 4 || isEditing">*</span>
+          <span style="color: red" v-if="documentStep === 4 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
@@ -38,7 +45,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade6Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -55,7 +65,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade6English || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -64,7 +77,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
-          <span style="color: red" v-if="documentStep === 4 || isEditing">*</span>
+          <span style="color: red" v-if="documentStep === 4 || isEditing"
+            >*</span
+          >
         </div>
         <v-select
           v-model="studyResult.grade6Morality"
@@ -76,7 +91,10 @@
           v-if="documentStep === 4 || isEditing"
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade6Morality || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -87,7 +105,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
-          <span style="color: red" v-if="documentStep === 4 || isEditing">*</span>
+          <span style="color: red" v-if="documentStep === 4 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
@@ -100,14 +120,19 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade7Math || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
-          <span style="color: red" v-if="documentStep === 4 || isEditing">*</span>
+          <span style="color: red" v-if="documentStep === 4 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
@@ -120,7 +145,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade7Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -137,7 +165,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade7English || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -146,7 +177,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
-          <span style="color: red" v-if="documentStep === 4 || isEditing">*</span>
+          <span style="color: red" v-if="documentStep === 4 || isEditing"
+            >*</span
+          >
         </div>
         <v-select
           v-model="studyResult.grade7Morality"
@@ -158,7 +191,10 @@
           v-if="documentStep === 4 || isEditing"
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade7Morality || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -169,7 +205,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Toán
-          <span style="color: red" v-if="documentStep === 4 || isEditing">*</span>
+          <span style="color: red" v-if="documentStep === 4 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
@@ -182,14 +220,19 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade8Math || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Văn
-          <span style="color: red" v-if="documentStep === 4 || isEditing">*</span>
+          <span style="color: red" v-if="documentStep === 4 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 10"
@@ -202,7 +245,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade8Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -219,7 +265,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade8English || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -238,7 +287,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade8Physics || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -255,14 +307,19 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade8Chemistry || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">
           Hạnh kiểm cả năm
-          <span style="color: red" v-if="documentStep === 4 || isEditing">*</span>
+          <span style="color: red" v-if="documentStep === 4 || isEditing"
+            >*</span
+          >
         </div>
         <v-select
           v-model="studyResult.grade8Morality"
@@ -274,7 +331,10 @@
           v-if="documentStep === 4 || isEditing"
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade8Morality || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -283,9 +343,7 @@
     <div class="section-label py-6">Lớp 9</div>
     <v-row class="my-0">
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
-        <div class="field-label">
-          Toán
-        </div>
+        <div class="field-label">Toán</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade9Math"
@@ -297,14 +355,15 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade9Math || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
-        <div class="field-label">
-          Văn
-        </div>
+        <div class="field-label">Văn</div>
         <v-text-field
           placeholder="VD: 10"
           v-model="studyResult.grade9Literature"
@@ -316,7 +375,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade9Literature || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -333,7 +395,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade9English || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -352,7 +417,10 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade9Physics || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -369,14 +437,15 @@
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade9Chemistry || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
-        <div class="field-label">
-          Hạnh kiểm cả năm
-        </div>
+        <div class="field-label">Hạnh kiểm cả năm</div>
         <v-select
           v-model="studyResult.grade9Morality"
           placeholder="VD: Tốt"
@@ -386,7 +455,10 @@
           v-if="documentStep === 4 || isEditing"
           outlined
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 4 && !isEditing"
+        >
           {{ studyResult.grade9Morality || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -406,7 +478,10 @@
             messages="Vui lòng bỏ qua nếu không có thông tin"
             outlined
           />
-          <div class="info-label mt-2 mb-6" v-if="documentStep !== 4 && !isEditing">
+          <div
+            class="info-label mt-2 mb-6"
+            v-if="documentStep !== 4 && !isEditing"
+          >
             {{ studyResult.achievements || "Chưa có thông tin" }}
           </div>
         </v-col>
@@ -440,10 +515,11 @@
           của nhà trường.
         </div>
       </div>
-      <v-row v-if="isRecuitingStraight" no-gutters>
+      <v-row no-gutters>
         <v-radio-group v-model="studyResult.recuitingStraightType">
           <v-radio
             v-for="recuitingStraightType in recuitingStraightTypes"
+            :disabled="!isRecuitingStraight"
             :key="recuitingStraightType.title"
             :label="recuitingStraightType.title"
             :value="recuitingStraightType.value"
@@ -563,7 +639,8 @@ export default {
   created() {
     if (this.document.studyRecord) {
       this.studyResult = this.document.studyRecord;
-      if(this.document.recuitingStraightType != "") this.isRecuitingStraight = true
+      this.isRecuitingStraight =
+        this.document.studyRecord.recuitingStraightType != "";
     }
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <div class="document-container d-flex py-8 mx-auto">
-    <v-row no-gutters style="max-width:100%">
+    <v-row no-gutters style="max-width: 100%">
       <v-col
         class="px-8"
         :class="{ 'pb-6': $vuetify.breakpoint.smAndDown }"
@@ -82,7 +82,14 @@
               </div>
             </v-stepper-step>
           </v-stepper>
-          <div class="notice pa-4">
+          <div
+            class="notice pa-4"
+            v-if="
+              (step === 4 || step === 3) &&
+              systemTime.checkDocumentSystemTime &&
+              !systemTime.checkDocumentSystemTime['display-exam-result']
+            "
+          >
             "Kết quả khảo sát năng lực" sẽ được thông báo đến quý phú huynh sau
             khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông
             báo: <br />- SMS đến số điện thoại đăng ký <br />- Tại mục Kết quả
@@ -95,6 +102,7 @@
           v-if="step === 1"
           :document="document"
           :documentStep="document.step"
+          :systemTime="systemTime"
           @completeStep="updateDocument($event, false)"
           @saveDraft="updateDocument($event, true)"
           @nextStep="nextStep"
@@ -103,6 +111,7 @@
           v-if="step === 2"
           :document="document"
           :documentStep="document.step"
+          :systemTime="systemTime"
           @completeStep="updateDocument($event, false)"
           @saveDraft="updateDocument($event, true)"
           @nextStep="nextStep"
@@ -111,6 +120,7 @@
           v-if="step === 3"
           :document="document"
           :documentStep="document.step"
+          :systemTime="systemTime"
           @completeStep="updateDocument($event, false)"
           @saveDraft="updateDocument($event, true)"
           @nextStep="nextStep"
@@ -119,6 +129,7 @@
           v-if="step === 4"
           :document="document"
           :documentStep="document.step"
+          :systemTime="systemTime"
           @completeStep="updateDocument($event, false)"
           @saveDraft="updateDocument($event, true)"
           @nextStep="nextStep"
@@ -161,8 +172,8 @@ export default {
         this.document.step === 4 &&
         (!this.document.ltvExamResult || !this.document.ltvExamResult.examMath)
       )
-        this.$alert.error(
-          "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
+        this.$alert.success(
+          "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin."
         );
     },
   },
@@ -193,7 +204,7 @@ export default {
             !this.systemTime.checkDocumentSystemTime["exam-result"] &&
             this.user.role.type !== "admin"
           ) {
-            this.$alert.error(
+            this.$alert.success(
               "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
             );
             this.setStep(this.step - 1);
@@ -202,8 +213,8 @@ export default {
             (!this.document.ltvExamResult ||
               !this.document.ltvExamResult.examMath)
           )
-            this.$alert.error(
-              "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
+            this.$alert.success(
+              "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin."
             );
           break;
       }
@@ -261,8 +272,8 @@ export default {
         this.user.role.type !== "admin"
       ) {
         if (step === 4)
-          this.$alert.error(
-            "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: \n- SMS đến số điện thoại đăng ký\n- Tại mục Kết quả khảo sát năng lực"
+          this.$alert.success(
+            "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin."
           );
         else
           this.$alert.error(

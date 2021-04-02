@@ -50,8 +50,8 @@
         color="primary"
         v-if="
           document.type === 'Khối 6' &&
-            document.ltvExamResult &&
-            document.ltvExamResult.passExam
+          document.ltvExamResult &&
+          document.ltvExamResult.passExam
         "
         @click="completeGrade6"
         large
@@ -65,6 +65,7 @@
 <script>
 import ExamResultGrade6 from "@/modules/cv/ExamResultGrade6.vue";
 import ExamResultGrade10 from "@/modules/cv/ExamResultGrade10.vue";
+import moment from "moment";
 
 export default {
   components: {
@@ -86,6 +87,21 @@ export default {
       if (!this.$refs.grade10ExamResult.validate()) {
         this.$alert.error(
           "Xin vui lòng điền tất cả thông tin bắt buộc và tích vào ô đồng ý với nội quy của nhà trường"
+        );
+        return;
+      }
+      if (
+        this.systemTime.checkDocumentSystemTime &&
+        this.systemTime.checkDocumentSystemTime["close-fill-exam-result"]
+      ) {
+        this.$alert.error(
+          `Hệ thống đã khóa chức năng khai báo điểm vào lúc ${moment(
+            this.systemTime.documentSystemTime["close-fill-exam-result"],
+            "DD/MM/YYYY HH:mm:ss"
+          ).format("HH:mm")} ngày ${moment(
+            this.systemTime.documentSystemTime["close-fill-exam-result"],
+            "DD/MM/YYYY HH:mm:ss"
+          ).format("DD/MM/YYYY")}`
         );
         return;
       }

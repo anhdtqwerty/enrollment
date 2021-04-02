@@ -5,7 +5,8 @@
       >Kết quả Kỳ thi tuyển sinh vào lớp 10 THPT năm 2021 - 2022</v-card-title
     >
     <v-card-subtitle class="card-subtitle py-6" v-if="!isAdminPreview">
-      Phụ huynh vui lòng nhập nguyện vọng của con mình và ấn lưu tạm thời.
+      Phụ huynh vui lòng khai báo đầy đủ thông tin và ấn "Hoàn thành" trước
+      {{ getCloseFillDocumentDate }}
     </v-card-subtitle>
     <v-card-text class="d-flex flex-column pa-0">
       <div class="section-label py-6">Số báo danh</div>
@@ -186,7 +187,7 @@
             :rules="[$rules.priorityMark]"
             :disabled="
               ltvExamResult.priorityType !==
-                'Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội'
+              'Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội'
             "
             outlined
             validate-on-blur
@@ -331,8 +332,8 @@
       <div
         v-if="
           ltvExamResult.passExam !== '' &&
-            systemTime.checkDocumentSystemTime &&
-            systemTime.checkDocumentSystemTime['close-fill-document']
+          systemTime.checkDocumentSystemTime &&
+          systemTime.checkDocumentSystemTime['display-exam-result']
         "
       >
         <hr class="dashed" />
@@ -348,7 +349,7 @@
             </div>
             <div>
               Phụ huynh vui lòng làm thủ tục nhập học ngày
-              <span class="error--text">{{ getRegisterDay }}</span>
+              <span class="error--text">01/07/2021</span>
             </div>
             <div>Thời gian làm việc của Ban tuyển sinh</div>
             <div>Sáng: 8:00 - 11:00</div>
@@ -399,22 +400,19 @@ export default {
   },
   computed: {
     getCloseFillDocumentDate() {
-      return this.systemTime.documentSystemTime &&
-        this.systemTime.documentSystemTime["close-fill-document"]
-        ? moment(
-            this.systemTime.documentSystemTime["close-fill-document"],
-            "DD/MM/YYYY hh:mm:ss"
-          ).format("DD/MM/YYYY")
-        : "01/07/2021";
-    },
-    getRegisterDay() {
-      return this.systemTime.documentSystemTime &&
-        this.systemTime.documentSystemTime["register-day"]
-        ? moment(
-            this.systemTime.documentSystemTime["register-day"],
-            "DD/MM/YYYY hh:mm:ss"
-          ).format("DD/MM/YYYY")
-        : "01/07/2021";
+      if (
+        this.systemTime.documentSystemTime &&
+        this.systemTime.documentSystemTime["close-fill-exam-result"]
+      ) {
+        return `${moment(
+          this.systemTime.documentSystemTime["close-fill-exam-result"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("HH:mm")} ngày ${moment(
+          this.systemTime.documentSystemTime["close-fill-exam-result"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("DD/MM/YYYY")}`;
+      }
+      return "00:00 ngày 14/06/2021";
     },
     getPriorityMark() {
       switch (this.ltvExamResult.priorityType) {

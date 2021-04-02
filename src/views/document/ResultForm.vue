@@ -2,18 +2,18 @@
   <v-card width="100%" class="elevation-0">
     <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
     <v-card-title class="card-title mb-2">Kết quả học tập</v-card-title>
-    <div
-      class="field-label pt-6"
-      v-if="
-        documentStep !== 4 && !isEditing && !isFillInfoClose && !isAdminPreview
-      "
-    >
+    <div class="field-label pt-6" v-if="isNoticeDisplay">
       <span class="error--text">(*)</span> Phụ huynh lưu ý: Các thông tin này có
       thể được chỉnh sửa nhưng sẽ bị khóa vào ngày
-      <span class="error--text">30/05/2021</span>.
+      <span class="error--text">{{ closeFillInfoTime }}</span
+      >.
     </div>
     <v-card-subtitle
-      v-if="documentStep === 4 || isEditing"
+      v-if="
+        (documentStep === 4 && document.type === 'Khối 10') ||
+        (documentStep === 3 && document.type === 'Khối 6') ||
+        isEditing
+      "
       class="card-subtitle"
       v-html="getSubtitle"
     >
@@ -35,6 +35,7 @@
           ref="grade6Result"
           :documentStep="documentStep"
           :document="document"
+          :isEditing="isEditing"
           v-if="document.type === 'Khối 6'"
         />
       </div>
@@ -43,6 +44,7 @@
           ref="grade6Expectation"
           :documentStep="documentStep"
           :document="document"
+          :isEditing="isEditing"
           v-if="document.type === 'Khối 6'"
         />
       </div>
@@ -55,8 +57,8 @@
         color="primary"
         v-if="
           (documentStep === 3 && document.type === 'Khối 6') ||
-            (documentStep === 4 && document.type === 'Khối 10') ||
-            isEditing
+          (documentStep === 4 && document.type === 'Khối 10') ||
+          isEditing
         "
         @click="saveDraft"
         outlined
@@ -70,24 +72,18 @@
         color="primary"
         v-if="
           (documentStep === 3 && document.type === 'Khối 6') ||
-            (documentStep === 4 && document.type === 'Khối 10') ||
-            isEditing
+          (documentStep === 4 && document.type === 'Khối 10') ||
+          isEditing
         "
         @click="completeStep"
         large
       >
-        <span>Hoàn thành</span>
+        <span>Tiếp tục</span>
       </v-btn>
       <v-btn
         class="px-6 py-3 mr-6 text-none"
         color="primary"
-        v-if="
-          documentStep !== 4 &&
-            document.type === 'Khối 10' &&
-            !isEditing &&
-            !isFillInfoClose &&
-            !isAdminPreview
-        "
+        v-if="isNoticeDisplay"
         @click="onEdit"
         outlined
         large
@@ -98,8 +94,8 @@
         class="px-6 py-3 text-none elevation-0"
         color="primary"
         v-if="
-          (documentStep !== 3 && document.type === 'Khối 6') ||
-            (documentStep !== 4 && document.type === 'Khối 10' && !isEditing)
+          (documentStep !== 3 && document.type === 'Khối 6' && !isEditing) ||
+          (documentStep !== 4 && document.type === 'Khối 10' && !isEditing)
         "
         @click="nextStep"
         large
@@ -114,7 +110,7 @@
 import Grade6ResultForm from "@/modules/cv/Grade6ResultForm.vue";
 import Grade6Expectation from "@/modules/cv/Grade6Expectation.vue";
 import Grade10ResultForm from "@/modules/cv/Grade10ResultForm.vue";
-
+import moment from "moment";
 export default {
   components: {
     Grade6ResultForm,
@@ -128,24 +124,61 @@ export default {
     isAdminPreview: Boolean,
   },
   computed: {
-    getSubtitle() {
-      if (this.document.type === "Khối 6")
-        return "Vui lòng điền <b>Điểm thi cuối năm</b> môn Toán, Văn, Anh và điểm hạnh kiểm cả năm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>";
-      return "Vui lòng điền <b>Điểm tổng kết cuối năm</b> môn Toán, Văn, Anh, Lý, Hóa & Xếp loại hạnh kiểm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>";
+    closeFillInfoTime() {
+      if (
+        this.systemTime.documentSystemTime &&
+        this.systemTime.documentSystemTime["close-fill-info"]
+      )
+        return `${moment(
+          this.systemTime.documentSystemTime["close-fill-info"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("DD/MM/YYYY")} lúc ${moment(
+          this.systemTime.documentSystemTime["close-fill-info"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("HH:mm")}`;
+      return "30/05/2021 lúc 00:00";
     },
     isFillInfoClose() {
       if (this.systemTime && this.systemTime.checkDocumentSystemTime)
         return this.systemTime.checkDocumentSystemTime["close-fill-info"];
       return false;
     },
+    getSubtitle() {
+      if (this.document.type === "Khối 6")
+        return "Vui lòng điền <b>Điểm thi cuối năm</b> môn Toán, Văn, Anh và điểm hạnh kiểm cả năm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>";
+      return "Vui lòng điền <b>Điểm tổng kết cuối năm</b> môn Toán, Văn, Anh, Lý, Hóa & Xếp loại hạnh kiểm <br /><i>(Lưu ý: Phần thập phân viết bằng dấu chấm VD: 9.25)</i>";
+    },
+    isNoticeDisplay() {
+      if (
+        this.documentStep !== 4 &&
+        this.document.type === "Khối 10" &&
+        !this.isEditing &&
+        !this.isFillInfoClose &&
+        !this.isAdminPreview
+      )
+        return true;
+      if (
+        this.documentStep !== 3 &&
+        this.document.type === "Khối 6" &&
+        !this.isEditing &&
+        !this.isFillInfoClose &&
+        !this.isAdminPreview
+      )
+        return true;
+      return false;
+    },
   },
   created() {
-    this.isEditing = false;
-    if (this.documentStep !== 4) this.isEditing = false;
+    this.isEditing = true;
+    if (this.documentStep !== 4 && this.document.type === "Khối 10")
+      this.isEditing = false;
+    else if (this.documentStep !== 3 && this.document.type === "Khối 6")
+      this.isEditing = false;
   },
   data() {
     return {
       isEditing: true,
+      closeFillInfoDate: "30/05/2021 lúc 00:00",
     };
   },
   methods: {
@@ -153,7 +186,7 @@ export default {
       this.$dialog.confirm({
         title: "Chỉnh sửa",
         okText: "Xác nhận",
-        topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">30/05/2021</span>`,
+        topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">${this.closeFillInfoTime}</span>`,
         midContent:
           "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
         botContent: "",
@@ -173,6 +206,7 @@ export default {
         expectation1: expectationForm.expectation1,
         expectation2: expectationForm.expectation2,
         expectation3: expectationForm.expectation3,
+        ltvExamResult: resultForm.ltvExamResult,
       };
     },
     getGrade10Query(resultForm) {
@@ -210,13 +244,12 @@ export default {
         title: "Chú ý",
         okText: "Xác nhận",
         topContent: `Quý phụ huynh lưu ý:`,
-        midContent:
-          "Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>30/05/2021</span>.",
-        botContent:
-          "<span class='error--text'>Sau 00:00</span> ngày <span class='error--text'>31/05/2021</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.",
+        midContent: `Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>${this.closeFillInfoDate}</span>.`,
+        botContent: `Sau <span class='error--text'>${this.closeFillInfoDate}</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.`,
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;
+          this.isEditing = false;
           this.$emit("completeStep", query);
         },
       });

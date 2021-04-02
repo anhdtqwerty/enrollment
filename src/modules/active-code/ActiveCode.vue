@@ -93,7 +93,7 @@ export default {
         "Ngày kích hoạt": {
           field: "activeDate",
           callback: (value) => {
-            if (value) return moment(value).format("DD/MM/YYYY hh:mm:ss");
+            if (value) return moment(value).format("DD/MM/YYYY HH:mm:ss");
             else return "";
           },
         },

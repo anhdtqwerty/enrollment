@@ -50,6 +50,7 @@ export default {
     onSignOut() {
       this.setAllDialogClose();
       this.signOut();
+      this.$router.push("/");
     },
   },
 };

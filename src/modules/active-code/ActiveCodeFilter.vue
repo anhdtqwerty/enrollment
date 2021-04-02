@@ -111,7 +111,7 @@
         <v-btn
           color="admin"
           height="40px"
-          class="px-2"
+          width="100%"
           @click="advancedFilter = !advancedFilter"
           text
         >

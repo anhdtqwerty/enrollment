@@ -325,7 +325,7 @@
       <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep === 3 || isEditing"
+        v-if="(documentStep === 3 || isEditing) && !isCloseFillInfo"
         @click="completeStep"
         large
       >
@@ -337,9 +337,9 @@
         color="primary"
         v-if="
           documentStep !== 3 &&
-            !isEditing &&
-            !isCloseFillInfo &&
-            !isAdminPreview
+          !isEditing &&
+          !isCloseFillInfo &&
+          !isAdminPreview
         "
         @click="onEdit"
         outlined
@@ -392,11 +392,14 @@ export default {
         this.systemTime.documentSystemTime &&
         this.systemTime.documentSystemTime["close-fill-info"]
       )
-        return moment(
+        return `${moment(
           this.systemTime.documentSystemTime["close-fill-info"],
-          "DD/MM/YYYY hh:mm:mm"
-        ).format("DD/MM/YYYY");
-      return "30/05/2021";
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("DD/MM/YYYY")} lúc ${moment(
+          this.systemTime.documentSystemTime["close-fill-info"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("HH:mm")}`;
+      return "30/05/2021 lúc 00:00";
     },
     isCloseFillInfo() {
       if (
@@ -438,9 +441,9 @@ export default {
         groupExpectation2: "",
       },
       groups: [
-        { title: "Ban A", value: "Ban A" },
-        { title: "Ban A1", value: "Ban A1" },
-        { title: "Ban D", value: "Ban D" },
+        { title: "Ban A - Chuyên sâu Toán, Lý, Hóa", value: "Ban A" },
+        { title: "Ban A1 - Chuyên sâu Toán, Lý, Anh", value: "Ban A1" },
+        { title: "Ban D - Chuyên sau Toán, Văn, Anh", value: "Ban D" },
       ],
     };
   },
@@ -469,10 +472,8 @@ export default {
         title: "Chú ý",
         okText: "Xác nhận",
         topContent: `Quý phụ huynh lưu ý:`,
-        midContent:
-          "Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>30/05/2021</span>.",
-        botContent:
-          "<span class='error--text'>Sau 00:00</span> ngày <span class='error--text'>31/05/2021</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.",
+        midContent: `Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>${this.closeFillInfoTime}</span>.`,
+        botContent: `Sau <span class='error--text'>${this.closeFillInfoTime}</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.`,
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;
@@ -510,7 +511,7 @@ export default {
       this.$dialog.confirm({
         title: "Chỉnh sửa",
         okText: "Xác nhận",
-        topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">30/05/2021</span>`,
+        topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">${this.closeFillInfoTime}</span>`,
         midContent:
           "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
         botContent: "",

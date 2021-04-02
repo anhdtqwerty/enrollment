@@ -53,7 +53,13 @@
           </div>
         </v-col>
       </v-row>
-      <div v-if="ltvExamResult.passExam !== ''">
+      <div
+        v-if="
+          ltvExamResult.passExam !== '' &&
+          systemTime.checkDocumentSystemTime &&
+          systemTime.checkDocumentSystemTime['display-exam-result']
+        "
+      >
         <hr class="dashed" />
         <div class="py-6" v-if="ltvExamResult.passExam">
           <div class="mx-auto" style="max-width: 355px">
@@ -84,8 +90,9 @@
               tuyển đợt 1 vào trường THCS & THPT Lương Thế Vinh.
             </div>
             <div>
-              Phụ huynh vui lòng làm thủ tục nhập học ngày
-              <span class="error--text">dd/mm/yyyy</span>
+              Phụ huynh vui lòng làm thủ tục nhập học tại trường trong 2 ngày
+              <span class="error--text">13/06/2021</span> và
+              <span class="error--text">14/06/2021</span>
             </div>
             <div>Thời gian làm việc của Ban tuyển sinh</div>
             <div>Sáng: 8:00 - 11:00</div>
@@ -130,6 +137,7 @@ export default {
       type: Object,
       default: () => {},
     },
+    systemTime: Object,
   },
   data() {
     return {

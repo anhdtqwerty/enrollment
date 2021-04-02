@@ -32,18 +32,17 @@ export default {
       return;
     }
     const systemTime = await this.checkSystemTime();
+    console.log(systemTime);
     if (
       (!systemTime || !systemTime.checkSystemTime["open-document"]) &&
       this.user.role.type !== "admin" &&
       process.env.NODE_ENV !== "development"
     ) {
-      this.$alert.error(
+      this.redirectToHome(
         `Hệ thống sẽ mở vào ngày ${moment(
           systemTime.systemTime["open-document"]
-        ).format("DD/MM/YYYY hh:mm:ss")}!`
+        ).format("DD/MM/YYYY HH:mm:ss")}!`
       );
-      this.$router.push("/");
-      this.$loading.active = false;
       return;
     }
     await this.fetchCV({
@@ -51,17 +50,32 @@ export default {
       parent: this.user.id,
     });
     if (!this.CV(this.documentId)) {
-      this.$alert.error(
+      this.redirectToHome(
         `Hồ sơ ${this.documentId} không tồn tại hoặc không có quyền truy cập!`
       );
-      this.$router.push("/");
-      this.$loading.active = false;
+      return;
+    } else if (
+      this.document.type == "Khối 6" &&
+      systemTime.checkSystemTime["grade6-close-document"]
+    ) {
+      this.redirectToHome(
+        `Hệ thống hồ sơ khối 6 đã đóng vào ngày ${systemTime.systemTime["grade6-close-document"]}`
+      );
+      return;
+    } else if (
+      this.document.type == "Khối 10" &&
+      systemTime.checkSystemTime["grade10-close-document"]
+    ) {
+      this.redirectToHome(
+        `Hệ thống hồ sơ khối 10 đã đóng vào ngày ${systemTime.systemTime["grade10-close-document"]}`
+      );
       return;
     }
     this.document = this.CV(this.documentId);
     this.documentSystemTime = await this.checkDocumentSystemTime({
       grade: this.document.type,
     });
+    console.log(this.documentSystemTime);
     if (this.document.type === "Khối 6")
       this.checkStepGrade6(this.document.step, this.documentSystemTime);
     else this.checkStepGrade10(this.document, this.documentSystemTime);
@@ -82,6 +96,11 @@ export default {
     ]),
     ...mapActions("upload", ["upload", "destroy"]),
     ...mapActions("activeCode", ["updateActiveCode", "fetchActiveCode"]),
+    redirectToHome(message) {
+      this.$alert.error(message);
+      this.$router.push("/");
+      this.$loading.active = false;
+    },
     checkStepGrade10(document, systemTime) {
       switch (document.step) {
         case 3:
@@ -174,9 +193,37 @@ export default {
           department: this.document.department,
         });
       }
-      if (isDraft) this.$alert.success("Đã lưu thành công");
-      else this.$alert.success("Đã hoàn thành khai báo thông tin");
+      this.showAlertDialog(isDraft);
       this.$loading.active = false;
+    },
+    showAlertDialog(isDraft) {
+      if (isDraft) {
+        if (
+          this.document.type === "Khối 6" &&
+          this.step === 4 &&
+          !this.documentSystemTime.checkDocumentSystemTime[
+            "display-exam-result"
+          ]
+        )
+          return;
+        else this.$alert.success("Đã lưu thành công");
+      } else {
+        if (
+          this.document.type === "Khối 6" &&
+          this.step === 4 &&
+          !this.documentSystemTime.checkDocumentSystemTime[
+            "display-exam-result"
+          ]
+        )
+          return;
+        if (
+          this.document.type === "Khối 10" &&
+          this.step === 4 &&
+          !this.documentSystemTime.checkDocumentSystemTime["exam-result"]
+        )
+          return;
+        else this.$alert.success("Đã hoàn thành khai báo thông tin");
+      }
     },
     async uploadAvatar(image) {
       if (this.document.avatar.length > 0)

@@ -157,7 +157,7 @@ export default {
       if (this.systemTime.documentSystemTime)
         return moment(
           this.systemTime.documentSystemTime["exam-result"],
-          "DD/MM/YYYY hh:mm:ss"
+          "DD/MM/YYYY HH:mm:ss"
         ).format("DD/MM/YYYY");
       return "12/06/2021";
     },

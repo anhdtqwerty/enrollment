@@ -72,9 +72,9 @@ export default {
     },
     setCountdown(date) {
       if (date) {
-        this.countdown = moment(date, "DD/MM/YYYY hh:mm:ss");
+        this.countdown = moment(date, "DD/MM/YYYY HH:mm:ss");
       } else {
-        this.countdown = moment().endOf("day").format("DD/MM/YYYY hh:mm:ss");
+        this.countdown = moment().endOf("day").format("DD/MM/YYYY HH:mm:ss");
       }
     },
     update() {
