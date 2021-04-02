@@ -61,7 +61,7 @@
             <div
               class="justify-center menu-title text-center mt-2"
               :class="{ 'mobile-menu-title': n === 5 || n === 6 }"
-              v-html="menu[n - 1].title"
+              v-html="menu[n - 1].mobile"
             ></div>
           </v-card>
         </v-row>
@@ -249,32 +249,60 @@ export default {
       {
         title: "Thông tin tuyển sinh",
         src: require("@/assets/homepage/Group-5.svg"),
+        mobile: "Thông tin tuyển sinh",
       },
       {
         title: "Hướng dẫn tuyển sinh",
         src: require("@/assets/homepage/Group-1.svg"),
+        mobile: "Hướng dẫn tuyển sinh",
       },
       {
         title: "Hồ sơ tuyển sinh",
         src: require("@/assets/homepage/Group-2.svg"),
+        mobile: "Hồ sơ tuyển sinh",
       },
       {
         title: "Giới thiệu chung",
         src: require("@/assets/homepage/Group-4.svg"),
+        mobile: "Giới thiệu chung",
       },
       {
         title: "Tham quan Cơ sở Nhà trường",
         src: require("@/assets/homepage/Group-6.svg"),
+        mobile:
+          "<span class='item-mobile-title'>Tham quan <br/> Cơ sở Nhà trường</span>" +
+          "<span class='item-desktop-title'>Tham quan Cơ sở Nhà trường</span>",
       },
       {
         title: "Hoạt động ngoại khóa",
         src: require("@/assets/homepage/Group-3.svg"),
+        mobile: "Hoạt động ngoại khóa",
       },
     ],
   }),
 };
 </script>
-
+<style>
+.item-mobile-title {
+  display: none;
+}
+.item-desktop-title {
+  display: block;
+}
+@media screen and (min-width: 600px) {
+  div.v-card--link:hover {
+    background: rgb(116, 160, 246, 0.15) !important;
+  }
+}
+@media screen and (max-width: 960px) {
+  .item-mobile-title {
+    display: block;
+  }
+  .item-desktop-title {
+    display: none;
+  }
+}
+</style>
 <style scoped>
 .bg-image {
   position: absolute;
@@ -321,10 +349,5 @@ export default {
   background-repeat: no-repeat;
   background-position: center;
   background-size: calc(100% - 48px) calc(100% - 48px);
-}
-@media screen and (min-width: 600px) {
-  div.v-card--link:hover {
-    background: rgb(116, 160, 246, 0.15) !important;
-  }
 }
 </style>
