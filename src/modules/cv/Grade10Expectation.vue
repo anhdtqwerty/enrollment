@@ -23,7 +23,7 @@
         <v-row class="my-0">
           <v-col class="py-0">
             <div class="field-label">
-              Con tôi đã đăng ký số nguyện vọng vào lớp 10
+              Con tôi đã đăng ký số nguyện vọng vào lớp 10 (Công lập)
               <span style="color: red" v-if="documentStep === 3 || isEditing"
                 >*</span
               >
@@ -128,6 +128,9 @@
           <v-col class="py-0">
             <div class="field-label">
               Con tôi đã đăng ký nguyện vọng 2 vào lớp 10 trường THPT
+              <span style="color: red" v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
             </div>
             <v-text-field
               placeholder="VD: Trường THPT..."
@@ -136,6 +139,7 @@
               type="text"
               color="primary"
               v-if="documentStep === 3 || isEditing"
+              :rules="[$rules.required]"
               @keyup.enter="submit"
               outlined
               validate-on-blur
@@ -150,7 +154,13 @@
         </v-row>
         <v-row class="my-0" v-if="expectationNumber >= 2">
           <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-            <div class="field-label">Quận (Huyện)</div>
+            <div class="field-label">
+              Quận (Huyện)<span
+                style="color: red"
+                v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
+            </div>
             <v-text-field
               placeholder="VD: Ba Đình"
               name="login"
@@ -158,6 +168,7 @@
               type="text"
               color="primary"
               v-if="documentStep === 3 || isEditing"
+              :rules="[$rules.required]"
               @keyup.enter="submit"
               outlined
               validate-on-blur
@@ -170,13 +181,20 @@
             </div>
           </v-col>
           <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-            <div class="field-label">Thành phố</div>
+            <div class="field-label">
+              Thành phố<span
+                style="color: red"
+                v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
+            </div>
             <v-text-field
               placeholder="VD: Hà Nội"
               name="login"
               v-model="expectation2.city"
               type="text"
               color="primary"
+              :rules="[$rules.required]"
               v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               outlined
@@ -197,6 +215,9 @@
           <v-col class="py-0">
             <div class="field-label">
               Con tôi đã đăng ký nguyện vọng 3 vào lớp 10 trường THPT
+              <span style="color: red" v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
             </div>
             <v-text-field
               placeholder="VD: Trường THPT..."
@@ -219,13 +240,20 @@
         </v-row>
         <v-row class="my-0" v-if="expectationNumber >= 3">
           <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-            <div class="field-label">Quận (Huyện)</div>
+            <div class="field-label">
+              Quận (Huyện)<span
+                style="color: red"
+                v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
+            </div>
             <v-text-field
               placeholder="VD: Ba Đình"
               name="login"
               v-model="expectation3.district"
               type="text"
               color="primary"
+              :rules="[$rules.required]"
               v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               outlined
@@ -239,13 +267,20 @@
             </div>
           </v-col>
           <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-            <div class="field-label">Thành phố</div>
+            <div class="field-label">
+              Thành phố<span
+                style="color: red"
+                v-if="documentStep === 3 || isEditing"
+                >*</span
+              >
+            </div>
             <v-text-field
               placeholder="VD: Hà Nội"
               name="login"
               v-model="expectation3.city"
               type="text"
               color="primary"
+              :rules="[$rules.required]"
               v-if="documentStep === 3 || isEditing"
               @keyup.enter="submit"
               outlined
@@ -443,7 +478,7 @@ export default {
       groups: [
         { title: "Ban A - Chuyên sâu Toán, Lý, Hóa", value: "Ban A" },
         { title: "Ban A1 - Chuyên sâu Toán, Lý, Anh", value: "Ban A1" },
-        { title: "Ban D - Chuyên sau Toán, Văn, Anh", value: "Ban D" },
+        { title: "Ban D - Chuyên sâu Toán, Văn, Anh", value: "Ban D" },
       ],
     };
   },

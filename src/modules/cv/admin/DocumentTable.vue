@@ -37,11 +37,11 @@
         <v-chip
           small
           class="white--text d-flex justify-center"
-          :color="getColor(item.status)"
+          :color="getColor(item)"
           style="width: 105px"
           label
         >
-          {{ item.status | getStatus }}
+          {{ item | getStatus }}
         </v-chip>
       </template>
       <template v-slot:[`item.parentName`]="{ item }">
@@ -152,8 +152,18 @@ export default {
       await this.fetchCVs({ ...query });
       this.loading = false;
     },
-    getColor(status) {
-      if (status === "submitted") return "success";
+    getColor(item) {
+      if (
+        item.type === "Khối 6" &&
+        item.step === 4 &&
+        item.studyRecord &&
+        item.studyRecord.grade5Math &&
+        item.studyRecord.grade5Literature &&
+        item.studyRecord.grade5Morality
+      )
+        return "success";
+      else if (item.type === "Khối 10" && item.status === "submitted")
+        return "success";
       else return "orange accent-2";
     },
     onDocumentClick(documentId) {
@@ -174,10 +184,20 @@ export default {
     getStudent: (item) => {
       return get(item, "name", "---");
     },
-    getStatus: (status) => {
-      if (status === "filling") return "Đang khai";
-      else if (status === "submitted") return "Đã nộp";
-      else return "Vừa tạo";
+    getStatus: (item) => {
+      if (
+        item.type === "Khối 6" &&
+        item.step === 4 &&
+        item.studyRecord &&
+        item.studyRecord.grade5Math &&
+        item.studyRecord.grade5Literature &&
+        item.studyRecord.grade5Morality
+      )
+        return "Hoàn thành";
+      else if (item.type === "Khối 10" && item.status === "submitted")
+        return "Hoàn thành";
+      if (item.status === "filling") return "Đang khai";
+      else return "Chưa khai";
     },
     getDepartment: (item) => {
       if (!item.department || item.department === "unset") return "---";

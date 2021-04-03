@@ -42,12 +42,11 @@
     </template>
     <template v-slot:[`item.status`]="{ item }">
       <v-chip
-        :color="getStatusColor(item.status)"
+        :color="getStatusColor(item)"
         class="d-flex justify-center"
-        style="width: 80px"
         small
       >
-        {{ item.status | getStatus }}
+        {{ item | getStatus }}
       </v-chip>
     </template>
     <template v-slot:[`item.action`]="{ item }">
@@ -153,8 +152,18 @@ export default {
       if (grade === "Khối 6") return "pink lighten-4";
       else return "deep-purple lighten-4";
     },
-    getStatusColor(status) {
-      if (status === "submitted") return "rgba(75,202,129,0.5)";
+    getStatusColor(item) {
+      if (
+        item.type === "Khối 6" &&
+        item.step === 4 &&
+        item.studyRecord &&
+        item.studyRecord.grade5Math &&
+        item.studyRecord.grade5Literature &&
+        item.studyRecord.grade5Morality
+      )
+        return "rgba(75,202,129,0.5)";
+      else if (item.type === "Khối 10" && item.status === "submitted")
+        return "rgba(75,202,129,0.5)";
       else return "rgba(255,196,16,0.5)";
     },
   },
@@ -165,10 +174,20 @@ export default {
     });
   },
   filters: {
-    getStatus: (status) => {
-      if (status === "submitted") return "Đã nộp";
-      else if (status === "filling") return "Đang khai";
-      else return "Vừa tạo";
+    getStatus: (item) => {
+      if (
+        item.type === "Khối 6" &&
+        item.step === 4 &&
+        item.studyRecord &&
+        item.studyRecord.grade5Math &&
+        item.studyRecord.grade5Literature &&
+        item.studyRecord.grade5Morality
+      )
+        return "Hoàn thành";
+      else if (item.type === "Khối 10" && item.status === "submitted")
+        return "Hoàn thành";
+      if (item.status === "filling") return "Đang khai";
+      else return "Chưa khai";
     },
     getDepartment: (item) => {
       if (!item.department || item.department === "unset") return "---";

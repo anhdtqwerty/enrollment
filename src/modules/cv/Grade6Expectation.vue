@@ -13,7 +13,7 @@
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Nguyện vọng 1
-            <span style="color: red" v-if="documentStep === 3">*</span>
+            <span style="color: red" v-if="documentStep === 3 || isEditing">*</span>
           </div>
           <v-select
             v-model="expectation1.clazz"
@@ -22,10 +22,10 @@
             item-value="select-value"
             :items="expectations"
             :rules="[$rules.required]"
-            v-if="documentStep === 3"
+            v-if="documentStep === 3 || isEditing"
             outlined
           />
-          <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+          <div class="info-label mt-2 mb-6" v-if="documentStep !== 3 && !isEditing">
             {{ expectation1.clazz || "Chưa có thông tin" }}
           </div>
         </v-col>
@@ -37,10 +37,10 @@
             item-text="title"
             item-value="select-value"
             :items="expectations"
-            v-if="documentStep === 3"
+            v-if="documentStep === 3 || isEditing"
             outlined
           />
-          <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+          <div class="info-label mt-2 mb-6" v-if="documentStep !== 3 && !isEditing">
             {{ expectation2.clazz || "Chưa có thông tin" }}
           </div>
         </v-col>
@@ -52,10 +52,10 @@
             item-text="title"
             item-value="select-value"
             :items="expectations"
-            v-if="documentStep === 3"
+            v-if="documentStep === 3 || isEditing"
             outlined
           />
-          <div class="info-label mt-2 mb-6" v-if="documentStep !== 3">
+          <div class="info-label mt-2 mb-6" v-if="documentStep !== 3 && !isEditing">
             {{ expectation3.clazz || "Chưa có thông tin" }}
           </div>
         </v-col>
@@ -66,11 +66,11 @@
       no-gutters
       style="max-width: 100%; overflow-x: auto"
     >
-      <div class="field-label" v-if="documentStep === 3">
+      <div class="field-label" v-if="documentStep === 3 || isEditing">
         <b>Mô hình lớp học</b>
       </div>
       <div style="overflow-x: auto">
-        <table class="expectation-table" v-if="documentStep === 3">
+        <table class="expectation-table" v-if="documentStep === 3 || isEditing">
           <tr>
             <td></td>
             <td
@@ -138,7 +138,7 @@
           </tr>
         </table>
       </div>
-      <div class="field-label py-6" v-if="documentStep === 3">
+      <div class="field-label py-6" v-if="documentStep === 3 || isEditing">
         <span style="color: red">(*)</span> Lưu ý: Học sinh không đăng ký nguyện
         vọng sẽ được nhà trường xếp lớp ngẫu nhiên.
       </div>
@@ -154,6 +154,7 @@ export default {
       type: Object,
       default: () => {},
     },
+    isEditing: Boolean,
   },
   data() {
     return {

@@ -700,10 +700,8 @@ export default {
       ],
       moralities: [
         { title: "Tốt", value: "Tốt" },
-        { title: "Khá", value: "Khá" },
-        { title: "Trung bình", value: "Trung bình" },
-        { title: "Yếu", value: "Yếu" },
-        { title: "Kém", value: "Kém" },
+        { title: "Đạt", value: "Đạt" },
+        { title: "Cần cố gắng", value: "Cần cố gắng" },
       ],
     };
   },
