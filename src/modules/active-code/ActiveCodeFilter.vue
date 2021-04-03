@@ -27,6 +27,7 @@
               item-value="value"
               v-model="grade"
               placeholder="Khối"
+              clearable
               outlined
               dense
               hide-details
@@ -39,6 +40,8 @@
               item-value="value"
               v-model="department"
               placeholder="Cơ sở"
+              :disabled="disabledDepartmentFilter"
+              clearable
               outlined
               dense
               hide-details
@@ -101,6 +104,7 @@
               v-model="createdBy"
               placeholder="Người tạo mã"
               :items="adminUsers"
+              clearable
               outlined
               dense
             />
@@ -137,6 +141,7 @@
               v-model="status"
               placeholder="Trạng thái"
               :items="statuses"
+              clearable
               outlined
               dense
               hide-details
@@ -149,7 +154,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import moment from "moment";
 export default {
   async created() {
@@ -161,10 +166,18 @@ export default {
         value: admin.name || admin.username,
       };
     });
+    if (this.user.department === "both") {
+      this.disabledDepartmentFilter = false;
+      this.department = "";
+    } else this.department = this.user.department;
     this.$loading.active = false;
+  },
+  computed: {
+    ...mapGetters("auth", ["user"]),
   },
   data() {
     return {
+      disabledDepartmentFilter: true,
       advancedFilter: false,
       show: false,
       status: "",
@@ -209,7 +222,7 @@ export default {
         grade: this.grade,
         code: this.code,
         createdBy: this.createdBy,
-        department: this.department,
+        department_in: [this.department, "unset"],
         createdAt_gt: moment(this.startDate, "DD/MM/YYYY").toISOString(),
         createdAt_lt: moment(this.endDate, "DD/MM/YYYY").toISOString(),
       });

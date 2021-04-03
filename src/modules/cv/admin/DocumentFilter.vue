@@ -27,6 +27,7 @@
               item-value="value"
               v-model="grade"
               placeholder="Khối"
+              clearable
               outlined
               dense
               hide-details
@@ -39,6 +40,7 @@
               item-value="value"
               v-model="department"
               placeholder="Cơ sở"
+              :disabled="disabledDepartmentFilter"
               outlined
               dense
               hide-details
@@ -132,6 +134,7 @@
               v-model="status"
               placeholder="Trạng thái"
               :items="statuses"
+              clearable
               outlined
               dense
               hide-details
@@ -156,10 +159,20 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
+  computed: {
+    ...mapGetters("auth", ["user"]),
+  },
+  created() {
+    if (this.user.department === "both") {
+      this.disabledDepartmentFilter = false;
+      this.department = "";
+    } else this.department = this.user.department;
+  },
   data() {
     return {
+      disabledDepartmentFilter: true,
       advancedFilter: false,
       show: false,
       status: "",
@@ -192,7 +205,7 @@ export default {
         status: this.status,
         grade: this.grade,
         code: this.code,
-        department: this.department,
+        department_in: ["unset", this.department],
         name: this.name,
         parentName: this.parent,
         otherParentName: this.otherParent,

@@ -44,12 +44,6 @@
           {{ item | getStatus }}
         </v-chip>
       </template>
-      <template v-slot:[`item.parentName`]="{ item }">
-        {{ item | getParentName }}
-      </template>
-      <template v-slot:[`item.otherParentName`]="{ item }">
-        {{ item | getOtherParentName }}
-      </template>
       <template v-slot:[`item.parentPhone`]="{ item }">
         {{ item | getUserPhone }}
       </template>
@@ -92,20 +86,6 @@ const originHeaders = [
   {
     text: "Trạng thái",
     value: "status",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-  {
-    text: "Họ và tên Người khai",
-    value: "parentName",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-  {
-    text: "Họ và tên Vợ(chồng)",
-    value: "otherParentName",
     align: "left",
     sortable: false,
     show: true,
@@ -174,12 +154,6 @@ export default {
   filters: {
     getUserPhone: (item) => {
       return get(item, "parent.username", "---");
-    },
-    getParentName: (item) => {
-      return get(item, "parentName", "---");
-    },
-    getOtherParentName: (item) => {
-      return get(item, "otherParentName", "---");
     },
     getStudent: (item) => {
       return get(item, "name", "---");

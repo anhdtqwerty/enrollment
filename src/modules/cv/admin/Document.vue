@@ -87,7 +87,13 @@ export default {
             return moment(value).format("DD/MM/YYYY HH:mm:ss");
           },
         },
-        "Cơ sở": "department",
+        "Cơ sở": {
+          field: "department",
+          callback: (value) => {
+            if (value === "unset") return "Chưa có thông tin";
+            else return value;
+          },
+        },
         "Họ và tên": "name",
         "Ngày sinh": {
           field: "dob",

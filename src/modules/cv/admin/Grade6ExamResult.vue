@@ -5,6 +5,13 @@
       :documentId="selectedDocumentId"
       @closeDialog="dialog = !dialog"
     />
+    <ConfirmExamResultDialog
+      :state="confirmResultDialog"
+      :importedDocuments="importedDocuments"
+      grade="Khối 6"
+      @closeDialog="closeConfirmDialog"
+      @updateResult="onUpdateResultDocument"
+    />
     <div class="d-flex justify-space-between align-center mb-6">
       <div class="component-title">Kết quả thi Khối 6</div>
       <div class="d-flex flex-center">
@@ -150,10 +157,6 @@ const schema = {
     prop: "examEnglish",
     type: String,
   },
-  "Điểm cộng": {
-    prop: "priorityMark",
-    type: String,
-  },
   "Tổng điểm": {
     prop: "totalMark",
     type: String,
@@ -169,6 +172,7 @@ import { mapActions, mapGetters } from "vuex";
 import DocumentFilter from "./DocumentFilter";
 import Grade6ResultTable from "./Grade6ResultTable";
 import DocumentDetailDialog from "./DocumentDetailDialog";
+import ConfirmExamResultDialog from "./ConfirmExamResultDialog";
 import readXlsxFile from "read-excel-file";
 import JsonExcel from "vue-json-excel";
 import moment from "moment";
@@ -179,6 +183,7 @@ export default {
     Grade6ResultTable,
     JsonExcel,
     DocumentDetailDialog,
+    ConfirmExamResultDialog,
   },
   props: {
     role: String,
@@ -186,6 +191,8 @@ export default {
   data() {
     return {
       dialog: false,
+      confirmResultDialog: false,
+      importedDocuments: [],
       selectedDocumentId: "",
       isSelecting: false,
       selectedFile: null,
@@ -221,7 +228,13 @@ export default {
             return moment(value).format("DD/MM/YYYY HH:mm:ss");
           },
         },
-        "Cơ sở": "department",
+        "Cơ sở": {
+          field: "department",
+          callback: (value) => {
+            if (value === "unset") return "Chưa có thông tin";
+            else return value;
+          },
+        },
         "Họ và tên": "name",
         "Ngày sinh": {
           field: "dob",
@@ -384,6 +397,11 @@ export default {
       this.loadingDownload = data;
       this.$loading.active = data;
     },
+    closeConfirmDialog() {
+      this.isSelecting;
+      this.confirmResultDialog = false;
+      this.$refs.uploader.value = null;
+    },
     onButtonClick() {
       this.isSelecting = true;
       window.addEventListener(
@@ -393,71 +411,86 @@ export default {
         },
         { once: true }
       );
-
       this.$refs.uploader.click();
     },
     async onFileChanged(e) {
       this.$loading.active = true;
       this.selectedFile = e.target.files[0];
-      const readFileResult = await readXlsxFile(this.selectedFile, { schema });
+      let readFileResult;
+      try {
+        readFileResult = await readXlsxFile(this.selectedFile, {
+          schema,
+        });
+      } catch (error) {
+        this.$alert.error(
+          "File không có định dạng .xlsx hoặc có dữ liệu không hợp lệ (tham khảo mẫu file)"
+        );
+        this.$loading.active = false;
+        return;
+      }
+      this.$alert.success("Đã đọc File thành công!");
       if (readFileResult.errors.length !== 0) {
         const error = readFileResult.errors[0];
         this.$alert.error(
           `Lỗi Dòng ${error.row} - Cột ${error.column} - ${error.value}: ${error.error}`
         );
+        this.$loading.active = false;
         return;
       } else {
-        this.$alert.success(
-          "Đọc file thành công! Đang xử lý dữ liệu, xin vui lòng đợi ít phút"
-        );
-
         const results = readFileResult.rows;
-        const promises = results.map(async (result) => {
-          if (
-            result.department !== this.user.department &&
-            this.user.department !== "both"
-          )
-            return;
-
-          const existingCV = await this.fetchCV({
-            code: result.code,
-            type: "Khối 6",
-          });
-          if (!existingCV) return;
-          let query = {
-            code: result.code,
-            ltvExamResult: {
-              examMath: result.examMath,
-              examLiterature: result.examLiterature,
-              examEnglish: result.examEnglish,
-              totalMark: result.totalMark,
-              studentExamID: result.studentExamID,
-            },
-            submitType: "update-exam-result",
-            userPhone: this.user.username,
-            isDraft: false,
-          };
-          if (
-            result.passExamText &&
-            result.passExamText.includes("Đã trúng tuyển")
-          ) {
-            query.ltvExamResult.passExam = true;
-            query.ltvExamResult.passExamText = result.passExamText;
-          } else if (
-            result.passExamText &&
-            result.passExamText.includes("Không trúng tuyển")
-          ) {
-            query.ltvExamResult.passExam = false;
-            query.ltvExamResult.passExamText = result.passExamText;
-          }
-          await this.updateCV(query);
-        });
-        await Promise.all(promises);
-        await this.$refs.grade6Result.refresh({
-          _sort: "updatedAt:DESC",
-        });
+        this.importedDocuments = results;
+        this.confirmResultDialog = true;
       }
       this.$loading.active = false;
+    },
+    async onUpdateResultDocument(results) {
+      const promises = results.map(async (result) => {
+        if (
+          result.department !== this.user.department &&
+          this.user.department !== "both"
+        )
+          return;
+        const existingCV = await this.fetchCV({
+          code: result.code,
+          type: "Khối 6",
+        });
+        if (!existingCV) return;
+        let query = {
+          code: result.code,
+          ltvExamResult: {
+            examMath: result.examMath,
+            examLiterature: result.examLiterature,
+            examEnglish: result.examEnglish,
+            totalMark: result.totalMark,
+            studentExamID: result.studentExamID,
+          },
+          submitType: "update-exam-result",
+          userPhone: this.user.username,
+          isDraft: false,
+        };
+        if (
+          result.passExamText &&
+          result.passExamText.includes("Đã trúng tuyển")
+        ) {
+          query.ltvExamResult.passExam = true;
+          query.ltvExamResult.passExamText = result.passExamText;
+        } else if (
+          result.passExamText &&
+          result.passExamText.includes("Không trúng tuyển")
+        ) {
+          query.ltvExamResult.passExam = false;
+          query.ltvExamResult.passExamText = result.passExamText;
+        }
+        await this.updateCV(query);
+      });
+      await Promise.all(promises);
+      this.$alert.success(
+        "Đã cập nhật thông tin điểm của tất cả thí sinh thành công!"
+      );
+      this.confirmResultDialog = false;
+      await this.$refs.grade6Result.refresh({
+        _sort: "updatedAt:DESC",
+      });
     },
   },
 };

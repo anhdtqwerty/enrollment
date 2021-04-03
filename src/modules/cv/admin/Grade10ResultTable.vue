@@ -172,8 +172,14 @@ export default {
     },
     search() {},
     getColor(item) {
-      if (item.ltvExamResult && item.ltvExamResult.passExam != "")
-        return item.ltvExamResult.passExam ? "success--text" : "error--text";
+      if (
+        item.ltvExamResult &&
+        item.ltvExamResult.passExam &&
+        item.ltvExamResult.passExam != ""
+      ) {
+        if (item.ltvExamResult.passExam) return "success--text";
+        else return "error--text";
+      }
       return "";
     },
     getExpectation1(item) {
