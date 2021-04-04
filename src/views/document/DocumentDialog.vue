@@ -139,9 +139,9 @@ export default {
       ) {
         const existingActiveCode = await this.fetchActiveCode(this.activeCode);
         if (
-          !this.systemTime.checkSystemTime["grade6-close-create"] &&
+          this.systemTime.checkSystemTime["grade6-close-create"] &&
           existingActiveCode &&
-          existingActiveCode.type === "Khối 6"
+          existingActiveCode.grade === "Khối 6"
         ) {
           this.$alert.error(
             `Xin lỗi hệ thống tạo hồ sơ khối 6 đã đóng vào lúc ${this.systemTime.systemTime["grade6-close-create"]}`
@@ -149,9 +149,9 @@ export default {
           return;
         }
         if (
-          !this.systemTime.checkSystemTime["grade10-close-create"] &&
+          this.systemTime.checkSystemTime["grade10-close-create"] &&
           existingActiveCode &&
-          existingActiveCode.type === "Khối 10"
+          existingActiveCode.grade === "Khối 10"
         ) {
           this.$alert.error(
             `Xin lỗi hệ thống tạo hồ sơ khối 10 đã đóng vào lúc ${this.systemTime.systemTime["grade10-close-create"]}`

@@ -33,7 +33,7 @@ export default {
       try {
         const activeCode = await ActiveCode.search({ code });
         commit("setActiveCode", activeCode[0]);
-        return activeCode;
+        return activeCode[0];
       } catch (e) {
         alert.error(e);
       }

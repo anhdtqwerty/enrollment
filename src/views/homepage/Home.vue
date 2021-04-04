@@ -181,7 +181,7 @@ export default {
         if (
           this.user &&
           this.isAuthenticated &&
-          !this.isConfirmedOTP &&
+          !this.isConfirmedOTP && 
           process.env.NODE_ENV === "development"
         )
           this.setConfirmSignupDialog(true);
