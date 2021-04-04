@@ -372,9 +372,9 @@
         color="primary"
         v-if="
           documentStep !== 3 &&
-          !isEditing &&
-          !isCloseFillInfo &&
-          !isAdminPreview
+            !isEditing &&
+            !isCloseFillInfo &&
+            !isAdminPreview
         "
         @click="onEdit"
         outlined

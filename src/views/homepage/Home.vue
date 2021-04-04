@@ -48,6 +48,7 @@
               'mobile-menu-blog': $vuetify.breakpoint.xsOnly,
               'tablet-menu-blog': $vuetify.breakpoint.smOnly,
               'desktop-menu-blog': $vuetify.breakpoint.mdAndUp,
+              'align-self-start': n === 4 || n === 6,
             }"
             style="background-color: transparent"
             @click="getBtnEvent(n)"
@@ -60,7 +61,9 @@
             ></v-img>
             <div
               class="justify-center menu-title text-center mt-2"
-              :class="{ 'mobile-menu-title': n === 5 || n === 6 }"
+              :class="{
+                'mobile-menu-titlex`': n === 5 || n === 6,
+              }"
               v-html="menu[n - 1].mobile"
             ></div>
           </v-card>
@@ -181,7 +184,7 @@ export default {
         if (
           this.user &&
           this.isAuthenticated &&
-          !this.isConfirmedOTP && 
+          !this.isConfirmedOTP &&
           process.env.NODE_ENV === "development"
         )
           this.setConfirmSignupDialog(true);
