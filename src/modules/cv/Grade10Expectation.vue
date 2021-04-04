@@ -528,6 +528,18 @@ export default {
     getQuery() {},
     saveDraft() {
       this.$loading.active = true;
+      if (this.expectationNumber < 3)
+        this.expectation3 = {
+          school: "",
+          district: "",
+          city: "",
+        };
+      if (this.expectationNumber < 2)
+        this.expectation2 = {
+          school: "",
+          district: "",
+          city: "",
+        };
       this.$emit("saveDraft", {
         expectation1: this.expectation1,
         expectation2: this.expectation2,
