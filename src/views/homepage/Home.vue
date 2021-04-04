@@ -72,7 +72,7 @@
         <Footer />
       </v-col>
       <v-col xs="12" sm="12" md="6" v-if="$vuetify.breakpoint.smAndDown">
-        <v-img src="@/assets/homepage/home-bg.svg"></v-img>
+        <v-img src="@/assets/homepage/home-bg.svg" style="z-index: 10"></v-img>
       </v-col>
     </v-row>
     <EnrollDialog :state="enrollDialog" @closeEnroll="toggleEnrollDialog" />

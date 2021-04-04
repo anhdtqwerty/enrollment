@@ -54,8 +54,8 @@ export default {
   computed: {
     getFooterStyle() {
       if (this.$vuetify.breakpoint.mdAndUp)
-        return "height: 52px; left: 0; width: 100%;";
-      else return "height: 72px; width: 100%;";
+        return "height: 52px; left: 0; width: 100%; z-index: 11;";
+      else return "height: 72px; width: 100%; z-index:11";
     },
   },
 };
