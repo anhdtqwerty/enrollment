@@ -38,10 +38,11 @@ export default {
       }[this.alert.type];
     },
     timeout() {
+      if (this.alert.isLastMessage) return 15000;
       return (
         {
           error: 8000,
-        }[this.$alert.type] || 5000
+        }[this.alert.type] || 5000
       );
     },
   },

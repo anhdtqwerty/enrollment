@@ -500,9 +500,25 @@
           item-value="value"
           :rules="[$rules.required]"
           :items="priorityTypes"
-          v-if="documentStep === 3 || isEditing"
+          v-if="
+            (documentStep === 3 || isEditing) && $vuetify.breakpoint.mdAndUp
+          "
           outlined
         />
+        <v-radio-group
+          v-model="ltvExamResult.priorityType"
+          v-if="
+            (documentStep === 3 || isEditing) && $vuetify.breakpoint.smAndDown
+          "
+          :rules="[$rules.required]"
+        >
+          <v-radio
+            v-for="priorityType in priorityTypes"
+            :key="priorityType.title"
+            :label="priorityType.title"
+            :value="priorityType.value"
+          ></v-radio>
+        </v-radio-group>
         <div
           class="info-label mt-2 mb-6"
           v-if="documentStep !== 3 && !isEditing"

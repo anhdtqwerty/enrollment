@@ -86,8 +86,8 @@
             class="notice pa-4"
             v-if="
               (step === 4 || step === 3) &&
-              systemTime.checkDocumentSystemTime &&
-              !systemTime.checkDocumentSystemTime['display-exam-result']
+                systemTime.checkDocumentSystemTime &&
+                !systemTime.checkDocumentSystemTime['display-exam-result']
             "
           >
             "Kết quả khảo sát năng lực" sẽ được thông báo đến quý phú huynh sau
@@ -173,7 +173,8 @@ export default {
         (!this.document.ltvExamResult || !this.document.ltvExamResult.examMath)
       )
         this.$alert.success(
-          "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin."
+          "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin.",
+          true
         );
     },
   },
@@ -205,7 +206,8 @@ export default {
             this.user.role.type !== "admin"
           ) {
             this.$alert.success(
-              "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực"
+              "Kết quả khảo sát năng lực sẽ được thông báo đến quý phú huynh sau khi nhà trường hoàn thành chấm điểm và đánh giá. Hình thức thông báo: <br/>- SMS đến số điện thoại đăng ký<br/>- Tại mục Kết quả khảo sát năng lực",
+              true
             );
             this.setStep(this.step - 1);
           } else if (
@@ -214,7 +216,8 @@ export default {
               !this.document.ltvExamResult.examMath)
           )
             this.$alert.success(
-              "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin."
+              "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin.",
+              true
             );
           break;
       }
@@ -273,11 +276,13 @@ export default {
       ) {
         if (step === 4)
           this.$alert.success(
-            "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin."
+            "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin.",
+            true
           );
         else
           this.$alert.error(
-            "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+            "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo",
+            true
           );
         return;
       }
