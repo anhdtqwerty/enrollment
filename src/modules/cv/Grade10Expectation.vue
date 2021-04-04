@@ -364,7 +364,7 @@
         @click="completeStep"
         large
       >
-        <span>Hoàn thành</span>
+        <span>Tiếp tục</span>
       </v-btn>
       <v-btn
         :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
