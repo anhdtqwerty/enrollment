@@ -2,6 +2,7 @@
   <div class="pa-6">
     <div class="d-flex justify-space-between align-center">
       <div class="component-title">Báo cáo</div>
+      <div class="component-title">{{ getCurrentDepartment }}</div>
     </div>
     <div class="section-title py-6">Mã kích hoạt</div>
     <v-row class="d-flex">
@@ -108,9 +109,18 @@
                     <div class="timeline-title">Chọn sơ sở</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
                     <div class="text-number admin--text text-start">
-                      {{ grade6Document.chooseFacility }}
+                      {{
+                        user.department === "both"
+                          ? grade6Document.chooseFacility
+                          : user.department === "Cơ sở A"
+                          ? grade6Document.chooseFacilityA
+                          : grade6Document.chooseFacility1
+                      }}
                     </div>
-                    <div class="timeline-subtitle py-2">
+                    <div
+                      class="timeline-subtitle py-2"
+                      v-if="user.department === 'both'"
+                    >
                       Cơ sở A:
                       <span class="admin--text">{{
                         grade6Document.chooseFacilityA
@@ -137,9 +147,18 @@
                     </div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
                     <div class="text-number admin--text text-start">
-                      {{ grade6Document.infoForm }}
+                      {{
+                        user.department === "both"
+                          ? grade6Document.infoForm
+                          : user.department === "Cơ sở A"
+                          ? grade6Document.infoFormA
+                          : grade6Document.infoForm1
+                      }}
                     </div>
-                    <div class="timeline-subtitle py-2">
+                    <div
+                      class="timeline-subtitle py-2"
+                      v-if="user.department === 'both'"
+                    >
                       Cơ sở A:
                       <span class="admin--text">{{
                         grade6Document.infoFormA
@@ -164,9 +183,18 @@
                     <div class="timeline-title">Kết quả học tập</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
                     <div class="text-number admin--text text-start">
-                      {{ grade6Document.studyResult }}
+                      {{
+                        user.department === "both"
+                          ? grade6Document.studyResult
+                          : user.department === "Cơ sở A"
+                          ? grade6Document.studyResultA
+                          : grade6Document.studyResult1
+                      }}
                     </div>
-                    <div class="timeline-subtitle py-2">
+                    <div
+                      class="timeline-subtitle py-2"
+                      v-if="user.department === 'both'"
+                    >
                       Cơ sở A:
                       <span class="admin--text">{{
                         grade6Document.studyResultA
@@ -233,9 +261,18 @@
                     <div class="timeline-title">Chọn sơ sở</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
                     <div class="text-number admin--text text-start">
-                      {{ grade10Document.chooseFacility }}
+                      {{
+                        user.department === "both"
+                          ? grade10Document.chooseFacility
+                          : user.department === "Cơ sở A"
+                          ? grade10Document.chooseFacilityA
+                          : grade10Document.chooseFacility1
+                      }}
                     </div>
-                    <div class="timeline-subtitle py-2">
+                    <div
+                      class="timeline-subtitle py-2"
+                      v-if="user.department === 'both'"
+                    >
                       Cơ sở A:
                       <span class="admin--text">{{
                         grade10Document.chooseFacilityA
@@ -262,9 +299,18 @@
                     </div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
                     <div class="text-number admin--text text-start">
-                      {{ grade10Document.infoForm }}
+                      {{
+                        user.department === "both"
+                          ? grade10Document.infoForm
+                          : user.department === "Cơ sở A"
+                          ? grade10Document.infoFormA
+                          : grade10Document.infoForm1
+                      }}
                     </div>
-                    <div class="timeline-subtitle py-2">
+                    <div
+                      class="timeline-subtitle py-2"
+                      v-if="user.department === 'both'"
+                    >
                       Cơ sở A:
                       <span class="admin--text">{{
                         grade10Document.infoFormA
@@ -289,9 +335,18 @@
                     <div class="timeline-title">Đăng ký nguyện vọng</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
                     <div class="text-number admin--text text-start">
-                      {{ grade10Document.expectation }}
+                      {{
+                        user.department === "both"
+                          ? grade10Document.expectation
+                          : user.department === "Cơ sở A"
+                          ? grade10Document.expectationA
+                          : grade10Document.expectation1
+                      }}
                     </div>
-                    <div class="timeline-subtitle py-2">
+                    <div
+                      class="timeline-subtitle py-2"
+                      v-if="user.department === 'both'"
+                    >
                       Cơ sở A:
                       <span class="admin--text">{{
                         grade10Document.expectationA
@@ -316,9 +371,18 @@
                     <div class="timeline-title">Kết quả học tập</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
                     <div class="text-number admin--text text-start">
-                      {{ grade10Document.studyResult }}
+                      {{
+                        user.department === "both"
+                          ? grade10Document.studyResult
+                          : user.department === "Cơ sở A"
+                          ? grade10Document.studyResultA
+                          : grade10Document.studyResult1
+                      }}
                     </div>
-                    <div class="timeline-subtitle py-2">
+                    <div
+                      class="timeline-subtitle py-2"
+                      v-if="user.department === 'both'"
+                    >
                       Cơ sở A:
                       <span class="admin--text">{{
                         grade10Document.studyResultA
@@ -343,9 +407,18 @@
                     <div class="timeline-title">Kết quả Kỳ thi tuyển sinh</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
                     <div class="text-number admin--text text-start">
-                      {{ grade10Document.examResult }}
+                      {{
+                        user.department === "both"
+                          ? grade10Document.examResult
+                          : user.department === "Cơ sở A"
+                          ? grade10Document.examResultA
+                          : grade10Document.examResult1
+                      }}
                     </div>
-                    <div class="timeline-subtitle py-2">
+                    <div
+                      class="timeline-subtitle py-2"
+                      v-if="user.department === 'both'"
+                    >
                       Cơ sở A:
                       <span class="admin--text">{{
                         grade10Document.examResultA
@@ -376,6 +449,12 @@ export default {
   computed: {
     ...mapGetters("cv", ["CVs", "CV", "count"]),
     ...mapGetters("activeCode", ["activeCode", "activeCodes", "count"]),
+    ...mapGetters("auth", ["user"]),
+    getCurrentDepartment() {
+      if (this.user && this.user.department != "both")
+        return this.user.department;
+      else return "Cơ sở 1 và Cơ sở A";
+    },
   },
   methods: {
     ...mapActions("activeCode", [
@@ -386,14 +465,19 @@ export default {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "countCVs"]),
     async getActiveCodeStatistics(grade) {
       return {
-        totalActiveCodes: await this.countActiveCodes({ grade }),
+        totalActiveCodes: await this.countActiveCodes({
+          grade,
+          department_in: this.department,
+        }),
         inactiveActiveCodes: await this.countActiveCodes({
           status: "inactive",
           grade,
+          department_in: this.department,
         }),
         activatedActiveCodes: await this.countActiveCodes({
           status: "active",
           grade,
+          department_in: this.department,
         }),
       };
     },
@@ -429,7 +513,9 @@ export default {
         startDate
       );
       daysArray = daysArray.map((index) => {
-        return moment(startDate).add(index, "days").format("DD/MM/YYYY");
+        return moment(startDate)
+          .add(index, "days")
+          .format("DD/MM/YYYY");
       });
       return {
         labels: daysArray,
@@ -448,10 +534,13 @@ export default {
       const promises = days.map(async (n, index) => {
         const query = {
           type: grade,
-          createdAt_gt: moment(startDate).add(index, "days").toISOString(),
+          createdAt_gt: moment(startDate)
+            .add(index, "days")
+            .toISOString(),
           createdAt_lt: moment(startDate)
             .add(index + 1, "days")
             .toISOString(),
+          department_in: this.department,
         };
         return await this.countCVs(query);
       });
@@ -459,12 +548,24 @@ export default {
     },
     /* eslint-enable no-unused-vars */
     async getDocumentInfo(grade) {
-      const cvs = await this.fetchCVs({ type: grade });
+      const cvs = await this.fetchCVs({
+        type: grade,
+      });
       let query = {
-        total: cvs.length,
-        totalSubmitted: cvs.filter((cv) => cv.status === "submitted").length,
-        totalFilling: cvs.filter((cv) => cv.status === "filling").length,
-        totalCreated: cvs.filter((cv) => cv.status === "created").length,
+        total: cvs.filter((cv) => this.department.includes(cv.department))
+          .length,
+        totalSubmitted: cvs.filter(
+          (cv) =>
+            cv.status === "submitted" && this.department.includes(cv.department)
+        ).length,
+        totalFilling: cvs.filter(
+          (cv) =>
+            cv.status === "filling" && this.department.includes(cv.department)
+        ).length,
+        totalCreated: cvs.filter(
+          (cv) =>
+            cv.status === "created" && this.department.includes(cv.department)
+        ).length,
         chooseFacility: cvs.filter(
           (cv) => cv.step >= 2 && cv.status === "filling"
         ).length,
@@ -564,6 +665,9 @@ export default {
   },
   async created() {
     this.$loading.active = true;
+    if (this.user.department === "both")
+      this.department = ["Cơ sở 1", "Cơ sở A", "unset"];
+    else this.department = [this.user.department, "unset"];
     //Grade 6
     this.grade6ActiveCode = await this.getActiveCodeStatistics("Khối 6");
     this.grade6Document = await this.getDocumentInfo("Khối 6");
@@ -587,6 +691,7 @@ export default {
   },
   data() {
     return {
+      department: [],
       pieChartOptions: { responsive: true, maintainAspectRatio: false },
       lineChartOptions: {
         responsive: true,
@@ -612,8 +717,16 @@ export default {
       },
       grade6LineChart: {},
       grade6PieChart: {},
-      grade6StartDate: moment().utc().clone().startOf("week").toISOString(),
-      grade6EndDate: moment().utc().clone().endOf("week").toISOString(),
+      grade6StartDate: moment()
+        .utc()
+        .clone()
+        .startOf("week")
+        .toISOString(),
+      grade6EndDate: moment()
+        .utc()
+        .clone()
+        .endOf("week")
+        .toISOString(),
       grade6Document: {
         total: 0,
         totalCreated: 0,
@@ -637,8 +750,16 @@ export default {
       },
       grade10LineChart: {},
       grade10PieChart: {},
-      grade10StartDate: moment().utc().clone().startOf("week").toISOString(),
-      grade10EndDate: moment().utc().clone().endOf("week").toISOString(),
+      grade10StartDate: moment()
+        .utc()
+        .clone()
+        .startOf("week")
+        .toISOString(),
+      grade10EndDate: moment()
+        .utc()
+        .clone()
+        .endOf("week")
+        .toISOString(),
       grade10Document: {
         total: 0,
         totalCreated: 0,

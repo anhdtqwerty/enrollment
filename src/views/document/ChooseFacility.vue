@@ -79,7 +79,7 @@
           }"
         />
         <ul class="item-content pt-4 pb-6 pr-6 pl-10">
-          <li>Địa chỉ: Thôn Yên Xã, Tân Triều, Thanh Trì, Hà Nội</li>
+          <li>Địa chỉ: Yên Xá, Tân Triều, Thanh Trì, Hà Nội</li>
           <li>Hotline: 0243.568.2603</li>
         </ul>
       </v-card>
@@ -171,7 +171,7 @@ export default {
       if (this.department === "Cơ sở A")
         fullAddress = "Số 35 Đinh Núp, Phường Trung Hòa, Quận Cầu Giấy, Hà Nội";
       else if (this.department === "Cơ sở 1")
-        fullAddress = "Thôn Yên Xã, Tân Triều, Thanh Trì, Hà Nội";
+        fullAddress = "Yên Xá, Tân Triều, Thanh Trì, Hà Nội";
       this.$dialog.confirm({
         title: "Hoàn thành",
         okText: "Xác nhận",
