@@ -47,6 +47,11 @@ export default {
         const result = await api.Auth.requestRegisterOTP(phone);
         alert.success(result);
       } catch (error) {
+        console.log(error);
+        if (error === "Email already taken") {
+          alert.error("Số điện thoại này đã có người sử dụng");
+          return;
+        }
         alert.error(error);
       }
     },
