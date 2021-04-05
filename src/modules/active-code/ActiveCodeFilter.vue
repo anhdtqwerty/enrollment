@@ -217,7 +217,7 @@ export default {
   methods: {
     ...mapActions("user", ["fetchAdminUsers"]),
     onFilterChanged() {
-      this.$emit("onFilterChanged", {
+      let query = {
         status: this.status,
         grade: this.grade,
         code: this.code,
@@ -225,7 +225,11 @@ export default {
         department_in: [this.department, "unset"],
         createdAt_gt: moment(this.startDate, "DD/MM/YYYY").toISOString(),
         createdAt_lt: moment(this.endDate, "DD/MM/YYYY").toISOString(),
-      });
+      };
+      if (this.department === "" || this.department === "both")
+        query.department_in = ["unset", "Cơ sở 1", "Cơ sở A"];
+      else query.department_in = ["unset", this.department];
+      this.$emit("onFilterChanged", query);
     },
   },
 };

@@ -188,9 +188,9 @@ export default {
         { title: "Khối 10", value: "Khối 10" },
       ],
       statuses: [
-        { title: "Đang khai báo", value: "filling" },
-        { title: "Vừa tạo", value: "created" },
-        { title: "Đã nộp", value: "submitted" },
+        { title: "Đang khai", value: "filling" },
+        { title: "Chưa khai", value: "created" },
+        { title: "Hoàn thành", value: "submitted" },
       ],
       departments: [
         { title: "Cơ sở A", value: "Cơ sở A" },
@@ -201,16 +201,19 @@ export default {
   methods: {
     ...mapActions("user", ["fetchAdminUsers"]),
     onFilterChanged() {
-      this.$emit("onFilterChanged", {
+      let query = {
         status: this.status,
         grade: this.grade,
         code: this.code,
-        department_in: ["unset", this.department],
         name: this.name,
         parentName: this.parent,
         otherParentName: this.otherParent,
         "parent.username": this.userPhone,
-      });
+      };
+      if (this.department === "" || this.department === "both")
+        query.department_in = ["unset", "Cơ sở 1", "Cơ sở A"];
+      else query.department_in = ["unset", this.department];
+      this.$emit("onFilterChanged", query);
     },
   },
 };
