@@ -17,7 +17,10 @@ export default {
     },
     async fetchActiveCodes({ commit }, options) {
       try {
-        commit("setActiveCodes", await ActiveCode.fetch(options));
+        commit(
+          "setActiveCodes",
+          await ActiveCode.fetch({ ...options, _limit: -1 })
+        );
       } catch (e) {
         alert.error(e);
       }

@@ -56,7 +56,7 @@ export default {
     },
     async fetchCVs({commit}, options) {
       try {
-        const cvs = await CV.fetch(options)
+        const cvs = await CV.fetch({...options, _limit: -1})
         commit('setCVs', cvs)
         return cvs
       } catch (e) {
