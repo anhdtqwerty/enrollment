@@ -17,12 +17,12 @@
       <v-container
         id="container"
         fluid
+        fill-height
         grid-list-xl
         class="overflow-auto pa-0"
         style="overflow-x: hidden; background-color: #fafafa"
-        :style="{ height: `calc(100vh - 64px)` }"
       >
-        <router-view style="max-width: 1200px; margin: auto"></router-view>
+        <router-view style="min-width: 1024px; max-width: 1400px; margin: auto"></router-view>
       </v-container>
     </v-main>
   </v-app>
