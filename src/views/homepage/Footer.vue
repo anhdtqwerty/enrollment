@@ -36,8 +36,8 @@
         :class="{ 'mr-4': $vuetify.breakpoint.mdAndUp }"
       >
         <span class="body-text">Cơ sở 1: </span>
-        <a href="tel:02435683488" class="text-decoration-none body-text"
-          >02435683488</a
+        <a href="tel:02435682603" class="text-decoration-none body-text"
+          >02435682603</a
         >
       </div>
       <div class="font-weight-light">
