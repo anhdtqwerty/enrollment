@@ -55,11 +55,11 @@
           placeholder="VD: 001111001980"
           name="login"
           v-model="cccd"
-          type="text"
+          type="number"
           color="primary"
           v-if="documentStep === 2"
           @keyup.enter="submit"
-          :rules="[$rules.required, $rules.cccd]"
+          :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
@@ -164,11 +164,10 @@
           placeholder="VD: 001111001980"
           name="login"
           v-model="otherCCCD"
-          type="text"
+          type="number"
           color="primary"
           v-if="documentStep === 2"
           @keyup.enter="submit"
-          :rules="[$rules.cccd]"
           outlined
           validate-on-blur
         />
