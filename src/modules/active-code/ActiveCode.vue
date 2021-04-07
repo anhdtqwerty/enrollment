@@ -90,6 +90,13 @@ export default {
             else return "";
           },
         },
+        "Ngày tạo mã": {
+          field: "createdAt",
+          callback: (value) => {
+            if (value) return moment(value).format("DD/MM/YYYY HH:mm:ss");
+            else return "";
+          },
+        },
         "Ngày kích hoạt": {
           field: "activeDate",
           callback: (value) => {
