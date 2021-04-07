@@ -136,7 +136,6 @@ export default {
         ...state.CVs,
         [CV.id]: CV,
       }
-      state.step = CV.step
     },
     setStep(state, step) {
       state.step = step

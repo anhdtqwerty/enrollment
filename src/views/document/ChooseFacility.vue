@@ -8,19 +8,22 @@
     </v-card-subtitle>
     <v-card-text
       class="py-6"
-      :class="{ 'd-flex': $vuetify.breakpoint.mdAndUp }"
+      :class="{
+        'd-flex': $vuetify.breakpoint.mdAndUp,
+        'd-flex flex-column align-center': $vuetify.breakpoint.smOnly,
+      }"
     >
       <v-card
-        style="flex: 1 1 0px; min-height: 292px"
+        style="flex: 1 1 0px; min-height: 292px; max-width: 365px"
         color="#F8F8F8"
         class="elevation-0"
         :class="{
           'selected-card': department === 'Cơ sở A',
-          'cursor-default': documentStep !== 1,
+          'cursor-default': documentStep !== 1 && !isEditing,
           'mr-8': $vuetify.breakpoint.mdAndUp,
           'mb-8': $vuetify.breakpoint.smAndDown,
         }"
-        :disabled="documentStep !== 1"
+        :disabled="documentStep !== 1 && !isEditing"
         @click="chooseFacility(true)"
       >
         <v-card-title
@@ -50,14 +53,14 @@
         </ul>
       </v-card>
       <v-card
-        style="flex: 1 1 0px; min-height: 292px"
+        style="flex: 1 1 0px; min-height: 292px; max-width: 365px"
         color="#F8F8F8"
         class="elevation-0"
         :class="{
           'selected-card': department === 'Cơ sở 1',
-          'cursor-default': documentStep !== 1,
+          'cursor-default': documentStep !== 1 && !isEditing,
         }"
-        :disabled="documentStep !== 1"
+        :disabled="documentStep !== 1 && !isEditing"
         @click="chooseFacility(false)"
       >
         <v-card-title
@@ -89,7 +92,7 @@
       <v-btn
         class="px-6 py-3 mr-6 text-none"
         color="primary"
-        v-if="documentStep === 1"
+        v-if="documentStep === 1 || isEditing"
         :disabled="department !== 'Cơ sở A' && department !== 'Cơ sở 1'"
         @click="saveDraft()"
         outlined
@@ -101,7 +104,7 @@
       <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep === 1"
+        v-if="documentStep === 1 || isEditing"
         @click="completeStep"
         :disabled="department !== 'Cơ sở A' && department !== 'Cơ sở 1'"
         large
@@ -109,9 +112,25 @@
         <span>Tiếp tục</span>
       </v-btn>
       <v-btn
+        :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
+        class="py-3 mr-6 text-none"
+        color="primary"
+        v-if="
+          documentStep !== 1 &&
+          !isEditing &&
+          !isCloseFillInfo &&
+          !isAdminPreview
+        "
+        @click="onEdit"
+        outlined
+        large
+      >
+        <span>Chỉnh sửa</span>
+      </v-btn>
+      <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep !== 1"
+        v-if="documentStep !== 1 && !isEditing"
         @click="nextStep"
         :disabled="department !== 'Cơ sở A' && department !== 'Cơ sở 1'"
         large
@@ -124,21 +143,45 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-
+import moment from "moment";
 export default {
   props: {
     document: Object,
     documentStep: Number,
     isAdminPreview: Boolean,
+    systemTime: Object,
   },
   data() {
     return {
       department: "",
+      isEditing: false,
     };
   },
   computed: {
     ...mapGetters("cv", ["CVs", "CV"]),
     ...mapGetters("auth", ["user", "isAuthenticated"]),
+    closeFillInfoTime() {
+      if (
+        this.systemTime.documentSystemTime &&
+        this.systemTime.documentSystemTime["close-fill-info"]
+      )
+        return `${moment(
+          this.systemTime.documentSystemTime["close-fill-info"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("DD/MM/YYYY")} lúc ${moment(
+          this.systemTime.documentSystemTime["close-fill-info"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("HH:mm")}`;
+      return "30/05/2021 lúc 00:00";
+    },
+    isCloseFillInfo() {
+      if (
+        this.systemTime.checkDocumentSystemTime &&
+        this.systemTime.checkDocumentSystemTime["close-fill-info"]
+      )
+        return true;
+      return false;
+    },
   },
   beforeMount() {
     if (this.document.department) this.department = this.document.department;
@@ -153,14 +196,32 @@ export default {
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
     chooseFacility(isFacilityA) {
-      if (isFacilityA && this.documentStep === 1) {
+      if (isFacilityA && this.isEditing) {
         if (this.department === "Cơ sở A") this.department = "";
         else this.department = "Cơ sở A";
       }
-      if (!isFacilityA && this.documentStep === 1) {
+      if (!isFacilityA && this.isEditing) {
         if (this.department === "Cơ sở 1") this.department = "";
         else this.department = "Cơ sở 1";
       }
+    },
+    onEdit() {
+      this.$dialog.confirm({
+        title: "Chỉnh sửa",
+        okText: "Xác nhận",
+        topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">${this.closeFillInfoTime}</span>`,
+        midContent:
+          "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
+        botContent: "",
+        cancelText: "Hủy",
+        done: async () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+          this.isEditing = true;
+        },
+      });
     },
     completeStep() {
       if (!this.department || this.department === "") {

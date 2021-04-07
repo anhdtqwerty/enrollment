@@ -86,8 +86,8 @@
             class="notice pa-4"
             v-if="
               (step === 4 || step === 3) &&
-                systemTime.checkDocumentSystemTime &&
-                !systemTime.checkDocumentSystemTime['display-exam-result']
+              systemTime.checkDocumentSystemTime &&
+              !systemTime.checkDocumentSystemTime['display-exam-result']
             "
           >
             "Kết quả khảo sát năng lực" sẽ được thông báo đến quý phú huynh sau
@@ -164,19 +164,6 @@ export default {
     step(step) {
       this.checkStep(step);
     },
-    systemTime(systemTime) {
-      if (
-        systemTime &&
-        systemTime.checkDocumentSystemTime &&
-        systemTime.checkDocumentSystemTime["exam-result"] &&
-        this.document.step === 4 &&
-        (!this.document.ltvExamResult || !this.document.ltvExamResult.examMath)
-      )
-        this.$alert.success(
-          "Cảm ơn quý phụ huynh đã hoàn thành khai báo thông tin cơ bản. Con đã hoàn thành đăng ký dự kỳ khảo sát tại trường. Nhà trường sẽ thông báo SBD, phòng khảo sát, địa điểm khảo sát thông qua tin nhắn SMS của phụ huynh vào ngày 02/06/2021. Quý phụ huynh vui lòng kiểm tra điện thoại để nhận thông tin.",
-          true
-        );
-    },
   },
   methods: {
     ...mapActions("cv", [
@@ -237,8 +224,14 @@ export default {
       )
         return "Chưa mở";
       else {
-        if (this.document.step === 4) return "Đã hoàn tất";
         if (!this.document.status === "created") return "Mới mở";
+        else if (
+          step === 4 &&
+          (!this.document.ltvExamResult ||
+            !this.document.ltvExamResult.passExam ||
+            this.document.ltvExamResult.passExam === "")
+        )
+          return "Chưa có kết quả";
         else if (
           this.document.status === "filling" &&
           this.document.step <= step
@@ -256,6 +249,13 @@ export default {
         return "dark-gray--text";
       else {
         if (!this.document.status === "created") return "error--text";
+        else if (
+          step === 4 &&
+          (!this.document.ltvExamResult ||
+            !this.document.ltvExamResult.passExam ||
+            this.document.ltvExamResult.passExam === "")
+        )
+          return "error--text";
         else if (
           this.document.status === "filling" &&
           this.document.step <= step
@@ -294,6 +294,10 @@ export default {
     },
     nextStep() {
       this.setStep(this.step + 1);
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       this.$loading.active = false;
     },
   },

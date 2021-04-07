@@ -5,7 +5,9 @@
       <v-col class="py-0">
         <div class="field-label">
           Họ tên tôi là
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: Nguyễn Văn A"
@@ -13,13 +15,16 @@
           v-model="name"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.parentName || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -28,7 +33,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Số điện thoại
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 0973728668"
@@ -36,20 +43,25 @@
           v-model="phone"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.phone]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.parentPhone || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Số Chứng minh nhân dân / Thẻ CCCD
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 001111001980"
@@ -57,13 +69,16 @@
           v-model="cccd"
           type="number"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.parentResidentID || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -72,7 +87,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Nghề nghiệp
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: Giáo viên"
@@ -80,20 +97,25 @@
           v-model="job"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.parentJob || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Nơi ở hiện tại
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 23 Quang Trung, Hoàn Kiếm, Hà Nội"
@@ -101,13 +123,16 @@
           v-model="address"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.parentAddress || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -116,102 +141,107 @@
     <div class="section-label py-6">Thông tin vợ (chồng)</div>
     <v-row class="my-0">
       <v-col class="py-0" cols="12">
-        <div class="field-label">
-          Họ tên vợ (chồng)
-        </div>
+        <div class="field-label">Họ tên vợ (chồng)</div>
         <v-text-field
           placeholder="VD: Nguyễn Văn A"
           name="login"
           v-model="otherName"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.otherParentName || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
     <v-row class="my-0">
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-        <div class="field-label">
-          Số điện thoại
-        </div>
+        <div class="field-label">Số điện thoại</div>
         <v-text-field
           placeholder="VD: 0973728668"
           name="login"
           v-model="otherPhone"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.phone]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.otherParentPhone || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-        <div class="field-label">
-          Số Chứng minh nhân dân / Thẻ CCCD
-        </div>
+        <div class="field-label">Số Chứng minh nhân dân / Thẻ CCCD</div>
         <v-text-field
           placeholder="VD: 001111001980"
           name="login"
           v-model="otherCCCD"
           type="number"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.otherParentResidentID || "Chưa có thông tin" }}
         </div>
       </v-col>
     </v-row>
     <v-row class="my-0">
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-        <div class="field-label">
-          Nghề nghiệp
-        </div>
+        <div class="field-label">Nghề nghiệp</div>
         <v-text-field
           placeholder="VD: Giáo viên"
           name="login"
           v-model="otherJob"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.otherParentJob || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
-        <div class="field-label">
-          Nơi ở hiện tại
-        </div>
+        <div class="field-label">Nơi ở hiện tại</div>
         <v-text-field
           placeholder="VD: 23 Quang Trung, Hoàn Kiếm, Hà Nội"
           name="login"
           v-model="otherAddress"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.otherParentAddress || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -227,6 +257,7 @@ export default {
       type: Object,
       default: () => {},
     },
+    isEditing: Boolean,
   },
   data() {
     return {

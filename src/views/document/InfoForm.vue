@@ -10,6 +10,7 @@
         ref="parentForm"
         :documentStep="documentStep"
         :document="document"
+        :isEditing="isEditing"
       />
     </v-card-text>
     <hr class="dashed" />
@@ -24,6 +25,7 @@
         ref="studentForm"
         :documentStep="documentStep"
         :document="document"
+        :isEditing="isEditing"
       />
     </v-card-text>
     <hr class="dashed" />
@@ -32,7 +34,7 @@
         :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
         class="py-3 mr-6 text-none"
         color="primary"
-        v-if="documentStep === 2"
+        v-if="documentStep === 2 || isEditing"
         @click="saveDraft"
         outlined
         large
@@ -43,16 +45,32 @@
       <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep === 2"
+        v-if="(documentStep === 2 || isEditing) && !isCloseFillInfo"
         @click="completeStep"
         large
       >
         <span>Tiếp tục</span>
       </v-btn>
       <v-btn
+        :class="{ 'px-6': $vuetify.breakpoint.mdAndUp }"
+        class="py-3 mr-6 text-none"
+        color="primary"
+        v-if="
+          documentStep !== 2 &&
+          !isEditing &&
+          !isCloseFillInfo &&
+          !isAdminPreview
+        "
+        @click="onEdit"
+        outlined
+        large
+      >
+        <span>Chỉnh sửa</span>
+      </v-btn>
+      <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="documentStep !== 2"
+        v-if="documentStep !== 2 && !isEditing"
         @click="nextStep"
         large
       >
@@ -75,11 +93,60 @@ export default {
   props: {
     document: Object,
     documentStep: Number,
+    systemTime: Object,
+    isAdminPreview: Boolean,
+  },
+  computed: {
+    closeFillInfoTime() {
+      if (
+        this.systemTime.documentSystemTime &&
+        this.systemTime.documentSystemTime["close-fill-info"]
+      )
+        return `${moment(
+          this.systemTime.documentSystemTime["close-fill-info"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("DD/MM/YYYY")} lúc ${moment(
+          this.systemTime.documentSystemTime["close-fill-info"],
+          "DD/MM/YYYY HH:mm:ss"
+        ).format("HH:mm")}`;
+      return "30/05/2021 lúc 00:00";
+    },
+    isCloseFillInfo() {
+      if (
+        this.systemTime.checkDocumentSystemTime &&
+        this.systemTime.checkDocumentSystemTime["close-fill-info"]
+      )
+        return true;
+      return false;
+    },
+  },
+  data() {
+    return {
+      isEditing: false,
+    };
   },
   methods: {
     reset() {
       this.$refs.parentForm.reset();
       this.$refs.studentForm.reset();
+    },
+    onEdit() {
+      this.$dialog.confirm({
+        title: "Chỉnh sửa",
+        okText: "Xác nhận",
+        topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">${this.closeFillInfoTime}</span>`,
+        midContent:
+          "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
+        botContent: "",
+        cancelText: "Hủy",
+        done: async () => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+          this.isEditing = true;
+        },
+      });
     },
     getQuery(parentForm, studentForm) {
       let query = {
@@ -127,11 +194,9 @@ export default {
       this.$dialog.confirm({
         title: "Hoàn thành",
         okText: "Xác nhận",
-        topContent: `Sau khi hoàn thành, thông tin đã được khai báo sẽ <span class="error--text">KHÔNG ĐƯỢC CHỈNH SỬA</span>.`,
-        midContent:
-          "Quý phụ huynh vui lòng kiểm tra lại một cách kỹ lưỡng trước khi chuyển sang bước tiếp theo.",
-        botContent:
-          "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục.",
+        topContent: `Quý phụ huynh lưu ý:`,
+        midContent: `Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>${this.closeFillInfoTime}</span>.`,
+        botContent: `Sau <span class='error--text'>${this.closeFillInfoTime}</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.`,
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;
@@ -144,6 +209,10 @@ export default {
       const studentForm = this.$refs.studentForm.getData();
       this.$loading.active = true;
       this.$emit("saveDraft", this.getQuery(parentForm, studentForm));
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     },
     nextStep() {
       this.$loading.active = true;

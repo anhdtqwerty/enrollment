@@ -78,7 +78,8 @@ export default {
     console.log(this.documentSystemTime);
     if (this.document.type === "Khối 6")
       this.checkStepGrade6(this.document.step, this.documentSystemTime);
-    else this.checkStepGrade10(this.document, this.documentSystemTime);
+    else
+      this.checkStepGrade10(this.step, this.document, this.documentSystemTime);
     this.$loading.active = false;
   },
   computed: {
@@ -101,15 +102,13 @@ export default {
       this.$router.push("/");
       this.$loading.active = false;
     },
-    checkStepGrade10(document, systemTime) {
-      switch (document.step) {
+    checkStepGrade10(step, document, systemTime) {
+      switch (step) {
         case 3:
           if (
             (!systemTime.checkDocumentSystemTime["register-expectation"] &&
               this.user.role.type !== "admin") ||
-            (document.isDraft &&
-              document.step > 3 &&
-              this.user.role.type !== "admin")
+            (document.isDraft && step > 3 && this.user.role.type !== "admin")
           )
             this.setStep(this.step - 1);
           break;
@@ -117,9 +116,7 @@ export default {
           if (
             (!systemTime.checkDocumentSystemTime["study-result"] &&
               this.user.role.type !== "admin") ||
-            (document.isDraft &&
-              document.step > 4 &&
-              this.user.role.type !== "admin")
+            (document.isDraft && step > 4 && this.user.role.type !== "admin")
           )
             this.setStep(this.step - 1);
           break;
@@ -127,9 +124,7 @@ export default {
           if (
             (!systemTime.checkDocumentSystemTime["exam-result"] &&
               this.user.role.type !== "admin") ||
-            (document.isDraft &&
-              document.step > 5 &&
-              this.user.role.type !== "admin")
+            (document.isDraft && step > 5 && this.user.role.type !== "admin")
           )
             this.setStep(this.step - 1);
           break;
@@ -180,6 +175,7 @@ export default {
       } else {
         data.submitType = "complete-step";
         data.isDraft = false;
+        this.setStep(this.step + 1);
       }
       await this.updateCV({
         code: this.document.code,
@@ -193,6 +189,10 @@ export default {
           department: this.document.department,
         });
       }
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
       this.showAlertDialog(isDraft);
       this.$loading.active = false;
     },

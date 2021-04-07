@@ -89,7 +89,6 @@ export default {
           "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
         cancelText: "Hủy",
         done: async () => {
-          console.log("an nut roi");
           this.$emit("updateResult", this.importedDocuments);
         },
       });

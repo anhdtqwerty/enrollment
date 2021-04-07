@@ -1,7 +1,11 @@
 <template>
   <v-form v-model="isValid" ref="form" v-bind="this.$attrs" style="width: 100%">
     <div class="section-label py-6">
-      Ảnh 3x4 của con<span style="color: red" v-if="documentStep === 2">*</span>
+      Ảnh 3x4 của con<span
+        style="color: red"
+        v-if="documentStep === 2 || isEditing"
+        >*</span
+      >
     </div>
     <v-row class="d-flex flex-column pb-6" no-gutters>
       <picture-input
@@ -19,25 +23,30 @@
           upload: '<b>Thiết bị không hỗ trợ tải lên file ảnh</b>',
           drag: 'Kéo vào để upload avatar',
         }"
-        v-if="documentStep === 2"
+        v-if="documentStep === 2 || isEditing"
         @change="onChange"
       ></picture-input>
       <div>
-        <v-img width="120" height="160" :src="avatar" v-if="documentStep !== 2" />
+        <v-img
+          width="120"
+          height="160"
+          :src="avatar"
+          v-if="documentStep !== 2 && !isEditing"
+        />
       </div>
-      <div class="mt-4 text-center" v-if="documentStep === 2">
+      <div class="mt-4 text-center" v-if="documentStep === 2 || isEditing">
         Ảnh theo chuẩn ảnh Căn cước công dân
       </div>
     </v-row>
     <hr class="dashed" />
-    <div class="section-label py-6">
-      Thông tin con
-    </div>
+    <div class="section-label py-6">Thông tin con</div>
     <v-row class="my-0">
       <v-col class="py-0">
         <div class="field-label">
           Họ tên học sinh
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: Nguyễn Văn B"
@@ -46,12 +55,15 @@
           type="text"
           color="primary"
           @keyup.enter="submit"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.name || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -60,7 +72,9 @@
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Ngày tháng năm sinh
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           v-mask="'##/##/####'"
@@ -69,32 +83,40 @@
           v-model="studentDob"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.dob]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ getStudentDob }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Giới tính
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-radio-group
           v-model="studentGender"
           :class="{ 'mt-0': $vuetify.breakpoint.smAndDown }"
           :rules="[$rules.required]"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           row
         >
           <v-radio label="Nam" value="male"></v-radio>
           <v-radio label="Nữ" value="female"></v-radio>
         </v-radio-group>
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ getStudentGender }}
         </div>
       </v-col>
@@ -103,7 +125,9 @@
       <v-col class="py-0">
         <div class="field-label">
           Mã số học sinh (Sở GD&DT Hà Nội cấp)
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: 1231294124124"
@@ -111,13 +135,16 @@
           v-model="studentId"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required, $rules.number]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.studentId || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -130,7 +157,9 @@
               ? "Con tôi đã học hết lớp 5 tại trường"
               : "Con tôi đã học hết lớp 9 tại trường"
           }}
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           :placeholder="
@@ -142,20 +171,25 @@
           v-model="studentSchool"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.school || "Chưa có thông tin" }}
         </div>
       </v-col>
       <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Thành phố
-          <span style="color: red" v-if="documentStep === 2">*</span>
+          <span style="color: red" v-if="documentStep === 2 || isEditing"
+            >*</span
+          >
         </div>
         <v-text-field
           placeholder="VD: Hà Nội"
@@ -163,13 +197,16 @@
           v-model="studentCity"
           type="text"
           color="primary"
-          v-if="documentStep === 2"
+          v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
           :rules="[$rules.required]"
           outlined
           validate-on-blur
         />
-        <div class="info-label mt-2 mb-6" v-if="documentStep !== 2">
+        <div
+          class="info-label mt-2 mb-6"
+          v-if="documentStep !== 2 && !isEditing"
+        >
           {{ document.city || "Chưa có thông tin" }}
         </div>
       </v-col>
@@ -186,6 +223,7 @@ export default {
   props: {
     document: { type: Object, default: () => {} },
     documentStep: Number,
+    isEditing: Boolean,
   },
   computed: {
     avatar() {

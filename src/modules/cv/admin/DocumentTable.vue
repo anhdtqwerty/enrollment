@@ -47,58 +47,49 @@
       <template v-slot:[`item.parentPhone`]="{ item }">
         {{ item | getUserPhone }}
       </template>
+      <!-- eslint-disable no-unused-vars--->
+      <template
+        v-slot:[`item.action`]="{ item }"
+        v-if="user.department === 'both'"
+      >
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              @click="onActiveItem(item)"
+              color="admin"
+              v-show="item.status === 'disabled'"
+              v-bind="attrs"
+              v-on="on"
+              icon
+            >
+              <v-icon> mdi-check </v-icon>
+            </v-btn>
+          </template>
+          <span>Bật hồ sơ</span>
+        </v-tooltip>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              @click="onDeactiveItem(item)"
+              color="admin"
+              v-show="item.status !== 'disabled'"
+              v-bind="attrs"
+              v-on="on"
+              icon
+            >
+              <v-icon> mdi-close </v-icon>
+            </v-btn>
+          </template>
+          <span>Tắt hồ sơ</span>
+        </v-tooltip>
+      </template>
+      <!-- eslint-enable no-unused-vars--->
     </v-data-table>
   </div>
 </template>
 
 <script>
 /* eslint-disable no-unused-vars */
-
-const originHeaders = [
-  {
-    text: "Mã hồ sơ",
-    value: "code",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-  {
-    text: "Khối",
-    value: "grade",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-  {
-    text: "Cơ sở",
-    value: "department",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-  {
-    text: "Học sinh",
-    value: "name",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-  {
-    text: "Trạng thái",
-    value: "status",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-  {
-    text: "SĐT tài khoản",
-    value: "parentPhone",
-    align: "left",
-    sortable: false,
-    show: true,
-  },
-];
-
 import { mapActions, mapGetters } from "vuex";
 import { get } from "lodash";
 import moment from "moment";
@@ -111,12 +102,65 @@ export default {
   data() {
     return {
       loading: false,
-      headers: originHeaders,
       selectedCode: "",
       selectedCreatedAt: "",
+      originHeaders: [
+        {
+          text: "Mã hồ sơ",
+          value: "code",
+          align: "left",
+          sortable: false,
+          show: true,
+        },
+        {
+          text: "Khối",
+          value: "grade",
+          align: "left",
+          sortable: false,
+          show: true,
+        },
+        {
+          text: "Cơ sở",
+          value: "department",
+          align: "left",
+          sortable: false,
+          show: true,
+        },
+        {
+          text: "Học sinh",
+          value: "name",
+          align: "left",
+          sortable: false,
+          show: true,
+        },
+        {
+          text: "Trạng thái",
+          value: "status",
+          align: "left",
+          sortable: false,
+          show: true,
+        },
+        {
+          text: "SĐT tài khoản",
+          value: "parentPhone",
+          align: "left",
+          sortable: false,
+          show: true,
+        },
+      ],
+      headers: [],
     };
   },
   async mounted() {
+    this.headers = this.originHeaders;
+    if (this.user.department == "both")
+      this.originHeaders.push({
+        text: "Hành động",
+        value: "action",
+        align: "left",
+        sortable: false,
+        show: true,
+      });
     let query = {
       _sort: "updatedAt:DESC",
     };
@@ -144,10 +188,49 @@ export default {
         return "success";
       else if (item.type === "Khối 10" && item.status === "submitted")
         return "success";
+      else if (item.status === "disabled") return "gray";
       else return "orange accent-2";
     },
     onDocumentClick(documentId) {
       this.$emit("onDocumentDetail", documentId);
+    },
+    async onDeactiveItem(item) {
+      this.$adminDialog.confirm({
+        title: "Xác nhận hành động",
+        okText: "Xác nhận",
+        topContent: `Bạn có chắc chắn muốn tắt hồ sơ này chứ?`,
+        midContent: `<span class='error--text'>Lưu ý: Nếu như tắt hồ sơ, phụ huynh học sinh sẽ không thể chỉnh sửa hoặc thao tác trên hồ sơ này được nữa.</span>`,
+        cancelText: "Hủy",
+        done: async () => {
+          await this.updateCV({
+            code: item.code,
+            submitType: "save-draft",
+            status: "disabled",
+            studyRecord: { ...item.studyRecord, lastStatus: item.status },
+            userPhone: this.user.username,
+          });
+          this.$alert.success("Tắt hồ sơ thành công!");
+        },
+      });
+    },
+    async onActiveItem(item) {
+      this.$adminDialog.confirm({
+        title: "Xác nhận hành động",
+        okText: "Xác nhận",
+        topContent: `Bạn có chắc chắn muốn bật hồ sơ này chứ?`,
+        midContent: `<span class='error--text'>Lưu ý: Nếu như bật lại hồ sơ, phụ huynh học sinh sẽ có thể chỉnh sửa hoặc thao tác trên hồ sơ này.</span>`,
+        cancelText: "Hủy",
+        done: async () => {
+          await this.updateCV({
+            code: item.code,
+            submitType: "save-draft",
+            status,
+            studyRecord: { ...item.studyRecord, lastStatus: "" },
+            userPhone: this.user.username,
+          });
+          this.$alert.success("Bật hồ sơ thành công!");
+        },
+      });
     },
     search() {},
   },
@@ -170,7 +253,8 @@ export default {
         return "Hoàn thành";
       else if (item.type === "Khối 10" && item.status === "submitted")
         return "Hoàn thành";
-      if (item.status === "filling") return "Đang khai";
+      else if (item.status === "filling") return "Đang khai";
+      else if (item.status === "disabled") return "Đang tắt";
       else return "Chưa khai";
     },
     getDepartment: (item) => {

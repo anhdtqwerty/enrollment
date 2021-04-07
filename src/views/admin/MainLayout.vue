@@ -20,9 +20,11 @@
         fill-height
         grid-list-xl
         class="overflow-auto pa-0"
-        style="overflow-x: hidden; background-color: #fafafa"
+        style="overflow-x: hidden; background-color: #fafafa; align-items: start;"
       >
-        <router-view style="min-width: 1024px; max-width: 1400px; margin: auto"></router-view>
+        <router-view
+          style="min-width: 1024px; max-width: 1400px; margin: 0px auto"
+        ></router-view>
       </v-container>
     </v-main>
   </v-app>
@@ -68,7 +70,7 @@ export default {
   methods: {
     ...mapActions("course", ["fetchCourses"]),
     ...mapActions("auth", ["setRole"]),
-    toggleDrawer: function(updatedDrawer) {
+    toggleDrawer: function (updatedDrawer) {
       this.drawer = updatedDrawer;
     },
   },

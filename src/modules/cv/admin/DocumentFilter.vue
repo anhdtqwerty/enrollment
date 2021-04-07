@@ -168,6 +168,7 @@ export default {
     if (this.user.department === "both") {
       this.disabledDepartmentFilter = false;
       this.department = "";
+      this.statuses.push({ title: "Đang tắt", value: "disabled" });
     } else this.department = this.user.department;
   },
   data() {

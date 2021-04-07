@@ -41,11 +41,7 @@
       {{ item | getStudentName }}
     </template>
     <template v-slot:[`item.status`]="{ item }">
-      <v-chip
-        :color="getStatusColor(item)"
-        class="d-flex justify-center"
-        small
-      >
+      <v-chip :color="getStatusColor(item)" class="d-flex justify-center" small>
         {{ item | getStatus }}
       </v-chip>
     </template>
@@ -171,6 +167,7 @@ export default {
     await this.refresh({
       _sort: "updatedAt:DESC",
       parent: this.user.id,
+      status_ne: "disabled",
     });
   },
   filters: {

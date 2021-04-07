@@ -193,6 +193,10 @@ export default {
         cancelText: "Hủy",
         done: async () => {
           this.isEditing = true;
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
         },
       });
     },

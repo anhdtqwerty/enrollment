@@ -122,6 +122,7 @@
           v-if="step === 1"
           :document="document"
           :documentStep="document.step"
+          :systemTime="systemTime"
           @completeStep="updateDocument($event, false)"
           @saveDraft="updateDocument($event, true)"
           @nextStep="nextStep"
@@ -130,6 +131,7 @@
           v-if="step === 2"
           :document="document"
           :documentStep="document.step"
+          :systemTime="systemTime"
           @completeStep="updateDocument($event, false)"
           @saveDraft="updateDocument($event, true)"
           @nextStep="nextStep"
@@ -280,6 +282,13 @@ export default {
         )
           return "Đang khai báo";
       }
+      if (
+        this.document.step === 5 &&
+        (!this.document.ltvExamResult ||
+          !this.document.ltvExamResult.passExam ||
+          this.document.ltvExamResult.passExam === "")
+      )
+        return "Chưa có kết quả";
       return "Đã hoàn tất";
     },
     getStatusColor(key, step) {
@@ -304,6 +313,10 @@ export default {
       return this.document.step > step;
     },
     onStepClick(key, step) {
+      if (this.document.step < step && this.user.role.type !== "admin") {
+        this.$alert.error("Xin vui lòng hoàn thành bước trước");
+        return;
+      }
       if (
         (!this.systemTime.checkDocumentSystemTime ||
           !this.systemTime.checkDocumentSystemTime[key]) &&
@@ -318,10 +331,6 @@ export default {
           this.$alert.error(
             "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
           );
-        return;
-      }
-      if (this.document.step < step && this.user.role.type !== "admin") {
-        this.$alert.error("Xin vui lòng hoàn thành bước trước");
         return;
       }
       this.setStep(step);
