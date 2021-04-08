@@ -192,6 +192,7 @@ export default {
       this.document.department != ""
     )
       this.department = "";
+    if (this.documentStep === 1) this.isEditing = true;
   },
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),

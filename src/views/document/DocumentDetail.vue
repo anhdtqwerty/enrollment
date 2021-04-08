@@ -172,6 +172,9 @@ export default {
       if (isDraft) {
         data.submitType = "save-draft";
         data.isDraft = true;
+      } else if (this.step < this.document.step) {
+        data.submitType = "save-draft";
+        this.setStep(this.step + 1);
       } else {
         data.submitType = "complete-step";
         data.isDraft = false;
