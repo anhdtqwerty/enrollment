@@ -24,7 +24,7 @@
       <v-btn
         class="py-3 mr-6 text-none"
         color="primary"
-        v-if="document.type === 'Khối 10'"
+        v-if="document.type === 'Khối 10' && !isAdminPreview"
         @click="saveDraft"
         outlined
         large
@@ -35,7 +35,7 @@
       <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
-        v-if="document.type === 'Khối 10'"
+        v-if="document.type === 'Khối 10' && !isAdminPreview"
         @click="completeGrade10"
         large
       >

@@ -96,12 +96,14 @@
           v-if="step === 1"
           :document="document"
           :documentStep="5"
+          :isAdminPreview="true"
           @nextStep="nextStep"
         />
         <InfoForm
           v-if="step === 2"
           :document="document"
           :documentStep="5"
+          :isAdminPreview="true"
           @nextStep="nextStep"
         />
         <Grade10Expectation
@@ -194,6 +196,13 @@ export default {
         )
           return "Đang khai báo";
       }
+      if (
+        this.document.step === 5 &&
+        (!this.document.ltvExamResult ||
+          !this.document.ltvExamResult.passExam ||
+          this.document.ltvExamResult.passExam === "")
+      )
+        return "Chưa có kết quả";
       return "Đã hoàn tất";
     },
     getStatusColor(key, step) {

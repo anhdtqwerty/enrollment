@@ -15,7 +15,7 @@
           <div class="field-label">
             Số báo danh dự thi vào kỳ thi vào lớp 10 của Sở GD&ĐT TP. Hà Nội năm
             2021
-            <span style="color: red" v-if="document.status !== 'submitted'"
+            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -24,7 +24,7 @@
             v-model="ltvExamResult.studentExamID"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview && !isAdminPreview"
             @keyup.enter="submit"
             :rules="[$rules.required]"
             outlined
@@ -32,7 +32,7 @@
           />
           <div
             class="info-label mt-2 mb-6"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ ltvExamResult.studentExamID || "Chưa có thông tin" }}
           </div>
@@ -46,7 +46,7 @@
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Toán
-            <span style="color: red" v-if="document.status !== 'submitted'"
+            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -55,7 +55,7 @@
             v-model="ltvExamResult.examMath"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview"
             @keyup.enter="submit"
             :rules="[$rules.required, $rules.mark]"
             outlined
@@ -64,7 +64,7 @@
           <div
             class="info-label error--text mt-2 mb-6"
             style="font-size: 16px"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ ltvExamResult.examMath || "Chưa có thông tin" }}
           </div>
@@ -72,7 +72,7 @@
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Văn
-            <span style="color: red" v-if="document.status !== 'submitted'"
+            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -81,7 +81,7 @@
             v-model="ltvExamResult.examLiterature"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview"
             @keyup.enter="submit"
             :rules="[$rules.required, $rules.mark]"
             outlined
@@ -90,7 +90,7 @@
           <div
             class="info-label error--text mt-2 mb-6"
             style="font-size: 16px"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ ltvExamResult.examLiterature || "Chưa có thông tin" }}
           </div>
@@ -98,7 +98,7 @@
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Anh
-            <span style="color: red" v-if="document.status !== 'submitted'"
+            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -107,7 +107,7 @@
             v-model="ltvExamResult.examEnglish"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview"
             :rules="[$rules.required, $rules.mark]"
             @keyup.enter="submit"
             outlined
@@ -116,7 +116,7 @@
           <div
             class="info-label error--text mt-2 mb-6"
             style="font-size: 16px"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ ltvExamResult.examEnglish || "Chưa có thông tin" }}
           </div>
@@ -126,7 +126,7 @@
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Lịch sử
-            <span style="color: red" v-if="document.status !== 'submitted'"
+            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -135,7 +135,7 @@
             v-model="ltvExamResult.examHistory"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview"
             @keyup.enter="submit"
             :rules="[$rules.required, $rules.mark]"
             outlined
@@ -144,17 +144,17 @@
           <div
             class="info-label error--text mt-2 mb-6"
             style="font-size: 16px"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ ltvExamResult.examHistory || "Chưa có thông tin" }}
           </div>
         </v-col>
       </v-row>
-      <v-row v-if="document.status !== 'submitted'" class="my-0">
+      <v-row v-if="document.status !== 'submitted' && !isAdminPreview" class="my-0">
         <v-col class="py-0" cols="12" xs="12" sm="12" md="8">
           <div class="field-label">
             Loại ưu tiên
-            <span style="color: red" v-if="document.status !== 'submitted'"
+            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -165,12 +165,12 @@
             item-value="value"
             :items="priorityTypes"
             :rules="[$rules.required]"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview"
             outlined
           />
           <div
             class="info-label mt-2 mb-6"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ ltvExamResult.priorityType || "Chưa có thông tin" }}
           </div>
@@ -182,7 +182,7 @@
             :value="getPriorityMark"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview"
             @keyup.enter="submit"
             :rules="[$rules.priorityMark]"
             :disabled="
@@ -194,7 +194,7 @@
           />
           <div
             class="info-label mt-2 mb-6"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ ltvExamResult.priorityMark || "Chưa có thông tin" }}
           </div>
@@ -208,7 +208,7 @@
             :value="getTotalA"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview"
             @keyup.enter="submit"
             hide-details="true"
             disabled
@@ -219,7 +219,7 @@
           <div
             class="info-label error--text mt-2 mb-6"
             style="font-size: 24px"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ getTotalA }}
           </div>
@@ -228,7 +228,7 @@
           class="py-0"
           :class="{
             'mt-8':
-              $vuetify.breakpoint.smAndDown && document.status !== 'submitted',
+              $vuetify.breakpoint.smAndDown && document.status !== 'submitted' && !isAdminPreview,
           }"
           cols="12"
           xs="12"
@@ -241,7 +241,7 @@
             :value="getTotalA1"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview"
             @keyup.enter="submit"
             hide-details="true"
             disabled
@@ -252,7 +252,7 @@
           <div
             class="info-label error--text mt-2 mb-6"
             style="font-size: 24px"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ getTotalA1 }}
           </div>
@@ -261,7 +261,7 @@
           class="py-0"
           :class="{
             'mt-8':
-              $vuetify.breakpoint.smAndDown && document.status !== 'submitted',
+              $vuetify.breakpoint.smAndDown && document.status !== 'submitted' && !isAdminPreview,
           }"
           cols="12"
           xs="12"
@@ -274,7 +274,7 @@
             :value="getTotalD"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted'"
+            v-if="document.status !== 'submitted' && !isAdminPreview"
             @keyup.enter="submit"
             hide-details="true"
             disabled
@@ -285,13 +285,13 @@
           <div
             class="info-label error--text mt-2 mb-6"
             style="font-size: 24px"
-            v-if="document.status === 'submitted'"
+            v-if="document.status === 'submitted' || isAdminPreview"
           >
             {{ getTotalD }}
           </div>
         </v-col>
       </v-row>
-      <div class="py-6" v-if="document.status !== 'submitted'">
+      <div class="py-6" v-if="document.status !== 'submitted' && !isAdminPreview">
         <div class="font-weight-bold">Cách tính tổng điểm</div>
         <div>
           - Ban A: ĐXT = (Điểm Toán + Điểm Anh) x4 + Điểm Văn + Lịch sử + Điểm
@@ -313,10 +313,10 @@
         </div>
         <div>- Học sinh THCS Lương Thế Vinh được cộng 3 điểm.</div>
       </div>
-      <hr class="dashed" v-if="document.status !== 'submitted'" />
+      <hr class="dashed" v-if="document.status !== 'submitted' && !isAdminPreview" />
       <div
         class="d-flex justify-center py-6"
-        v-if="document.status !== 'submitted'"
+        v-if="document.status !== 'submitted' && !isAdminPreview"
       >
         <v-checkbox
           class="align-self-start mt-3 pt-0"

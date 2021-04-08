@@ -138,6 +138,7 @@ export default {
       default: () => {},
     },
     systemTime: Object,
+    isAdminPreview: Boolean,
   },
   data() {
     return {

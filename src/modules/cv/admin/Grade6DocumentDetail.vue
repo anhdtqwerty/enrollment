@@ -1,6 +1,6 @@
 <template>
   <div class="document-container d-flex py-8 mx-auto">
-    <v-row no-gutters style="max-width:100%">
+    <v-row no-gutters style="max-width: 100%">
       <v-col
         class="px-8"
         :class="{ 'pb-6': $vuetify.breakpoint.smAndDown }"
@@ -142,6 +142,13 @@ export default {
       else {
         if (!this.document.status === "created") return "Mới mở";
         else if (
+          step === 4 &&
+          (!this.document.ltvExamResult ||
+            !this.document.ltvExamResult.passExam ||
+            this.document.ltvExamResult.passExam === "")
+        )
+          return "Chưa có kết quả";
+        else if (
           this.document.status === "filling" &&
           this.document.step <= step
         )
@@ -158,6 +165,13 @@ export default {
         return "dark-gray--text";
       else {
         if (!this.document.status === "created") return "error--text";
+        else if (
+          step === 4 &&
+          (!this.document.ltvExamResult ||
+            !this.document.ltvExamResult.passExam ||
+            this.document.ltvExamResult.passExam === "")
+        )
+          return "error--text";
         else if (
           this.document.status === "filling" &&
           this.document.step <= step
