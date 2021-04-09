@@ -122,7 +122,7 @@
       </v-col>
     </v-row>
     <v-row class="my-0">
-      <v-col class="py-0">
+      <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
         <div class="field-label">
           Mã số học sinh (Sở GD&DT Hà Nội cấp)
           <span style="color: red" v-if="documentStep === 2 || isEditing"
@@ -137,7 +137,8 @@
           color="primary"
           v-if="documentStep === 2 || isEditing"
           @keyup.enter="submit"
-          :rules="[$rules.required, $rules.number]"
+          :rules="studentIdRules"
+          :disabled="otherProvinceStudent"
           outlined
           validate-on-blur
         />
@@ -146,6 +147,15 @@
           v-if="documentStep !== 2 && !isEditing"
         >
           {{ document.studentId || "Chưa có thông tin" }}
+        </div>
+      </v-col>
+      <v-col class="py-0 d-flex align-center" cols="12" xs="12" sm="12" md="6">
+        <div class="field-label">
+          <v-checkbox
+            v-if="documentStep === 2 || isEditing"
+            v-model="otherProvinceStudent"
+            label="Học sinh tỉnh khác, không có mã học sinh"
+          ></v-checkbox>
         </div>
       </v-col>
     </v-row>
@@ -237,16 +247,26 @@ export default {
     getStudentGender() {
       return this.document.gender === "male" ? "Nam" : "Nữ";
     },
+    studentIdRules() {
+      if (!this.otherProvinceStudent) return [this.$rules.required];
+      else return [];
+    },
   },
   created() {
     if (this.document) {
       this.studentName = this.document.name;
       this.studentGender = this.document.gender;
       this.studentDob = moment(this.document.dob).format("DD/MM/YYYY");
-      this.studentId = this.document.studentId;
       this.studentSchool = this.document.school;
       this.studentCity = this.document.city;
+      this.studentId = this.document.studentId;
+      this.otherProvinceStudent = this.document.studentId === "";
     }
+  },
+  watch: {
+    otherProvinceStudent(newVal) {
+      if (newVal) this.studentId = "";
+    },
   },
   methods: {
     async onChange(image) {
@@ -298,6 +318,7 @@ export default {
       studentId: "",
       studentSchool: "",
       studentCity: "",
+      otherProvinceStudent: false,
     };
   },
 };
