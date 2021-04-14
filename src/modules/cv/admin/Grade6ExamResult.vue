@@ -15,22 +15,18 @@
     <div class="d-flex justify-space-between align-center mb-6">
       <div class="component-title">Kết quả thi Khối 6</div>
       <div class="d-flex flex-center">
-        <JsonExcel
-          :data="updatedCVs"
-          :fields="json_fields"
-          :before-generate="toggleLoadingScreen(true)"
-          :before-finish="toggleLoadingScreen(false)"
-          type="xls"
-          worksheet="Hồ sơ"
-          name="ho-so-khoi-6.xls"
+        <v-btn
+          color="admin"
+          dark
+          class="elevation-0 ml-6"
+          :loading="isSelecting"
+          @click="exportExcelTemplate"
+          ><v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel mẫu</v-btn
         >
-          <v-btn color="admin" dark outlined>
-            <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
-          </v-btn>
-        </JsonExcel>
         <v-btn
           color="admin"
           class="elevation-0 ml-6"
+          width="167px"
           dark
           :loading="isSelecting"
           @click="onButtonClick"
@@ -45,6 +41,21 @@
           />
         </v-btn>
       </div>
+    </div>
+    <div class="d-flex justify-end align-center mb-6">
+      <JsonExcel
+        :data="updatedCVs"
+        :fields="json_fields"
+        :before-generate="toggleLoadingScreen(true)"
+        :before-finish="toggleLoadingScreen(false)"
+        type="xls"
+        worksheet="Hồ sơ"
+        name="ho-so-khoi-6.xls"
+      >
+        <v-btn color="admin" width="167px" dark outlined>
+          <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
+        </v-btn>
+      </JsonExcel>
     </div>
     <v-card class="pa-6 elevation-1 mb-6">
       <DocumentFilter @onFilterChanged="onFilterChanged" />
@@ -360,6 +371,11 @@ export default {
   },
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
+    async exportExcelTemplate() {
+      this.$loading.active = true
+      window.location.href =`${this.$baseUrl}grade6-exam-result.xlsx`
+      this.$loading.active = false
+    },
     async onFilterChanged(data) {
       this.$loading.active = true;
       await this.fetchCVs({
@@ -444,6 +460,7 @@ export default {
       this.$loading.active = false;
     },
     async onUpdateResultDocument(results) {
+      this.$refs.uploader.value = null;
       const promises = results.map(async (result) => {
         if (
           result.department !== this.user.department &&

@@ -258,6 +258,9 @@ export default {
             this.setStep(this.step - 1);
           }
           break;
+        case 6:
+          this.setStep(this.step - 1);
+          break;
       }
     },
     backToHome() {

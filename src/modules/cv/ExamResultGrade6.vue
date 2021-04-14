@@ -10,7 +10,7 @@
         <v-col class="py-0">
           <div class="field-label">Số báo danh</div>
           <div class="info-label mt-2 mb-6" v-if="documentStep === 4">
-            {{ ltvExamResult.studentExamID || "Chưa có thông tin" }}
+            {{ getStudentExamId }}
           </div>
         </v-col>
       </v-row>
@@ -21,7 +21,7 @@
             class="info-label error--text mt-2 mb-6"
             v-if="documentStep === 4"
           >
-            {{ ltvExamResult.examMath || "Chưa có thông tin" }}
+            {{ getStudentExamId }}
           </div>
         </v-col>
         <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
@@ -30,7 +30,7 @@
             class="info-label error--text mt-2 mb-6"
             v-if="documentStep === 4"
           >
-            {{ ltvExamResult.examMath || "Chưa có thông tin" }}
+            {{ getExamMath }}
           </div>
         </v-col>
         <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
@@ -39,7 +39,7 @@
             class="info-label error--text mt-2 mb-6"
             v-if="documentStep === 4"
           >
-            {{ ltvExamResult.examEnglish || "Chưa có thông tin" }}
+            {{ getExamEnglish }}
           </div>
         </v-col>
         <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
@@ -49,17 +49,11 @@
             style="font-size: 24px"
             v-if="documentStep === 4"
           >
-            {{ ltvExamResult.totalMark || "Chưa có thông tin" }}
+            {{ getTotalMark }}
           </div>
         </v-col>
       </v-row>
-      <div
-        v-if="
-          ltvExamResult.passExam !== '' &&
-          systemTime.checkDocumentSystemTime &&
-          systemTime.checkDocumentSystemTime['display-exam-result']
-        "
-      >
+      <div v-if="isOpenDisplayResult">
         <hr class="dashed" />
         <div class="py-6" v-if="ltvExamResult.passExam">
           <div class="mx-auto" style="max-width: 355px">
@@ -130,6 +124,7 @@
 </template>
 
 <script>
+import { get } from "lodash";
 export default {
   props: {
     documentStep: Number,
@@ -139,6 +134,44 @@ export default {
     },
     systemTime: Object,
     isAdminPreview: Boolean,
+  },
+  computed: {
+    isDevelopmentMode() {
+      return process.env.NODE_ENV === "development";
+    },
+    isOpenDisplayResult() {
+      return (
+        (this.ltvExamResult.passExam !== "" &&
+          this.systemTime.checkDocumentSystemTime &&
+          this.systemTime.checkDocumentSystemTime["display-exam-result"]) ||
+        (this.isDevelopmentMode && this.ltvExamResult.passExam !== "")
+      );
+    },
+    getStudentExamId() {
+      if (this.isOpenDisplayResult)
+        return get(this.ltvExamResult, "studentExamID", "Chưa có thông tin");
+      else return "Chưa có thông tin";
+    },
+    getExamMath() {
+      if (this.isOpenDisplayResult)
+        return get(this.ltvExamResult, "examMath", "Chưa có thông tin");
+      else return "Chưa có thông tin";
+    },
+    getExamLiterature() {
+      if (this.isOpenDisplayResult)
+        return get(this.ltvExamResult, "examLiterature", "Chưa có thông tin");
+      else return "Chưa có thông tin";
+    },
+    getExamEnglish() {
+      if (this.isOpenDisplayResult)
+        return get(this.ltvExamResult, "examEnglish", "Chưa có thông tin");
+      else return "Chưa có thông tin";
+    },
+    getTotalMark() {
+      if (this.isOpenDisplayResult)
+        return get(this.ltvExamResult, "totalMark", "Chưa có thông tin");
+      else return "Chưa có thông tin";
+    },
   },
   data() {
     return {

@@ -15,7 +15,9 @@
           <div class="field-label">
             Số báo danh dự thi vào kỳ thi vào lớp 10 của Sở GD&ĐT TP. Hà Nội năm
             2021
-            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
+            <span
+              style="color: red"
+              v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -24,7 +26,11 @@
             v-model="ltvExamResult.studentExamID"
             type="number"
             color="primary"
-            v-if="document.status !== 'submitted' && !isAdminPreview && !isAdminPreview"
+            v-if="
+              document.status !== 'submitted' &&
+              !isAdminPreview &&
+              !isAdminPreview
+            "
             @keyup.enter="submit"
             :rules="[$rules.required]"
             outlined
@@ -46,7 +52,9 @@
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Toán
-            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
+            <span
+              style="color: red"
+              v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -72,7 +80,9 @@
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Văn
-            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
+            <span
+              style="color: red"
+              v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -98,7 +108,9 @@
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Anh
-            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
+            <span
+              style="color: red"
+              v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -126,7 +138,9 @@
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
           <div class="field-label">
             Lịch sử
-            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
+            <span
+              style="color: red"
+              v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -150,11 +164,16 @@
           </div>
         </v-col>
       </v-row>
-      <v-row v-if="document.status !== 'submitted' && !isAdminPreview" class="my-0">
+      <v-row
+        v-if="document.status !== 'submitted' && !isAdminPreview"
+        class="my-0"
+      >
         <v-col class="py-0" cols="12" xs="12" sm="12" md="8">
           <div class="field-label">
             Loại ưu tiên
-            <span style="color: red" v-if="document.status !== 'submitted' && !isAdminPreview"
+            <span
+              style="color: red"
+              v-if="document.status !== 'submitted' && !isAdminPreview"
               >*</span
             >
           </div>
@@ -228,7 +247,9 @@
           class="py-0"
           :class="{
             'mt-8':
-              $vuetify.breakpoint.smAndDown && document.status !== 'submitted' && !isAdminPreview,
+              $vuetify.breakpoint.smAndDown &&
+              document.status !== 'submitted' &&
+              !isAdminPreview,
           }"
           cols="12"
           xs="12"
@@ -261,7 +282,9 @@
           class="py-0"
           :class="{
             'mt-8':
-              $vuetify.breakpoint.smAndDown && document.status !== 'submitted' && !isAdminPreview,
+              $vuetify.breakpoint.smAndDown &&
+              document.status !== 'submitted' &&
+              !isAdminPreview,
           }"
           cols="12"
           xs="12"
@@ -291,7 +314,10 @@
           </div>
         </v-col>
       </v-row>
-      <div class="py-6" v-if="document.status !== 'submitted' && !isAdminPreview">
+      <div
+        class="py-6"
+        v-if="document.status !== 'submitted' && !isAdminPreview"
+      >
         <div class="font-weight-bold">Cách tính tổng điểm</div>
         <div>
           - Ban A: ĐXT = (Điểm Toán + Điểm Anh) x4 + Điểm Văn + Lịch sử + Điểm
@@ -313,7 +339,10 @@
         </div>
         <div>- Học sinh THCS Lương Thế Vinh được cộng 3 điểm.</div>
       </div>
-      <hr class="dashed" v-if="document.status !== 'submitted' && !isAdminPreview" />
+      <hr
+        class="dashed"
+        v-if="document.status !== 'submitted' && !isAdminPreview"
+      />
       <div
         class="d-flex justify-center py-6"
         v-if="document.status !== 'submitted' && !isAdminPreview"
@@ -329,14 +358,8 @@
           nộp cho nhà trường ngày hôm nay.
         </p>
       </div>
-      <div
-        v-if="
-          ltvExamResult.passExam !== '' &&
-          systemTime.checkDocumentSystemTime &&
-          systemTime.checkDocumentSystemTime['display-exam-result']
-        "
-      >
-        <hr class="dashed" />
+      <div v-if="isOpenDisplayResult">
+        <hr class="dashed" v-if="ltvExamResult.passExam"/>
         <div v-if="ltvExamResult.passExam === true">
           <div class="mx-auto py-6" style="max-width: 355px">
             <v-img src="@/assets/pass-exam.svg" />
@@ -478,6 +501,17 @@ export default {
           3 +
         parseFloat(this.ltvExamResult.examHistory) +
         this.getPriorityMark
+      );
+    },
+    isDevelopmentMode() {
+      return process.env.NODE_ENV === "development";
+    },
+    isOpenDisplayResult() {
+      return (
+        (this.ltvExamResult.passExam !== "" &&
+          this.systemTime.checkDocumentSystemTime &&
+          this.systemTime.checkDocumentSystemTime["display-exam-result"]) ||
+        (this.isDevelopmentMode && this.ltvExamResult.passExam !== "")
       );
     },
   },
