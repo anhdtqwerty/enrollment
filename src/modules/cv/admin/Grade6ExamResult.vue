@@ -12,7 +12,10 @@
       @closeDialog="closeConfirmDialog"
       @updateResult="onUpdateResultDocument"
     />
-    <div class="d-flex justify-space-between align-center mb-6">
+    <div
+      class="d-flex justify-space-between align-center mb-6"
+      v-if="this.user && this.user.department === 'both'"
+    >
       <div class="component-title">Kết quả thi Khối 6</div>
       <div class="d-flex flex-center">
         <v-btn
@@ -372,9 +375,9 @@ export default {
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
     async exportExcelTemplate() {
-      this.$loading.active = true
-      window.location.href =`${this.$baseUrl}grade6-exam-result.xlsx`
-      this.$loading.active = false
+      this.$loading.active = true;
+      window.location.href = `${this.$baseUrl}grade6-exam-result.xlsx`;
+      this.$loading.active = false;
     },
     async onFilterChanged(data) {
       this.$loading.active = true;

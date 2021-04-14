@@ -12,7 +12,7 @@
       @closeDialog="closeConfirmDialog"
       @updateResult="onUpdateResultDocument"
     />
-    <div class="d-flex justify-space-between align-center mb-6">
+    <div class="d-flex justify-space-between align-center mb-6" v-if="this.user && this.user.department === 'both'">
       <div class="component-title">Kết quả thi Khối 10</div>
       <div class="d-flex flex-center">
         <v-btn
