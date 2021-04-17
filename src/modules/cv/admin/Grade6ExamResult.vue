@@ -12,53 +12,53 @@
       @closeDialog="closeConfirmDialog"
       @updateResult="onUpdateResultDocument"
     />
-    <div
-      class="d-flex justify-space-between align-center mb-6"
-      v-if="this.user && this.user.department === 'both'"
-    >
+    <div class="d-flex justify-space-between align-center mb-6">
       <div class="component-title">Kết quả thi Khối 6</div>
       <div class="d-flex flex-center">
-        <v-btn
-          color="admin"
-          dark
-          class="elevation-0 ml-6"
-          :loading="isSelecting"
-          @click="exportExcelTemplate"
-          ><v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel mẫu</v-btn
+        <JsonExcel
+          :data="updatedCVs"
+          :fields="json_fields"
+          :before-generate="toggleLoadingScreen(true)"
+          :before-finish="toggleLoadingScreen(false)"
+          type="xls"
+          worksheet="Hồ sơ"
+          name="ho-so-khoi-6.xls"
         >
-        <v-btn
-          color="admin"
-          class="elevation-0 ml-6"
-          width="167px"
-          dark
-          :loading="isSelecting"
-          @click="onButtonClick"
-        >
-          <v-icon left>mdi-upload</v-icon>Upload Excel
-          <input
-            ref="uploader"
-            type="file"
-            class="d-none"
-            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-            @change="onFileChanged"
-          />
-        </v-btn>
+          <v-btn color="admin" width="167px" dark outlined>
+            <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
+          </v-btn>
+        </JsonExcel>
       </div>
     </div>
-    <div class="d-flex justify-end align-center mb-6">
-      <JsonExcel
-        :data="updatedCVs"
-        :fields="json_fields"
-        :before-generate="toggleLoadingScreen(true)"
-        :before-finish="toggleLoadingScreen(false)"
-        type="xls"
-        worksheet="Hồ sơ"
-        name="ho-so-khoi-6.xls"
+    <div
+      class="d-flex justify-end align-center mb-6"
+      v-if="user.department === 'both'"
+    >
+      <v-btn
+        color="admin"
+        dark
+        class="elevation-0 ml-6"
+        :loading="isSelecting"
+        @click="exportExcelTemplate"
+        ><v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel mẫu</v-btn
       >
-        <v-btn color="admin" width="167px" dark outlined>
-          <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
-        </v-btn>
-      </JsonExcel>
+      <v-btn
+        color="admin"
+        class="elevation-0 ml-6"
+        width="167px"
+        dark
+        :loading="isSelecting"
+        @click="onButtonClick"
+      >
+        <v-icon left>mdi-upload</v-icon>Upload Excel
+        <input
+          ref="uploader"
+          type="file"
+          class="d-none"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          @change="onFileChanged"
+        />
+      </v-btn>
     </div>
     <v-card class="pa-6 elevation-1 mb-6">
       <DocumentFilter @onFilterChanged="onFilterChanged" />
