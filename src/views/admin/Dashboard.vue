@@ -4,7 +4,9 @@
       <div class="component-title">Báo cáo</div>
       <div class="component-title">{{ getCurrentDepartment }}</div>
     </div>
-    <div class="section-title py-6" v-if="user.department === 'both'">Tài khoản và tin nhắn</div>
+    <div class="section-title py-6" v-if="user.department === 'both'">
+      Tài khoản và tin nhắn
+    </div>
     <v-row class="d-flex" v-if="user.department === 'both'">
       <v-col cols="6">
         <v-card>
@@ -13,7 +15,12 @@
           <v-card-text class="pa-6">
             <v-row class="align-center">
               <v-col sm="12" xs="12" md="9">Tổng số tài khoản</v-col>
-              <v-col class="text-number admin--text text-end" sm="12" xs="12" md="3">
+              <v-col
+                class="text-number admin--text text-end"
+                sm="12"
+                xs="12"
+                md="3"
+              >
                 {{ accountInfo.totalAccount }}
               </v-col>
             </v-row>
@@ -21,7 +28,12 @@
               <v-col sm="12" xs="12" md="9"
                 >Số tài khoản chưa kích hoạt OTP</v-col
               >
-              <v-col class="text-number admin--text text-end" sm="12" xs="12" md="3">
+              <v-col
+                class="text-number admin--text text-end"
+                sm="12"
+                xs="12"
+                md="3"
+              >
                 {{ accountInfo.totalInactiveAccount }}
               </v-col>
             </v-row>
@@ -29,7 +41,12 @@
               <v-col sm="12" xs="12" md="9"
                 >Số tài khoản đã kích hoạt OTP chưa có hồ sơ</v-col
               >
-              <v-col class="text-number admin--text text-end" sm="12" xs="12" md="3">
+              <v-col
+                class="text-number admin--text text-end"
+                sm="12"
+                xs="12"
+                md="3"
+              >
                 {{ accountInfo.totalNoDocumentAccount }}
               </v-col>
             </v-row>
@@ -43,7 +60,12 @@
           <v-card-text class="pa-6">
             <v-row class="align-center">
               <v-col sm="12" xs="12" md="9">Tổng số tin nhắn</v-col>
-              <v-col class="text-number admin--text text-end" sm="12" xs="12" md="3">
+              <v-col
+                class="text-number admin--text text-end"
+                sm="12"
+                xs="12"
+                md="3"
+              >
                 {{ smsInfo.totalSMS }}
               </v-col>
             </v-row>
@@ -51,7 +73,12 @@
               <v-col sm="12" xs="12" md="9"
                 >Số tin nhắn trung bình một ngày</v-col
               >
-              <v-col class="text-number admin--text text-end" sm="12" xs="12" md="3">
+              <v-col
+                class="text-number admin--text text-end"
+                sm="12"
+                xs="12"
+                md="3"
+              >
                 {{ smsInfo.dailySMS }}
               </v-col>
             </v-row>
@@ -59,7 +86,12 @@
               <v-col sm="12" xs="12" md="9"
                 >Số tin nhắn OTP nhưng tài khoản chưa kích hoạt</v-col
               >
-              <v-col class="text-number admin--text text-end" sm="12" xs="12" md="3">
+              <v-col
+                class="text-number admin--text text-end"
+                sm="12"
+                xs="12"
+                md="3"
+              >
                 {{ smsInfo.inactiveSMS }}
               </v-col>
             </v-row>
@@ -555,7 +587,7 @@ export default {
         }),
         totalNoDocumentAccount: users.filter(
           (user) =>
-            user.cvs.length > 0 &&
+            user.cvs.length === 0 &&
             user.role.type != "admin" &&
             user.isConfirmedOTP
         ).length,
@@ -574,7 +606,8 @@ export default {
           inactiveSMS: 0,
         }
       );
-      const dayNum = moment().diff(moment("05/04/2021", "DD/MM/YYYY"), "days") + 1;
+      const dayNum =
+        moment().diff(moment("05/04/2021", "DD/MM/YYYY"), "days") + 1;
       return {
         totalSMS,
         inactiveSMS,
@@ -806,12 +839,12 @@ export default {
   },
   async created() {
     this.$loading.active = true;
-    if (this.user.department === "both")
+    if (this.user.department === "both") {
       this.department = ["Cơ sở 1", "Cơ sở A", "unset"];
-    else this.department = [this.user.department, "unset"];
-    const users = await this.fetchUsers({});
-    this.accountInfo = await this.getAccountInfo(users);
-    this.smsInfo = await this.getSMSInfo(users);
+      const users = await this.fetchUsers({});
+      this.accountInfo = await this.getAccountInfo(users);
+      this.smsInfo = await this.getSMSInfo(users);
+    } else this.department = [this.user.department, "unset"];
     //Grade 6
     this.grade6ActiveCode = await this.getActiveCodeStatistics("Khối 6");
     this.grade6Document = await this.getDocumentInfo("Khối 6");
