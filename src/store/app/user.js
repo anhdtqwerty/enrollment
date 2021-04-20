@@ -14,7 +14,7 @@ export default {
       return userCount - adminCount;
     },
     async fetchUsers({ commit }, options) {
-      const foundUsers = await User.fetch({ ...options, _limit: -1 });
+      const foundUsers = await User.fetch({ ...options, _limit: -1, _sort: "updatedAt:DESC" });
       commit("setUsers", foundUsers);
       return foundUsers;
     },
@@ -54,6 +54,9 @@ export default {
     },
   },
   getters: {
+    users: (state) => {
+      return Object.values(state.users);
+    },
     adminUsers: (state) => {
       return Object.values(state.adminUsers);
     },

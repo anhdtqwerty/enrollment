@@ -31,6 +31,18 @@
         <v-list-item-action></v-list-item-action>
         <v-list-item-title> Báo cáo </v-list-item-title>
       </v-list-item>
+      <v-list-item
+        to="/admin/user"
+        active-class="active-item"
+        v-if="user.role.type === 'admin' && user.department === 'both'"
+        link
+      >
+        <v-list-item-icon class="mr-4">
+          <v-icon>mdi-account</v-icon>
+        </v-list-item-icon>
+        <v-list-item-action></v-list-item-action>
+        <v-list-item-title> Quản lý tài khoản </v-list-item-title>
+      </v-list-item>
       <v-list-item to="/admin/active-code" active-class="active-item" link>
         <v-list-item-icon class="mr-4">
           <v-icon>mdi-folder</v-icon>
@@ -68,6 +80,7 @@
   </v-navigation-drawer>
 </template>
 <script>
+import { mapGetters } from "vuex";
 export default {
   props: {
     drawer: { type: Boolean },
@@ -88,8 +101,8 @@ export default {
       this.state = true;
     },
   },
-  components: {},
   computed: {
+    ...mapGetters("auth", ["user"]),
     imageHeight() {
       switch (this.$vuetify.breakpoint.name) {
         case "xs":

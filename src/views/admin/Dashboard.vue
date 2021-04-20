@@ -4,101 +4,7 @@
       <div class="component-title">Báo cáo</div>
       <div class="component-title">{{ getCurrentDepartment }}</div>
     </div>
-    <div class="section-title py-6" v-if="user.department === 'both'">
-      Tài khoản và tin nhắn
-    </div>
-    <v-row class="d-flex" v-if="user.department === 'both'">
-      <v-col cols="6">
-        <v-card>
-          <v-card-title class="card-title pa-6">Tài khoản</v-card-title>
-          <v-divider></v-divider>
-          <v-card-text class="pa-6">
-            <v-row class="align-center">
-              <v-col sm="12" xs="12" md="9">Tổng số tài khoản</v-col>
-              <v-col
-                class="text-number admin--text text-end"
-                sm="12"
-                xs="12"
-                md="3"
-              >
-                {{ accountInfo.totalAccount }}
-              </v-col>
-            </v-row>
-            <v-row class="align-center">
-              <v-col sm="12" xs="12" md="9"
-                >Số tài khoản chưa kích hoạt OTP</v-col
-              >
-              <v-col
-                class="text-number admin--text text-end"
-                sm="12"
-                xs="12"
-                md="3"
-              >
-                {{ accountInfo.totalInactiveAccount }}
-              </v-col>
-            </v-row>
-            <v-row class="align-center">
-              <v-col sm="12" xs="12" md="9"
-                >Số tài khoản đã kích hoạt OTP chưa có hồ sơ</v-col
-              >
-              <v-col
-                class="text-number admin--text text-end"
-                sm="12"
-                xs="12"
-                md="3"
-              >
-                {{ accountInfo.totalNoDocumentAccount }}
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col cols="6">
-        <v-card>
-          <v-card-title class="card-title pa-6">Tin nhắn</v-card-title>
-          <v-divider></v-divider>
-          <v-card-text class="pa-6">
-            <v-row class="align-center">
-              <v-col sm="12" xs="12" md="9">Tổng số tin nhắn</v-col>
-              <v-col
-                class="text-number admin--text text-end"
-                sm="12"
-                xs="12"
-                md="3"
-              >
-                {{ smsInfo.totalSMS }}
-              </v-col>
-            </v-row>
-            <v-row class="align-center">
-              <v-col sm="12" xs="12" md="9"
-                >Số tin nhắn trung bình một ngày</v-col
-              >
-              <v-col
-                class="text-number admin--text text-end"
-                sm="12"
-                xs="12"
-                md="3"
-              >
-                {{ smsInfo.dailySMS }}
-              </v-col>
-            </v-row>
-            <v-row class="align-center">
-              <v-col sm="12" xs="12" md="9"
-                >Số tin nhắn OTP nhưng tài khoản chưa kích hoạt</v-col
-              >
-              <v-col
-                class="text-number admin--text text-end"
-                sm="12"
-                xs="12"
-                md="3"
-              >
-                {{ smsInfo.inactiveSMS }}
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+
     <div class="section-title py-6">Mã kích hoạt</div>
     <v-row class="d-flex">
       <v-col cols="6">
@@ -211,7 +117,7 @@
                   <div>
                     <div class="timeline-title">Chọn sơ sở</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
-                    <div class="text-number admin--text text-end">
+                    <div class="text-number admin--text text-start">
                       {{
                         user.department === "both"
                           ? grade6Document.chooseFacility
@@ -249,7 +155,7 @@
                       Thông tin phụ huynh, học sinh
                     </div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
-                    <div class="text-number admin--text text-end">
+                    <div class="text-number admin--text text-start">
                       {{
                         user.department === "both"
                           ? grade6Document.infoForm
@@ -285,7 +191,7 @@
                   <div>
                     <div class="timeline-title">Kết quả học tập</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
-                    <div class="text-number admin--text text-end">
+                    <div class="text-number admin--text text-start">
                       {{
                         user.department === "both"
                           ? grade6Document.studyResult
@@ -371,7 +277,7 @@
                   <div>
                     <div class="timeline-title">Chọn sơ sở</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
-                    <div class="text-number admin--text text-end">
+                    <div class="text-number admin--text text-start">
                       {{
                         user.department === "both"
                           ? grade10Document.chooseFacility
@@ -409,7 +315,7 @@
                       Thông tin phụ huynh, học sinh
                     </div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
-                    <div class="text-number admin--text text-end">
+                    <div class="text-number admin--text text-start">
                       {{
                         user.department === "both"
                           ? grade10Document.infoForm
@@ -445,7 +351,7 @@
                   <div>
                     <div class="timeline-title">Đăng ký nguyện vọng</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
-                    <div class="text-number admin--text text-end">
+                    <div class="text-number admin--text text-start">
                       {{
                         user.department === "both"
                           ? grade10Document.expectation
@@ -481,7 +387,7 @@
                   <div>
                     <div class="timeline-title">Kết quả học tập</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
-                    <div class="text-number admin--text text-end">
+                    <div class="text-number admin--text text-start">
                       {{
                         user.department === "both"
                           ? grade10Document.studyResult
@@ -517,7 +423,7 @@
                   <div>
                     <div class="timeline-title">Kết quả Kỳ thi tuyển sinh</div>
                     <div class="timeline-subtitle py-2">Số hồ sơ hoàn tất</div>
-                    <div class="text-number admin--text text-end">
+                    <div class="text-number admin--text text-start">
                       {{
                         user.department === "both"
                           ? grade10Document.examResult
@@ -575,45 +481,6 @@ export default {
       "fetchActiveCode",
     ]),
     ...mapActions("cv", ["fetchCVs", "fetchCV", "countCVs"]),
-    ...mapActions("user", ["countUsers", "fetchUsers"]),
-    async getAccountInfo(users) {
-      return {
-        totalAccount: await this.countUsers({}),
-        totalActiveAccount: users.filter(
-          (user) => user.role.type != "admin" && user.isConfirmedOTP
-        ).length,
-        totalInactiveAccount: await this.countUsers({
-          isConfirmedOTP: "false",
-        }),
-        totalNoDocumentAccount: users.filter(
-          (user) =>
-            user.cvs.length === 0 &&
-            user.role.type != "admin" &&
-            user.isConfirmedOTP
-        ).length,
-      };
-    },
-    async getSMSInfo(users) {
-      const { totalSMS, inactiveSMS } = users.reduce(
-        (acc, cur) => {
-          acc.totalSMS += cur.SMSNum;
-          if (cur.isConfirmedOTP && cur.cvs.length === 0)
-            acc.inactiveSMS += cur.SMSNum;
-          return acc;
-        },
-        {
-          totalSMS: 0,
-          inactiveSMS: 0,
-        }
-      );
-      const dayNum =
-        moment().diff(moment("05/04/2021", "DD/MM/YYYY"), "days") + 1;
-      return {
-        totalSMS,
-        inactiveSMS,
-        dailySMS: Math.round(totalSMS / dayNum),
-      };
-    },
     async getActiveCodeStatistics(grade) {
       return {
         totalActiveCodes: await this.countActiveCodes({
@@ -841,9 +708,6 @@ export default {
     this.$loading.active = true;
     if (this.user.department === "both") {
       this.department = ["Cơ sở 1", "Cơ sở A", "unset"];
-      const users = await this.fetchUsers({});
-      this.accountInfo = await this.getAccountInfo(users);
-      this.smsInfo = await this.getSMSInfo(users);
     } else this.department = [this.user.department, "unset"];
     //Grade 6
     this.grade6ActiveCode = await this.getActiveCodeStatistics("Khối 6");
@@ -869,16 +733,6 @@ export default {
   data() {
     return {
       department: [],
-      accountInfo: {
-        totalAccount: 0,
-        totalInactiveAccount: 0,
-        totalNoDocumentAccount: 0,
-      },
-      smsInfo: {
-        totalSMS: 0,
-        dailySMS: 0,
-        inactiveSMS: 0,
-      },
       pieChartOptions: { responsive: true, maintainAspectRatio: false },
       lineChartOptions: {
         responsive: true,

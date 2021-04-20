@@ -8,6 +8,7 @@ import DocumentDetail from "@/views/document/DocumentDetail.vue";
 
 /* Admin Page */
 import MainLayout from "@/views/admin/MainLayout.vue";
+import UserManagement from "@/views/admin/UserManagement.vue";
 import AdminSigninDialog from "@/views/admin/AdminSigninDialog.vue";
 import Dashboard from "@/views/admin/Dashboard.vue";
 import ActiveCode from "@/modules/active-code/ActiveCode.vue";
@@ -64,6 +65,15 @@ const routes = [
         component: Dashboard,
         meta: {
           title: "Trang chủ",
+          auth: true,
+        },
+      },
+      {
+        path: "user",
+        name: "User Management",
+        component: UserManagement,
+        meta: {
+          title: "Quản lý tài khoản",
           auth: true,
         },
       },
