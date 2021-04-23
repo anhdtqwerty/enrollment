@@ -16,8 +16,9 @@
             placeholder="Nhập số điện thoại tại đây (Ví dụ: 097372xxxx)"
             v-model="credentials.identifier"
             name="login"
-            type="text"
+            type="tel"
             color="primary"
+            v-mask="'##########'"
             @keyup.enter="submit"
             :rules="phoneRules"
             outlined

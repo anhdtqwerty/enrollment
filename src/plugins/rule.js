@@ -43,7 +43,7 @@ export const inputRules = {
   phone: (v) =>
     !v ||
     (v.length >= 10 &&
-      /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$/gi.test(v)) ||
+      /(84|0[3|5|7|8|9]|01[2|6|8|9])+([0-9]{8})\b/gi.test(v)) ||
     "Sai định dạng số điện thoại",
   nospace: (v) => !v || !/ /.test(v.trim()) || "Không được chứa dấu cách",
   notEmpty: (v) => !Array.isArray(v) || !!v.length || "Required",

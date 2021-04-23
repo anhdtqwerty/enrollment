@@ -17,6 +17,7 @@
             name="login"
             type="tel"
             color="primary"
+            v-mask="'##########'"
             v-model="credentials.phone"
             @keyup.enter="submit"
             :rules="phoneRules"
