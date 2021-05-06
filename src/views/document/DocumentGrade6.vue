@@ -227,43 +227,43 @@ export default {
       )
         return "Chưa mở";
       else {
-        if (!this.document.status === "created") return "Mới mở";
-        else if (
+        if (
           step === 4 &&
           (!this.document.ltvExamResult ||
             !this.document.ltvExamResult.passExam ||
             this.document.ltvExamResult.passExam === "")
         )
           return "Chưa có kết quả";
+        else if (this.document.step === step) return "Đang khai báo";
         else if (
-          this.document.status === "filling" &&
+          this.document.status === "created" ||
           this.document.step <= step
         )
-          return "Đang khai báo";
+          return "Mới mở";
       }
       return "Đã hoàn tất";
     },
     getStatusColor(key, step) {
       if (
-        !this.systemTime.checkDocumentSystemTime ||
-        !this.systemTime.checkDocumentSystemTime[key] ||
-        this.document.step < step
+        (!this.systemTime.checkDocumentSystemTime ||
+          !this.systemTime.checkDocumentSystemTime[key]) &&
+        this.user.role.type !== "admin"
       )
         return "dark-gray--text";
       else {
-        if (!this.document.status === "created") return "error--text";
-        else if (
+        if (
           step === 4 &&
           (!this.document.ltvExamResult ||
             !this.document.ltvExamResult.passExam ||
             this.document.ltvExamResult.passExam === "")
         )
           return "error--text";
+        else if (this.document.step === step) return "warning--text";
         else if (
-          this.document.status === "filling" &&
+          this.document.status === "created" ||
           this.document.step <= step
         )
-          return "warning--text";
+          return "error--text";
       }
       return "success--text";
     },
@@ -289,6 +289,8 @@ export default {
           );
         return;
       }
+      console.log(this.document.step);
+      console.log(step);
       if (this.document.step < step && this.user.role.type !== "admin") {
         this.$alert.error("Xin vui lòng hoàn thành bước trước");
         return;

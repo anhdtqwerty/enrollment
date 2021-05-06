@@ -272,42 +272,51 @@ export default {
     },
     getStatus(key, step) {
       if (
-        !this.systemTime.checkDocumentSystemTime ||
-        !this.systemTime.checkDocumentSystemTime[key] ||
-        this.document.step < step
+        (!this.systemTime.checkDocumentSystemTime ||
+          !this.systemTime.checkDocumentSystemTime[key]) &&
+        this.user.role.type !== "admin"
       )
         return "Chưa mở";
       else {
-        if (!this.document.status === "created") return "Mới mở";
+        if (
+          step === 5 &&
+          this.document.step === 5 &&
+          (!this.document.ltvExamResult ||
+            !this.document.ltvExamResult.passExam ||
+            this.document.ltvExamResult.passExam === "")
+        )
+          return "Chưa có kết quả";
+        else if (step === this.document.step) return "Đang khai báo";
         else if (
-          this.document.status === "filling" &&
+          this.document.status === "created" ||
           this.document.step <= step
         )
-          return "Đang khai báo";
+          return "Mới mở";
       }
-      if (
-        this.document.step === 5 &&
-        (!this.document.ltvExamResult ||
-          !this.document.ltvExamResult.passExam ||
-          this.document.ltvExamResult.passExam === "")
-      )
-        return "Chưa có kết quả";
       return "Đã hoàn tất";
     },
     getStatusColor(key, step) {
       if (
-        !this.systemTime.checkDocumentSystemTime ||
-        !this.systemTime.checkDocumentSystemTime[key] ||
-        this.document.step < step
+        (!this.systemTime.checkDocumentSystemTime ||
+          !this.systemTime.checkDocumentSystemTime[key]) &&
+        this.user.role.type !== "admin"
       )
-        return "dark-gray--text";
+        return "gray--text";
       else {
-        if (!this.document.status === "created") return "error--text";
+        if (
+          step === 5 &&
+          this.document.step === 5 &&
+          (!this.document.ltvExamResult ||
+            !this.document.ltvExamResult.passExam ||
+            this.document.ltvExamResult.passExam === "")
+        )
+          return "error--text";
+        else if (step === this.document.step) return "warning--text";
         else if (
-          this.document.status === "filling" &&
+          this.document.status === "created" ||
           this.document.step <= step
         )
-          return "warning--text";
+          return "error--text";
       }
       return "success--text";
     },
