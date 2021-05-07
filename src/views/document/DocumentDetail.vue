@@ -72,6 +72,8 @@ export default {
       return;
     }
     this.document = this.CV(this.documentId);
+    if (this.document.status === "disabled")
+      this.redirectToHome(`Hồ sơ ${this.documentId} đã bị Admin vô hiệu hoá!`);
     this.documentSystemTime = await this.checkDocumentSystemTime({
       grade: this.document.type,
     });
