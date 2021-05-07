@@ -192,6 +192,7 @@ export default {
         { title: "Đang khai", value: "filling" },
         { title: "Chưa khai", value: "created" },
         { title: "Hoàn thành", value: "submitted" },
+        { title: "Đang tắt", value: "disabled" },
       ],
       departments: [
         { title: "Cơ sở A", value: "Cơ sở A" },

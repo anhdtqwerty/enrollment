@@ -157,7 +157,7 @@ export default {
       this.originHeaders.push({
         text: "Hành động",
         value: "action",
-        align: "left",
+        align: "center",
         sortable: false,
         show: true,
       });
@@ -171,8 +171,11 @@ export default {
   },
   methods: {
     ...mapActions("cv", ["fetchCVs", "fetchCV", "updateCV"]),
+    ...mapActions("activeCode", ["enableActiveCode", "disableActiveCode"]),
     async refresh(query) {
       this.loading = true;
+      if (!this.user.department || this.user.department !== "both")
+        query.status = { $ne: "disabled" };
       await this.fetchCVs({ ...query });
       this.loading = false;
     },
@@ -202,14 +205,8 @@ export default {
         midContent: `<span class='error--text'>Lưu ý: Nếu như tắt hồ sơ, phụ huynh học sinh sẽ không thể chỉnh sửa hoặc thao tác trên hồ sơ này được nữa.</span>`,
         cancelText: "Hủy",
         done: async () => {
-          await this.updateCV({
-            code: item.code,
-            submitType: "save-draft",
-            status: "disabled",
-            studyRecord: { ...item.studyRecord, lastStatus: item.status },
-            userPhone: this.user.username,
-          });
-          this.$alert.success("Tắt hồ sơ thành công!");
+          await this.disableActiveCode(item.code);
+          await this.refresh({});
         },
       });
     },
@@ -221,14 +218,8 @@ export default {
         midContent: `<span class='error--text'>Lưu ý: Nếu như bật lại hồ sơ, phụ huynh học sinh sẽ có thể chỉnh sửa hoặc thao tác trên hồ sơ này.</span>`,
         cancelText: "Hủy",
         done: async () => {
-          await this.updateCV({
-            code: item.code,
-            submitType: "save-draft",
-            status,
-            studyRecord: { ...item.studyRecord, lastStatus: "" },
-            userPhone: this.user.username,
-          });
-          this.$alert.success("Bật hồ sơ thành công!");
+          await this.enableActiveCode(item.code);
+          await this.refresh({});
         },
       });
     },

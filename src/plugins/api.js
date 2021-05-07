@@ -80,6 +80,8 @@ export const ActiveCode = {
     axios.post(`/active-codes/validate`, {
       code,
     }),
+    enableActiveCode: (code) => axios.put(`/active-codes/enable-code/${code}`, {}),
+    disableActiveCode: (code) => axios.put(`/active-codes/disable-code/${code}`, {}),
 };
 export const User = APIHelper(USER_API);
 export const Upload = {

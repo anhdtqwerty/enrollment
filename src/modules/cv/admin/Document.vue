@@ -65,6 +65,7 @@ export default {
           callback: (value) => {
             if (value === "submitted") return "Đã nộp";
             else if (value === "created") return "Vừa tạo";
+            else if (value === "disabled") return "Đang tắt";
             else return "Đang khai";
           },
         },

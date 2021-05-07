@@ -58,11 +58,43 @@
         </v-chip>
       </template>
       <template v-slot:[`item.action`]="{ item }">
-        <v-btn @click="onConfirmPrint(item)" color="admin" icon>
-          <v-icon>
-            mdi-printer
-          </v-icon>
-        </v-btn>
+        <div class="d-flex align-center">
+          <v-btn @click="onConfirmPrint(item)" color="admin" icon>
+            <v-icon> mdi-printer </v-icon>
+          </v-btn>
+          <div v-if="user.department === 'both'">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  @click="onActiveItem(item)"
+                  color="admin"
+                  v-show="item.status === 'disabled'"
+                  v-bind="attrs"
+                  v-on="on"
+                  icon
+                >
+                  <v-icon> mdi-check </v-icon>
+                </v-btn>
+              </template>
+              <span>Bật mã kích hoạt</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn
+                  @click="onDeactiveItem(item)"
+                  color="admin"
+                  v-show="item.status !== 'disabled'"
+                  v-bind="attrs"
+                  v-on="on"
+                  icon
+                >
+                  <v-icon> mdi-close </v-icon>
+                </v-btn>
+              </template>
+              <span>Vô hiệu hoá Mã kích hoạt</span>
+            </v-tooltip>
+          </div>
+        </div>
       </template>
       <template v-slot:no-data>
         <div class="d-flex flex-column align-center justify-center pa-6">
@@ -135,7 +167,7 @@ const originHeaders = [
   {
     text: "Thao tác",
     value: "action",
-    align: "left",
+    align: "center",
     sortable: false,
     show: true,
   },
@@ -172,6 +204,7 @@ export default {
       "setActiveCode",
       "updateActiveCode",
     ]),
+    ...mapActions("activeCode", ["enableActiveCode", "disableActiveCode"]),
     getCreatedAt(item) {
       if (item.createdAt) return moment(item.createdAt).format("DD/MM/YYYY");
       else return "---";
@@ -201,13 +234,43 @@ export default {
       };
       if (this.user.department === "both")
         query.department_in = ["Cơ sở A", "Cơ sở 1", "unset"];
-      else query.department_in = [this.user.department, "unset"];
+      else {
+        query.status = { $ne: "disabled" };
+        query.department_in = [this.user.department, "unset"];
+      }
       await this.fetchActiveCodes({ ...query });
       this.loading = false;
     },
     getColor(status) {
       if (status === "active") return "green";
+      if (status === "inactive") return "orange accent-2";
       else return "gray";
+    },
+    async onDeactiveItem(item) {
+      this.$adminDialog.confirm({
+        title: "Xác nhận hành động",
+        okText: "Xác nhận",
+        topContent: `Bạn có chắc chắn muốn vô hiệu hoá Mã kích hoạt ${item.code} không?`,
+        midContent: `<span class='error--text'>Lưu ý: Nếu như tắt mã kích hoạt đã được sử dụng, hồ sơ tương ứng cũng sẽ bị vô hiệu hoá (phụ huynh không thể chỉnh sửa).</span>`,
+        cancelText: "Hủy",
+        done: async () => {
+          await this.disableActiveCode(item.code);
+          await this.refresh({});
+        },
+      });
+    },
+    async onActiveItem(item) {
+      this.$adminDialog.confirm({
+        title: "Xác nhận hành động",
+        okText: "Xác nhận",
+        topContent: `Bạn có chắc chắn muốn tắt Mã kích hoạt ${item.code} không?`,
+        midContent: `<span class='error--text'>Lưu ý: Nếu như bật lại mã kích hoạt đã được sử dụng, hồ sơ tương ứng cũng sẽ được bật lại.</span>`,
+        cancelText: "Hủy",
+        done: async () => {
+          await this.enableActiveCode(item.code);
+          await this.refresh({});
+        },
+      });
     },
     search() {},
   },
@@ -215,7 +278,7 @@ export default {
     getStatus: (status) => {
       if (status === "active") return "Đã kích hoạt";
       else if (status === "inactive") return "Chưa kích hoạt";
-      else return "---";
+      else return "Đang tắt";
     },
     getDepartment: (item) => {
       if (!item.department || item.department === "unset") return "---";

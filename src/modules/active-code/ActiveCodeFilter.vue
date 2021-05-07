@@ -195,6 +195,7 @@ export default {
       statuses: [
         { title: "Chưa kích hoạt", value: "inactive" },
         { title: "Đã kích hoạt", value: "active" },
+        { title: "Đang tắt", value: "disabled" },
       ],
       departments: [
         { title: "Cơ sở A", value: "Cơ sở A" },

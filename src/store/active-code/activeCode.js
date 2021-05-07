@@ -8,6 +8,20 @@ export default {
     count: 0,
   },
   actions: {
+    async enableActiveCode({commit}, code){
+      try {
+        alert.success(await ActiveCode.enableActiveCode(code));
+      } catch (e) {
+        alert.error(e);
+      }
+    },
+    async disableActiveCode({commit}, code){
+      try {
+        alert.success(await ActiveCode.disableActiveCode(code));
+      } catch (e) {
+        alert.error(e);
+      }
+    },
     async validate({ commit }, code) {
       try {
         return await ActiveCode.validate(code);

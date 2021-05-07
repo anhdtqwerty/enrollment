@@ -1,9 +1,7 @@
 <template>
   <div class="pa-6">
     <div class="d-flex justify-space-between align-center mb-6">
-      <div class="component-title">
-        Quản lý mã kích hoạt
-      </div>
+      <div class="component-title">Quản lý mã kích hoạt</div>
       <div class="flex-center">
         <JsonExcel
           :data="activeCodes"
@@ -87,7 +85,7 @@ export default {
           callback: (value) => {
             if (value === "active") return "Đã kích hoạt";
             else if (value === "inactive") return "Chưa kích hoạt";
-            else return "";
+            else return "Đang tắt";
           },
         },
         "Ngày tạo mã": {
