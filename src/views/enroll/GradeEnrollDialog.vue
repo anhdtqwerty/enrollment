@@ -1,8 +1,8 @@
 <template>
   <v-dialog v-model="dialog" max-width="1024px" width="100%">
     <v-card>
-      <v-card-title
-        ><div
+      <v-card-title>
+        <div
           :class="{
             'text-subtitle-1 font-weight-bold title--text':
               $vuetify.breakpoint.smAndDown,
@@ -12,11 +12,17 @@
           {{ title }}
         </div>
         <v-spacer />
+        <v-icon @click="refresh()" class="mr-2">mdi-refresh</v-icon>
         <v-icon @click="cancel()">mdi-close</v-icon>
       </v-card-title>
       <v-divider></v-divider>
       <div class="iframe-container" :style="getIframeContainerHeight">
-        <iframe :src="src" class="responsive-iframe" style="border: none"/>
+        <iframe
+          :src="src"
+          id="grade-enroll-iframe"
+          class="responsive-iframe"
+          style="border: none"
+        />
       </div>
     </v-card>
   </v-dialog>
@@ -55,11 +61,15 @@ export default {
   },
   methods: {
     cancel() {
+      this.refresh();
       this.$emit("closeDialog", false);
     },
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
+    },
+    refresh() {
+      document.getElementById("grade-enroll-iframe").src += ``;
     },
   },
   created() {
