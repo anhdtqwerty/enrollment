@@ -43,7 +43,7 @@
     </v-card>
     <GradeEnrollDialog
       title="Thông tin tuyển sinh khối lớp 6"
-      :src="`${$baseUrl}Khoi6.html`"
+      :src="`${$baseUrl}Khoi6_0525.html`"
       :state="grade6Dialog"
       @closeDialog="toggleGrade6Dialog"
     />
