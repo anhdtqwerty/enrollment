@@ -88,6 +88,12 @@ export default {
             return moment(value).format("DD/MM/YYYY HH:mm:ss");
           },
         },
+        "Tài khoản kích hoạt": {
+          field: "username",
+          callback: (value) => {
+            return value;
+          },
+        },
         "Cơ sở": {
           field: "department",
           callback: (value) => {
@@ -291,6 +297,7 @@ export default {
       this.updatedCVs = data.map((cv) => {
         return {
           ...cv,
+          username: cv.parent.username,
           parent: {
             parentName: cv.parentName,
             parentPhone: cv.parentPhone,

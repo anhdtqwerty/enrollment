@@ -34,7 +34,7 @@
       <v-list-item
         to="/admin/user"
         active-class="active-item"
-        v-if="user.role.type === 'admin' && user.department === 'both'"
+        v-if="user.role && user.role.type === 'admin' && user.department === 'both'"
         link
       >
         <v-list-item-icon class="mr-4">

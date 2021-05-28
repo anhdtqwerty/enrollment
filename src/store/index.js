@@ -24,6 +24,7 @@ export default createStore(Vuex.Store, {
         "auth.jwt",
         "auth.isConfirmedOTP",
         "auth.role",
+        "auth.isRequestingReset",
       ],
     }),
     axiosPlugin,

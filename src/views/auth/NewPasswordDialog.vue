@@ -4,7 +4,7 @@
       <v-card-title
         ><div style="color: #797979">Đặt lại mật khẩu</div>
         <v-spacer />
-        <v-icon class="mr-n1" @click="cancel()">mdi-close</v-icon>
+        <!-- <v-icon class="mr-n1" @click="cancel()">mdi-close</v-icon> -->
       </v-card-title>
       <v-divider></v-divider>
       <v-card-text class="py-8">
