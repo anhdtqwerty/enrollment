@@ -182,7 +182,9 @@ export default {
     ]),
     ...mapActions("layout", ["setDocumentDialog"]),
     getStatus(key, step) {
-      if (
+      if (!this.systemTime) return "Đang cập nhật";
+      else if (
+        !this.systemTime ||
         !this.systemTime.checkDocumentSystemTime ||
         !this.systemTime.checkDocumentSystemTime[key] ||
         this.document.step < step
@@ -227,6 +229,7 @@ export default {
       return this.document.step > step;
     },
     onStepClick(key, step) {
+      if (!this.systemTime) return;
       if (
         (!this.systemTime.checkDocumentSystemTime ||
           !this.systemTime.checkDocumentSystemTime[key]) &&

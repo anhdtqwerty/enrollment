@@ -276,7 +276,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("cv", ["fetchCVs"]),
+    ...mapActions("cv", ["fetchCVs", "startHourlySMSTask"]),
     async onFilterChanged(data) {
       this.$loading.active = true;
       await this.fetchCVs({

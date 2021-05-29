@@ -113,6 +113,7 @@ export default {
     },
     isCloseFillInfo() {
       if (
+        this.systemTime &&
         this.systemTime.checkDocumentSystemTime &&
         this.systemTime.checkDocumentSystemTime["close-fill-info"]
       )
