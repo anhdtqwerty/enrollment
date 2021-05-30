@@ -135,7 +135,8 @@ export default {
       this.$dialog.confirm({
         title: "Chỉnh sửa",
         okText: "Xác nhận",
-        topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">${this.closeFillInfoTime}</span>`,
+        // topContent: `Phụ huynh lưu ý: Các thông tin này có thể được chỉnh sửa nhưng sẽ bị khóa vào ngày <span class="error--text">${this.closeFillInfoTime}</span>`,
+        topContent: ``,
         midContent:
           "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
         botContent: "",
@@ -195,9 +196,13 @@ export default {
       this.$dialog.confirm({
         title: "Hoàn thành",
         okText: "Xác nhận",
-        topContent: `Quý phụ huynh lưu ý:`,
-        midContent: `Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>${this.closeFillInfoTime}</span>.`,
-        botContent: `Sau <span class='error--text'>${this.closeFillInfoTime}</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.`,
+        // topContent: `Quý phụ huynh lưu ý:`,
+        // midContent: `Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>${this.closeFillInfoTime}</span>.`,
+        // botContent: `Sau <span class='error--text'>${this.closeFillInfoTime}</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.`,
+        topContent: "",
+        midContent:
+          "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
+        botContent: "",
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;

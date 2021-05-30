@@ -6,12 +6,12 @@
       <br v-if="$vuetify.breakpoint.smAndDown" />THPT năm 2021 -
       2022</v-card-title
     >
-    <div class="field-label pt-6" v-if="!isCloseFillInfo && !isAdminPreview">
-      <span class="error--text">(*)</span> Phụ huynh lưu ý: Các thông tin này có
+    <!-- <div class="field-label pt-6" v-if="!isCloseFillInfo && !isAdminPreview"> -->
+      <!-- <span class="error--text">(*)</span> Phụ huynh lưu ý: Các thông tin này có
       thể được chỉnh sửa nhưng sẽ bị khóa vào ngày
       <span class="error--text">{{ closeFillInfoTime }}</span
-      >.
-    </div>
+      >. -->
+    <!-- </div> -->
     <v-card-text class="pa-0">
       <v-form
         v-model="isValid"
@@ -372,9 +372,9 @@
         color="primary"
         v-if="
           documentStep !== 3 &&
-            !isEditing &&
-            !isCloseFillInfo &&
-            !isAdminPreview
+          !isEditing &&
+          !isCloseFillInfo &&
+          !isAdminPreview
         "
         @click="onEdit"
         outlined
@@ -506,9 +506,13 @@ export default {
       this.$dialog.confirm({
         title: "Chú ý",
         okText: "Xác nhận",
-        topContent: `Quý phụ huynh lưu ý:`,
-        midContent: `Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>${this.closeFillInfoTime}</span>.`,
-        botContent: `Sau <span class='error--text'>${this.closeFillInfoTime}</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.`,
+        // topContent: `Quý phụ huynh lưu ý:`,
+        // midContent: `Sau khi ấn 'Xác nhận', hệ thống sẽ tạm lưu thông tin phụ huynh vừa khai. Phụ huynh có thể thay đổi thông tin này trước ngày <span class='error--text'>${this.closeFillInfoTime}</span>.`,
+        // botContent: `Sau <span class='error--text'>${this.closeFillInfoTime}</span>, hệ thống sẽ tự động xác nhận thông tin đã được khai báo và đồng thời khóa khai báo mục này.`,
+        topContent: "",
+        midContent:
+          "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
+        botContent: "",
         cancelText: "Kiểm tra lại",
         done: async () => {
           this.$loading.active = true;

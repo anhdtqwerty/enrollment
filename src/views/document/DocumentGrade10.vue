@@ -252,7 +252,7 @@ export default {
             this.user.role.type !== "admin"
           ) {
             this.$alert.error(
-              `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Dự kiến sau ngày ${this.getExamResultDate}. Xin cảm ơn phụ huynh.`,
+              `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Xin cảm ơn phụ huynh.`,
               true
             );
             this.setStep(this.step - 1);
@@ -336,7 +336,7 @@ export default {
       ) {
         if (step === 5)
           this.$alert.error(
-            `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Dự kiến sau ngày ${this.getExamResultDate}. Xin cảm ơn phụ huynh.`,
+            `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Xin cảm ơn phụ huynh.`,
             true
           );
         else
