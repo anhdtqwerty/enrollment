@@ -297,7 +297,7 @@ export default {
       this.updatedCVs = data.map((cv) => {
         return {
           ...cv,
-          username: cv.parent.username,
+          username: cv.parent ? cv.parent.username : "",
           parent: {
             parentName: cv.parentName,
             parentPhone: cv.parentPhone,

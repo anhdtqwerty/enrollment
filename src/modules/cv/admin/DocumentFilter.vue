@@ -25,7 +25,7 @@
               :items="grades"
               item-text="title"
               item-value="value"
-              v-model="grade"
+              v-model="type"
               placeholder="Khối"
               clearable
               outlined
@@ -177,7 +177,7 @@ export default {
       advancedFilter: false,
       show: false,
       status: "",
-      grade: "",
+      type: "",
       code: "",
       department: "",
       name: "",
@@ -205,7 +205,7 @@ export default {
     onFilterChanged() {
       let query = {
         status: this.status,
-        grade: this.grade,
+        type: this.type,
         code: this.code,
         name: this.name,
         parentName: this.parent,
