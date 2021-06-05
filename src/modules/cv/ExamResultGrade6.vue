@@ -2,7 +2,7 @@
   <v-form ref="form" v-bind="this.$attrs">
     <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
     <v-card-title class="card-title">Điểm thi</v-card-title>
-    <v-card-subtitle class="card-subtitle py-6">
+    <v-card-subtitle class="card-subtitle" style="padding: 24px 0px !important">
       Kết quả kỳ khảo sát & đánh giá năng lực để vào trường THCS Lương Thế Vinh
     </v-card-subtitle>
     <v-card-text class="d-flex flex-column pa-0">
@@ -140,11 +140,13 @@ export default {
       return process.env.NODE_ENV === "development";
     },
     isOpenDisplayResult() {
-      return (
+      if (
         this.ltvExamResult.passExam !== "" &&
         this.systemTime.checkDocumentSystemTime &&
         this.systemTime.checkDocumentSystemTime["display-exam-result"]
-      );
+      )
+        return true;
+      return false;
     },
     getStudentExamId() {
       if (this.isOpenDisplayResult)
