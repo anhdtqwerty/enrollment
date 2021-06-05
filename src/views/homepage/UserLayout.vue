@@ -25,20 +25,18 @@
           cảm ơn!
         </div>
       </div>
-      <div v-else>
-        <MainToolbar />
-        <router-view></router-view>
-        <DocumentDialog />
-        <SignInDialog />
-        <ForgotPasswordDialog />
-        <ConfirmForgotPasswordDialog />
-        <NewPasswordDialog />
-        <SignUpDialog />
-        <ConfirmSignupDialog />
-        <div id="notice" v-if="isDevelopmentBuild">
-          <div class="error--text text-subtitle-1">
-            Development Build. v{{ version }}
-          </div>
+      <MainToolbar v-if="!isMaintainMode" />
+      <router-view v-if="!isMaintainMode"></router-view>
+      <DocumentDialog />
+      <SignInDialog />
+      <ForgotPasswordDialog />
+      <ConfirmForgotPasswordDialog />
+      <NewPasswordDialog />
+      <SignUpDialog />
+      <ConfirmSignupDialog />
+      <div id="notice" v-if="isDevelopmentBuild">
+        <div class="error--text text-subtitle-1">
+          Development Build. v{{ version }}
         </div>
       </div>
     </v-main>
@@ -74,7 +72,7 @@ export default {
   },
   data() {
     return {
-      isMaintainMode: true,
+      isMaintainMode: false,
       isDevelopmentBuild: true,
       version: "0.1",
     };

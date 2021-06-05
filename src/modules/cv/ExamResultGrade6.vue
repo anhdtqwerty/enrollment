@@ -141,10 +141,9 @@ export default {
     },
     isOpenDisplayResult() {
       return (
-        (this.ltvExamResult.passExam !== "" &&
-          this.systemTime.checkDocumentSystemTime &&
-          this.systemTime.checkDocumentSystemTime["display-exam-result"]) ||
-        (this.isDevelopmentMode && this.ltvExamResult.passExam !== "")
+        this.ltvExamResult.passExam !== "" &&
+        this.systemTime.checkDocumentSystemTime &&
+        this.systemTime.checkDocumentSystemTime["display-exam-result"]
       );
     },
     getStudentExamId() {
@@ -191,6 +190,7 @@ export default {
     if (this.document.ltvExamResult) {
       this.ltvExamResult = this.document.ltvExamResult;
     }
+    console.log(this.isOpenDisplayResult);
   },
   methods: {
     validate() {

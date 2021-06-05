@@ -249,7 +249,7 @@ export default {
       documentId: "",
       document: {},
       documentSystemTime: {},
-      isMaintainMode: true, //TODO: delete this
+      isMaintainMode: false, //TODO: delete this
     };
   },
   components: {
