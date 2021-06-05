@@ -25,6 +25,10 @@ export default {
   async created() {
     this.documentId = this.$route.params.id;
     this.$loading.active = true;
+    if (this.isMaintainMode) {
+      this.redirectToHome(`Hệ thống hiện tại đang được bảo trì!`);
+      return;
+    }
     if (!this.user || !this.isAuthenticated) {
       this.$alert.error(`Bạn cần phải đăng nhập để sử dụng chức năng này!`);
       this.$router.push("/");
@@ -245,6 +249,7 @@ export default {
       documentId: "",
       document: {},
       documentSystemTime: {},
+      isMaintainMode: true, //TODO: delete this
     };
   },
   components: {

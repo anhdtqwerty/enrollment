@@ -238,6 +238,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   data: () => ({
+    isMaintainMode: true, //TODO: turn this down when fix bug done
     activityDialog: false,
     enrollDialog: false,
     facilityDialog: false,

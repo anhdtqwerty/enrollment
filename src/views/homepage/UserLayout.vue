@@ -4,18 +4,41 @@
       <PluginAlert />
       <PluginConfirmDialog />
       <PluginLoading />
-      <MainToolbar />
-      <router-view></router-view>
-      <DocumentDialog />
-      <SignInDialog />
-      <ForgotPasswordDialog />
-      <ConfirmForgotPasswordDialog />
-      <NewPasswordDialog />
-      <SignUpDialog />
-      <ConfirmSignupDialog />
-      <div id="notice" v-if="isDevelopmentBuild">
-        <div class="error--text text-subtitle-1">
-          Development Build. v{{ version }}
+      <div
+        class="
+          text-h4 text-center
+          d-flex
+          flex-column
+          justify-center
+          align-center
+          pa-5
+        "
+        style="height: 100%"
+        v-if="isMaintainMode"
+      >
+        <div>
+          Xin lỗi, trang Tuyển sinh đang được bảo trì để nâng cao chất lượng
+          trải nghiệm cho quý phụ huynh.
+        </div>
+        <div class="mt-5">
+          Mong quý phụ huynh thông cảm cho sự bất tiện này và quay lại sau. Xin
+          cảm ơn!
+        </div>
+      </div>
+      <div v-else>
+        <MainToolbar />
+        <router-view></router-view>
+        <DocumentDialog />
+        <SignInDialog />
+        <ForgotPasswordDialog />
+        <ConfirmForgotPasswordDialog />
+        <NewPasswordDialog />
+        <SignUpDialog />
+        <ConfirmSignupDialog />
+        <div id="notice" v-if="isDevelopmentBuild">
+          <div class="error--text text-subtitle-1">
+            Development Build. v{{ version }}
+          </div>
         </div>
       </div>
     </v-main>
@@ -51,6 +74,7 @@ export default {
   },
   data() {
     return {
+      isMaintainMode: true,
       isDevelopmentBuild: true,
       version: "0.1",
     };
