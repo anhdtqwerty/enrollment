@@ -609,13 +609,13 @@ export default {
     getPriorityMark() {
       switch (this.ltvExamResult.priorityType) {
         case "Có bố mẹ hoặc anh chị đã hoặc đang theo học tại trường Lương Thế Vinh":
-          return 20;
+          return 7;
         case "Là con, em ruột của giáo viên đang công tác tại trường Lương Thế Vinh":
-          return 20;
+          return 7;
         case "Thuộc gia đình có công với cách mạng; gia đình thương binh, liệt sĩ":
-          return 20;
+          return 7;
         case "Là con cán bộ Y tế, Bộ đội, Công an tham gia phòng chống dịch Covid-19":
-          return 30;
+          return 10;
         default:
           return 0;
       }
