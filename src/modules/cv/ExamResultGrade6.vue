@@ -53,7 +53,8 @@
           </div>
         </v-col>
       </v-row>
-      <div v-if="isOpenDisplayResult">
+      <!-- TODO: Uncomment when display result-->
+      <!-- <div v-if="isOpenDisplayResult">
         <hr class="dashed" />
         <div class="py-6" v-if="ltvExamResult.passExam">
           <div class="mx-auto" style="max-width: 355px">
@@ -118,7 +119,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </v-card-text>
   </v-form>
 </template>

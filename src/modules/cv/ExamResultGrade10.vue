@@ -358,7 +358,8 @@
           nộp cho nhà trường ngày hôm nay.
         </p>
       </div>
-      <div v-if="isOpenDisplayResult">
+      <!-- TODO: Uncomment when display result-->
+      <!-- <div v-if="isOpenDisplayResult">
         <hr class="dashed" v-if="ltvExamResult.passExam"/>
         <div v-if="ltvExamResult.passExam === true">
           <div class="mx-auto py-6" style="max-width: 355px">
@@ -404,7 +405,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </v-card-text>
   </v-form>
 </template>
