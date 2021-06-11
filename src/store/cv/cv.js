@@ -120,6 +120,9 @@ export default {
         await dispatch('removeCV', item.code)
       }
     },
+    setCVs({commit}, cvs){
+      commit('setCVs', cvs)
+    }
   },
   mutations: {
     setCVs(state, CVs) {
