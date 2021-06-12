@@ -36,7 +36,8 @@ export default {
       return;
     }
     const systemTime = await this.checkSystemTime();
-    console.log(systemTime);
+    console.log("systemTime", systemTime);
+    console.log("currentTime", moment().format("DD/MM/YYYY HH:mm:ss"));
     if (
       (!systemTime || !systemTime.checkSystemTime["open-document"]) &&
       this.user.role.type !== "admin" &&
@@ -81,7 +82,7 @@ export default {
     this.documentSystemTime = await this.checkDocumentSystemTime({
       grade: this.document.type,
     });
-    console.log(this.documentSystemTime);
+    console.log("documentSystemTime", this.documentSystemTime);
     if (this.document.type === "Khối 6")
       this.checkStepGrade6(this.document.step, this.documentSystemTime);
     else
