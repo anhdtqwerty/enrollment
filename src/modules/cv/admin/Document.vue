@@ -545,7 +545,6 @@ export default {
       this.$loading.active = true;
       await this.fetchCVs({
         ...data,
-        avatar_null: true,
         _sort: "updatedAt:DESC",
       });
       this.$loading.active = false;
