@@ -218,7 +218,7 @@ export default {
     isOpenDisplayResult() {
       if (
         this.document.ltvExamResult &&
-        this.document.ltvExamResult.passExam !== "" &&
+        this.document.ltvExamResult.passExamText &&
         this.systemTime &&
         this.systemTime.checkDocumentSystemTime &&
         this.systemTime.checkDocumentSystemTime["display-exam-result"]
@@ -227,45 +227,27 @@ export default {
       return false;
     },
     getCodeCV() {
-      if (this.isOpenDisplayResult)
-        return get(this.document, "code", "Chưa có thông tin");
-      else return "Chưa có thông tin";
+      return get(this.document, "code", "Chưa có thông tin");
     },
     getExamMark() {
-      if (this.isOpenDisplayResult)
-        return get(
-          this.document,
-          "ltvExamResult.examMark",
-          "Chưa có thông tin"
-        );
-      else return "Chưa có thông tin";
+      return get(this.document, "ltvExamResult.examMark", "Chưa có thông tin");
     },
     getTotalMathLiterature() {
-      if (this.isOpenDisplayResult)
-        return get(
-          this.document,
-          "studyRecord.totalMathLiterature",
-          "Chưa có thông tin"
-        );
-      else return "Chưa có thông tin";
+      return get(
+        this.document,
+        "studyRecord.totalMathLiterature",
+        "Chưa có thông tin"
+      );
     },
     getPriorityMark() {
-      if (this.isOpenDisplayResult)
-        return get(
-          this.document,
-          "ltvExamResult.priorityMark",
-          "Chưa có thông tin"
-        );
-      else return "Chưa có thông tin";
+      return get(
+        this.document,
+        "ltvExamResult.priorityMark",
+        "Chưa có thông tin"
+      );
     },
     getTotalMark() {
-      if (this.isOpenDisplayResult)
-        return get(
-          this.document,
-          "ltvExamResult.totalMark",
-          "Chưa có thông tin"
-        );
-      else return "Chưa có thông tin";
+      return get(this.document, "ltvExamResult.totalMark", "Chưa có thông tin");
     },
   },
   data() {
