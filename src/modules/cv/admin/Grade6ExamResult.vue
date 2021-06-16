@@ -190,6 +190,7 @@ import ConfirmExamResultDialog from "./ConfirmExamResultDialog";
 import readXlsxFile from "read-excel-file";
 import JsonExcel from "vue-json-excel";
 import moment from "moment";
+import { chunk } from "lodash";
 
 export default {
   components: {
@@ -463,47 +464,53 @@ export default {
       this.$loading.active = false;
     },
     async onUpdateResultDocument(results) {
+      this.$loading.active = true;
       this.$refs.uploader.value = null;
-      const promises = results.map(async (result) => {
-        if (
-          result.department !== this.user.department &&
-          this.user.department !== "both"
-        )
-          return;
-        const existingCV = await this.fetchCV({
-          code: result.code,
-          type: "Khối 6",
+      const examResultGroups = chunk(results, 5);
+      // for (let examResults in examResultGroups) {
+      for (let i = 0; i < examResultGroups.length; i++) {
+        const examResults = examResultGroups[i];
+        const promises = examResults.map(async (result) => {
+          if (
+            result.department !== this.user.department &&
+            this.user.department !== "both"
+          )
+            return;
+          const existingCV = await this.fetchCV({
+            code: result.code,
+            type: "Khối 6",
+          });
+          if (!existingCV) return;
+          let query = {
+            code: result.code,
+            ltvExamResult: {
+              examMath: result.examMath,
+              examLiterature: result.examLiterature,
+              examEnglish: result.examEnglish,
+              totalMark: result.totalMark,
+              studentExamID: result.studentExamID,
+            },
+            submitType: "update-exam-result",
+            userPhone: this.user.username,
+            isDraft: false,
+          };
+          if (
+            result.passExamText &&
+            result.passExamText.includes("Đã trúng tuyển")
+          ) {
+            query.ltvExamResult.passExam = true;
+            query.ltvExamResult.passExamText = result.passExamText;
+          } else if (
+            result.passExamText &&
+            result.passExamText.includes("Không trúng tuyển")
+          ) {
+            query.ltvExamResult.passExam = false;
+            query.ltvExamResult.passExamText = result.passExamText;
+          }
+          await this.updateCV(query);
         });
-        if (!existingCV) return;
-        let query = {
-          code: result.code,
-          ltvExamResult: {
-            examMath: result.examMath,
-            examLiterature: result.examLiterature,
-            examEnglish: result.examEnglish,
-            totalMark: result.totalMark,
-            studentExamID: result.studentExamID,
-          },
-          submitType: "update-exam-result",
-          userPhone: this.user.username,
-          isDraft: false,
-        };
-        if (
-          result.passExamText &&
-          result.passExamText.includes("Đã trúng tuyển")
-        ) {
-          query.ltvExamResult.passExam = true;
-          query.ltvExamResult.passExamText = result.passExamText;
-        } else if (
-          result.passExamText &&
-          result.passExamText.includes("Không trúng tuyển")
-        ) {
-          query.ltvExamResult.passExam = false;
-          query.ltvExamResult.passExamText = result.passExamText;
-        }
-        await this.updateCV(query);
-      });
-      await Promise.all(promises);
+        await Promise.all(promises);
+      }
       this.$alert.success(
         "Đã cập nhật thông tin điểm của tất cả thí sinh thành công!"
       );
