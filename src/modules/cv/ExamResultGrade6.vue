@@ -55,6 +55,23 @@
           </div>
         </v-col>
       </v-row>
+      <hr class="dashed" />
+      <v-card class="pa-6 text-justify my-6 elevation-2">
+        <div class="text-h6">Phụ huynh lưu ý:</div>
+        <div>
+          - Hệ thống hiện đang mở chỉnh sửa điểm học bạ cho toàn bộ học sinh.
+          Phụ huynh có thể khai báo thêm hoặc chỉnh sửa nội dung thông tin của
+          phần này. Hạn chỉnh sửa điểm là 12:00, ngày 17/06/2021.
+        </div>
+        <div>
+          - Nhà trường sẽ lấy dữ liệu điểm học bạ của toàn bộ học sinh vào 12:00
+          ngày 17/06/2021 làm căn cứ xét điểm chuẩn vào trường.
+        </div>
+        <div>
+          - Đề nghị phụ huynh khai báo điểm chính xác trước thời gian trên để
+          con có thể được cộng đủ số điểm tổng học bạ.
+        </div>
+      </v-card>
       <!-- TODO: Uncomment when display result-->
       <!-- <div v-if="isOpenDisplayResult">
         <hr class="dashed" />
