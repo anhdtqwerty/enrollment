@@ -1,8 +1,8 @@
 <template>
   <v-form ref="form" v-bind="this.$attrs">
     <v-divider class="py-2" v-if="$vuetify.breakpoint.smAndDown"></v-divider>
-    <v-card-title class="card-title">Điểm thi</v-card-title>
-    <v-card-subtitle class="card-subtitle" style="padding: 24px 0px !important">
+    <!-- <v-card-title class="card-title">Điểm thi</v-card-title> -->
+    <v-card-subtitle class="card-title" style="padding: 24px 0px !important">
       Kết quả kỳ khảo sát & đánh giá năng lực để vào trường THCS Lương Thế Vinh
     </v-card-subtitle>
     <v-card-text class="d-flex flex-column pa-0">
@@ -76,7 +76,7 @@
         </div>
       </v-card>
       <!-- TODO: Uncomment when display result-->
-      <div v-if="isOpenDisplayResult">
+      <!-- <div v-if="isOpenDisplayResult">
         <hr class="dashed" />
         <div
           class="py-6"
@@ -88,25 +88,7 @@
           <div class="mx-auto" style="max-width: 355px">
             <v-img src="@/assets/pass-exam.svg" />
           </div>
-          <div
-            class="d-flex align-center pt-6"
-            v-if="document.status !== 'submitted'"
-          >
-            <v-checkbox
-              class="align-self-start mt-0 pt-0"
-              v-model="agree"
-              :rules="[$rules.checkbox]"
-            ></v-checkbox>
-            <div class="text-justify">
-              Nếu được nhận vào học, gia đình chúng tôi và cháu sẽ chấp hành mọi
-              nội quy, quy định của nhà trường. Đơn này đã được gia đình thống
-              nhất và nộp cho nhà trường ngày hôm nay.
-            </div>
-          </div>
-          <div
-            class="fail-card pa-4 mt-6"
-            v-if="document.status === 'submitted'"
-          >
+          <div class="fail-card pa-4 mt-6">
             <div>
               Học sinh
               <span class="font-weight-bold">{{ document.name }}</span> đã trúng
@@ -212,7 +194,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </v-card-text>
   </v-form>
 </template>

@@ -41,7 +41,7 @@
       >
         <span>Hoàn thành</span>
       </v-btn>
-      <v-btn
+      <!-- <v-btn
         :class="{
           'mt-6': $vuetify.breakpoint.mdAndUp,
           'mt-3': $vuetify.breakpoint.smAndDown,
@@ -58,7 +58,7 @@
         large
       >
         <span>Đăng ký nhập học</span>
-      </v-btn>
+      </v-btn> -->
     </v-card-actions>
   </v-card>
 </template>
