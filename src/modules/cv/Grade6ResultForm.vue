@@ -648,8 +648,7 @@ export default {
         parseFloat(this.studyResult.grade4Literature) +
         parseFloat(this.studyResult.grade4Math) +
         +grade5Literature +
-        grade5Math +
-        this.getPriorityMark
+        grade5Math
       );
     },
   },

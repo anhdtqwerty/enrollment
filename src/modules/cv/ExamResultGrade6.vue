@@ -146,6 +146,7 @@ export default {
       if (
         this.document.ltvExamResult &&
         this.document.ltvExamResult.passExam !== "" &&
+        this.systemTime &&
         this.systemTime.checkDocumentSystemTime &&
         this.systemTime.checkDocumentSystemTime["display-exam-result"]
       )
