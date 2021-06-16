@@ -51,7 +51,8 @@
         v-if="
           document.type === 'Khối 6' &&
           document.ltvExamResult &&
-          document.ltvExamResult.passExam
+          document.ltvExamResult.passExamType &&
+          document.ltvExamResult.passExamType === 'pass'
         "
         @click="completeGrade6"
         large

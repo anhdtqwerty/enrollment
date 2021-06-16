@@ -55,8 +55,11 @@
           </div>
         </v-col>
       </v-row>
-      <hr class="dashed" />
-      <v-card class="pa-6 text-justify my-6 elevation-2">
+      <hr class="dashed" v-if="!isOpenDisplayResult" />
+      <v-card
+        class="pa-6 text-justify my-6 elevation-2"
+        v-if="!isOpenDisplayResult"
+      >
         <div class="text-h6">Phụ huynh lưu ý:</div>
         <div>
           - Hệ thống hiện đang mở chỉnh sửa điểm học bạ cho toàn bộ học sinh.
@@ -73,9 +76,15 @@
         </div>
       </v-card>
       <!-- TODO: Uncomment when display result-->
-      <!-- <div v-if="isOpenDisplayResult">
+      <div v-if="isOpenDisplayResult">
         <hr class="dashed" />
-        <div class="py-6" v-if="ltvExamResult.passExam">
+        <div
+          class="py-6"
+          v-if="
+            document.ltvExamResult.passExamText &&
+            document.ltvExamResult.passExamType === 'pass'
+          "
+        >
           <div class="mx-auto" style="max-width: 355px">
             <v-img src="@/assets/pass-exam.svg" />
           </div>
@@ -103,11 +112,7 @@
               <span class="font-weight-bold">{{ document.name }}</span> đã trúng
               tuyển đợt 1 vào trường THCS & THPT Lương Thế Vinh.
             </div>
-            <div>
-              Phụ huynh vui lòng làm thủ tục nhập học tại trường trong 2 ngày
-              <span class="error--text">13/06/2021</span> và
-              <span class="error--text">14/06/2021</span>
-            </div>
+            <div>Phụ huynh vui lòng làm thủ tục nhập học tại trường</div>
             <div>Thời gian làm việc của Ban tuyển sinh</div>
             <div>Sáng: 8:00 - 11:00</div>
             <div>Chiều: 14:00 - 17:00</div>
@@ -116,7 +121,10 @@
             </div>
           </div>
         </div>
-        <div class="py-6" v-if="!ltvExamResult.passExam">
+        <div
+          class="py-6"
+          v-else-if="document.ltvExamResult.passExamType === 'fail'"
+        >
           <div class="mx-auto mb-6" style="max-width: 355px">
             <v-img src="@/assets/fail-exam.svg" />
           </div>
@@ -127,18 +135,84 @@
               ký.
             </div>
             <div>
-              <div>Thông tin liên hệ:</div>
-              <div>Cơ Sở A: Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội</div>
-              <div>
+              <div class="text-h6">Thông tin liên hệ:</div>
+              <div class="mt-4">
+                <b>Cơ Sở A:</b> Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội
+              </div>
+              <div class="mt-2">
                 SĐT: <span class="primary--text">0242.215.5985</span> –
                 <span class="primary--text">0246.663.8338</span>
               </div>
-              <div>Cơ Sở I: Tân Triều, Thanh Trì, Hà Nội</div>
-              <div>SĐT: <span class="primary--text">0243.568.2603</span></div>
+              <div class="mt-4">
+                <b>Cơ Sở I:</b> Tân Triều, Thanh Trì, Hà Nội
+              </div>
+              <div class="mt-2">
+                SĐT: <span class="primary--text">0243.568.2603</span>
+              </div>
             </div>
           </div>
         </div>
-      </div> -->
+        <div
+          class="py-6"
+          v-else-if="document.ltvExamResult.passExamType === 'reserve'"
+        >
+          <div
+            class="mx-auto mb-6 text-center fail-notify-card pa-4"
+            style="max-width: 420px"
+          >
+            <div>Không trúng tuyển Đợt tuyển sinh thứ nhất.</div>
+            <div>Học sinh trong danh sách dự khuyết của Nhà trường.</div>
+          </div>
+          <div class="fail-card pa-4">
+            <div>
+              <div class="text-h6">Thông tin liên hệ:</div>
+              <div class="mt-4">
+                <b>Cơ Sở A:</b> Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội
+              </div>
+              <div class="mt-2">
+                SĐT: <span class="primary--text">0242.215.5985</span> –
+                <span class="primary--text">0246.663.8338</span>
+              </div>
+              <div class="mt-4">
+                <b>Cơ Sở I:</b> Tân Triều, Thanh Trì, Hà Nội
+              </div>
+              <div class="mt-2">
+                SĐT: <span class="primary--text">0243.568.2603</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="py-6"
+          v-else-if="document.ltvExamResult.passExamType === 'violation'"
+        >
+          <div
+            class="mx-auto mb-6 text-center fail-notify-card pa-4"
+            style="max-width: 420px"
+          >
+            <div>Không trúng tuyển Đợt tuyển sinh thứ nhất.</div>
+            <div>Học sinh vi phạm quy chế thi của Nhà trường.</div>
+          </div>
+          <div class="fail-card pa-4">
+            <div>
+              <div class="text-h6">Thông tin liên hệ:</div>
+              <div class="mt-4">
+                <b>Cơ Sở A:</b> Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội
+              </div>
+              <div class="mt-2">
+                SĐT: <span class="primary--text">0242.215.5985</span> –
+                <span class="primary--text">0246.663.8338</span>
+              </div>
+              <div class="mt-4">
+                <b>Cơ Sở I:</b> Tân Triều, Thanh Trì, Hà Nội
+              </div>
+              <div class="mt-2">
+                SĐT: <span class="primary--text">0243.568.2603</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </v-card-text>
   </v-form>
 </template>
@@ -290,8 +364,19 @@ hr.dashed {
   font-family: "Roboto";
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 20px;
   color: #3e3e3c;
+  border-radius: 8px;
+}
+.fail-notify-card {
+  background: rgba(255, 29, 48, 0.2);
+  color: rgba(255, 29, 48, 1);
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 8px;
 }
 </style>
