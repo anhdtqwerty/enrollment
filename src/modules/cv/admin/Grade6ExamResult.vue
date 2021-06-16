@@ -563,6 +563,7 @@ export default {
             let query = {
               code: result.code,
               ltvExamResult: {
+                ...existingCV.ltvExamResult,
                 examMark: result.examMark,
                 totalMark: result.totalMark,
               },
@@ -575,6 +576,12 @@ export default {
               result.passExamText.toLowerCase().includes("đã trúng tuyển")
             ) {
               query.ltvExamResult.passExamType = "pass";
+              query.ltvExamResult.passExamText = result.passExamText;
+            } else if (
+              result.passExamText &&
+              result.passExamText.toLowerCase().includes("vi phạm")
+            ) {
+              query.ltvExamResult.passExamType = "violation";
               query.ltvExamResult.passExamText = result.passExamText;
             } else if (
               result.passExamText &&

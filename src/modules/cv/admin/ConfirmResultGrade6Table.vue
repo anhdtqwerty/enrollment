@@ -134,7 +134,10 @@ export default {
       if (item.passExamText && item.passExamText != "") {
         if (item.passExamText.toLowerCase().includes("đã trúng tuyển"))
           return "success--text";
-        else if (item.passExamText.toLowerCase().includes("không"))
+        else if (
+          item.passExamText.toLowerCase().includes("không") ||
+          item.passExamText.toLowerCase().includes("vi phạm")
+        )
           return "error--text";
         return "";
       }

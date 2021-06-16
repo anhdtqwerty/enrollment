@@ -213,13 +213,23 @@ export default {
     },
     search() {},
     getColor(item) {
+      if (!item.ltvExamResult || item.ltvExamResult.passExamText) return "";
       if (
-        item.ltvExamResult &&
-        item.ltvExamResult.passExam &&
-        item.ltvExamResult.passExam != ""
+        item.ltvExamResult.passExamText &&
+        item.ltvExamResult.passExamText != ""
       ) {
-        if (item.ltvExamResult.passExam) return "success--text";
-        else return "error--text";
+        if (
+          item.ltvExamResult.passExamText
+            .toLowerCase()
+            .includes("đã trúng tuyển")
+        )
+          return "success--text";
+        else if (
+          item.ltvExamResult.passExamText.toLowerCase().includes("không") ||
+          item.ltvExamResult.passExamText.toLowerCase().includes("vi phạm")
+        )
+          return "error--text";
+        return "";
       }
       return "";
     },
