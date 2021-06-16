@@ -6,7 +6,9 @@
         Xác nhận cập nhật kết quả thi của thí sinh
         <v-spacer></v-spacer>
         <v-btn dark icon>
-          <v-icon @click="cancel" class="mr-n1">mdi-close</v-icon>
+          <v-icon @click="cancel" class="mr-n1" :disabled="loading"
+            >mdi-close</v-icon
+          >
         </v-btn>
       </v-card-title>
       <v-divider />
@@ -67,6 +69,7 @@ export default {
   watch: {
     state(state) {
       this.dialog = state;
+      if (!state) this.loading = false;
     },
   },
   data() {
@@ -89,6 +92,7 @@ export default {
           "Nếu đã chắc chắn quý phụ huynh bấm vào nút xác nhận bên dưới để tiếp tục",
         cancelText: "Hủy",
         done: async () => {
+          this.loading = true;
           this.$emit("updateResult", this.importedDocuments);
         },
       });

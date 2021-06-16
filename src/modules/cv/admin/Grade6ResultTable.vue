@@ -33,14 +33,14 @@
       <template v-slot:[`item.dob`]="{ item }">
         {{ item | getStudentDob }}
       </template>
-      <template v-slot:[`item.examMath`]="{ item }">
-        {{ item | getExamMath }}
+      <template v-slot:[`item.examMark`]="{ item }">
+        {{ item | getExamMark }}
       </template>
-      <template v-slot:[`item.examLiterature`]="{ item }">
-        {{ item | getExamLiterature }}
+      <template v-slot:[`item.totalMathLiterature`]="{ item }">
+        {{ item | getTotalMathLiterature }}
       </template>
-      <template v-slot:[`item.examEnglish`]="{ item }">
-        {{ item | getExamEnglish }}
+      <template v-slot:[`item.priorityMark`]="{ item }">
+        {{ item | getPriorityMark }}
       </template>
       <template v-slot:[`item.totalMark`]="{ item }">
         {{ item | getTotalMark }}
@@ -93,23 +93,44 @@ const originHeaders = [
     sortable: false,
     show: true,
   },
+  // {
+  //   text: "Toán",
+  //   value: "examMath",
+  //   align: "left",
+  //   sortable: false,
+  //   show: true,
+  // },
+  // {
+  //   text: "Văn",
+  //   value: "examLiterature",
+  //   align: "left",
+  //   sortable: false,
+  //   show: true,
+  // },
+  // {
+  //   text: "Anh",
+  //   value: "examEnglish",
+  //   align: "left",
+  //   sortable: false,
+  //   show: true,
+  // },
   {
-    text: "Toán",
-    value: "examMath",
+    text: "Điểm bài Khảo sát ĐGNL Tổng hợp",
+    value: "examMark",
     align: "left",
     sortable: false,
     show: true,
   },
   {
-    text: "Văn",
-    value: "examLiterature",
+    text: "Tổng điểm Học bạ",
+    value: "totalMathLiterature",
     align: "left",
     sortable: false,
     show: true,
   },
   {
-    text: "Anh",
-    value: "examEnglish",
+    text: "Điểm ưu tiên",
+    value: "priorityMark",
     align: "left",
     sortable: false,
     show: true,
@@ -247,14 +268,23 @@ export default {
       if (item.dob) return moment(item.dob).format("DD/MM/YYYY");
       return "---";
     },
-    getExamMath: (item) => {
-      return get(item, "ltvExamResult.examMath", "---");
+    // getExamMath: (item) => {
+    //   return get(item, "ltvExamResult.examMath", "---");
+    // },
+    // getExamLiterature: (item) => {
+    //   return get(item, "ltvExamResult.examLiterature", "---");
+    // },
+    // getExamEnglish: (item) => {
+    //   return get(item, "ltvExamResult.examEnglish", "---");
+    // },
+    getExamMark: (item) => {
+      return get(item, "ltvExamResult.examMark", "---");
     },
-    getExamLiterature: (item) => {
-      return get(item, "ltvExamResult.examLiterature", "---");
+    getTotalMathLiterature: (item) => {
+      return get(item, "studyRecord.totalMathLiterature", "---");
     },
-    getExamEnglish: (item) => {
-      return get(item, "ltvExamResult.examEnglish", "---");
+    getPriorityMark: (item) => {
+      return get(item, "ltvExamResult.priorityMark", "---");
     },
     getTotalMark: (item) => {
       return get(item, "ltvExamResult.totalMark", "---");

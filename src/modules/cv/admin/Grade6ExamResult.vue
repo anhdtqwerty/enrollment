@@ -18,8 +18,6 @@
         <JsonExcel
           :data="updatedCVs"
           :fields="json_fields"
-          :before-generate="toggleLoadingScreen(true)"
-          :before-finish="toggleLoadingScreen(false)"
           type="xls"
           worksheet="Hồ sơ"
           name="ho-so-khoi-6.xls"
@@ -34,14 +32,24 @@
       class="d-flex justify-end align-center mb-6"
       v-if="user.department === 'both'"
     >
-      <v-btn
-        color="admin"
-        dark
-        class="elevation-0 ml-6"
-        :loading="isSelecting"
-        @click="exportExcelTemplate"
-        ><v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel mẫu</v-btn
+      <JsonExcel
+        :data="updatedCVs"
+        :fields="example_json_fields"
+        type="xls"
+        worksheet="Hồ sơ"
+        name="ket-qua-thi-khoi6-mau.xls"
       >
+        <!-- <v-btn color="admin" width="167px" dark outlined>
+            <v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel
+          </v-btn> -->
+        <v-btn
+          color="admin"
+          dark
+          class="elevation-0 ml-6"
+          :loading="isSelecting"
+          ><v-icon left>mdi-file-excel-outline</v-icon>Xuất Excel mẫu</v-btn
+        >
+      </JsonExcel>
       <v-btn
         color="admin"
         class="elevation-0 ml-6"
@@ -79,30 +87,6 @@ const schema = {
     prop: "code",
     type: String,
   },
-  "Trạng thái": {
-    prop: "status",
-    type: String,
-  },
-  "Số báo danh": {
-    prop: "studentExamID",
-    type: String,
-  },
-  "Cơ sở": {
-    prop: "department",
-    type: String,
-  },
-  Khối: {
-    prop: "grade",
-    type: String,
-  },
-  "Tạo lúc": {
-    prop: "createdAt",
-    type: String,
-  },
-  "Cập nhật lúc": {
-    prop: "updatedAt",
-    type: String,
-  },
   "Họ và tên": {
     prop: "name",
     type: String,
@@ -111,64 +95,16 @@ const schema = {
     prop: "dob",
     type: String,
   },
-  "Giới tính": {
-    prop: "gender",
+  "Điểm bài Khảo sát ĐGNL Tổng hợp": {
+    prop: "examMark",
     type: String,
   },
-  "Mã học sinh": {
-    prop: "studentId",
+  "Tổng điểm học bạ": {
+    prop: "totalMathLiterature",
     type: String,
   },
-  "Trường từng học": {
-    prop: "studentId",
-    type: String,
-  },
-  "Thành phố": {
-    prop: "studentId",
-    type: String,
-  },
-  "Thông tin người khai": {
-    prop: "parent",
-    type: String,
-  },
-  "Thông tin vợ(chồng) người khai": {
-    prop: "otherParent",
-    type: String,
-  },
-  "Nguyện vọng 1": {
-    prop: "expectation1",
-    type: String,
-  },
-  "Nguyện vọng 2": {
-    prop: "expectation2",
-    type: String,
-  },
-  "Nguyện vọng 3": {
-    prop: "expectation3",
-    type: String,
-  },
-  "Kết quả học tập": {
-    prop: "studyRecord",
-    type: String,
-  },
-  "Thành tích nổi bật": {
-    prop: "achivements",
-    type: String,
-  },
-  "Số báo danh dự thi": {
-    prop: "studentExamID",
-    type: String,
-  },
-  "Điểm thi Toán": {
-    prop: "examMath",
-    type: String,
-  },
-  "Điểm thi Văn": {
-    prop: "examLiterature",
-    type: String,
-  },
-  "Điểm thi Anh": {
-    prop: "examEnglish",
+  "Điểm ưu tiên": {
+    prop: "priorityMark",
     type: String,
   },
   "Tổng điểm": {
@@ -214,6 +150,47 @@ export default {
       loading: false,
       loadingDownload: false,
       updatedCVs: [],
+      example_json_fields: {
+        "Mã hồ sơ": "code",
+        "Họ và tên": "name",
+        "Ngày sinh": {
+          field: "dob",
+          callback: (value) => {
+            if (value) return moment(value, "YYYY-MM-DD").format("DD/MM/YYYY");
+            return "";
+          },
+        },
+        "Điểm bài Khảo sát ĐGNL Tổng hợp": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.examMark;
+          },
+        },
+        "Tổng điểm học bạ": {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.totalMathLiterature;
+          },
+        },
+        "Điểm ưu tiên": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.priorityMark;
+          },
+        },
+        "Tổng điểm": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.totalMark;
+          },
+        },
+        "Kết quả trúng tuyển": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.passExamText;
+          },
+        },
+      },
       json_fields: {
         "Mã hồ sơ": "code",
         "Trạng thái": {
@@ -315,39 +292,142 @@ export default {
             else return "";
           },
         },
-        "Kết quả học tập": {
+        T1: {
           field: "studyRecord",
           callback: (value) => {
-            if (value) {
-              return (
-                `Lớp 1:\n` +
-                `Toán: ${value.grade1Math}\n` +
-                `Văn: ${value.grade1Literature}\n` +
-                `Anh: ${value.grade1English}\n` +
-                `Hạnh kiểm cả năm: ${value.grade1Morality}\n\n` +
-                `Lớp 2:\n` +
-                `Toán: ${value.grade2Math}\n` +
-                `Văn: ${value.grade2Literature}\n` +
-                `Anh: ${value.grade2English}\n` +
-                `Hạnh kiểm cả năm: ${value.grade2Morality}\n\n` +
-                `Lớp 3:\n` +
-                `Toán: ${value.grade3Math}\n` +
-                `Văn: ${value.grade3Literature}\n` +
-                `Anh: ${value.grade3English}\n` +
-                `Hạnh kiểm cả năm: ${value.grade3Morality}\n\n` +
-                `Lớp 4:\n` +
-                `Toán: ${value.grade4Math}\n` +
-                `Văn: ${value.grade4Literature}\n` +
-                `Anh: ${value.grade4English}\n` +
-                `Hạnh kiểm cả năm: ${value.grade4Morality}\n\n` +
-                `Lớp 5:\n` +
-                `Toán: ${value.grade5Math}\n` +
-                `Văn: ${value.grade5Literature}\n` +
-                `Anh: ${value.grade5English}\n` +
-                `Hạnh kiểm cả năm: ${value.grade5Morality}\n\n` +
-                `Tổng điểm tổng kết toán văn (khối 6): ${value.totalMathLiterature}`
-              );
-            } else return "";
+            return value.grade1Math;
+          },
+        },
+        V1: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade1Literature;
+          },
+        },
+        A1: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade1English;
+          },
+        },
+        HK1: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade1Morality;
+          },
+        },
+        T2: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade2Math;
+          },
+        },
+        V2: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade2Literature;
+          },
+        },
+        A2: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade2English;
+          },
+        },
+        HK2: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade2Morality;
+          },
+        },
+        T3: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade3Math;
+          },
+        },
+        V3: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade3Literature;
+          },
+        },
+        A3: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade3English;
+          },
+        },
+        HK3: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade3Morality;
+          },
+        },
+        T4: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade4Math;
+          },
+        },
+        V4: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade4Literature;
+          },
+        },
+        A4: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade4English;
+          },
+        },
+        HK4: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade4Morality;
+          },
+        },
+        T5: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade5Math;
+          },
+        },
+        V5: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade5Literature;
+          },
+        },
+        A5: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade5English;
+          },
+        },
+        HK5: {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.grade5Morality;
+          },
+        },
+        "Điểm bài Khảo sát ĐGNL Tổng hợp": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.examMark;
+          },
+        },
+        "Tổng điểm học bạ": {
+          field: "studyRecord",
+          callback: (value) => {
+            return value.totalMathLiterature;
+          },
+        },
+        "Điểm ưu tiên": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.priorityMark;
           },
         },
         "Thành tích nổi bật": "studyRecord.achievements",
@@ -464,7 +544,6 @@ export default {
       this.$loading.active = false;
     },
     async onUpdateResultDocument(results) {
-      this.$loading.active = true;
       this.$refs.uploader.value = null;
       const examResultGroups = chunk(results, 5);
       for (let i = 0; i < examResultGroups.length; i++) {
@@ -484,11 +563,8 @@ export default {
             let query = {
               code: result.code,
               ltvExamResult: {
-                examMath: result.examMath,
-                examLiterature: result.examLiterature,
-                examEnglish: result.examEnglish,
+                examMark: result.examMark,
                 totalMark: result.totalMark,
-                studentExamID: result.studentExamID,
               },
               submitType: "update-exam-result",
               userPhone: this.user.username,
@@ -496,15 +572,22 @@ export default {
             };
             if (
               result.passExamText &&
-              result.passExamText.includes("Đã trúng tuyển")
+              result.passExamText.toLowerCase().includes("đã trúng tuyển")
             ) {
-              query.ltvExamResult.passExam = true;
+              query.ltvExamResult.passExamType = "pass";
               query.ltvExamResult.passExamText = result.passExamText;
             } else if (
               result.passExamText &&
-              result.passExamText.includes("Không trúng tuyển")
+              result.passExamText.toLowerCase().includes("không trúng tuyển")
             ) {
-              query.ltvExamResult.passExam = false;
+              query.ltvExamResult.passExamType = "fail";
+              query.ltvExamResult.passExamText = result.passExamText;
+            } else if (
+              result.passExamText &&
+              (result.passExamText.toLowerCase().includes("dự bị") ||
+                result.passExamText.toLowerCase().includes("dự khuyết"))
+            ) {
+              query.ltvExamResult.passExamType = "reserve";
               query.ltvExamResult.passExamText = result.passExamText;
             }
             await this.updateCV(query);

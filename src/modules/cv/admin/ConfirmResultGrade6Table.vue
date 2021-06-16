@@ -16,28 +16,25 @@
     <template v-slot:[`item.code`]="{ item }">
       {{ item | getCode }}
     </template>
-    <template v-slot:[`item.department`]="{ item }">
-      {{ item | getDepartment }}
-    </template>
     <template v-slot:[`item.name`]="{ item }">
-      {{ item | getStudent }}
+      {{ item | getStudentName }}
     </template>
     <template v-slot:[`item.dob`]="{ item }">
       {{ item | getStudentDob }}
     </template>
-    <template v-slot:[`item.examMath`]="{ item }">
-      {{ item | getExamMath }}
+    <template v-slot:[`item.examMark`]="{ item }">
+      {{ item | getExamMark }}
     </template>
-    <template v-slot:[`item.examLiterature`]="{ item }">
-      {{ item | getExamLiterature }}
+    <template v-slot:[`item.totalMathLiterature`]="{ item }">
+      {{ item | getTotalMathLiterature }}
     </template>
-    <template v-slot:[`item.examEnglish`]="{ item }">
-      {{ item | getExamEnglish }}
+    <template v-slot:[`item.priorityMark`]="{ item }">
+      {{ item | getPriorityMark }}
     </template>
     <template v-slot:[`item.totalMark`]="{ item }">
       {{ item | getTotalMark }}
     </template>
-    <template v-slot:[`item.examPass`]="{ item }">
+    <template v-slot:[`item.examPassText`]="{ item }">
       <span :class="getColor(item)">{{ item | isPassExam }}</span>
     </template>
   </v-data-table>
@@ -76,22 +73,22 @@ const originHeaders = [
     show: true,
   },
   {
-    text: "Toán",
-    value: "examMath",
+    text: "Điểm bài Khảo sát ĐGNL Tổng hợp",
+    value: "examMark",
     align: "left",
     sortable: false,
     show: true,
   },
   {
-    text: "Văn",
-    value: "examLiterature",
+    text: "Tổng điểm Học bạ",
+    value: "totalMathLiterature",
     align: "left",
     sortable: false,
     show: true,
   },
   {
-    text: "Anh",
-    value: "examEnglish",
+    text: "Điểm ưu tiên",
+    value: "priorityMark",
     align: "left",
     sortable: false,
     show: true,
@@ -105,7 +102,7 @@ const originHeaders = [
   },
   {
     text: "Kết quả trúng tuyển",
-    value: "examPass",
+    value: "examPassText",
     align: "left",
     sortable: false,
     show: true,
@@ -135,9 +132,10 @@ export default {
     search() {},
     getColor(item) {
       if (item.passExamText && item.passExamText != "") {
-        if (item.passExamText.includes("Đã trúng tuyển"))
+        if (item.passExamText.toLowerCase().includes("đã trúng tuyển"))
           return "success--text";
-        else if (item.passExamText.includes("Không")) return "error--text";
+        else if (item.passExamText.toLowerCase().includes("không"))
+          return "error--text";
         return "";
       }
       return "";
@@ -173,12 +171,8 @@ export default {
     },
   },
   filters: {
-    getStudent: (item) => {
+    getStudentName: (item) => {
       return get(item, "name", "---");
-    },
-    getDepartment: (item) => {
-      if (!item.department || item.department === "unset") return "---";
-      else return item.department;
     },
     getCode: (item) => {
       return get(item, "code", "---");
@@ -187,14 +181,14 @@ export default {
       if (item.dob) return moment(item.dob, "DD/MM/YYYY").format("DD/MM/YYYY");
       return "---";
     },
-    getExamMath: (item) => {
-      return get(item, "examMath", "---");
+    getExamMark: (item) => {
+      return get(item, "examMark", "---");
     },
-    getExamLiterature: (item) => {
-      return get(item, "examLiterature", "---");
+    getTotalMathLiterature: (item) => {
+      return get(item, "totalMathLiterature", "---");
     },
-    getExamEnglish: (item) => {
-      return get(item, "examEnglish", "---");
+    getPriorityMark: (item) => {
+      return get(item, "priorityMark", "---");
     },
     getTotalMark: (item) => {
       return get(item, "totalMark", "---");
