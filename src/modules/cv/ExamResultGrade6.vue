@@ -8,45 +8,47 @@
     <v-card-text class="d-flex flex-column pa-0">
       <v-row class="my-0">
         <v-col class="py-0">
-          <div class="field-label">Số báo danh</div>
+          <div class="field-label">Mã hồ sơ</div>
           <div class="info-label mt-2 mb-6" v-if="documentStep === 4">
-            {{ getStudentExamId }}
+            {{ getCodeCV }}
           </div>
         </v-col>
       </v-row>
       <v-row class="my-0">
         <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
-          <div class="field-label">Toán</div>
+          <div class="field-label" style="height: 42px">
+            Điểm bài Khảo sát ĐGNL Tổng hợp
+          </div>
           <div
             class="info-label error--text mt-2 mb-6"
             v-if="documentStep === 4"
           >
-            {{ getStudentExamId }}
+            {{ getExamMark }}
           </div>
         </v-col>
         <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
-          <div class="field-label">Văn</div>
+          <div class="field-label" style="height: 42px">Tổng điểm Học Bạ</div>
           <div
             class="info-label error--text mt-2 mb-6"
             v-if="documentStep === 4"
           >
-            {{ getExamMath }}
+            {{ getTotalMathLiterature }}
           </div>
         </v-col>
         <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
-          <div class="field-label">Anh</div>
+          <div class="field-label" style="height: 42px">Điểm ưu tiên</div>
           <div
             class="info-label error--text mt-2 mb-6"
             v-if="documentStep === 4"
           >
-            {{ getExamEnglish }}
+            {{ getPriorityMark }}
           </div>
         </v-col>
         <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
-          <div class="field-label mb-2">Tổng điểm</div>
+          <div class="field-label mb-2" style="height: 42px">Tổng điểm</div>
           <div
             class="info-label error--text mt-2 mb-6"
-            style="font-size: 24px"
+            style="font-size: 20px"
             v-if="documentStep === 4"
           >
             {{ getTotalMark }}
@@ -142,58 +144,61 @@ export default {
     },
     isOpenDisplayResult() {
       if (
-        this.ltvExamResult.passExam !== "" &&
+        this.document.ltvExamResult &&
+        this.document.ltvExamResult.passExam !== "" &&
         this.systemTime.checkDocumentSystemTime &&
         this.systemTime.checkDocumentSystemTime["display-exam-result"]
       )
         return true;
       return false;
     },
-    getStudentExamId() {
+    getCodeCV() {
       if (this.isOpenDisplayResult)
-        return get(this.ltvExamResult, "studentExamID", "Chưa có thông tin");
+        return get(this.document, "code", "Chưa có thông tin");
       else return "Chưa có thông tin";
     },
-    getExamMath() {
+    getExamMark() {
       if (this.isOpenDisplayResult)
-        return get(this.ltvExamResult, "examMath", "Chưa có thông tin");
+        return get(
+          this.document,
+          "ltvExamResult.examMark",
+          "Chưa có thông tin"
+        );
       else return "Chưa có thông tin";
     },
-    getExamLiterature() {
+    getTotalMathLiterature() {
       if (this.isOpenDisplayResult)
-        return get(this.ltvExamResult, "examLiterature", "Chưa có thông tin");
+        return get(
+          this.document,
+          "studyRecord.totalMathLiterature",
+          "Chưa có thông tin"
+        );
       else return "Chưa có thông tin";
     },
-    getExamEnglish() {
+    getPriorityMark() {
       if (this.isOpenDisplayResult)
-        return get(this.ltvExamResult, "examEnglish", "Chưa có thông tin");
+        return get(
+          this.document,
+          "ltvExamResult.priorityMark",
+          "Chưa có thông tin"
+        );
       else return "Chưa có thông tin";
     },
     getTotalMark() {
       if (this.isOpenDisplayResult)
-        return get(this.ltvExamResult, "totalMark", "Chưa có thông tin");
+        return get(
+          this.document,
+          "ltvExamResult.totalMark",
+          "Chưa có thông tin"
+        );
       else return "Chưa có thông tin";
     },
   },
   data() {
     return {
       isValid: false,
-      ltvExamResult: {
-        studentExamID: "",
-        examMath: "",
-        examLiterature: "",
-        examEnglish: "",
-        totalMark: "",
-        passExam: "",
-      },
       agree: false,
     };
-  },
-  created() {
-    if (this.document.ltvExamResult) {
-      this.ltvExamResult = this.document.ltvExamResult;
-    }
-    console.log(this.isOpenDisplayResult);
   },
   methods: {
     validate() {

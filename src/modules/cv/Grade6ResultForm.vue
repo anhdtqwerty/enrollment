@@ -400,7 +400,7 @@
       </v-col>
     </v-row>
     <hr class="dashed" />
-    <div class="section-label py-6">Lớp 5</div>
+    <div class="section-label py-6">Lớp 5 (Học kỳ I)</div>
     <v-row class="my-0">
       <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
         <div class="field-label">Toán</div>
