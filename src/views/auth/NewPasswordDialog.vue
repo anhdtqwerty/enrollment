@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="480px">
+  <v-dialog v-model="dialog" width="480px" persistent>
     <v-card>
       <v-card-title
         ><div style="color: #797979">Đặt lại mật khẩu</div>
@@ -102,10 +102,7 @@ export default {
           newPassword: this.newPassword,
           confirmNewPassword: this.confirmPassword,
         });
-        if (
-          !this.isRequestingReset &&
-          !this.isConfirmedResetOTP
-        ) {
+        if (!this.isRequestingReset && !this.isConfirmedResetOTP) {
           this.setNewPasswordDialog(false);
           this.setSignInDialog(true);
         }
