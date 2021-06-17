@@ -17,13 +17,14 @@
         v-if="isMaintainMode"
       >
         <div>
-          Xin lỗi, trang Tuyển sinh đang được bảo trì để nâng cao chất lượng
-          trải nghiệm cho quý phụ huynh.
+          Xin lỗi, trang Tuyển sinh đang tạm đóng để cập nhật lại Điểm thi và
+          nâng cao chất lượng trải nghiệm cho quý phụ huynh.
         </div>
         <div class="mt-5">
           Mong quý phụ huynh thông cảm cho sự bất tiện này và quay lại sau. Xin
           cảm ơn!
         </div>
+        <img class="mt-10 mx-auto" width="420px" src="../../assets/logo.svg" />
       </div>
       <MainToolbar v-if="!isMaintainMode" />
       <router-view v-if="!isMaintainMode"></router-view>
