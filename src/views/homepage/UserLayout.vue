@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      isMaintainMode: false,
+      isMaintainMode: true,
       isDevelopmentBuild: true,
       version: "0.1",
     };
