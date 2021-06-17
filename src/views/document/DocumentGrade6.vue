@@ -74,11 +74,9 @@
               @click="onStepClick('exam-result', 4)"
             >
               <span class="step-title">Kết quả khảo sát năng lực</span>
-              <div
-                class="step-subtitle"
-                :class="getStatusColor('exam-result', 4)"
-              >
-                {{ getStatus("exam-result", 4) }}
+              <div class="step-subtitle success--text">
+                <!-- {{ getStatus("exam-result", 4) }} -->
+                Đã cập nhật
               </div>
             </v-stepper-step>
           </v-stepper>

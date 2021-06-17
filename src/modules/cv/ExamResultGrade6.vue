@@ -15,7 +15,7 @@
         </v-col>
       </v-row>
       <v-row class="my-0">
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="5">
           <div class="field-label" style="height: 42px">
             Chi tiết bài kiểm tra khảo sát ĐGNL tổng hợp
           </div>
@@ -24,39 +24,39 @@
             v-if="documentStep === 4"
           >
             <v-row>
-              <v-col cols="12" sm="12" md="8" class="py-2 black--text"
+              <v-col cols="12" sm="12" md="7 " class="py-2 black--text"
                 >Số lượng câu đúng:</v-col
               >
               <v-col
                 cols="12"
                 sm="12"
-                md="4"
+                md="5"
                 class="py-2"
                 style="font-size: 16px"
                 >{{ getExamCorrectAnswer }}</v-col
               >
             </v-row>
             <v-row>
-              <v-col cols="12" sm="12" md="8" class="py-2 black--text"
+              <v-col cols="12" sm="12" md="7" class="py-2 black--text"
                 >Tỉ lệ % câu đúng:</v-col
               >
               <v-col
                 cols="12"
                 sm="12"
-                md="4"
+                md="5"
                 class="py-2"
                 style="font-size: 16px"
                 >{{ getExamCorrectRate }}</v-col
               >
             </v-row>
             <v-row>
-              <v-col cols="12" sm="12" md="8" class="py-2 black--text"
+              <v-col cols="12" sm="12" md="7" class="py-2 black--text"
                 >Tổng điểm:</v-col
               >
               <v-col
                 cols="12"
                 sm="12"
-                md="4"
+                md="5"
                 class="py-2"
                 style="font-size: 20px"
                 >{{ getExamMark }}</v-col
@@ -64,36 +64,44 @@
             </v-row>
           </div>
         </v-col>
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="2">
-          <div class="field-label" style="height: 42px">Tổng điểm Học Bạ</div>
-          <div
-            class="info-label error--text mt-2 mb-6"
-            style="font-size: 20px"
-            v-if="documentStep === 4"
-          >
-            {{ getTotalMathLiterature }}
+        <v-col
+          class="py-0 d-flex justify-space-between"
+          cols="12"
+          xs="12"
+          sm="12"
+          md="7"
+        >
+          <div>
+            <div class="field-label" style="height: 42px">Tổng điểm Học Bạ</div>
+            <div
+              class="info-label error--text mt-2 mb-6"
+              style="font-size: 20px"
+              v-if="documentStep === 4"
+            >
+              {{ getTotalMathLiterature }}
+            </div>
           </div>
-        </v-col>
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="2">
-          <div class="field-label" style="height: 42px">Điểm ưu tiên</div>
-          <div
-            class="info-label error--text mt-2 mb-6"
-            style="font-size: 20px"
-            v-if="documentStep === 4"
-          >
-            {{ getPriorityMark }}
+          <div>
+            <div class="field-label" style="height: 42px">Điểm ưu tiên</div>
+            <div
+              class="info-label error--text mt-2 mb-6"
+              style="font-size: 20px"
+              v-if="documentStep === 4"
+            >
+              {{ getPriorityMark }}
+            </div>
           </div>
-        </v-col>
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="2">
-          <div class="field-label mb-2" style="height: 42px">
-            Tổng điểm xét tuyển
-          </div>
-          <div
-            class="info-label error--text mt-2 mb-6"
-            style="font-size: 24px"
-            v-if="documentStep === 4"
-          >
-            {{ getTotalMark }}
+          <div>
+            <div class="field-label mb-2" style="height: 42px">
+              Tổng điểm xét tuyển
+            </div>
+            <div
+              class="info-label error--text mt-2 mb-6"
+              style="font-size: 24px"
+              v-if="documentStep === 4"
+            >
+              {{ getTotalMark }}
+            </div>
           </div>
         </v-col>
       </v-row>
