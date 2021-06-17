@@ -6,25 +6,33 @@
       <PluginLoading />
       <div
         class="
-          text-h4 text-center
+          text-h5 text-center
           d-flex
           flex-column
           justify-center
           align-center
-          pa-5
+          pa-6
+          mx-auto
         "
-        style="height: 100%"
+        style="height: 100%; max-width: 1200px"
         v-if="isMaintainMode"
       >
         <div>
-          Xin lỗi, trang Tuyển sinh đang tạm đóng để cập nhật lại Điểm thi và
-          nâng cao chất lượng trải nghiệm cho quý phụ huynh.
+          Lượng truy cập hệ thống sáng 17/06 cao dẫn đến việc ảnh hưởng tới quá
+          trình cập nhật điểm của hệ thống.
         </div>
         <div class="mt-5">
-          Mong quý phụ huynh thông cảm cho sự bất tiện này và quay lại sau. Xin
-          cảm ơn!
+          Hệ thống xin tạm đóng để chỉnh sửa thông tin học sinh. Nhà trường lùi
+          hạn khai báo điểm học bạ của học sinh đến đêm nay 23:59 ngày 17/06 và
+          lùi hạn công bố điểm chuẩn sang 12:00 ngày 08/06.
         </div>
-        <img class="mt-10 mx-auto" width="420px" src="../../assets/logo.svg" />
+        <div class="mt-5">
+          Thông tin chi tiết:
+          <a href="http://luongthevinh.com.vn/home/?p=3326"
+            >http://luongthevinh.com.vn/home/?p=3326</a
+          >
+        </div>
+        <img class="mt-10 mx-auto" width="320px" src="../../assets/logo.svg" />
       </div>
       <MainToolbar v-if="!isMaintainMode" />
       <router-view v-if="!isMaintainMode"></router-view>
