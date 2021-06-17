@@ -441,7 +441,8 @@ export default {
         "Tỉ lệ % câu đúng": {
           field: "ltvExamResult",
           callback: (value) => {
-            return value.examCorrectAnswer;
+            if (!value.examCorrectRate || isNaN(value)) return "";
+            return Number(value.examCorrectRate).toFixed(1);
           },
         },
         "Điểm bài Khảo sát ĐGNL Tổng hợp": {
@@ -600,6 +601,10 @@ export default {
                 examCorrectAnswer: result.examCorrectAnswer,
                 examCorrectRate: result.examCorrectRate,
                 totalMark: result.totalMark,
+              },
+              studyRecord: {
+                ...existingCV.studyRecord,
+                totalMathLiterature: result.totalMathLiterature,
               },
               submitType: "update-exam-result",
               userPhone: this.user.username,

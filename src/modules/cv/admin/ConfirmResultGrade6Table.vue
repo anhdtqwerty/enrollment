@@ -208,7 +208,9 @@ export default {
       return get(item, "examCorrectAnswer", "---");
     },
     getCorrectRate: (item) => {
-      return get(item, "examCorrectRate", "---");
+      if (!item.examCorrectRate) return "---";
+      else if (isNaN(item.examCorrectRate)) return item.examCorrectRate;
+      return Number(item.examCorrectRate).toFixed(1);
     },
     getExamMark: (item) => {
       return get(item, "examMark", "---");

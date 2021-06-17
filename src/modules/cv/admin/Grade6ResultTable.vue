@@ -281,7 +281,11 @@ export default {
       return get(item, "ltvExamResult.examCorrectAnswer", "---");
     },
     getExamCorrectRate: (item) => {
-      return get(item, "ltvExamResult.examCorrectRate", "---");
+      if (!item.ltvExamResult || !item.ltvExamResult.examCorrectRate)
+        return "---";
+      else if (!item.ltvExamResult.examCorrectRate || isNaN(item.ltvExamResult))
+        return "";
+      return Number(item.ltvExamResult.examCorrectRate).toFixed(1);
     },
     getExamMark: (item) => {
       return get(item, "ltvExamResult.examMark", "---");

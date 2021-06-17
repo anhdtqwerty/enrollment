@@ -15,7 +15,23 @@
         </v-col>
       </v-row>
       <v-row class="my-0">
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="5">
+        <v-col
+          class="py-0 error--text text-h6 mb-4"
+          cols="12"
+          xs="12"
+          sm="12"
+          md="5"
+          v-if="
+            document.ltvExamResult &&
+            document.ltvExamResult.examMark === 'Không làm bài'
+          "
+        >
+          <div class="field-label" style="height: 42px">
+            Chi tiết bài kiểm tra khảo sát ĐGNL tổng hợp
+          </div>
+          Không làm bài
+        </v-col>
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="5" v-else>
           <div class="field-label" style="height: 42px">
             Chi tiết bài kiểm tra khảo sát ĐGNL tổng hợp
           </div>
@@ -66,6 +82,7 @@
         </v-col>
         <v-col
           class="py-0 d-flex justify-space-between"
+          :class="{ 'flex-column': $vuetify.breakpoint.smAndDown }"
           cols="12"
           xs="12"
           sm="12"
@@ -91,6 +108,7 @@
               {{ getPriorityMark }}
             </div>
           </div>
+          <hr class="dashed mb-4" v-if="$vuetify.breakpoint.smAndDown" />
           <div>
             <div class="field-label mb-2" style="height: 42px">
               Tổng điểm xét tuyển
@@ -317,7 +335,15 @@ export default {
         !this.document.ltvExamResult.examCorrectRate
       )
         return "Chưa có thông tin";
-      return `${this.document.ltvExamResult.examCorrectRate}%`;
+      if (
+        this.document.ltvExamResult &&
+        this.document.ltvExamResult.examCorrectRate &&
+        this.document.ltvExamResult.examCorrectRate === "Không làm bài"
+      )
+        return "Không làm bài";
+      return `${Number(this.document.ltvExamResult.examCorrectRate).toFixed(
+        1
+      )}%`;
     },
   },
   data() {
