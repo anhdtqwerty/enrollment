@@ -24,7 +24,7 @@
         <div class="mt-5">
           Hệ thống xin tạm đóng để chỉnh sửa thông tin học sinh. Nhà trường lùi
           hạn khai báo điểm học bạ của học sinh đến đêm nay 23:59 ngày 17/06 và
-          lùi hạn công bố điểm chuẩn sang 12:00 ngày 08/06.
+          lùi hạn công bố điểm chuẩn sang 12:00 ngày 18/06.
         </div>
         <div class="mt-5">
           Thông tin chi tiết:
