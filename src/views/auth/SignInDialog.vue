@@ -135,7 +135,7 @@ export default {
     async submit() {
       if (this.$refs.form.validate()) {
         this.loading = true;
-        await this.delay(5000);
+        await this.delay(1500);
         await this.signIn(this.credentials);
         if (this.user && this.isAuthenticated && !this.isConfirmedOTP) {
           this.$refs.form.reset();

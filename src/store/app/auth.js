@@ -29,9 +29,12 @@ export default {
           alert.success("Đăng nhập thành công");
       } catch (error) {
         console.log(error);
-        alert.error(
-          "Đăng nhập không thành công! Xin vui lòng thử lại sau ít phút"
-        );
+        if (error.includes(`Identifier or password invalid`))
+          alert.error("Tài khoản hoặc mật khẩu không chính xác");
+        else
+          alert.error(
+            "Đăng nhập không thành công! Xin vui lòng thử lại sau ít phút."
+          );
       }
     },
     signOut({ commit }) {
