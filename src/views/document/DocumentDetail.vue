@@ -250,7 +250,7 @@ export default {
       documentId: "",
       document: {},
       documentSystemTime: {},
-      isMaintainMode: false,
+      isMaintainMode: true,
     };
   },
   components: {
