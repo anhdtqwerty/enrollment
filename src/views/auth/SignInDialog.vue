@@ -55,7 +55,10 @@
         <div class="d-flex justify-center mt-6">
           <v-btn
             plain
-            class="info--text text-subtitle-1 text-decoration-underline text-none"
+            class="
+              info--text
+              text-subtitle-1 text-decoration-underline text-none
+            "
             style="width: 100%"
             @click="resetPassword()"
             >Quên mật khẩu?
@@ -122,9 +125,17 @@ export default {
       this.$refs.form.reset();
       this.setSignInDialog(false);
     },
+    delay(time) {
+      return new Promise((rel) => {
+        setTimeout(() => {
+          rel();
+        }, time);
+      });
+    },
     async submit() {
       if (this.$refs.form.validate()) {
         this.loading = true;
+        await this.delay(5000);
         await this.signIn(this.credentials);
         if (this.user && this.isAuthenticated && !this.isConfirmedOTP) {
           this.$refs.form.reset();

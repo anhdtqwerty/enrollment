@@ -28,7 +28,7 @@ export default {
         if (state.user && state.isAuthenticated)
           alert.success("Đăng nhập thành công");
       } catch (error) {
-        alert.error("Thông tin đăng nhập không chính xác! Xin vui lòng thử lại");
+        alert.error("Đăng nhập không thành công!");
       }
     },
     signOut({ commit }) {
