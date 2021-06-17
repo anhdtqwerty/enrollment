@@ -81,7 +81,7 @@ export default {
   },
   data() {
     return {
-      isMaintainMode: true,
+      isMaintainMode: false,
       isDevelopmentBuild: true,
       version: "0.1",
     };
