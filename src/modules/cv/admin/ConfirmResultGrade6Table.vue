@@ -22,6 +22,12 @@
     <template v-slot:[`item.dob`]="{ item }">
       {{ item | getStudentDob }}
     </template>
+    <template v-slot:[`item.examCorrectAnswer`]="{ item }">
+      {{ item | getCorrectAnswer }}
+    </template>
+    <template v-slot:[`item.examCorrectRate`]="{ item }">
+      {{ item | getCorrectRate }}
+    </template>
     <template v-slot:[`item.examMark`]="{ item }">
       {{ item | getExamMark }}
     </template>
@@ -68,6 +74,20 @@ const originHeaders = [
   {
     text: "Ngày sinh",
     value: "dob",
+    align: "left",
+    sortable: false,
+    show: true,
+  },
+  {
+    text: "Số lượng câu đúng",
+    value: "examCorrectAnswer",
+    align: "left",
+    sortable: false,
+    show: true,
+  },
+  {
+    text: "Tỉ lệ % câu đúng",
+    value: "examCorrectRate",
     align: "left",
     sortable: false,
     show: true,
@@ -183,6 +203,12 @@ export default {
     getStudentDob: (item) => {
       if (item.dob) return moment(item.dob, "DD/MM/YYYY").format("DD/MM/YYYY");
       return "---";
+    },
+    getCorrectAnswer: (item) => {
+      return get(item, "examCorrectAnswer", "---");
+    },
+    getCorrectRate: (item) => {
+      return get(item, "examCorrectRate", "---");
     },
     getExamMark: (item) => {
       return get(item, "examMark", "---");

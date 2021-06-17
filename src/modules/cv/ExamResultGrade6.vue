@@ -15,40 +15,82 @@
         </v-col>
       </v-row>
       <v-row class="my-0">
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="6">
           <div class="field-label" style="height: 42px">
-            Điểm bài Khảo sát ĐGNL Tổng hợp
+            Chi tiết bài kiểm tra khảo sát ĐGNL tổng hợp
           </div>
           <div
-            class="info-label error--text mt-2 mb-6"
+            class="info-label error--text mt-3 mb-6"
             v-if="documentStep === 4"
           >
-            {{ getExamMark }}
+            <v-row>
+              <v-col cols="12" sm="12" md="8" class="py-2 black--text"
+                >Số lượng câu đúng:</v-col
+              >
+              <v-col
+                cols="12"
+                sm="12"
+                md="4"
+                class="py-2"
+                style="font-size: 16px"
+                >{{ getExamCorrectAnswer }}</v-col
+              >
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="12" md="8" class="py-2 black--text"
+                >Tỉ lệ % câu đúng:</v-col
+              >
+              <v-col
+                cols="12"
+                sm="12"
+                md="4"
+                class="py-2"
+                style="font-size: 16px"
+                >{{ getExamCorrectRate }}</v-col
+              >
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="12" md="8" class="py-2 black--text"
+                >Tổng điểm:</v-col
+              >
+              <v-col
+                cols="12"
+                sm="12"
+                md="4"
+                class="py-2"
+                style="font-size: 20px"
+                >{{ getExamMark }}</v-col
+              >
+            </v-row>
           </div>
         </v-col>
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="2">
           <div class="field-label" style="height: 42px">Tổng điểm Học Bạ</div>
           <div
             class="info-label error--text mt-2 mb-6"
+            style="font-size: 20px"
             v-if="documentStep === 4"
           >
             {{ getTotalMathLiterature }}
           </div>
         </v-col>
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="2">
           <div class="field-label" style="height: 42px">Điểm ưu tiên</div>
           <div
             class="info-label error--text mt-2 mb-6"
+            style="font-size: 20px"
             v-if="documentStep === 4"
           >
             {{ getPriorityMark }}
           </div>
         </v-col>
-        <v-col class="py-0" cols="12" xs="12" sm="12" md="3">
-          <div class="field-label mb-2" style="height: 42px">Tổng điểm</div>
+        <v-col class="py-0" cols="12" xs="12" sm="12" md="2">
+          <div class="field-label mb-2" style="height: 42px">
+            Tổng điểm xét tuyển
+          </div>
           <div
             class="info-label error--text mt-2 mb-6"
-            style="font-size: 20px"
+            style="font-size: 24px"
             v-if="documentStep === 4"
           >
             {{ getTotalMark }}
@@ -62,13 +104,17 @@
       >
         <div class="text-h6">Phụ huynh lưu ý:</div>
         <div>
-          - Hệ thống hiện đang mở chỉnh sửa điểm học bạ cho toàn bộ học sinh.
-          Phụ huynh có thể khai báo thêm hoặc chỉnh sửa nội dung thông tin của
-          phần này. Hạn chỉnh sửa điểm là 12:00, ngày 17/06/2021.
+          - Hệ thống đã được cập nhật để hiển thị <b>Tổng số câu đúng</b> và
+          <b>Tỉ lệ % câu đúng</b> trong <b>Bài khảo sát ĐGNL</b>.
         </div>
         <div>
-          - Nhà trường sẽ lấy dữ liệu điểm học bạ của toàn bộ học sinh vào 12:00
-          ngày 17/06/2021 làm căn cứ xét điểm chuẩn vào trường.
+          - Hệ thống hiện đang mở chỉnh sửa điểm học bạ cho toàn bộ học sinh.
+          Phụ huynh có thể khai báo thêm hoặc chỉnh sửa nội dung thông tin của
+          phần này. Hạn chỉnh sửa điểm là 00:00, ngày 18/06/2021.
+        </div>
+        <div>
+          - Nhà trường sẽ lấy dữ liệu điểm học bạ của toàn bộ học sinh vào 00:00
+          ngày 18/06/2021 làm căn cứ xét điểm chuẩn vào trường.
         </div>
         <div>
           - Đề nghị phụ huynh khai báo điểm chính xác trước thời gian trên để
@@ -248,6 +294,22 @@ export default {
     },
     getTotalMark() {
       return get(this.document, "ltvExamResult.totalMark", "Chưa có thông tin");
+    },
+    getExamCorrectAnswer() {
+      return get(
+        this.document,
+        "ltvExamResult.examCorrectAnswer",
+        "Chưa có thông tin"
+      );
+    },
+    getExamCorrectRate() {
+      if (
+        !this.document ||
+        !this.document.ltvExamResult ||
+        !this.document.ltvExamResult.examCorrectRate
+      )
+        return "Chưa có thông tin";
+      return `${this.document.ltvExamResult.examCorrectRate}%`;
     },
   },
   data() {

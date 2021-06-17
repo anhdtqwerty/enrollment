@@ -739,14 +739,19 @@ export default {
       this.$refs.form.resetValidation();
     },
     getData() {
+      const totalMathLiterature = !isNaN(this.getTotal) ? this.getTotal : "";
+      let totalMark = totalMathLiterature;
+      totalMark += parseFloat(this.document.ltvExamResult.examMark) || 0;
+      totalMark += parseFloat(this.document.ltvExamResult.priorityMark) || 0;
       return {
         studyResult: {
           ...this.studyResult,
-          totalMathLiterature: !isNaN(this.getTotal) ? this.getTotal : "",
+          totalMathLiterature,
         },
         ltvExamResult: {
           ...this.ltvExamResult,
           priorityMark: this.getPriorityMark,
+          totalMark,
         },
       };
     },

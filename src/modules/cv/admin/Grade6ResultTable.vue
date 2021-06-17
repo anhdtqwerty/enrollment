@@ -33,6 +33,12 @@
       <template v-slot:[`item.dob`]="{ item }">
         {{ item | getStudentDob }}
       </template>
+      <template v-slot:[`item.examCorrectAnswer`]="{ item }">
+        {{ item | getExamCorrectAnswer }}
+      </template>
+      <template v-slot:[`item.examCorrectRate`]="{ item }">
+        {{ item | getExamCorrectRate }}
+      </template>
       <template v-slot:[`item.examMark`]="{ item }">
         {{ item | getExamMark }}
       </template>
@@ -93,27 +99,20 @@ const originHeaders = [
     sortable: false,
     show: true,
   },
-  // {
-  //   text: "Toán",
-  //   value: "examMath",
-  //   align: "left",
-  //   sortable: false,
-  //   show: true,
-  // },
-  // {
-  //   text: "Văn",
-  //   value: "examLiterature",
-  //   align: "left",
-  //   sortable: false,
-  //   show: true,
-  // },
-  // {
-  //   text: "Anh",
-  //   value: "examEnglish",
-  //   align: "left",
-  //   sortable: false,
-  //   show: true,
-  // },
+  {
+    text: "Số lượng câu đúng",
+    value: "examCorrectAnswer",
+    align: "left",
+    sortable: false,
+    show: true,
+  },
+  {
+    text: "Tỉ lệ % câu đúng",
+    value: "examCorrectRate",
+    align: "left",
+    sortable: false,
+    show: true,
+  },
   {
     text: "Điểm bài Khảo sát ĐGNL Tổng hợp",
     value: "examMark",
@@ -278,15 +277,12 @@ export default {
       if (item.dob) return moment(item.dob).format("DD/MM/YYYY");
       return "---";
     },
-    // getExamMath: (item) => {
-    //   return get(item, "ltvExamResult.examMath", "---");
-    // },
-    // getExamLiterature: (item) => {
-    //   return get(item, "ltvExamResult.examLiterature", "---");
-    // },
-    // getExamEnglish: (item) => {
-    //   return get(item, "ltvExamResult.examEnglish", "---");
-    // },
+    getExamCorrectAnswer: (item) => {
+      return get(item, "ltvExamResult.examCorrectAnswer", "---");
+    },
+    getExamCorrectRate: (item) => {
+      return get(item, "ltvExamResult.examCorrectRate", "---");
+    },
     getExamMark: (item) => {
       return get(item, "ltvExamResult.examMark", "---");
     },

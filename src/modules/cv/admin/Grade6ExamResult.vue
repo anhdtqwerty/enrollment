@@ -95,6 +95,14 @@ const schema = {
     prop: "dob",
     type: String,
   },
+  "Số lượng câu đúng": {
+    prop: "examCorrectAnswer",
+    type: String,
+  },
+  "Tỉ lệ % câu đúng": {
+    prop: "examCorrectRate",
+    type: String,
+  },
   "Điểm bài Khảo sát ĐGNL Tổng hợp": {
     prop: "examMark",
     type: String,
@@ -158,6 +166,18 @@ export default {
           callback: (value) => {
             if (value) return moment(value, "YYYY-MM-DD").format("DD/MM/YYYY");
             return "";
+          },
+        },
+        "Số lượng câu đúng": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.examCorrectAnswer;
+          },
+        },
+        "Tỉ lệ % câu đúng": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.examCorrectRate;
           },
         },
         "Điểm bài Khảo sát ĐGNL Tổng hợp": {
@@ -412,6 +432,18 @@ export default {
             return value.grade5Morality;
           },
         },
+        "Số lượng câu đúng": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.examCorrectAnswer;
+          },
+        },
+        "Tỉ lệ % câu đúng": {
+          field: "ltvExamResult",
+          callback: (value) => {
+            return value.examCorrectAnswer;
+          },
+        },
         "Điểm bài Khảo sát ĐGNL Tổng hợp": {
           field: "ltvExamResult",
           callback: (value) => {
@@ -565,6 +597,8 @@ export default {
               ltvExamResult: {
                 ...existingCV.ltvExamResult,
                 examMark: result.examMark,
+                examCorrectAnswer: result.examCorrectAnswer,
+                examCorrectRate: result.examCorrectRate,
                 totalMark: result.totalMark,
               },
               submitType: "update-exam-result",
