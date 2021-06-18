@@ -148,7 +148,7 @@
         </div>
       </v-card>
       <!-- TODO: Uncomment when display result-->
-      <!-- <div v-if="isOpenDisplayResult">
+      <div v-if="isOpenDisplayResult">
         <hr class="dashed" />
         <div
           class="py-6"
@@ -157,8 +157,8 @@
             document.ltvExamResult.passExamType === 'pass'
           "
         >
-          <div class="mx-auto" style="max-width: 355px">
-            <v-img src="@/assets/pass-exam.svg" />
+          <div class="mx-auto" style="max-width: 250px">
+            <v-img src="@/assets/pass.svg" />
           </div>
           <div class="fail-card pa-4 mt-6">
             <div>
@@ -168,16 +168,19 @@
             </div>
             <div class="mt-2">
               Trân trọng mời phụ huynh đến làm thủ tục tại cơ sở Nhà trường từ
-              ngày 18/06/2021 - 20/06/2021
+              ngày
+              <span class="font-weight-bold error--text"
+                >18/06/2021 - 20/06/2021</span
+              >
             </div>
             <div class="mt-2">Thời gian làm việc:</div>
             <div class="mt-2">Sáng: 8:00 - 11:00</div>
             <div class="mt-2">Chiều: 14:00 - 16:30</div>
             <div class="mt-2">Phụ huynh lưu ý:</div>
-            <div class="mt-2">
+            <div class="mt-2 font-weight-bold error--text">
               - Nhà trường sẽ dừng tuyển sinh khi đủ chỉ tiêu.
             </div>
-            <div class="mt-2">
+            <div class="mt-2 font-weight-bold error--text">
               - Nhà trường chỉ tuyển học sinh trúng tuyển đợt 1 trong thời gian
               trên.
             </div>
@@ -286,7 +289,7 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
     </v-card-text>
   </v-form>
 </template>
