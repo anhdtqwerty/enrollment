@@ -162,16 +162,24 @@
           </div>
           <div class="fail-card pa-4 mt-6">
             <div>
-              Học sinh
+              Chúc mừng em
               <span class="font-weight-bold">{{ document.name }}</span> đã trúng
-              tuyển đợt 1 vào trường THCS & THPT Lương Thế Vinh.
+              tuyển đợt 1 vào trường THCS & THPT Lương Thế Vinh!
             </div>
-            <div>Phụ huynh vui lòng làm thủ tục nhập học tại trường</div>
-            <div>Thời gian làm việc của Ban tuyển sinh</div>
-            <div>Sáng: 8:00 - 11:00</div>
-            <div>Chiều: 14:00 - 17:00</div>
-            <div class="font-weight-bold">
-              Nhà trường sẽ dừng tuyển sinh khi đủ chỉ tiêu
+            <div class="mt-2">
+              Trân trọng mời phụ huynh đến làm thủ tục tại cơ sở Nhà trường từ
+              ngày 18/06/2021 - 20/06/2021
+            </div>
+            <div class="mt-2">Thời gian làm việc:</div>
+            <div class="mt-2">Sáng: 8:00 - 11:00</div>
+            <div class="mt-2">Chiều: 14:00 - 16:30</div>
+            <div class="mt-2">Phụ huynh lưu ý:</div>
+            <div class="mt-2">
+              - Nhà trường sẽ dừng tuyển sinh khi đủ chỉ tiêu.
+            </div>
+            <div class="mt-2">
+              - Nhà trường chỉ tuyển học sinh trúng tuyển đợt 1 trong thời gian
+              trên.
             </div>
           </div>
         </div>
@@ -179,25 +187,30 @@
           class="py-6"
           v-else-if="document.ltvExamResult.passExamType === 'fail'"
         >
-          <div class="mx-auto mb-6" style="max-width: 355px">
-            <v-img src="@/assets/fail-exam.svg" />
+          <div
+            class="mx-auto mb-6 text-center fail-notify-card pa-4"
+            style="max-width: 420px"
+          >
+            <div>Không trúng tuyển đợt 1</div>
           </div>
           <div class="fail-card pa-4">
             <div>
-              Nếu quý phụ huynh vẫn có nguyện vọng đăng ký vào danh sách dự
-              khuyết, xin vui lòng liên hệ trực tiếp văn phòng tại cơ sở đăng
-              ký.
+              Học sinh <b>{{ document.name || "" }}</b> không trúng tuyển đợt 1.
             </div>
             <div>
-              <div class="text-h6">Thông tin liên hệ:</div>
-              <div class="mt-4">
+              <div class="mt-2">
+                Để biết thêm chi tiết, xin vui lòng liên hệ văn phòng nhà trường
+                tại 2 cơ sở.
+              </div>
+              <div class="mt-2">Thông tin liên hệ:</div>
+              <div class="mt-2">
                 <b>Cơ Sở A:</b> Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội
               </div>
               <div class="mt-2">
                 SĐT: <span class="primary--text">0242.215.5985</span> –
                 <span class="primary--text">0246.663.8338</span>
               </div>
-              <div class="mt-4">
+              <div class="mt-2">
                 <b>Cơ Sở I:</b> Tân Triều, Thanh Trì, Hà Nội
               </div>
               <div class="mt-2">
@@ -214,20 +227,24 @@
             class="mx-auto mb-6 text-center fail-notify-card pa-4"
             style="max-width: 420px"
           >
-            <div>Không trúng tuyển Đợt tuyển sinh thứ nhất.</div>
-            <div>Học sinh trong danh sách dự khuyết của Nhà trường.</div>
+            <div>Dự khuyết đợt 1</div>
           </div>
           <div class="fail-card pa-4">
             <div>
-              <div class="text-h6">Thông tin liên hệ:</div>
-              <div class="mt-4">
+              <div style="line-height: 24px !important">
+                Học sinh <b>{{ document.name || "" }}</b> trong danh sách "Dự
+                khuyết đợt 1" xin vui lòng theo dõi thông tin tuyển sinh cuối
+                ngày 20/06/2021 để biết thêm chi tiết.
+              </div>
+              <div class="mt-2">Thông tin liên hệ:</div>
+              <div class="mt-2">
                 <b>Cơ Sở A:</b> Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội
               </div>
               <div class="mt-2">
                 SĐT: <span class="primary--text">0242.215.5985</span> –
                 <span class="primary--text">0246.663.8338</span>
               </div>
-              <div class="mt-4">
+              <div class="mt-2">
                 <b>Cơ Sở I:</b> Tân Triều, Thanh Trì, Hà Nội
               </div>
               <div class="mt-2">
@@ -244,20 +261,23 @@
             class="mx-auto mb-6 text-center fail-notify-card pa-4"
             style="max-width: 420px"
           >
-            <div>Không trúng tuyển Đợt tuyển sinh thứ nhất.</div>
-            <div>Học sinh vi phạm quy chế thi của Nhà trường.</div>
+            <div>Vi phạm quy chế thi</div>
           </div>
           <div class="fail-card pa-4">
             <div>
-              <div class="text-h6">Thông tin liên hệ:</div>
-              <div class="mt-4">
+              <div>
+                Học sinh <b>{{ document.name || "" }}</b> đã vi phạm quy chế thi
+                trong thời gian làm bài kiểm tra đánh giá năng lực.
+              </div>
+              <div class="mt-2">Thông tin liên hệ:</div>
+              <div class="mt-2">
                 <b>Cơ Sở A:</b> Số 35 Đinh Núp, Trung Hòa, Cầu Giấy, Hà Nội
               </div>
               <div class="mt-2">
                 SĐT: <span class="primary--text">0242.215.5985</span> –
                 <span class="primary--text">0246.663.8338</span>
               </div>
-              <div class="mt-4">
+              <div class="mt-2">
                 <b>Cơ Sở I:</b> Tân Triều, Thanh Trì, Hà Nội
               </div>
               <div class="mt-2">
