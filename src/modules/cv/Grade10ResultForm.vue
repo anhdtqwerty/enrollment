@@ -531,6 +531,45 @@
         Nhà trường để xác nhận với ban tuyển sinh về diện tuyển thẳng của con
       </div>
     </div>
+    <div v-else>
+      <hr class="dashed" />
+      <div class="section-label py-6">Thành tích đặc biệt</div>
+      <v-row class="pb-4 my-0">
+        <v-col cols="12">
+          <div class="field-label">Thành tích đặc biệt (xét học bổng)</div>
+          <v-text-field
+            placeholder="VD: Con đạt giải Nhì Toán Thành phố Năm 2020, giải Nhất Toán Thành phố Năm 2021"
+            v-model="studyResult.achievements"
+            type="text"
+            color="primary"
+            v-if="documentStep === 4 || isEditing"
+            messages="Vui lòng bỏ qua nếu không có thông tin"
+            outlined
+          />
+          <div class="info-label mt-2" v-if="documentStep !== 4 && !isEditing">
+            {{ studyResult.achievements || "Chưa có thông tin" }}
+          </div>
+        </v-col>
+      </v-row>
+      <hr class="dashed" />
+      <div class="section-label py-6">Diện tuyển thẳng</div>
+      <div v-if="studyResult && studyResult.recuitingStraightType">
+        <div>
+          Con của tôi đạt tiêu chí dưới và nằm trong diện tuyển thẳng của nhà
+          trường.
+        </div>
+        <div class="font-weight-bold">
+          "{{ studyResult.recuitingStraightType || "Chưa có thông tin" }}"
+        </div>
+      </div>
+      <div class="d-flex text-justify" v-else>
+        Con của tôi không nằm trong diện tuyển thẳng của nhà trường.
+      </div>
+      <div class="field-label py-6">
+        <span class="error--text">(*)</span> Phụ huynh vui lòng đến cơ sở của
+        Nhà trường để xác nhận với ban tuyển sinh về diện tuyển thẳng của con
+      </div>
+    </div>
   </v-form>
 </template>
 
