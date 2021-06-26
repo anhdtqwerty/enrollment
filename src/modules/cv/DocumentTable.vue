@@ -201,6 +201,8 @@ export default {
     },
     getActionName: (item) => {
       if (item.status === "submitted") return "Xem lại";
+      else if (item.type === "Khối 6" && item.status === "filling")
+        return "Xem lại";
       else if (item.status === "filling") return "Chỉnh sửa";
       return "Vào khai";
     },

@@ -166,10 +166,7 @@
           </div>
         </v-col>
       </v-row>
-      <v-row
-        v-if="document.status !== 'submitted' && !isAdminPreview"
-        class="my-0"
-      >
+      <v-row class="my-0">
         <v-col class="py-0" cols="12" xs="12" sm="12" md="8">
           <div class="field-label">
             Loại ưu tiên
@@ -187,6 +184,7 @@
             :items="priorityTypes"
             :rules="[$rules.required]"
             v-if="document.status !== 'submitted' && !isAdminPreview"
+            @input="getPriorityMark"
             outlined
           />
           <div
@@ -200,12 +198,12 @@
           <div class="field-label">Điểm cộng ưu tiên (nếu có)</div>
           <v-text-field
             placeholder="VD: 3"
-            :value="getPriorityMark"
+            v-model="priorityMark"
             type="number"
             color="primary"
             v-if="document.status !== 'submitted' && !isAdminPreview"
             @keyup.enter="submit"
-            :rules="[$rules.priorityMark]"
+            :rules="[$rules.priorityMark, $rules.required]"
             :disabled="
               ltvExamResult.priorityType !==
               'Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội'
@@ -214,10 +212,10 @@
             validate-on-blur
           />
           <div
-            class="info-label mt-2 mb-6"
+            class="info-label mt-2 mb-6 error--text"
             v-if="document.status === 'submitted' || isAdminPreview"
           >
-            {{ ltvExamResult.priorityMark || "Chưa có thông tin" }}
+            {{ priorityMark || "Chưa có thông tin" }}
           </div>
         </v-col>
       </v-row>
@@ -440,27 +438,13 @@ export default {
       }
       return "00:00 ngày 14/06/2021";
     },
-    getPriorityMark() {
-      switch (this.ltvExamResult.priorityType) {
-        case "Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội":
-          return "";
-        case "Con em chiến sĩ, cán bộ y tế phục vụ chống dịch Covid-19":
-          return 2;
-        case "Học sinh THCS Lương Thế Vinh":
-          return 3;
-        case "Không có điểm cộng":
-          return 0;
-        default:
-          return 0;
-      }
-    },
     getTotalA() {
       if (
         !this.ltvExamResult.examMath ||
         !this.ltvExamResult.examLiterature ||
         !this.ltvExamResult.examEnglish ||
         !this.ltvExamResult.examHistory ||
-        isNaN(this.getPriorityMark)
+        isNaN(this.priorityMark)
       )
         return "Chưa có thông tin";
       return (
@@ -468,7 +452,7 @@ export default {
         parseFloat(this.ltvExamResult.examEnglish) * 4 +
         parseFloat(this.ltvExamResult.examLiterature) +
         parseFloat(this.ltvExamResult.examHistory) +
-        this.getPriorityMark
+        Number(this.priorityMark)
       );
     },
     getTotalA1() {
@@ -477,7 +461,7 @@ export default {
         !this.ltvExamResult.examLiterature ||
         !this.ltvExamResult.examEnglish ||
         !this.ltvExamResult.examHistory ||
-        isNaN(this.getPriorityMark)
+        isNaN(this.priorityMark)
       )
         return "Chưa có thông tin";
       return (
@@ -485,7 +469,7 @@ export default {
         parseFloat(this.ltvExamResult.examEnglish) * 4 +
         parseFloat(this.ltvExamResult.examLiterature) +
         parseFloat(this.ltvExamResult.examHistory) +
-        this.getPriorityMark
+        Number(this.priorityMark)
       );
     },
     getTotalD() {
@@ -494,7 +478,7 @@ export default {
         !this.ltvExamResult.examLiterature ||
         !this.ltvExamResult.examEnglish ||
         !this.ltvExamResult.examHistory ||
-        isNaN(this.getPriorityMark)
+        isNaN(this.priorityMark)
       )
         return "Chưa có thông tin";
       return (
@@ -503,7 +487,7 @@ export default {
           parseFloat(this.ltvExamResult.examLiterature)) *
           3 +
         parseFloat(this.ltvExamResult.examHistory) +
-        this.getPriorityMark
+        Number(this.priorityMark)
       );
     },
     isDevelopmentMode() {
@@ -530,6 +514,7 @@ export default {
         passExam: "",
         priorityType: "",
       },
+      priorityMark: 0,
       agree: false,
       priorityTypes: [
         {
@@ -554,6 +539,8 @@ export default {
   created() {
     if (this.document.ltvExamResult) {
       this.ltvExamResult = this.document.ltvExamResult;
+      if (this.ltvExamResult.priorityMark)
+        this.priorityMark = Number(this.ltvExamResult.priorityMark);
       this.agree = this.document.status === "submitted";
     }
   },
@@ -567,14 +554,27 @@ export default {
     resetValidation() {
       this.$refs.form.resetValidation();
     },
+    getPriorityMark() {
+      switch (this.ltvExamResult.priorityType) {
+        case "Con em chiến sĩ, cán bộ y tế phục vụ chống dịch Covid-19":
+          this.priorityMark = 2;
+          break;
+        case "Học sinh THCS Lương Thế Vinh":
+          this.priorityMark = 3;
+          break;
+        case "Không có điểm cộng":
+          this.priorityMark = 0;
+          break;
+      }
+    },
     getData() {
       return {
         agree: this.agree,
         ltvExamResult: {
           ...this.ltvExamResult,
-          priorityMark: !isNaN(this.getPriorityMark)
-            ? this.getPriorityMark
-            : "",
+          priorityMark: !isNaN(this.priorityMark)
+            ? Number(this.priorityMark)
+            : 0,
           totalA: !isNaN(this.getTotalA) ? this.getTotalA : "",
           totalA1: !isNaN(this.getTotalA1) ? this.getTotalA1 : "",
           totalD: !isNaN(this.getTotalD) ? this.getTotalD : "",
