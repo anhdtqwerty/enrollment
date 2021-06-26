@@ -384,8 +384,8 @@
           ưu tiên
         </div>
         <div>
-          - Ban D: ĐXT = (Điểm Toán x3 + Điểm Văn + Điểm Anh) x3 + Lịch sử +
-          Điểm ưu tiên
+          - Ban D: ĐXT = (Điểm Toán + Điểm Văn + Điểm Anh) x3 + Lịch sử + Điểm
+          ưu tiên
         </div>
         <div class="font-weight-bold mt-3">Các diện điểm cộng ưu tiên:</div>
         <div>- Điểm ưu tiên theo quy định của Sở GD&ĐT Hà Nội.</div>
