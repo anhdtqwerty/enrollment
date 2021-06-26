@@ -556,6 +556,9 @@ export default {
     },
     getPriorityMark() {
       switch (this.ltvExamResult.priorityType) {
+        case "Điểm cộng ưu tiên theo quy định của Sở GD&ĐT Hà Nội":
+          this.priorityMark = "";
+          break;
         case "Con em chiến sĩ, cán bộ y tế phục vụ chống dịch Covid-19":
           this.priorityMark = 2;
           break;
