@@ -98,13 +98,13 @@
               </div>
             </v-stepper-step>
           </v-stepper>
-          <div class="notice pa-4" v-if="step === 4">
+          <!-- <div class="notice pa-4" v-if="step === 4">
             Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP
             Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi
             thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm
             tra tin nhắn yêu cầu khai báo điểm của nhà trường. Xin cảm ơn phụ
             huynh.
-          </div>
+          </div> -->
           <div
             class="notice pa-4"
             v-if="step === 5 && document.status === 'submitted'"
@@ -247,16 +247,16 @@ export default {
           }
           break;
         case 5:
-          if (
-            !this.systemTime.checkDocumentSystemTime["exam-result"] &&
-            this.user.role.type !== "admin"
-          ) {
-            this.$alert.error(
-              `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Xin cảm ơn phụ huynh.`,
-              true
-            );
-            this.setStep(this.step - 1);
-          }
+          // if (
+          //   !this.systemTime.checkDocumentSystemTime["exam-result"] &&
+          //   this.user.role.type !== "admin"
+          // ) {
+          //   this.$alert.error(
+          //     `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Xin cảm ơn phụ huynh.`,
+          //     true
+          //   );
+          //   this.setStep(this.step - 1);
+          // }
           break;
         case 6:
           this.setStep(this.step - 1);
@@ -281,11 +281,9 @@ export default {
         if (
           step === 5 &&
           this.document.step === 5 &&
-          (!this.document.ltvExamResult ||
-            !this.document.ltvExamResult.passExam ||
-            this.document.ltvExamResult.passExam === "")
+          this.document.status === "filling"
         )
-          return "Chưa có kết quả";
+          return "Vừa mở";
         else if (step === this.document.step) return "Đang khai báo";
         else if (
           this.document.status === "created" ||
@@ -334,15 +332,15 @@ export default {
           !this.systemTime.checkDocumentSystemTime[key]) &&
         this.user.role.type !== "admin"
       ) {
-        if (step === 5)
-          this.$alert.error(
-            `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Xin cảm ơn phụ huynh.`,
-            true
-          );
-        else
-          this.$alert.error(
-            "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
-          );
+        // if (step === 5)
+        //   this.$alert.error(
+        //     `Phần thông tin khai báo kết quả kỳ thi tuyển sinh vào lớp 10 của TP Hà Nội hiện giờ chưa được mở. Nhà trường sẽ mở khai báo này khi thành phố công bố kết quả kỳ thi vào lớp 10. Phụ huynh vui lòng kiểm tra tin nhắn yêu cầu khai báo điểm của nhà trường. Xin cảm ơn phụ huynh.`,
+        //     true
+        //   );
+        // else
+        this.$alert.error(
+          "Phần thông tin tiếp theo chưa được mở. Thời gian cụ thể Nhà trường sẽ gửi qua SMS. Phụ huynh vui lòng kiểm tra tin nhắn để nhận thông báo"
+        );
         return;
       }
       this.setStep(step);

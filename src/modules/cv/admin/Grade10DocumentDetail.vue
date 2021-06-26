@@ -198,13 +198,8 @@ export default {
         )
           return "Đang khai báo";
       }
-      if (
-        this.document.step === 5 &&
-        (!this.document.ltvExamResult ||
-          !this.document.ltvExamResult.passExam ||
-          this.document.ltvExamResult.passExam === "")
-      )
-        return "Chưa có kết quả";
+      if (this.document.step === 5 && this.document.status === "filling")
+        return "Vừa mở";
       return "Đã hoàn tất";
     },
     getStatusColor(key, step) {
