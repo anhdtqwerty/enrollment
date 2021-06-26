@@ -86,7 +86,7 @@
               (document.status === 'submitted' && !isEditing) || isAdminPreview
             "
           >
-            {{ ltvExamResult.examMath || "Chưa có thông tin" }}
+            {{ ltvExamResult.examMath | mark }}
           </div>
         </v-col>
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
@@ -121,7 +121,7 @@
               (document.status === 'submitted' && !isEditing) || isAdminPreview
             "
           >
-            {{ ltvExamResult.examLiterature || "Chưa có thông tin" }}
+            {{ ltvExamResult.examLiterature | mark }}
           </div>
         </v-col>
         <v-col class="py-0" cols="12" xs="12" sm="12" md="4">
@@ -156,7 +156,7 @@
               (document.status === 'submitted' && !isEditing) || isAdminPreview
             "
           >
-            {{ ltvExamResult.examEnglish || "Chưa có thông tin" }}
+            {{ ltvExamResult.examEnglish | mark }}
           </div>
         </v-col>
       </v-row>
@@ -193,7 +193,7 @@
               (document.status === 'submitted' && !isEditing) || isAdminPreview
             "
           >
-            {{ ltvExamResult.examHistory || "Chưa có thông tin" }}
+            {{ ltvExamResult.examHistory | mark }}
           </div>
         </v-col>
       </v-row>
@@ -286,7 +286,7 @@
               (document.status === 'submitted' && !isEditing) || isAdminPreview
             "
           >
-            {{ getTotalA }}
+            {{ getTotalA | mark }}
           </div>
         </v-col>
         <v-col
@@ -326,7 +326,7 @@
               (document.status === 'submitted' && !isEditing) || isAdminPreview
             "
           >
-            {{ getTotalA1 }}
+            {{ getTotalA1 | mark }}
           </div>
         </v-col>
         <v-col
@@ -366,7 +366,7 @@
               (document.status === 'submitted' && !isEditing) || isAdminPreview
             "
           >
-            {{ getTotalD }}
+            {{ getTotalD | mark }}
           </div>
         </v-col>
       </v-row>
@@ -515,7 +515,7 @@ export default {
         parseFloat(this.ltvExamResult.examLiterature) +
         parseFloat(this.ltvExamResult.examHistory) +
         Number(this.priorityMark)
-      );
+      ).toFixed(2);
     },
     getTotalA1() {
       if (
@@ -532,7 +532,7 @@ export default {
         parseFloat(this.ltvExamResult.examLiterature) +
         parseFloat(this.ltvExamResult.examHistory) +
         Number(this.priorityMark)
-      );
+      ).toFixed(2);
     },
     getTotalD() {
       if (
@@ -550,7 +550,7 @@ export default {
           3 +
         parseFloat(this.ltvExamResult.examHistory) +
         Number(this.priorityMark)
-      );
+      ).toFixed(2);
     },
     isDevelopmentMode() {
       return process.env.NODE_ENV === "development";
@@ -631,6 +631,12 @@ export default {
           this.priorityMark = 0;
           break;
       }
+    },
+    filters: {
+      mark(mark) {
+        if (!mark) return "Chưa có thông tin";
+        return Number(mark).toFixed(2);
+      },
     },
     getData() {
       return {
