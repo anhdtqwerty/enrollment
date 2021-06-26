@@ -284,6 +284,12 @@ export default {
           this.document.status === "filling"
         )
           return "Vừa mở";
+        else if (
+          step === 5 &&
+          this.document.step === 5 &&
+          this.document.status === "submitted"
+        )
+          return "Đã hoàn tất";
         else if (step === this.document.step) return "Đang khai báo";
         else if (
           this.document.status === "created" ||
@@ -304,11 +310,15 @@ export default {
         if (
           step === 5 &&
           this.document.step === 5 &&
-          (!this.document.ltvExamResult ||
-            !this.document.ltvExamResult.passExam ||
-            this.document.ltvExamResult.passExam === "")
+          this.document.status === "filling"
         )
           return "error--text";
+        else if (
+          step === 5 &&
+          this.document.step === 5 &&
+          this.document.status === "submitted"
+        )
+          return "success--text";
         else if (step === this.document.step) return "warning--text";
         else if (
           this.document.status === "created" ||
