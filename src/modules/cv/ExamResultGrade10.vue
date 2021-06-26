@@ -4,9 +4,11 @@
     <v-card-title class="card-title"
       >Kết quả Kỳ thi tuyển sinh vào lớp 10 THPT năm 2021 - 2022</v-card-title
     >
-    <v-card-subtitle class="card-subtitle py-6" v-if="!isAdminPreview">
-      Phụ huynh vui lòng khai báo đầy đủ thông tin và ấn "Hoàn thành" trước
-      {{ getCloseFillDocumentDate }}
+    <v-card-subtitle
+      class="card-subtitle py-6 mt-4"
+      v-if="!isAdminPreview && document.status !== 'submitted'"
+    >
+      Phụ huynh vui lòng khai báo đầy đủ thông tin và ấn "Hoàn thành"
     </v-card-subtitle>
     <v-card-text class="d-flex flex-column pa-0">
       <div class="section-label py-6">Số báo danh</div>
