@@ -63,7 +63,7 @@
     </v-card-actions>
     <v-card-actions class="d-flex justify-end pt-6 px-0" v-else>
       <!-- TODO: Remove this button when close -->
-      <v-btn
+      <!-- <v-btn
         class="px-6 py-3 text-none elevation-0"
         color="primary"
         v-if="document.type === 'Khối 10' && !isAdminPreview && !isEditing"
@@ -71,7 +71,7 @@
         large
       >
         <span>Chỉnh sửa</span>
-      </v-btn>
+      </v-btn> -->
     </v-card-actions>
   </v-card>
 </template>

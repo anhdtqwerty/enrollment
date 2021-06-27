@@ -153,7 +153,7 @@ export default {
         this.documentStep !== 4 &&
         this.document.type === "Khối 10" &&
         !this.isEditing &&
-        // !this.isFillInfoClose && //TODO: add this when close
+        !this.isFillInfoClose &&
         !this.isAdminPreview
       )
         return true;
